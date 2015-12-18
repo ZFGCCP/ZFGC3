@@ -1,0 +1,29 @@
+{
+  "name": "zfgc3",
+  "version": "0.0.0",
+  "homepage": "https://github.com/ZFGCCP/ZFGC3",
+  "authors": [
+    "Christopher Bebry <invalidsyntax@gmail.com>"
+  ],
+  "description": "",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "src/main/webapp/bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.8",
+    "bootstrap": "v4.0.0-alpha.2",
+    "jquery": "~2.1.4",
+    "angular-ui-router": "~0.2.15",
+    "angular-resource": "~1.4.8",
+    "tether": "~1.1.1"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "name": "zfgc3",
+  "version": "0.0.0",
+  "description": "It's a secret to everyone.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ZFGCCP/ZFGC3.git"
+  },
+  "author": "cbebry, mg-zero",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ZFGCCP/ZFGC3/issues"
+  },
+  "homepage": "https://github.com/ZFGCCP/ZFGC3#readme",
+  "devDependencies": {
+    "gulp": "^3.9.0",
+    "gulp-angular-filesort": "^1.1.1",
+    "gulp-filter": "^3.0.1",
+    "gulp-inject": "^3.0.0",
+    "gulp-sass": "^2.1.1",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-watch": "^4.3.5",
+    "main-bower-files": "^2.11.0",
+    "rimraf": "^2.4.4",
+    "run-sequence": "^1.1.5",
+    "stream-series": "^0.1.1"
+  }
+}
