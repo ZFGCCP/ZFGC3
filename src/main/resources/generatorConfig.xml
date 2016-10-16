@@ -4,12 +4,13 @@
   <context id="zfgc3_context">
   
     <!-- This kinda worries me a bit tbh, security issue?! Is there a way we can hide this information?-->
+    <!-- TODO: Shove this stuff into a jndi and change db password -->
     <jdbcConnection connectionURL="jdbc:mysql://zfgc.com:3306/zfgc3_dev" 
     				driverClass="com.mysql.jdbc.Driver" 
     				password="ki7t3N5F0R_Lif3Y0" 
     				userId="zfgc3" />
     				
-    <javaModelGenerator targetPackage="com.zfgc.dbObj" targetProject="ZFGC3">
+    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="ZFGC3">
     	<property name="enableSubPackages" value="true" />
     </javaModelGenerator>
     <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3">
@@ -19,7 +20,7 @@
     
     <!-- tables -->
     
-    <table schema="zfgc3" tableName="users" domainObjectName="usersDbObj">
+    <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
     	<generatedKey column="users_id" sqlStatement="SELECT LAST_INSERT_ID()"/>
     </table>
     
