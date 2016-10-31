@@ -61,7 +61,7 @@ public class AuthenticationService{
 	
 	public Boolean checkUserPassword(String userName, String password) throws Exception{
 		try {
-			UserHashInfo hashInfo = usersDao.getUSerPasswordAndSaltByName(userName);
+			UserHashInfo hashInfo = usersDao.getUserPasswordAndSaltByName(userName);
 			return checkPassword(password,hashInfo);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());

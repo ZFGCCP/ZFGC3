@@ -57,7 +57,7 @@ public class UsersDao extends AbstractDao {
 		}
 	}
 	
-	public UserHashInfo getUSerPasswordAndSaltByName(String loginName) throws Exception{
+	public UserHashInfo getUserPasswordAndSaltByName(String loginName) throws Exception{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT PASSWORD, PASS_SALT \n")

@@ -38,12 +38,11 @@ public class ForumApplication extends SpringBootServletInitializer {
     public DozerBeanMapper dozerBean() {
       List<String> mappingFiles = Arrays.asList(
         "dozer-global-configuration.xml", 
-        "dozer-bean-mappings.xml",
-        "more-dozer-bean-mappings.xml"
+        "dozer-bean-mappings.xml"
       );
 
       DozerBeanMapper dozerBean = new DozerBeanMapper();
-      dozerBean.setMappingFiles(mappingFiles);
+      //dozerBean.setMappingFiles(mappingFiles);
       return dozerBean;
     }
 }
