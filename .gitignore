@@ -24,3 +24,9 @@ release.properties
 dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
+
+#spring application properties
+src/main/resources/application.properties
+
+.classpath
+.project
