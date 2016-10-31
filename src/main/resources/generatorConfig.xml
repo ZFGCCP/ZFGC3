@@ -1,14 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
+
+  <properties resource="application.properties"/>
+  <classPathEntry location="${mbg.jdbc.driver-location}"/>
   <context id="zfgc3_context">
   
     <!-- This kinda worries me a bit tbh, security issue?! Is there a way we can hide this information?-->
     <!-- TODO: Shove this stuff into a jndi and change db password -->
-    <jdbcConnection connectionURL="jdbc:mysql://zfgc.com:3306/zfgc3_dev" 
-    				driverClass="com.mysql.jdbc.Driver" 
-    				password="ki7t3N5F0R_Lif3Y0" 
-    				userId="zfgc3" />
+    <jdbcConnection connectionURL="${mbg.jdbc.url}"
+    				driverClass="com.mysql.jdbc.Driver"
+    				password="${mbg.jdbc.password}"
+    				userId="${mbg.jdbc.username}"/>
     				
     <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="ZFGC3">
     	<property name="enableSubPackages" value="true" />
