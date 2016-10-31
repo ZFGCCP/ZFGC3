@@ -14,6 +14,7 @@ public abstract class AbstractRequiredFieldsChecker {
 			RequiredField requiredField = new RequiredField();
 			requiredField.setErrorMessage(errorMessage);
 			requiredField.setFieldName(fieldName);
+			errors.add(requiredField);
 		}
 	}
 }

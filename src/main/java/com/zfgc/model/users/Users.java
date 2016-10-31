@@ -1,11 +1,14 @@
 package com.zfgc.model.users;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class Users extends BaseZfgcModel {
 	private String password;
@@ -16,6 +19,7 @@ public class Users extends BaseZfgcModel {
 	private Date dateRegistered;
 	private Boolean isActiveFlag = false;
 	private String emailAddress;
+	private Date birthDate;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -84,5 +88,39 @@ public class Users extends BaseZfgcModel {
 	public void setEmailAddress(String emailAddress) {
 		this.emailAddress = emailAddress;
 	}
+	public Date getBirthDate() {
+		return birthDate;
+	}
+	public void setBirthDate(Date birthDate) {
+		this.birthDate = birthDate;
+	}
 	
+	//Date functions
+	public void setBirthDateAsString(String birthDateAsString){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
+		try {
+			birthDate = sdf.parse(birthDateAsString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			birthDate = null;
+		}
+	}
+	public String getBirthDateAsString(){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
+		return sdf.format(birthDate);
+	}
+	
+	public void setDateRegisteredAsString(String dateRegisteredAsString){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
+		try {
+			dateRegistered = sdf.parse(dateRegisteredAsString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			dateRegistered = null;
+		}
+	}
+	public String getDateRegisteredAsString(){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
+		return sdf.format(dateRegistered);
+	}
 }

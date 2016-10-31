@@ -20,6 +20,7 @@ public class UsersRequiredFieldsChecker extends AbstractRequiredFieldsChecker{
 		checkRequiredField(userModel.getDisplayName(), "displayName", "Display name" + IS_REQUIRED_FIELD, userModel.getErrors().getRequiredFieldsErrors());
 		checkRequiredField(userModel.getPassword(), "password", "Password" + IS_REQUIRED_FIELD, userModel.getErrors().getRequiredFieldsErrors());
 		checkRequiredField(userModel.getEmailAddress(), "emailAddress", "Email Address" + IS_REQUIRED_FIELD, userModel.getErrors().getRequiredFieldsErrors());
+		checkRequiredField(userModel.getBirthDate(), "birthDate", "Birth Date" + IS_REQUIRED_FIELD, userModel.getErrors().getRequiredFieldsErrors());
 	}
 	
 }

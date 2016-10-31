@@ -25,7 +25,7 @@ class UsersController{
 	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
-		usersService.createNewUser(user, request);
+		user = usersService.createNewUser(user, request);
 		
 		if(user == null){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
