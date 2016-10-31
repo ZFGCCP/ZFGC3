@@ -1,6 +1,8 @@
 package com.zfgc.model.users;
 
-public class UserHashInfo{
+import com.zfgc.model.BaseZfgcModel;
+
+public class UserHashInfo extends BaseZfgcModel{
 	private String password;
 	private String passSalt;
 	public String getPassword() {

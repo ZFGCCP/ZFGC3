@@ -25,6 +25,10 @@
     
     <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
     	<generatedKey column="users_id" sqlStatement="SELECT LAST_INSERT_ID()"/>
+    	<columnOverride column="HIDE_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="PM_EMAIL_NOTIF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
     <!-- views -->

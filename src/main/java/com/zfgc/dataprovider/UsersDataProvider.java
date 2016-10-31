@@ -24,8 +24,9 @@ public class UsersDataProvider {
 		
 		try {
 			UsersDbObj usersDbObj = usersDao.createUser(user);
+			user.setUsersId(usersDbObj.getUsersId());
 			
-			return mapper.map(usersDbObj, Users.class);
+			return user;
 		} catch (Exception ex) {
 			throw new Exception(ex);
 		}
