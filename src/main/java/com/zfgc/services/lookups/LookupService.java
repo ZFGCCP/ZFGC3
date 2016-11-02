@@ -24,6 +24,7 @@ public class LookupService{
 	
 	public static final String TIMEZONE = "TIMEZONE";
 	public static final String MEMBER_GROUP = "MEMBER_GROUP";
+	public static final String LANGUAGE = "LANGUAGE";
 	
 	@PostConstruct
 	public void loadLookups(){
@@ -32,6 +33,7 @@ public class LookupService{
 			LOGGER.info("Loading lookups...");
 			lookups.put(TIMEZONE, lookupDao.getLookup(TIMEZONE));
 			lookups.put(MEMBER_GROUP, lookupDao.getLookup(MEMBER_GROUP));
+			lookups.put(LANGUAGE, lookupDao.getLookup(LANGUAGE));
 			LOGGER.info("Finished loading lookups.");
 		} catch (Exception e) {
 			LOGGER.error("Failed to load lookups due to exception.");
