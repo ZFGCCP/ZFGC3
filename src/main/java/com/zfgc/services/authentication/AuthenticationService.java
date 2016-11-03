@@ -6,6 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zfgc.dao.UsersDao;
+import com.zfgc.dataprovider.AuthenticationDataProvider;
+import com.zfgc.model.users.EmailAddress;
+import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.UserHashInfo;
 
 import java.security.MessageDigest;
@@ -22,6 +25,9 @@ public class AuthenticationService{
 	
 	@Autowired
 	private UsersDao usersDao;
+	
+	@Autowired
+	private AuthenticationDataProvider authenticationDataProvider;
 	
 	//returns null if the hash fails
 	public String createPasswordHash(String password, String salt){
@@ -71,5 +77,17 @@ public class AuthenticationService{
 	private Boolean checkPassword(String password, UserHashInfo userHashInfo){
 		String hashCompare = createPasswordHash(password, userHashInfo.getPassSalt());
 		return hashCompare != null && hashCompare.equals(userHashInfo.getPassword());
+	}
+	
+	public Boolean checkIpIsSpammer(IpAddress ipAddress) throws Exception{
+		return authenticationDataProvider.getIpSpamInfo(ipAddress).getIsSpammerFlag();
+	}
+	
+	public Boolean checkEmailIsSpammer(EmailAddress emailAddress) throws Exception{
+		return authenticationDataProvider.getEmailSpamInfo(emailAddress).getIsSpammerFlag();
+	}
+	
+	public Boolean doesEmailExist(EmailAddress emailAddress) throws Exception{
+		return authenticationDataProvider.doesEmailExist(emailAddress);
 	}
 }

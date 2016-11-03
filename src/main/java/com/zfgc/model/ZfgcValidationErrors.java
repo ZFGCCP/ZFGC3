@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.zfgc.requiredfields.RequiredField;
+import com.zfgc.rules.Rule;
 
 public class ZfgcValidationErrors{
 	private List<RequiredField> requiredFieldsErrors = new ArrayList<>();
 	private List<RequiredField> validationErrors = new ArrayList<>();
-	private List<RequiredField> ruleErrors = new ArrayList<>();
+	private List<Rule> ruleErrors = new ArrayList<>();
 
 	public List<RequiredField> getValidationErrors() {
 		return validationErrors;
@@ -18,11 +19,11 @@ public class ZfgcValidationErrors{
 		this.validationErrors = validationErrors;
 	}
 
-	public List<RequiredField> getRuleErrors() {
+	public List<Rule> getRuleErrors() {
 		return ruleErrors;
 	}
 
-	public void setRuleError(List<RequiredField> ruleErrors) {
+	public void setRuleError(List<Rule> ruleErrors) {
 		this.ruleErrors = ruleErrors;
 	}
 
