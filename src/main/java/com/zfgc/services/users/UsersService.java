@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
+import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.authentication.AuthenticationService;
 
 @Service
@@ -24,8 +25,18 @@ public class UsersService {
 	@Autowired 
 	UsersRequiredFieldsChecker requiredFieldsChecker;
 	
+	@Autowired
+	UsersRuleChecker ruleChecker;
+	
 	public Users createNewUser(Users user, HttpServletRequest requestHeader){
-		requiredFieldsChecker.requiredFieldsCheck(user);
+		
+		try {
+			requiredFieldsChecker.requiredFieldsCheck(user);
+			ruleChecker.rulesCheck(user);
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			return null;
+		}
 		
 		if(!user.getErrors().hasErrors()){
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
@@ -35,10 +46,11 @@ public class UsersService {
 			user.setIsActiveFlag(false);
 			
 			user.getPrimaryIpAddress().setIpAddress(requestHeader.getRemoteAddr());
-			user.getPrimaryIpAddress().setVersion(requestHeader.getRemoteAddr().length() > 15 ? 6 : 4);
+			user.getPrimaryIpAddress().setVersion(requestHeader.getRemoteAddr().contains(":")  ? 6 : 4);
 			
-			setUserIsSpammer(user);
+			
 			try {
+				setUserIsSpammer(user);
 				user = usersDataProvider.createUser(user);
 			} catch (Exception ex) {
 				ex.printStackTrace();
@@ -58,8 +70,8 @@ public class UsersService {
 		}
 	}
 	
-	public void setUserIsSpammer(Users user){
-		//todo: figure out how to actually query a spammer db
-		user.getPrimaryIpAddress().setIsSpammer(false);
+	public void setUserIsSpammer(Users user) throws Exception{
+		user.getPrimaryIpAddress().setIsSpammerFlag(authenticationService.checkIpIsSpammer(user.getPrimaryIpAddress()));
+		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
 	}
 }

@@ -3,7 +3,7 @@ package com.zfgc.model.users;
 public class IpAddress{
 	private String ipAddress;
 	private Integer version;
-	private Boolean isSpammer = true; //just assume everyone is a spammer by default, we'll have a proper check for this during registration
+	private Boolean isSpammerFlag = true; //just assume everyone is a spammer by default, we'll have a proper check for this during registration
 	public String getIpAddress() {
 		return ipAddress;
 	}
@@ -16,11 +16,11 @@ public class IpAddress{
 	public void setVersion(Integer version) {
 		this.version = version;
 	}
-	public Boolean getIsSpammer() {
-		return isSpammer;
+	public Boolean getIsSpammerFlag() {
+		return isSpammerFlag;
 	}
-	public void setIsSpammer(Boolean isSpammer) {
-		this.isSpammer = isSpammer;
+	public void setIsSpammerFlag(Boolean isSpammerFlag) {
+		this.isSpammerFlag = isSpammerFlag;
 	}
 	
 	

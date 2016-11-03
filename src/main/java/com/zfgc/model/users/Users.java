@@ -18,11 +18,12 @@ public class Users extends BaseZfgcModel {
 	private String loginName;
 	private Date dateRegistered;
 	private Boolean isActiveFlag = false;
-	private String emailAddress;
 	private Date birthDate;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
+	
+	private EmailAddress emailAddress;
 	
 	
 	@JsonIgnore
@@ -82,10 +83,10 @@ public class Users extends BaseZfgcModel {
 	public void setSecondaryIpAddresses(List<IpAddress> secondaryIpAddresses) {
 		this.secondaryIpAddresses = secondaryIpAddresses;
 	}
-	public String getEmailAddress() {
+	public EmailAddress getEmailAddress() {
 		return emailAddress;
 	}
-	public void setEmailAddress(String emailAddress) {
+	public void setEmailAddress(EmailAddress emailAddress) {
 		this.emailAddress = emailAddress;
 	}
 	public Date getBirthDate() {

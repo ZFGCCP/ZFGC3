@@ -16,16 +16,14 @@ import com.zfgc.model.users.Users;
 public class UsersDao extends AbstractDao {
 	@Autowired 
 	UsersDbObjMapper usersDbObjMapper;
-	
-	@Autowired
-	DozerBeanMapper mapper;
-	
+
 	Logger LOGGER = Logger.getLogger(UsersDao.class);
 	
 	public UsersDbObj createUser(Users user) throws Exception{
 		UsersDbObj usersDbObj = mapper.map(user, UsersDbObj.class);
 		usersDbObj.setPassword(user.getUserHashInfo().getPassword());
 		usersDbObj.setPassSalt(user.getUserHashInfo().getPassSalt());
+		usersDbObj.setPrimaryIp(user.getPrimaryIpAddress().getIpAddress());
 		try{
 			usersDbObjMapper.insertSelective(usersDbObj);
 		}
