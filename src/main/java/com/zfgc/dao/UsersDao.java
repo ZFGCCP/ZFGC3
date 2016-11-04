@@ -1,5 +1,7 @@
 package com.zfgc.dao;
 
+import java.util.List;
+
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +10,7 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dbobj.UsersDbObj;
+import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.mappers.UsersDbObjMapper;
 import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
@@ -24,6 +27,7 @@ public class UsersDao extends AbstractDao {
 		usersDbObj.setPassword(user.getUserHashInfo().getPassword());
 		usersDbObj.setPassSalt(user.getUserHashInfo().getPassSalt());
 		usersDbObj.setPrimaryIp(user.getPrimaryIpAddress().getIpAddress());
+		usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
 		try{
 			usersDbObjMapper.insertSelective(usersDbObj);
 		}
@@ -91,6 +95,70 @@ public class UsersDao extends AbstractDao {
 		}
 		catch(Exception ex){
 			LOGGER.error("Error getting password for user " + displayName);
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public Users getUserByLoginName(String loginName) throws Exception{
+		UsersDbObjExample usersDbObjExample = new UsersDbObjExample();
+		usersDbObjExample.createCriteria().andLoginNameEqualTo(loginName);
+		
+		try{
+			List<UsersDbObj> usersDbObj = usersDbObjMapper.selectByExample(usersDbObjExample);
+			
+			if(usersDbObj != null && usersDbObj.size() > 0){
+				return mapper.map(usersDbObj.get(0), Users.class);
+			}
+		}
+		catch(Exception ex){
+			LOGGER.error("Error finding login name " + loginName);
+			throw new Exception(ex.getMessage());
+		}
+
+		return null;
+	}
+	
+	public Users getUserByDisplayName(String displayName) throws Exception{
+		UsersDbObjExample usersDbObjExample = new UsersDbObjExample();
+		usersDbObjExample.createCriteria().andDisplayNameEqualTo(displayName);
+		
+		try{
+			List<UsersDbObj> usersDbObj = usersDbObjMapper.selectByExample(usersDbObjExample);
+			
+			if(usersDbObj != null && usersDbObj.size() > 0){
+				return mapper.map(usersDbObj.get(0), Users.class);
+			}
+		}
+		catch(Exception ex){
+			LOGGER.error("Error finding display name " + displayName);
+			throw new Exception(ex.getMessage());
+		}
+		
+		return null;
+	}
+	
+	public Boolean doesLoginNameExist(String loginName) throws Exception{
+		UsersDbObjExample usersDbObjExample = new UsersDbObjExample();
+		usersDbObjExample.createCriteria().andLoginNameEqualTo(loginName);
+		
+		try{
+			return usersDbObjMapper.countByExample(usersDbObjExample) > 0;
+		}
+		catch(Exception ex){
+			LOGGER.error("Error finding login name " + loginName);
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public Boolean doesDisplayNameExist(String displayName) throws Exception{
+		UsersDbObjExample usersDbObjExample = new UsersDbObjExample();
+		usersDbObjExample.createCriteria().andDisplayNameEqualTo(displayName);
+		
+		try{
+			return usersDbObjMapper.countByExample(usersDbObjExample) > 0;
+		}
+		catch(Exception ex){
+			LOGGER.error("Error finding display name " + displayName);
 			throw new Exception(ex.getMessage());
 		}
 	}
