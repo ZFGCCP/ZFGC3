@@ -63,7 +63,7 @@ public class AuthenticationDataProvider{
 		emailSpamInfo.setEmailAddress(emailAddress.getEmailAddress());
 		
 		try{
-			emailSpamInfo.setIsSpammerFlag(getSpamInfoFromUrl("http://api.stopforumspam.org/api?=" + emailAddress.getEmailAddress()));
+			emailSpamInfo.setIsSpammerFlag(getSpamInfoFromUrl("http://api.stopforumspam.org/api?email=" + emailAddress.getEmailAddress()));
 		}
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());

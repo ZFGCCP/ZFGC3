@@ -63,4 +63,12 @@ public class UsersDataProvider {
 			throw new Exception("Email Address " + emailAddress.getEmailAddress() + " already exists.");
 		}
 	}
+	
+	public Boolean doesLoginNameExist(String loginName) throws Exception{
+		return usersDao.doesLoginNameExist(loginName);
+	}
+	
+	public Boolean doesDisplayNameExist(String displayName) throws Exception{
+		return usersDao.doesDisplayNameExist(displayName);
+	}
 }

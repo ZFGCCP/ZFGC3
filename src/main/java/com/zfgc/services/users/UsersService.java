@@ -74,4 +74,12 @@ public class UsersService {
 		user.getPrimaryIpAddress().setIsSpammerFlag(authenticationService.checkIpIsSpammer(user.getPrimaryIpAddress()));
 		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
 	}
+	
+	public Boolean doesLoginNameExist(String loginName) throws Exception {
+		return usersDataProvider.doesLoginNameExist(loginName);
+	}
+	
+	public Boolean doesDisplayNameExist(String loginName) throws Exception {
+		return usersDataProvider.doesDisplayNameExist(loginName);
+	}
 }
