@@ -13,6 +13,7 @@ import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
 import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.validation.uservalidation.UserValidator;
 
 @Service
 public class UsersService {
@@ -26,12 +27,16 @@ public class UsersService {
 	UsersRequiredFieldsChecker requiredFieldsChecker;
 	
 	@Autowired
+	UserValidator validator;
+	
+	@Autowired
 	UsersRuleChecker ruleChecker;
 	
 	public Users createNewUser(Users user, HttpServletRequest requestHeader){
 		
 		try {
 			requiredFieldsChecker.requiredFieldsCheck(user);
+			validator.validator(user);
 			ruleChecker.rulesCheck(user);
 		} catch (Exception ex) {
 			ex.printStackTrace();
