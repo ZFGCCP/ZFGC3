@@ -8,14 +8,14 @@ import com.zfgc.rules.Rule;
 
 public class ZfgcValidationErrors{
 	private List<RequiredField> requiredFieldsErrors = new ArrayList<>();
-	private List<RequiredField> validationErrors = new ArrayList<>();
+	private List<Rule> validationErrors = new ArrayList<>();
 	private List<Rule> ruleErrors = new ArrayList<>();
 
-	public List<RequiredField> getValidationErrors() {
+	public List<Rule> getValidationErrors() {
 		return validationErrors;
 	}
 
-	public void setValidationErrors(List<RequiredField> validationErrors) {
+	public void setValidationErrors(List<Rule> validationErrors) {
 		this.validationErrors = validationErrors;
 	}
 
