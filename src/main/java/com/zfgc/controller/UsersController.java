@@ -35,4 +35,10 @@ class UsersController{
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity authenticateUser(@RequestBody Users user, HttpServletRequest request){
+		
+	}
 }

@@ -80,6 +80,15 @@ public class UsersService {
 		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
 	}
 	
+	public void authenticateUser(Users user) throws Exception{
+		if (authenticationService.checkUserPassword(user.getLoginName(), user.getPassword())){
+			
+		}
+		else{
+			
+		}
+	}
+	
 	public Boolean doesLoginNameExist(String loginName) throws Exception {
 		return usersDataProvider.doesLoginNameExist(loginName);
 	}
