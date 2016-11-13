@@ -1,21 +1,21 @@
-package com.zfgc.services.logging;
+package com.zfgc.dataprovider;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zfgc.dataprovider.LoggingDataProvider;
+import com.zfgc.dao.LoggingDao;
 
 @Component
-public class LoggingService {
+public class LoggingDataProvider{
 	@Autowired
-	LoggingDataProvider loggingDataProvider;
+	LoggingDao loggingDao;
 	
 	public void logAction(Integer logType, String description, Integer usersId, String ipAddress) throws Exception{
 		try{
-			loggingDataProvider.logAction(logType, description, usersId, ipAddress);
+			loggingDao.logAction(logType, description, usersId, ipAddress);
 		}
 		catch(Exception ex){
-			ex.printStackTrace();
+			throw new Exception(ex.getMessage());
 		}
 	}
 }

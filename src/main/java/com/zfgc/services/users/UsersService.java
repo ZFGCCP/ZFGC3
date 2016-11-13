@@ -12,11 +12,12 @@ import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
 import com.zfgc.rules.users.UsersRuleChecker;
+import com.zfgc.services.AbstractService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.validation.uservalidation.UserValidator;
 
 @Service
-public class UsersService {
+public class UsersService extends AbstractService {
 	@Autowired 
 	AuthenticationService authenticationService;
 	
@@ -68,7 +69,10 @@ public class UsersService {
 	
 	public Boolean checkUserPassword(String password, String userName){
 		try{
-			return authenticationService.checkUserPassword(userName, password);
+			Users user = new Users();
+			user.setPassword(password);
+			user.setLoginName(userName);
+			return authenticationService.checkUserPassword(user);
 		}
 		catch(Exception ex){
 			return false;
@@ -80,12 +84,14 @@ public class UsersService {
 		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
 	}
 	
-	public void authenticateUser(Users user) throws Exception{
-		if (authenticationService.checkUserPassword(user.getLoginName(), user.getPassword())){
-			
+	public Users authenticateUser(Users user, String sourceIp) throws Exception{
+		if (authenticationService.checkUserPassword(user)){
+			Users authenticatedUser = usersDataProvider.getUserByLoginName(user.getLoginName());
+			return authenticatedUser;
 		}
 		else{
-			
+			loggingService.logAction(3, "Login failed for user " + user.getLoginName(), null, sourceIp);
+			return null;
 		}
 	}
 	

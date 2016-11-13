@@ -71,4 +71,13 @@ public class UsersDataProvider {
 	public Boolean doesDisplayNameExist(String displayName) throws Exception{
 		return usersDao.doesDisplayNameExist(displayName);
 	}
+	
+	public Users getUserByLoginName(String loginName) throws Exception{
+		try{
+			return usersDao.getUserByDisplayName(loginName);
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
+	}
 }

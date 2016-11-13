@@ -1,6 +1,8 @@
 package com.zfgc.util.time;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -19,5 +21,17 @@ public class ZfgcTimeUtils extends DateUtils {
 		sdf.setTimeZone(TimeZone.getTimeZone(timezone));
 		
 		return sdf;
+	}
+	
+	public static Calendar getCalendar(){
+		Calendar cal = Calendar.getInstance();
+		cal.setTimeZone(TimeZone.getTimeZone("GMT"));
+		
+		return cal;
+	}
+	
+	public static Date getToday(){
+		Calendar cal = getCalendar();
+		return cal.getTime();
 	}
 }
