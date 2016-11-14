@@ -1,17 +1,23 @@
 package com.zfgc.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dbobj.BrUsersIpAddressDbObjKey;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
+import com.zfgc.mappers.BrUsersIpAddressDbObjMapper;
 import com.zfgc.mappers.UsersDbObjMapper;
+import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
 
@@ -20,6 +26,9 @@ public class UsersDao extends AbstractDao {
 	@Autowired 
 	UsersDbObjMapper usersDbObjMapper;
 
+	@Autowired
+	BrUsersIpAddressDbObjMapper brUsersIpAddressDbObjMapper;
+	
 	Logger LOGGER = Logger.getLogger(UsersDao.class);
 	
 	public UsersDbObj createUser(Users user) throws Exception{
@@ -162,4 +171,122 @@ public class UsersDao extends AbstractDao {
 			throw new Exception(ex.getMessage());
 		}
 	}
+	
+	public Integer incrementLoginFails(String loginName) throws Exception{
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("UPDATE USERS \n")
+		   .append("SET LOGIN_FAILED_ATTEMPTS = \n")
+		   .append("(SELECT LOGIN_FAILED_ATTEMPTS + 1 FROM USERS WHERE LOGIN_NAME = :loginName) \n")
+		   .append("WHERE LOGIN_NAME = :loginName");
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("loginName",loginName);
+		
+		try{
+			jdbcTemplate.update(sql.toString(), params);
+		
+			sql = new StringBuilder();
+			sql.append("SELECT LOGIN_FAILED_ATTEMPS FROM USERS WHERE LOGIN_NAME = :loginName");
+		
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			logDbGeneralError(LOGGER, "USERS");
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public void lockAccount(String loginName, Date lockTime) throws Exception{
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("UPDATE USERS \n")
+		   .append("SET LOCKED_UNTIL = :lockTime \n")
+		   .append("WHERE LOGIN_NAME = :loginName");
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("loginName",loginName);
+		params.addValue("lockTime", lockTime);
+		
+		try{
+			jdbcTemplate.update(sql.toString(), params);
+		}
+		catch(Exception ex){
+			logDbUpdateError(LOGGER,"USERS");
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public void unlockAccount(String loginName) throws Exception{
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("UPDATE USERS \n")
+		   .append("SET LOCKED_UNTIL = null, LOGIN_FAILED_ATTEMPS = 0 \n")
+		   .append("WHERE LOGIN_NAME = :loginName");
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("loginName",loginName);
+		
+		try{
+			jdbcTemplate.update(sql.toString(), params);
+		}
+		catch(Exception ex){
+			logDbUpdateError(LOGGER,"USERS");
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	public Date getAccountLockTime(String loginName) throws Exception{
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT LOCKED_UNTIL \n")
+		   .append("FROM USERS \n")
+		   .append("WHERE LOGIN_NAME = :loginName");
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("loginName",loginName);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Date.class);
+		}
+		catch(Exception ex){
+			logDbGeneralError(LOGGER,"USERS");
+			throw new Exception(ex.getMessage());
+		}
+	}
+
+	@Transactional
+	public void linkUserToIp(Users user, IpAddress ipAddress, Boolean setPrimary) throws Exception{
+		if(setPrimary){
+			UsersDbObj tempUser = new UsersDbObj();
+			tempUser.setUsersId(user.getUsersId());
+			tempUser.setPrimaryIp(ipAddress.getIpAddress());
+			
+			try{
+				usersDbObjMapper.updateByPrimaryKeySelective(tempUser);
+			}
+			catch(Exception ex){
+				super.logDbUpdateError(LOGGER, "USERS");
+				throw new Exception(ex.getMessage());
+			}
+		}
+		
+		BrUsersIpAddressDbObjKey brUsersIpAddress = new BrUsersIpAddressDbObjKey();
+		brUsersIpAddress.setIpAddress(ipAddress.getIpAddress());
+		brUsersIpAddress.setUsersId(user.getUsersId());
+		
+		try{
+			brUsersIpAddressDbObjMapper.insert(brUsersIpAddress);
+		}
+		catch(DuplicateKeyException ex){
+			super.logDbDuplicateKeyError(LOGGER, "BR_USERS_IP_ADDRESS", brUsersIpAddress.getUsersId() + ", " + brUsersIpAddress.getIpAddress());
+		}
+		catch(Exception ex){
+			super.logDbInsertError(LOGGER, "BR_USERS_IP_ADDRESS");
+			throw new Exception(ex.getMessage());
+		}
+
+	}
+	
+	
 }

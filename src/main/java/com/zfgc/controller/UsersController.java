@@ -45,7 +45,7 @@ class UsersController{
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
 		
-		if(user == null){
+		if(user.getErrors().hasErrors()){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(user.getErrors());
 		}
 

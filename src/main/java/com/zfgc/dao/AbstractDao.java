@@ -15,4 +15,16 @@ public abstract class AbstractDao{
 	protected void logDbInsertError(Logger LOGGER, String tableName){
 		LOGGER.error("Error inserting into " + tableName);
 	}
+	
+	protected void logDbUpdateError(Logger LOGGER, String tableName){
+		LOGGER.error("Error updating database table " + tableName);
+	}
+	
+	protected void logDbGeneralError(Logger LOGGER, String tableName){
+		LOGGER.error("Error querying database table " + tableName);
+	}
+	
+	protected void logDbDuplicateKeyError(Logger LOGGER, String tableName, String pkValue){
+		LOGGER.error("Error inserting into " + tableName + ". Primary Key value '" + pkValue + "' already exists.");
+	}
 }
