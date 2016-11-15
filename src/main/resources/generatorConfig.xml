@@ -41,9 +41,13 @@
     
     <table schema="zfgc3" tableName="ACTIVITY_LOG" domainObjectName="ActivityLogDbObj">
     	<generatedKey column="ACTIVITY_LOG_ID" sqlStatement="SELECT MAX(ACTIVITY_LOG_ID) + 1 FROM ACTIVITY_LOG"/>
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="BR_USERS_IP_ADDRESS" domainObjectName="BrUsersIpAddressDbObj">
+    </table>-->
+    
+    <table schema="zfgc3" tableName="AUTH_TOKEN" domainObjectName="AuthTokenDbObj">
+    	<generatedKey column="users_id" sqlStatement="SELECT MAX(AUTH_TOKEN_ID) + 1 FROM AUTH_TOKEN"/>
     </table>
     
     <!-- views -->

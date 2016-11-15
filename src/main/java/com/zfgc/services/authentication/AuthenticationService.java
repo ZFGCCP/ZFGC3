@@ -1,21 +1,27 @@
 package com.zfgc.services.authentication;
 
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.codec.Hex;
 import org.springframework.stereotype.Service;
 
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dataprovider.AuthenticationDataProvider;
+import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
+import com.zfgc.util.time.ZfgcTimeUtils;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.util.Date;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -63,8 +69,50 @@ public class AuthenticationService  extends AbstractService {
 		Random cryptoRand = new SecureRandom();
 		byte[] salt = new byte[SALT_LENGTH];
 		cryptoRand.nextBytes(salt);
-		
 		return Base64.encodeBase64String(salt);
+	}
+	
+	public String generateAuthenticationToken(Users user, Integer ttl) throws Exception{
+		Random cryptoRand = new SecureRandom();
+		byte[] token = new byte[16];
+		cryptoRand.nextBytes(token);
+		
+		AuthToken authToken = new AuthToken();
+		authToken.setCreateTimestamp(ZfgcTimeUtils.getToday());
+		authToken.setTtl(DateUtils.addSeconds(authToken.getCreateTimestamp(), ttl));
+		authToken.setUsersId(user.getUsersId());
+		authToken.setToken(new String(Hex.encode(token)));
+		
+		try{
+			authenticationDataProvider.createAuthToken(authToken);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			throw new Exception(ex.getMessage());
+		}
+		
+		return authToken.getToken();
+	}
+	
+	public Boolean isTokenValid(Users user, String token) throws Exception{
+		List<AuthToken> tokens = null;
+		try{
+			tokens = authenticationDataProvider.getAuthTokensForUser(user);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			throw new Exception(ex.getMessage());
+		}
+		
+		Date now = ZfgcTimeUtils.getToday();
+		
+		for(AuthToken authToken : tokens){
+			if(now.before(authToken.getTtl()) && authToken.getToken().equals(token)){
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	public Boolean checkUserPassword(Users user) throws Exception{

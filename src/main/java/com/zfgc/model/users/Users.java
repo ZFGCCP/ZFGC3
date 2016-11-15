@@ -12,6 +12,7 @@ import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class Users extends BaseZfgcModel {
 	private String password;
+	private Integer ttlLogin;
 	
 	private Integer usersId;
 	private String displayName;
@@ -26,6 +27,7 @@ public class Users extends BaseZfgcModel {
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
 	
 	private EmailAddress emailAddress;
+	private String authToken;
 	
 	
 	@JsonIgnore
@@ -151,5 +153,17 @@ public class Users extends BaseZfgcModel {
 			e.printStackTrace();
 			dateRegistered = null;
 		}
+	}
+	public String getAuthToken() {
+		return authToken;
+	}
+	public void setAuthToken(String authToken) {
+		this.authToken = authToken;
+	}
+	public Integer getTtlLogin() {
+		return ttlLogin;
+	}
+	public void setTtlLogin(Integer ttlLogin) {
+		this.ttlLogin = ttlLogin;
 	}
 }

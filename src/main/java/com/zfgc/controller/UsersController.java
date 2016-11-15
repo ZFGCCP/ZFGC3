@@ -46,7 +46,7 @@ class UsersController{
 		}
 		
 		if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(user.getErrors());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user.getErrors());
 		}
 
 		return ResponseEntity.status(HttpStatus.OK).body(user);

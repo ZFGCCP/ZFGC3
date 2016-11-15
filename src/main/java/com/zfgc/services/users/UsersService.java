@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zfgc.dataprovider.UsersDataProvider;
+import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
@@ -103,6 +104,8 @@ public class UsersService extends AbstractService {
 			Users authenticatedUser = usersDataProvider.getUserByLoginName(user.getLoginName());
 			loggingService.logAction(7, "Login success for user " + user.getLoginName(), authenticatedUser.getUsersId(), sourceIp);
 			setPrimaryIp(user,sourceIp);
+			String token = authenticationService.generateAuthenticationToken(user, user.getTtlLogin());
+			authenticatedUser.setAuthToken(token);
 			return authenticatedUser;
 		}
 		else{
