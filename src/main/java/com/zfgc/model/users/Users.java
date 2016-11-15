@@ -19,6 +19,8 @@ public class Users extends BaseZfgcModel {
 	private Date dateRegistered;
 	private Boolean isActiveFlag = false;
 	private Date birthDate;
+	private Date lockedUntil;
+	private Date loginFailedAttempts;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -123,5 +125,31 @@ public class Users extends BaseZfgcModel {
 	public String getDateRegisteredAsString(){
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
 		return sdf.format(dateRegistered);
+	}
+	public Date getLoginFailedAttempts() {
+		return loginFailedAttempts;
+	}
+	public void setLoginFailedAttempts(Date loginFailedAttempts) {
+		this.loginFailedAttempts = loginFailedAttempts;
+	}
+	public Date getLockedUntil() {
+		return lockedUntil;
+	}
+	public void setLockedUntil(Date lockedUntil) {
+		this.lockedUntil = lockedUntil;
+	}
+	public String getLockedUntilAsString(){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
+		return sdf.format(lockedUntil);
+	}
+	
+	public void setLockedUntilAsString(String lockedUntilAsString){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
+		try {
+			lockedUntil = sdf.parse(lockedUntilAsString);
+		} catch (ParseException e) {
+			e.printStackTrace();
+			dateRegistered = null;
+		}
 	}
 }

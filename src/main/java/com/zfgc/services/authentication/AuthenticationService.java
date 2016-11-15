@@ -10,6 +10,8 @@ import com.zfgc.dataprovider.AuthenticationDataProvider;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.UserHashInfo;
+import com.zfgc.model.users.Users;
+import com.zfgc.services.AbstractService;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -17,7 +19,7 @@ import java.security.SecureRandom;
 import java.util.Random;
 
 @Service
-public class AuthenticationService{
+public class AuthenticationService  extends AbstractService {
 	
 	private final String HASH_ALGORITHM = "SHA-256";
 	private final int SALT_LENGTH = 128;
@@ -65,10 +67,11 @@ public class AuthenticationService{
 		return Base64.encodeBase64String(salt);
 	}
 	
-	public Boolean checkUserPassword(String userName, String password) throws Exception{
+	public Boolean checkUserPassword(Users user) throws Exception{
 		try {
-			UserHashInfo hashInfo = usersDao.getUserPasswordAndSaltByName(userName);
-			return checkPassword(password,hashInfo);
+			UserHashInfo hashInfo = usersDao.getUserPasswordAndSaltByName(user.getLoginName());
+			
+			return checkPassword(user.getPassword(),hashInfo);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
@@ -76,7 +79,9 @@ public class AuthenticationService{
 	
 	private Boolean checkPassword(String password, UserHashInfo userHashInfo){
 		String hashCompare = createPasswordHash(password, userHashInfo.getPassSalt());
-		return hashCompare != null && hashCompare.equals(userHashInfo.getPassword());
+		Boolean result =  hashCompare != null && hashCompare.equals(userHashInfo.getPassword());
+		
+		return result;
 	}
 	
 	public Boolean checkIpIsSpammer(IpAddress ipAddress) throws Exception{

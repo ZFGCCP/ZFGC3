@@ -35,4 +35,20 @@ class UsersController{
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
+	
+	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity authenticateUser(@RequestBody Users user, HttpServletRequest request){
+		try {
+			user = usersService.authenticateUser(user, request.getRemoteAddr());
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+		}
+		
+		if(user.getErrors().hasErrors()){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(user.getErrors());
+		}
+
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+	}
 }

@@ -47,7 +47,4 @@ public class UsersRuleChecker extends AbstractRulesChecker<Users>{
 		}
 		
 	}
-	
-	
-
 }

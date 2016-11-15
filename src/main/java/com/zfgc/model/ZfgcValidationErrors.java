@@ -11,6 +11,9 @@ public class ZfgcValidationErrors{
 	private List<Rule> validationErrors = new ArrayList<>();
 	private List<Rule> ruleErrors = new ArrayList<>();
 
+	private List<String> generalErrors = new ArrayList<>();
+	private List<String> generalWarnings = new ArrayList<>();
+	
 	public List<Rule> getValidationErrors() {
 		return validationErrors;
 	}
@@ -36,6 +39,22 @@ public class ZfgcValidationErrors{
 	}
 	
 	public Boolean hasErrors(){
-		return requiredFieldsErrors.size() > 0 || validationErrors.size() > 0 || ruleErrors.size() > 0;
+		return requiredFieldsErrors.size() > 0 || validationErrors.size() > 0 || ruleErrors.size() > 0 || generalErrors.size() > 0;
+	}
+
+	public List<String> getGeneralWarnings() {
+		return generalWarnings;
+	}
+
+	public void setGeneralWarnings(List<String> generalWarnings) {
+		this.generalWarnings = generalWarnings;
+	}
+
+	public List<String> getGeneralErrors() {
+		return generalErrors;
+	}
+
+	public void setGeneralErrors(List<String> generalErrors) {
+		this.generalErrors = generalErrors;
 	}
 }
