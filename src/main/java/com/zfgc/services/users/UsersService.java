@@ -54,12 +54,10 @@ public class UsersService extends AbstractService {
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
 			user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
 			
-			user.setDateRegistered(new Date());
+			user.setDateRegistered(ZfgcTimeUtils.getToday());
 			user.setIsActiveFlag(false);
 			
-			user.getPrimaryIpAddress().setIpAddress(requestHeader.getRemoteAddr());
-			user.getPrimaryIpAddress().setVersion(requestHeader.getRemoteAddr().contains(":")  ? 6 : 4);
-			
+			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
 			
 			try {
 				setUserIsSpammer(user);

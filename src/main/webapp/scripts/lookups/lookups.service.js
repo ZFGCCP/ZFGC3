@@ -12,8 +12,7 @@
 			},
 			getLkupList : {
 				url : '/forum/lookups/list',
-				method: 'POST',
-				isArray: true
+				method: 'POST'
 			}
 		});
 		
