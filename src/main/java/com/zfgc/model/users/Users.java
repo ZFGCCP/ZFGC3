@@ -22,6 +22,9 @@ public class Users extends BaseZfgcModel {
 	private Date birthDate;
 	private Date lockedUntil;
 	private Date loginFailedAttempts;
+	private Integer timeOffset;
+	private String location;
+	private Boolean agreeToTermsFlag;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -29,6 +32,8 @@ public class Users extends BaseZfgcModel {
 	private EmailAddress emailAddress;
 	private String authToken;
 	
+	@JsonIgnore
+	private String timeOffsetLkup;
 	
 	@JsonIgnore
 	private UserHashInfo userHashInfo = new UserHashInfo();
@@ -165,5 +170,31 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setTtlLogin(Integer ttlLogin) {
 		this.ttlLogin = ttlLogin;
+	}
+	public Integer getTimeOffset() {
+		return timeOffset;
+	}
+	public void setTimeOffset(Integer timeOffset) {
+		this.timeOffset = timeOffset;
+	}
+	public Long getAge(){
+		long age = 0;
+		Date today = ZfgcTimeUtils.getToday(timeOffsetLkup);
+		
+		age = ZfgcTimeUtils.getYearsBetween(birthDate, today);
+
+		return age;
+	}
+	public String getLocation() {
+		return location;
+	}
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	public Boolean getAgreeToTermsFlag() {
+		return agreeToTermsFlag;
+	}
+	public void setAgreeToTermsFlag(Boolean agreeToTermsFlag) {
+		this.agreeToTermsFlag = agreeToTermsFlag;
 	}
 }

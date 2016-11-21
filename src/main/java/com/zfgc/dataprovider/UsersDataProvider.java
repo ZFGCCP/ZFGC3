@@ -31,6 +31,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 	private AuthenticationDataProvider authenticationDataProvider;
 	
 	Logger LOGGER = Logger.getLogger(UsersDataProvider.class);
+	
+	@Transactional
 	public Users createUser(Users user) throws Exception{
 		
 		try {

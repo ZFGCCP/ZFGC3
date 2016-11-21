@@ -42,9 +42,27 @@ public class UsersRuleChecker extends AbstractRulesChecker<Users>{
 				loginNameDuplicate.setErrorMessage("That login name is already taken");
 				model.getErrors().getRuleErrors().add(loginNameDuplicate);
 			}
+			
+			if(model.getAge() < 13){
+				Rule coppaViolation = new Rule();
+				coppaViolation.setRuleName("COPPA_VIOLATION_AGE");
+				coppaViolation.setErrorMessage("You must be 13 years of age or older to use this forum.");
+				model.getErrors().getRuleErrors().add(coppaViolation);
+			}
+			
+			checkAgreeToTerms(model);
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		}
 		
+	}
+	
+	protected void checkAgreeToTerms(Users model){
+		if(!model.getAgreeToTermsFlag()){
+			Rule tosUnchecked = new Rule();
+			tosUnchecked.setRuleName("TOS_UNCHECKED");
+			tosUnchecked.setErrorMessage("You must acknowledge that you have read and agree to the terms of service and are 13 years of age or older.");
+			model.getErrors().getRuleErrors().add(tosUnchecked);
+		}
 	}
 }

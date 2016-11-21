@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.zfgc.model.BaseZfgcModel;
 
-public abstract class AbstractRequiredFieldsChecker<T> {
+public abstract class AbstractRequiredFieldsChecker<T extends BaseZfgcModel> {
 	protected final String IS_REQUIRED_FIELD = " is required";
 	
 	public abstract void requiredFieldsCheck(T model);

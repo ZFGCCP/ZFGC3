@@ -17,6 +17,7 @@ import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.ip.IpAddressService;
+import com.zfgc.services.lookups.LookupService;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
 
@@ -53,9 +54,16 @@ public class UsersService extends AbstractService {
 		
 		if(!user.getErrors().hasErrors()){
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
-			user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
 			
-			user.setDateRegistered(ZfgcTimeUtils.getToday());
+			try{
+				user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
+			}
+			catch(Exception ex){
+				ex.printStackTrace();
+				return null;
+			}
+			
+			user.setDateRegistered(ZfgcTimeUtils.getToday(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset())));
 			user.setIsActiveFlag(false);
 			
 			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
@@ -63,6 +71,7 @@ public class UsersService extends AbstractService {
 			try {
 				setUserIsSpammer(user);
 				user = usersDataProvider.createUser(user);
+				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				return null;
@@ -104,6 +113,7 @@ public class UsersService extends AbstractService {
 			Users authenticatedUser = usersDataProvider.getUserByLoginName(user.getLoginName());
 			loggingService.logAction(7, "Login success for user " + user.getLoginName(), authenticatedUser.getUsersId(), sourceIp);
 			setPrimaryIp(user,sourceIp);
+			linkUserToIp(user,user.getPrimaryIpAddress(),true);
 			String token = authenticationService.generateAuthenticationToken(user, user.getTtlLogin());
 			authenticatedUser.setAuthToken(token);
 			return authenticatedUser;

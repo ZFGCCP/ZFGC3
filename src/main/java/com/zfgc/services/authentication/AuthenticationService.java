@@ -38,7 +38,7 @@ public class AuthenticationService  extends AbstractService {
 	private AuthenticationDataProvider authenticationDataProvider;
 	
 	//returns null if the hash fails
-	public String createPasswordHash(String password, String salt){
+	public String createPasswordHash(String password, String salt) throws Exception{
 		String hashThis = password + salt;
 		
 		try{
@@ -60,14 +60,18 @@ public class AuthenticationService  extends AbstractService {
 		}
 		catch(NoSuchAlgorithmException ex){
 			LOGGER.error(ex.getMessage());
-			return null;
+			throw new Exception(ex.getMessage());
 		}
 	}
 	
 	//generates a cryptographically secure salt for passwords
 	public String generateSalt(){
+		return generateCryptoString(SALT_LENGTH);
+	}
+	
+	private String generateCryptoString(int unencodedLength){
 		Random cryptoRand = new SecureRandom();
-		byte[] salt = new byte[SALT_LENGTH];
+		byte[] salt = new byte[unencodedLength];
 		cryptoRand.nextBytes(salt);
 		return Base64.encodeBase64String(salt);
 	}
@@ -81,7 +85,7 @@ public class AuthenticationService  extends AbstractService {
 		authToken.setCreateTimestamp(ZfgcTimeUtils.getToday());
 		authToken.setTtl(DateUtils.addSeconds(authToken.getCreateTimestamp(), ttl));
 		authToken.setUsersId(user.getUsersId());
-		authToken.setToken(new String(Hex.encode(token)));
+		authToken.setToken(generateCryptoString(32));
 		
 		try{
 			authenticationDataProvider.createAuthToken(authToken);
@@ -125,11 +129,17 @@ public class AuthenticationService  extends AbstractService {
 		}
 	}
 	
-	private Boolean checkPassword(String password, UserHashInfo userHashInfo){
-		String hashCompare = createPasswordHash(password, userHashInfo.getPassSalt());
-		Boolean result =  hashCompare != null && hashCompare.equals(userHashInfo.getPassword());
-		
-		return result;
+	private Boolean checkPassword(String password, UserHashInfo userHashInfo) throws Exception{
+		try{
+			String hashCompare = createPasswordHash(password, userHashInfo.getPassSalt());
+			Boolean result =  hashCompare != null && hashCompare.equals(userHashInfo.getPassword());
+			
+			return result;
+		}
+		catch(Exception ex){
+			LOGGER.error("Error checking password");
+			throw new Exception(ex.getMessage());
+		}
 	}
 	
 	public Boolean checkIpIsSpammer(IpAddress ipAddress) throws Exception{
