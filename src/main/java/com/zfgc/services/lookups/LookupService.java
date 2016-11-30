@@ -54,10 +54,12 @@ public class LookupService{
 	}
 	
 	public String getLkupValue(String lookupName, Integer id){
-		if(lookups.containsKey(lookupName)){
-			for(Lookup lkup : lookups.get(lookupName)){
-				if(lkup.getId().equals(id)){
-					return lkup.getValue();
+		if(id != null){
+			if(lookups.containsKey(lookupName)){
+				for(Lookup lkup : lookups.get(lookupName)){
+					if(lkup.getId().equals(id)){
+						return lkup.getValue();
+					}
 				}
 			}
 		}

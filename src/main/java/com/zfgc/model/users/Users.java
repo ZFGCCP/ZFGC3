@@ -197,4 +197,10 @@ public class Users extends BaseZfgcModel {
 	public void setAgreeToTermsFlag(Boolean agreeToTermsFlag) {
 		this.agreeToTermsFlag = agreeToTermsFlag;
 	}
+	public String getTimeOffsetLkup() {
+		return timeOffsetLkup;
+	}
+	public void setTimeOffsetLkup(String timeOffsetLkup) {
+		this.timeOffsetLkup = timeOffsetLkup;
+	}
 }

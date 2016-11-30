@@ -42,10 +42,12 @@ public class UsersService extends AbstractService {
 	UsersRuleChecker ruleChecker;
 	
 	public Users createNewUser(Users user, HttpServletRequest requestHeader){
+
 		
 		try {
 			requiredFieldsChecker.requiredFieldsCheck(user);
 			validator.validator(user);
+			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
 			ruleChecker.rulesCheck(user);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -63,7 +65,7 @@ public class UsersService extends AbstractService {
 				return null;
 			}
 			
-			user.setDateRegistered(ZfgcTimeUtils.getToday(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset())));
+			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
 			user.setIsActiveFlag(false);
 			
 			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
