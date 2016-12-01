@@ -5,7 +5,7 @@
 		var vm = this;
 		vm.somevalue = 'swipe all day';
 		
-		vm.lookups = LookupsService.getLookupsList("TIMEZONE");
+		vm.lookups = LookupsService.getLookupsList("TIMEZONE,LANGUAGE");
 		
 		vm.getCurrentTimeZone = function(){
 			var tz = jstz.determine();
@@ -25,7 +25,7 @@
 		
 		vm.lookups.$promise.then(function(data){
 			//sample usage
-			console.log(vm.getCurrentTimeZoneId());
+			vm.usertimezone= { id: vm.getCurrentTimeZoneId() };
 		});
 	}
 	
