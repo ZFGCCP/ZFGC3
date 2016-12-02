@@ -11,5 +11,6 @@ angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'zfgc.modules'
 angular.module('zfgc.modules', [
     'zfgc.users',
     'zfgc.forum',
-    'zfgc.potm'
+    'zfgc.potm',
+    '720kb.datepicker'
 ]);
