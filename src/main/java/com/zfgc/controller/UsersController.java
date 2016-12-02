@@ -28,10 +28,10 @@ class UsersController{
 		user = usersService.createNewUser(user, request);
 		
 		if(user == null){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
 		else if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(user.getErrors());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(user.getErrors());
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
@@ -42,11 +42,11 @@ class UsersController{
 		try {
 			user = usersService.authenticateUser(user, request.getRemoteAddr());
 		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
 		
 		if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user.getErrors());
+			return ResponseEntity.status(HttpStatus.CONFLICT).body(user.getErrors());
 		}
 
 		return ResponseEntity.status(HttpStatus.OK).body(user);
