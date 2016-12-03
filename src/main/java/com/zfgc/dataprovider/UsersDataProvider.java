@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dbobj.UsersDbObj;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
@@ -31,6 +32,18 @@ public class UsersDataProvider extends AbstractDataProvider {
 	private AuthenticationDataProvider authenticationDataProvider;
 	
 	Logger LOGGER = Logger.getLogger(UsersDataProvider.class);
+	
+	public Users getUserByToken(String token) throws Exception{
+		try{
+			return mapper.map(usersDao.getUserByToken(token), Users.class);
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getResourceName());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
+	}
 	
 	@Transactional
 	public Users createUser(Users user) throws Exception{

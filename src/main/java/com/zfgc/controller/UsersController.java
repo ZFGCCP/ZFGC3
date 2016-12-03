@@ -49,6 +49,6 @@ class UsersController{
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(user.getErrors());
 		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(user);
+		return ResponseEntity.status(HttpStatus.OK).body(user.getAuthToken());
 	}
 }

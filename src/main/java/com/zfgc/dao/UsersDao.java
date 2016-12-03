@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zfgc.dbobj.BrUsersIpAddressDbObjKey;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.BrUsersIpAddressDbObjMapper;
 import com.zfgc.mappers.UsersDbObjMapper;
 import com.zfgc.model.users.IpAddress;
@@ -30,6 +31,33 @@ public class UsersDao extends AbstractDao {
 	BrUsersIpAddressDbObjMapper brUsersIpAddressDbObjMapper;
 	
 	Logger LOGGER = Logger.getLogger(UsersDao.class);
+	
+	public UsersDbObj getUserByToken(String authToken) throws Exception{
+		StringBuilder sql = new StringBuilder();
+		
+		//TODO add time expiration, get rid of *
+		sql.append("SELECT U.* \n")
+		   .append("FROM AUTH_TOKEN A\n")
+		   .append("INNER JOIN USERS U ON U.USERS_ID = A.USERS_ID \n")
+		   .append("WHERE A.TOKEN = :authToken");
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("authToken", authToken);
+		try{
+			UsersDbObj user = (UsersDbObj)jdbcTemplate.queryForObject(sql.toString(), params, new BeanPropertyRowMapper(UsersDbObj.class));
+			if(user == null){
+				throw new ZfgcNotFoundException(authToken);
+			}
+			
+			return user;
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting user for token " + authToken);
+			throw new Exception(ex.getMessage());
+		}
+		
+		
+	}
 	
 	public UsersDbObj createUser(Users user) throws Exception{
 		UsersDbObj usersDbObj = mapper.map(user, UsersDbObj.class);

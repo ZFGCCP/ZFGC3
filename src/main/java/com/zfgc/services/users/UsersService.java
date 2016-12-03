@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zfgc.dataprovider.UsersDataProvider;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
@@ -110,6 +111,20 @@ public class UsersService extends AbstractService {
 		if(isAccountLocked(user)){
 			loggingService.logAction(7, "Login failed for user " + user.getLoginName() + ". Account is locked.", null, sourceIp);
 			user.getErrors().getGeneralErrors().add("You have exceeded the allowed number of login attempts.  Please try again later.");
+		}
+		else if(user.getAuthToken() != null && !user.getAuthToken().equals("")){
+			try{
+				authenticationService.checkToken(user, user.getAuthToken());
+				setPrimaryIp(user,sourceIp);
+				linkUserToIp(user,user.getPrimaryIpAddress(),true);
+				loggingService.logAction(7, "Login success for user " + user.getLoginName(), user.getUsersId(), sourceIp);
+				return user;
+			}
+			catch(ZfgcNotFoundException ex){
+				loggingService.logAction(7, "Login failed for token " + user.getAuthToken() + ". Token is invalid.", null, sourceIp);
+				user.getErrors().getGeneralErrors().add("Login error.");
+			}
+			
 		}
 		else if (doesLoginNameExist(user.getLoginName()) && authenticationService.checkUserPassword(user)){
 			Users authenticatedUser = usersDataProvider.getUserByLoginName(user.getLoginName());

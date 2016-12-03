@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dataprovider.AuthenticationDataProvider;
+import com.zfgc.dataprovider.UsersDataProvider;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
@@ -36,6 +38,9 @@ public class AuthenticationService  extends AbstractService {
 	
 	@Autowired
 	private AuthenticationDataProvider authenticationDataProvider;
+	
+	@Autowired
+	private UsersDataProvider usersDataProvider;
 	
 	//returns null if the hash fails
 	public String createPasswordHash(String password, String salt) throws Exception{
@@ -125,6 +130,19 @@ public class AuthenticationService  extends AbstractService {
 			
 			return checkPassword(user.getPassword(),hashInfo);
 		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	public void checkToken(Users user, String authToken) throws Exception{
+		try{
+			user = usersDataProvider.getUserByToken(authToken);
+			user.setAuthToken(authToken);
+		}
+		catch(ZfgcNotFoundException e){
+			throw new ZfgcNotFoundException(e.getResourceName());
+		}
+		catch(Exception e){
 			throw new Exception(e.getMessage());
 		}
 	}
