@@ -9,39 +9,7 @@ angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'zfgc.modules'
 		
 		
 		//interceptor
-		$httpProvider.interceptors.push(function() {
-		    return {
-		      response: function(res) {
-		        /* This is the code that transforms the response. `res.data` is the
-		         * response body */
-		        /*res.data = { data: data };
-		        res.data.meta = { status: res.status };*/
-		    	  	return res;
-		      },
-		    
-		      request: function(req){
-			    	if(!angular.isUndefined(window.localStorage["zfgc-auth-token"])){
-			    		res.headers.authorization = window.localStorage["zfgc-auth-token"];
-			    	}  
-		    	
-			    	return req;
-		      },
-		      
-		      responseError: function(resE){
-		    	  	if(resE.status === 409){
-		    	  		
-		    	  	}
-		    	  	else if(resE.status === 404){
-		    	  		window.location = "/forum/#/notFound"
-		    	  	}
-		    	  	else if(resE.status === 500){
-		    	  		window.location = "/forum/#/internalServer"
-		    	  	}
-		    	  
-		    	  	return resE;
-		      }
-		    };
-		  });
+		$httpProvider.interceptors.push('InterceptorService');
 		
 	}]);
 
