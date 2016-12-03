@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function InterceptorService(LookupsService){
+	function InterceptorService($q,$injector){
 		var InterceptorService = {};
 		InterceptorService.response = function(res) {
 	        /* This is the code that transforms the response. `res.data` is the
@@ -15,19 +15,18 @@
 		    	if(!angular.isUndefined(window.localStorage["zfgc-auth-token"])){
 		    		res.headers.authorization = window.localStorage["zfgc-auth-token"];
 		    	}  
-	    	
+		    	
 		    	return req;
 	      },
 	      
 	      InterceptorService.responseError = function(resE){
-	    	  	if(resE.status === 409){
-	    	  		
-	    	  	}
-	    	  	else if(resE.status === 404){
-	    	  		window.location = "/forum/#/notFound"
+	    	    var state = $injector.get('$state');
+
+	    	  	if(resE.status === 404){
+	    	  		state.go('notFound');
 	    	  	}
 	    	  	else if(resE.status === 500){
-	    	  		window.location = "/forum/#/internalServer"
+	    	  		//window.location = "/forum/#/internalServer"
 	    	  	}
 	    	  
 	    	  	return resE;
@@ -38,6 +37,6 @@
 	}
 	
 	angular
-		.module('zfgc.users')
-		.service('InterceptorService', ['LookupsService',InterceptorService])
+		.module('zfgc.forum')
+		.service('InterceptorService', ['$q','$injector',InterceptorService])
 })();
