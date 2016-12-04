@@ -67,7 +67,7 @@ public class UsersService extends AbstractService {
 			}
 			
 			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
-			user.setIsActiveFlag(false);
+			user.setActiveFlag(false);
 			
 			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
 			
@@ -80,7 +80,6 @@ public class UsersService extends AbstractService {
 				return null;
 			}
 		}
-		
 		return user;
 	}
 	
@@ -107,31 +106,28 @@ public class UsersService extends AbstractService {
 		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
 	}
 	
+	public Users authenticateUserByToken(String token) throws Exception{
+		try{
+			return authenticationService.authenticateWithToken(token);
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getResourceName());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 	public Users authenticateUser(Users user, String sourceIp) throws Exception{
 		if(isAccountLocked(user)){
 			loggingService.logAction(7, "Login failed for user " + user.getLoginName() + ". Account is locked.", null, sourceIp);
 			user.getErrors().getGeneralErrors().add("You have exceeded the allowed number of login attempts.  Please try again later.");
 		}
-		else if(user.getAuthToken() != null && !user.getAuthToken().equals("")){
-			try{
-				authenticationService.checkToken(user, user.getAuthToken());
-				setPrimaryIp(user,sourceIp);
-				linkUserToIp(user,user.getPrimaryIpAddress(),true);
-				loggingService.logAction(7, "Login success for user " + user.getLoginName(), user.getUsersId(), sourceIp);
-				return user;
-			}
-			catch(ZfgcNotFoundException ex){
-				loggingService.logAction(7, "Login failed for token " + user.getAuthToken() + ". Token is invalid.", null, sourceIp);
-				user.getErrors().getGeneralErrors().add("Login error.");
-			}
-			
-		}
 		else if (doesLoginNameExist(user.getLoginName()) && authenticationService.checkUserPassword(user)){
 			Users authenticatedUser = usersDataProvider.getUserByLoginName(user.getLoginName());
 			loggingService.logAction(7, "Login success for user " + user.getLoginName(), authenticatedUser.getUsersId(), sourceIp);
-			setPrimaryIp(user,sourceIp);
-			linkUserToIp(user,user.getPrimaryIpAddress(),true);
-			String token = authenticationService.generateAuthenticationToken(user, user.getTtlLogin());
+			setPrimaryIp(authenticatedUser,sourceIp);
+			String token = authenticationService.generateAuthenticationToken(authenticatedUser, authenticatedUser.getTtlLogin());
 			authenticatedUser.setAuthToken(token);
 			return authenticatedUser;
 		}

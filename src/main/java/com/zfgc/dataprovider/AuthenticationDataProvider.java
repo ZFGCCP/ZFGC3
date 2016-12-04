@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.AuthenticationDao;
 import com.zfgc.dbobj.AuthTokenDbObj;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
@@ -116,5 +117,19 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 		}
 		
 		return output;
+	}
+	
+	public AuthToken getAuthToken(String authToken) throws Exception{
+		try{
+			AuthToken auth = mapper.map(authenticationDao.getAuthToken(authToken), AuthToken.class);
+			
+			return auth;
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getResourceName());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
 	}
 }

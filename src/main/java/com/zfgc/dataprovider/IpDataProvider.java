@@ -16,4 +16,9 @@ public class IpDataProvider extends AbstractDataProvider{
 		IpAddressDbObj dbObj = ipDao.logIpAddress(ip);
 		return mapper.map(dbObj, IpAddress.class);
 	}
+	
+	public IpAddress getPrimaryIpByToken(String token){
+		IpAddressDbObj dbObj = ipDao.getPrimaryIpByToken(token);
+		return mapper.map(dbObj, IpAddress.class);
+	}
 }

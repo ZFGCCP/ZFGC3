@@ -47,7 +47,7 @@
     </table>-->
     
     <table schema="zfgc3" tableName="AUTH_TOKEN" domainObjectName="AuthTokenDbObj">
-    	<generatedKey column="users_id" sqlStatement="SELECT MAX(AUTH_TOKEN_ID) + 1 FROM AUTH_TOKEN"/>
+    	<generatedKey column="AUTH_TOKEN_ID" sqlStatement="SELECT COALESCE(MAX(AUTH_TOKEN_ID) + 1,0) FROM AUTH_TOKEN"/>
     </table>
     
     <!-- views -->

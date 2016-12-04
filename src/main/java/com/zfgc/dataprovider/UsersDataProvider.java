@@ -35,7 +35,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	public Users getUserByToken(String token) throws Exception{
 		try{
-			return mapper.map(usersDao.getUserByToken(token), Users.class);
+			UsersDbObj dbObj = usersDao.getUserByToken(token);
+			return mapper.map(dbObj, Users.class);
 		}
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getResourceName());
@@ -95,7 +96,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	public Users getUserByLoginName(String loginName) throws Exception{
 		try{
-			return usersDao.getUserByDisplayName(loginName);
+			return usersDao.getUserByLoginName(loginName);
 		}
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
@@ -145,5 +146,13 @@ public class UsersDataProvider extends AbstractDataProvider {
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	public String getLoginNameByToken(String token){
+		return usersDao.getLoginNameByToken(token);
+	}
+	
+	public Boolean getActiveFlagByToken(String token){
+		return usersDao.getActiveFlagByToken(token);
 	}
 }

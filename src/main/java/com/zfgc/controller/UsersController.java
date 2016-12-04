@@ -11,12 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.Users;
+import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.users.UsersService;
 
 @RestController
 @RequestMapping("/users")
-class UsersController{
+class UsersController extends BaseController{
 	
 	@Autowired
 	UsersService usersService;
@@ -33,7 +35,7 @@ class UsersController{
 		else if(user.getErrors().hasErrors()){
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(user.getErrors());
 		}
-		return ResponseEntity.status(HttpStatus.OK).body(user);
+		return ResponseEntity.status(HttpStatus.OK).body(new String[]{"Created user successfully."});
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
@@ -49,6 +51,25 @@ class UsersController{
 			return ResponseEntity.status(HttpStatus.CONFLICT).body(user.getErrors());
 		}
 
-		return ResponseEntity.status(HttpStatus.OK).body(user.getAuthToken());
+		return ResponseEntity.status(HttpStatus.OK).body(new String[]{user.getAuthToken()});
+	}
+	
+	@RequestMapping(value="/tokenauth", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity authenticateUser(HttpServletRequest request){
+		try{
+			Users user = usersService.authenticateUserByToken(request.getHeader("authorization"));
+			if(user == null){
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+			}
+			
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		}
+		catch(ZfgcNotFoundException ex){
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authorized to access this resource.");
+		}
+		catch(Exception ex){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+		}
 	}
 }

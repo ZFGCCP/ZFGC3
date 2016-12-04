@@ -6,11 +6,33 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.zfgc.dataprovider.IpDataProvider;
+import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
+@Component
 public class Users extends BaseZfgcModel {
+	@Autowired
+	@JsonIgnore
+	private HttpServletRequest request;
+	
+	@Autowired
+	@JsonIgnore
+	private UsersDataProvider usersDataProvider;
+	
+	@Autowired
+	@JsonIgnore
+	private IpDataProvider ipDataProvider;
+	
 	private String password;
 	private Integer ttlLogin;
 	
@@ -18,7 +40,7 @@ public class Users extends BaseZfgcModel {
 	private String displayName;
 	private String loginName;
 	private Date dateRegistered;
-	private Boolean isActiveFlag = false;
+	private Boolean activeFlag = null;
 	private Date birthDate;
 	private Date lockedUntil;
 	private Date loginFailedAttempts;
@@ -57,6 +79,9 @@ public class Users extends BaseZfgcModel {
 		this.displayName = displayName;
 	}
 	public String getLoginName() {
+		if(loginName == null || loginName.equals("")){
+			return usersDataProvider.getLoginNameByToken(request.getHeader("authorization"));
+		}
 		return loginName;
 	}
 	public void setLoginName(String loginName) {
@@ -74,13 +99,20 @@ public class Users extends BaseZfgcModel {
 	public void setDateRegistered(Date dateRegistered) {
 		this.dateRegistered = dateRegistered;
 	}
-	public Boolean getIsActiveFlag() {
-		return isActiveFlag;
+	public Boolean getActiveFlag() {
+		if(activeFlag == null){
+			return usersDataProvider.getActiveFlagByToken(request.getHeader("authorization"));
+		}
+		
+		return activeFlag;
 	}
-	public void setIsActiveFlag(Boolean isActiveFlag) {
-		this.isActiveFlag = isActiveFlag;
+	public void setActiveFlag(Boolean isActiveFlag) {
+		this.activeFlag = isActiveFlag;
 	}
 	public IpAddress getPrimaryIpAddress() {
+		if(primaryIpAddress == null){
+			return ipDataProvider.getPrimaryIpByToken(request.getHeader("authorization"));
+		}
 		return primaryIpAddress;
 	}
 	public void setPrimaryIpAddress(IpAddress primaryIpAddress) {
@@ -95,8 +127,12 @@ public class Users extends BaseZfgcModel {
 	public EmailAddress getEmailAddress() {
 		return emailAddress;
 	}
-	public void setEmailAddress(EmailAddress emailAddress) {
+	public void setEmailAddressObj(EmailAddress emailAddress) {
 		this.emailAddress = emailAddress;
+	}
+	public void setEmailAddress(String emailAddress){
+		this.emailAddress = new EmailAddress();
+		this.emailAddress.setEmailAddress(emailAddress);
 	}
 	public Date getBirthDate() {
 		return birthDate;

@@ -11,6 +11,7 @@ import com.zfgc.dbobj.AuthTokenDbObj;
 import com.zfgc.dbobj.AuthTokenDbObjExample;
 import com.zfgc.dbobj.EmailAddressDbObj;
 import com.zfgc.dbobj.IpAddressDbObj;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.AuthTokenDbObjMapper;
 import com.zfgc.mappers.EmailAddressDbObjMapper;
 import com.zfgc.mappers.IpAddressDbObjMapper;
@@ -88,5 +89,25 @@ public class AuthenticationDao extends AbstractDao{
 			logDbSelectError(LOGGER, "AUTH_TOKEN");
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	public AuthTokenDbObj getAuthToken(String authToken) throws Exception{
+		List<AuthTokenDbObj> dbObj = null;
+		try{
+			AuthTokenDbObjExample authTokenDbObjExample = new AuthTokenDbObjExample(); 
+			authTokenDbObjExample.createCriteria().andTokenEqualTo(authToken);
+			
+			dbObj = authTokenDbObjMapper.selectByExample(authTokenDbObjExample);
+		}
+		catch(Exception ex){
+			LOGGER.error("Unable to find auth token " + authToken);
+			throw new Exception(ex.getMessage());
+		}
+		
+		if(dbObj.size() == 0){
+			throw new ZfgcNotFoundException("Auth token: " + authToken);
+		}
+		
+		return dbObj.get(0);
 	}
 }

@@ -17,6 +17,7 @@ import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.lookups.LookupService;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 import java.security.MessageDigest;
@@ -78,7 +79,7 @@ public class AuthenticationService  extends AbstractService {
 		Random cryptoRand = new SecureRandom();
 		byte[] salt = new byte[unencodedLength];
 		cryptoRand.nextBytes(salt);
-		return Base64.encodeBase64String(salt);
+		return Base64.encodeBase64URLSafeString(salt);
 	}
 	
 	public String generateAuthenticationToken(Users user, Integer ttl) throws Exception{
@@ -88,7 +89,13 @@ public class AuthenticationService  extends AbstractService {
 		
 		AuthToken authToken = new AuthToken();
 		authToken.setCreateTimestamp(ZfgcTimeUtils.getToday());
-		authToken.setTtl(DateUtils.addSeconds(authToken.getCreateTimestamp(), ttl));
+		
+		if(ttl != null){
+			authToken.setTtl(DateUtils.addSeconds(authToken.getCreateTimestamp(), ttl));
+		}
+		else{
+			authToken.setTtl(DateUtils.addSeconds(authToken.getCreateTimestamp(), Integer.MAX_VALUE));
+		}
 		authToken.setUsersId(user.getUsersId());
 		authToken.setToken(generateCryptoString(32));
 		
@@ -134,10 +141,37 @@ public class AuthenticationService  extends AbstractService {
 		}
 	}
 	
-	public void checkToken(Users user, String authToken) throws Exception{
+	public Users authenticateWithToken(String authToken) throws Exception{
 		try{
-			user = usersDataProvider.getUserByToken(authToken);
-			user.setAuthToken(authToken);
+			Boolean isTokenValid = checkToken(authToken);
+
+			if(isTokenValid){
+				Users user = usersDataProvider.getUserByToken(authToken);
+				user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
+				return user;
+			}
+			else{
+				return null;
+			}
+		}
+		catch(ZfgcNotFoundException e){
+			throw new ZfgcNotFoundException(e.getResourceName());
+		}
+		catch(Exception e){
+			throw new Exception(e.getMessage());
+		}
+	}
+	
+	public Boolean checkToken(String authToken) throws Exception{
+		try{
+			AuthToken token = authenticationDataProvider.getAuthToken(authToken);
+			
+			Date now = ZfgcTimeUtils.getToday();
+			if(now.before(token.getTtl())){
+				return true;
+			}
+			
+			return false;
 		}
 		catch(ZfgcNotFoundException e){
 			throw new ZfgcNotFoundException(e.getResourceName());
