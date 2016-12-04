@@ -32,3 +32,4 @@ src/main/resources/application.properties
 .project
 
 .settings/
+/bin/

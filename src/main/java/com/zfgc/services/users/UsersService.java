@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.zfgc.dataprovider.UsersDataProvider;
+import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
@@ -16,6 +18,7 @@ import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.ip.IpAddressService;
+import com.zfgc.services.lookups.LookupService;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
 
@@ -40,10 +43,12 @@ public class UsersService extends AbstractService {
 	UsersRuleChecker ruleChecker;
 	
 	public Users createNewUser(Users user, HttpServletRequest requestHeader){
+
 		
 		try {
 			requiredFieldsChecker.requiredFieldsCheck(user);
 			validator.validator(user);
+			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
 			ruleChecker.rulesCheck(user);
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -52,22 +57,29 @@ public class UsersService extends AbstractService {
 		
 		if(!user.getErrors().hasErrors()){
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
-			user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
 			
-			user.setDateRegistered(ZfgcTimeUtils.getToday());
-			user.setIsActiveFlag(false);
+			try{
+				user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
+			}
+			catch(Exception ex){
+				ex.printStackTrace();
+				return null;
+			}
+			
+			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
+			user.setActiveFlag(false);
 			
 			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
 			
 			try {
 				setUserIsSpammer(user);
 				user = usersDataProvider.createUser(user);
+				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				return null;
 			}
 		}
-		
 		return user;
 	}
 	
@@ -94,6 +106,18 @@ public class UsersService extends AbstractService {
 		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
 	}
 	
+	public Users authenticateUserByToken(String token) throws Exception{
+		try{
+			return authenticationService.authenticateWithToken(token);
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getResourceName());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 	public Users authenticateUser(Users user, String sourceIp) throws Exception{
 		if(isAccountLocked(user)){
 			loggingService.logAction(7, "Login failed for user " + user.getLoginName() + ". Account is locked.", null, sourceIp);
@@ -102,7 +126,9 @@ public class UsersService extends AbstractService {
 		else if (doesLoginNameExist(user.getLoginName()) && authenticationService.checkUserPassword(user)){
 			Users authenticatedUser = usersDataProvider.getUserByLoginName(user.getLoginName());
 			loggingService.logAction(7, "Login success for user " + user.getLoginName(), authenticatedUser.getUsersId(), sourceIp);
-			setPrimaryIp(user,sourceIp);
+			setPrimaryIp(authenticatedUser,sourceIp);
+			String token = authenticationService.generateAuthenticationToken(authenticatedUser, authenticatedUser.getTtlLogin());
+			authenticatedUser.setAuthToken(token);
 			return authenticatedUser;
 		}
 		else{

@@ -52,4 +52,22 @@ public class LookupService{
 			return null;
 		}
 	}
+	
+	public String getLkupValue(String lookupName, Integer id){
+		if(id != null){
+			if(lookups.containsKey(lookupName)){
+				for(Lookup lkup : lookups.get(lookupName)){
+					if(lkup.getId().equals(id)){
+						return lkup.getValue();
+					}
+				}
+			}
+		}
+
+		return null;
+	}
+	
+	public Boolean isLkupIdValid(String lookupName, Integer id){
+		return getLkupValue(lookupName, id) != null;
+	}
 }

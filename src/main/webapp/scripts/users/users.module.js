@@ -6,5 +6,9 @@ angular.module('zfgc.users',['zfgc.config'])
 				url: '/users',
 				templateUrl: basePath + '/users.html'
 			})
+			.state('registration', {
+				url: '/registration',
+				templateUrl: basePath + '/registration.html'
+			})
 			;
 }]);

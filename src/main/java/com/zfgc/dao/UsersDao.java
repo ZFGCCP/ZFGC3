@@ -15,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zfgc.dbobj.BrUsersIpAddressDbObjKey;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.BrUsersIpAddressDbObjMapper;
 import com.zfgc.mappers.UsersDbObjMapper;
 import com.zfgc.model.users.IpAddress;
@@ -30,6 +31,35 @@ public class UsersDao extends AbstractDao {
 	BrUsersIpAddressDbObjMapper brUsersIpAddressDbObjMapper;
 	
 	Logger LOGGER = Logger.getLogger(UsersDao.class);
+	
+	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_KEY A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
+	
+	public UsersDbObj getUserByToken(String authToken) throws Exception{
+		StringBuilder sql = new StringBuilder();
+		
+		//TODO add time expiration, get rid of *
+		sql.append("SELECT U.* \n")
+		   .append("FROM AUTH_TOKEN A \n")
+		   .append("INNER JOIN users U ON U.USERS_ID = A.USERS_ID \n")
+		   .append("WHERE A.TOKEN = :authToken");
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("authToken", authToken);
+		try{
+			UsersDbObj user = (UsersDbObj)jdbcTemplate.queryForObject(sql.toString(), params, new BeanPropertyRowMapper(UsersDbObj.class));
+			if(user == null){
+				throw new ZfgcNotFoundException(authToken);
+			}
+			
+			return user;
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting user for token " + authToken);
+			throw new Exception(ex.getMessage());
+		}
+		
+		
+	}
 	
 	public UsersDbObj createUser(Users user) throws Exception{
 		UsersDbObj usersDbObj = mapper.map(user, UsersDbObj.class);
@@ -155,6 +185,7 @@ public class UsersDao extends AbstractDao {
 		}
 		catch(Exception ex){
 			LOGGER.error("Error finding login name " + loginName);
+			ex.printStackTrace();
 			throw new Exception(ex.getMessage());
 		}
 	}
@@ -177,7 +208,7 @@ public class UsersDao extends AbstractDao {
 		
 		sql.append("UPDATE USERS \n")
 		   .append("SET LOGIN_FAILED_ATTEMPTS = \n")
-		   .append("(SELECT LOGIN_FAILED_ATTEMPTS + 1 FROM USERS WHERE LOGIN_NAME = :loginName) \n")
+		   .append("(SELECT LOGIN_FAILED_ATTEMPTS + 1 FROM users WHERE LOGIN_NAME = :loginName) \n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
@@ -187,7 +218,7 @@ public class UsersDao extends AbstractDao {
 			jdbcTemplate.update(sql.toString(), params);
 		
 			sql = new StringBuilder();
-			sql.append("SELECT LOGIN_FAILED_ATTEMPS FROM USERS WHERE LOGIN_NAME = :loginName");
+			sql.append("SELECT LOGIN_FAILED_ATTEMPS FROM users WHERE LOGIN_NAME = :loginName");
 		
 			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
 		}
@@ -240,7 +271,7 @@ public class UsersDao extends AbstractDao {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT LOCKED_UNTIL \n")
-		   .append("FROM USERS \n")
+		   .append("FROM users \n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
@@ -286,6 +317,42 @@ public class UsersDao extends AbstractDao {
 			throw new Exception(ex.getMessage());
 		}
 
+	}
+	
+	public String getLoginNameByToken(String token){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT U.LOGIN_NAME \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, String.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting login name for " + token);
+			return null;
+		}
+	}
+	
+	public Boolean getActiveFlagByToken(String token){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT U.ACTIVE_FLAG \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class) == 1;
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting login name for " + token);
+			return null;
+		}
 	}
 	
 	

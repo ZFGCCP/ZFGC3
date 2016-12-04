@@ -16,6 +16,10 @@ public abstract class AbstractDao{
 		LOGGER.error("Error inserting into " + tableName);
 	}
 	
+	protected void logDbSelectError(Logger LOGGER, String tableName){
+		LOGGER.error("Error selecting from " + tableName);
+	}
+	
 	protected void logDbUpdateError(Logger LOGGER, String tableName){
 		LOGGER.error("Error updating database table " + tableName);
 	}

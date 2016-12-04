@@ -21,7 +21,7 @@ import com.zfgc.services.lookups.LookupService;
 
 @Controller
 @RequestMapping("/lookups")
-public class LookupController{
+public class LookupController extends BaseController{
 	
 	@Autowired
 	LookupService lookupService;

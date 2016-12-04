@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dbobj.UsersDbObj;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
@@ -31,6 +32,21 @@ public class UsersDataProvider extends AbstractDataProvider {
 	private AuthenticationDataProvider authenticationDataProvider;
 	
 	Logger LOGGER = Logger.getLogger(UsersDataProvider.class);
+	
+	public Users getUserByToken(String token) throws Exception{
+		try{
+			UsersDbObj dbObj = usersDao.getUserByToken(token);
+			return mapper.map(dbObj, Users.class);
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getResourceName());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
+	@Transactional
 	public Users createUser(Users user) throws Exception{
 		
 		try {
@@ -80,7 +96,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	public Users getUserByLoginName(String loginName) throws Exception{
 		try{
-			return usersDao.getUserByDisplayName(loginName);
+			return usersDao.getUserByLoginName(loginName);
 		}
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
@@ -130,5 +146,13 @@ public class UsersDataProvider extends AbstractDataProvider {
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	public String getLoginNameByToken(String token){
+		return usersDao.getLoginNameByToken(token);
+	}
+	
+	public Boolean getActiveFlagByToken(String token){
+		return usersDao.getActiveFlagByToken(token);
 	}
 }

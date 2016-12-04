@@ -5,16 +5,22 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.AuthenticationDao;
+import com.zfgc.dbobj.AuthTokenDbObj;
+import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
+import com.zfgc.model.users.Users;
 
 @Component
-public class AuthenticationDataProvider{
+public class AuthenticationDataProvider extends AbstractDataProvider{
 	
 	@Autowired
 	private AuthenticationDao authenticationDao;
@@ -95,5 +101,35 @@ public class AuthenticationDataProvider{
 	
 	public Boolean doesEmailExist(EmailAddress emailAddress) throws Exception{
 		return authenticationDao.getEmailAddress(emailAddress.getEmailAddress()) != null;
+	}
+	
+	public void createAuthToken(AuthToken authToken) throws Exception{
+		authenticationDao.saveAuthToken(authToken);
+	}
+	
+	public List<AuthToken> getAuthTokensForUser(Users user) throws Exception{
+		List<AuthTokenDbObj> result = authenticationDao.getAuthTokenByUser(user);
+		
+		List<AuthToken> output = new ArrayList<>();
+		
+		for(AuthTokenDbObj authToken : result){
+			output.add(mapper.map(authToken, AuthToken.class));
+		}
+		
+		return output;
+	}
+	
+	public AuthToken getAuthToken(String authToken) throws Exception{
+		try{
+			AuthToken auth = mapper.map(authenticationDao.getAuthToken(authToken), AuthToken.class);
+			
+			return auth;
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getResourceName());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
 	}
 }
