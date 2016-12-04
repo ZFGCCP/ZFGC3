@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.zfgc.dataprovider.IpDataProvider;
@@ -42,6 +43,7 @@ public class Users extends BaseZfgcModel {
 	private Date dateRegistered;
 	private Boolean activeFlag = null;
 	private Date birthDate;
+
 	private Date lockedUntil;
 	private Date loginFailedAttempts;
 	private Integer timeOffset;
@@ -60,6 +62,7 @@ public class Users extends BaseZfgcModel {
 	@JsonIgnore
 	private UserHashInfo userHashInfo = new UserHashInfo();
 	
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}
@@ -87,6 +90,7 @@ public class Users extends BaseZfgcModel {
 	public void setLoginName(String loginName) {
 		this.loginName = loginName;
 	}
+	@JsonIgnore
 	public UserHashInfo getUserHashInfo() {
 		return userHashInfo;
 	}
@@ -152,6 +156,9 @@ public class Users extends BaseZfgcModel {
 		}
 	}
 	public String getBirthDateAsString(){
+		if(birthDate == null){
+			return "";
+		}
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
 		return sdf.format(birthDate);
 	}
@@ -166,6 +173,10 @@ public class Users extends BaseZfgcModel {
 		}
 	}
 	public String getDateRegisteredAsString(){
+		if(dateRegistered == null){
+			return "";
+		}
+		
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
 		return sdf.format(dateRegistered);
 	}
@@ -182,6 +193,10 @@ public class Users extends BaseZfgcModel {
 		this.lockedUntil = lockedUntil;
 	}
 	public String getLockedUntilAsString(){
+		if(lockedUntil == null){
+			return "";
+		}
+		
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
 		return sdf.format(lockedUntil);
 	}
