@@ -44,13 +44,20 @@
     </table>
     
     <table schema="zfgc3" tableName="BR_USERS_IP_ADDRESS" domainObjectName="BrUsersIpAddressDbObj">
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="AUTH_TOKEN" domainObjectName="AuthTokenDbObj">
     	<generatedKey column="AUTH_TOKEN_ID" sqlStatement="SELECT COALESCE(MAX(AUTH_TOKEN_ID) + 1,0) FROM AUTH_TOKEN"/>
-    </table>
+    </table>-->
     
     <!-- views -->
+    
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    	<columnOverride column="HIDE_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_GENDER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_AGE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_BIRTH_DATE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
     
   </context>
 </generatorConfiguration>

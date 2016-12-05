@@ -70,6 +70,10 @@ public class Users extends BaseZfgcModel {
 		this.password = password;
 	}
 	public Integer getUsersId() {
+		if(usersId == null){
+			return usersDataProvider.getUsersIdByToken(request.getHeader("authorization"));
+		}
+		
 		return usersId;
 	}
 	public void setUsersId(Integer usersId) {
@@ -253,5 +257,10 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setTimeOffsetLkup(String timeOffsetLkup) {
 		this.timeOffsetLkup = timeOffsetLkup;
+	}
+	@Override
+	public String getHMAC() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

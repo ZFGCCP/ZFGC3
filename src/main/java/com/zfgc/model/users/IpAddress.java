@@ -1,6 +1,8 @@
 package com.zfgc.model.users;
 
-public class IpAddress{
+import com.zfgc.model.BaseZfgcModel;
+
+public class IpAddress extends BaseZfgcModel{
 	private String ipAddress;
 	private Integer version;
 	private Boolean isSpammerFlag = true; //just assume everyone is a spammer by default, we'll have a proper check for this during registration
@@ -21,6 +23,11 @@ public class IpAddress{
 	}
 	public void setIsSpammerFlag(Boolean isSpammerFlag) {
 		this.isSpammerFlag = isSpammerFlag;
+	}
+	@Override
+	public String getHMAC() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

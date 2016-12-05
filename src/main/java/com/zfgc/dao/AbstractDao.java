@@ -5,7 +5,9 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-public abstract class AbstractDao{
+import com.zfgc.model.BaseZfgcModel;
+
+public abstract class AbstractDao<T extends BaseZfgcModel>{
 	@Autowired
 	protected NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -31,4 +33,6 @@ public abstract class AbstractDao{
 	protected void logDbDuplicateKeyError(Logger LOGGER, String tableName, String pkValue){
 		LOGGER.error("Error inserting into " + tableName + ". Primary Key value '" + pkValue + "' already exists.");
 	}
+	
+	public abstract Boolean validateIntegrity(T model);
 }

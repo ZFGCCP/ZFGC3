@@ -23,7 +23,7 @@ import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
 
 @Component
-public class UsersDao extends AbstractDao {
+public class UsersDao extends AbstractDao<Users> {
 	@Autowired 
 	UsersDbObjMapper usersDbObjMapper;
 
@@ -351,6 +351,30 @@ public class UsersDao extends AbstractDao {
 		}
 		catch(Exception ex){
 			LOGGER.error("Error getting login name for " + token);
+			return null;
+		}
+	}
+
+	@Override
+	public Boolean validateIntegrity(Users model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer getUsersIdByToken(String token) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT U.USERS_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting users Id for " + token);
 			return null;
 		}
 	}

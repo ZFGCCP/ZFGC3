@@ -155,4 +155,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public Boolean getActiveFlagByToken(String token){
 		return usersDao.getActiveFlagByToken(token);
 	}
+	
+	public Integer getUsersIdByToken(String token){
+		return usersDao.getUsersIdByToken(token);
+	}
 }

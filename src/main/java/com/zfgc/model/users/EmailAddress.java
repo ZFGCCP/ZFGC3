@@ -18,6 +18,11 @@ public class EmailAddress extends BaseZfgcModel{
 	public void setIsSpammerFlag(Boolean isSpammerFlag) {
 		this.isSpammerFlag = isSpammerFlag;
 	}
+	@Override
+	public String getHMAC() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

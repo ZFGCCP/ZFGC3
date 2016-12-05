@@ -9,10 +9,11 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dbobj.IpAddressDbObj;
 import com.zfgc.mappers.IpAddressDbObjMapper;
+import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.IpAddress;
 
 @Component
-public class IpDao extends AbstractDao {
+public class IpDao extends AbstractDao<IpAddress> {
 	
 	@Autowired
 	IpAddressDbObjMapper ipAddressDbObjMapper;
@@ -57,4 +58,11 @@ public class IpDao extends AbstractDao {
 			return null;
 		}
 	}
+
+	@Override
+	public Boolean validateIntegrity(IpAddress model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dbobj.ActivityLogDbObj;
 import com.zfgc.dbobj.ActivityLogDbObjExample;
 import com.zfgc.mappers.ActivityLogDbObjMapper;
+import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.logging.ActivityLog;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
@@ -41,7 +42,13 @@ public class LoggingDao extends AbstractDao {
 	public List<ActivityLogDbObj> getLogs(ActivityLogDbObjExample example){
 		return activityLogDbObjMapper.selectByExample(example);
 	}
-	
+
+	@Override
+	public Boolean validateIntegrity(BaseZfgcModel model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 	
 }
