@@ -32,7 +32,7 @@ public class UsersDao extends AbstractDao<Users> {
 	
 	Logger LOGGER = Logger.getLogger(UsersDao.class);
 	
-	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_KEY A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
+	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_TOKEN A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
 	
 	public UsersDbObj getUserByToken(String authToken) throws Exception{
 		StringBuilder sql = new StringBuilder();
@@ -375,6 +375,24 @@ public class UsersDao extends AbstractDao<Users> {
 		}
 		catch(Exception ex){
 			LOGGER.error("Error getting users Id for " + token);
+			return null;
+		}
+	}
+
+	public Integer getPrimaryMemberGroupIdByToken(String token) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT U.PRIMARY_MEMBER_GROUP_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting primary member group Id for " + token);
 			return null;
 		}
 	}

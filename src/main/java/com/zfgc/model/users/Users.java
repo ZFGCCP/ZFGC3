@@ -49,6 +49,7 @@ public class Users extends BaseZfgcModel {
 	private Integer timeOffset;
 	private String location;
 	private Boolean agreeToTermsFlag;
+	private Integer primaryMemberGroupId;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -262,5 +263,15 @@ public class Users extends BaseZfgcModel {
 	public String getHMAC() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Integer getPrimaryMemberGroupId() {
+		if(primaryMemberGroupId == null){
+			return usersDataProvider.getPrimaryMemberGroupIdByToken(request.getHeader("authorization"));
+		}
+		
+		return primaryMemberGroupId;
+	}
+	public void setPrimaryMemberGroupId(Integer primaryMemberGroupId) {
+		this.primaryMemberGroupId = primaryMemberGroupId;
 	}
 }

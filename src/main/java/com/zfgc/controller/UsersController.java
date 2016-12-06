@@ -14,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.userprofile.UserProfileService;
 import com.zfgc.services.users.UsersService;
 
 @RestController
@@ -23,6 +25,9 @@ class UsersController extends BaseController{
 	
 	@Autowired
 	UsersService usersService;
+	
+	@Autowired
+	UserProfileService userProfileService;
 	
 	@RequestMapping(value="/new-user", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
@@ -77,6 +82,16 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/profile/{userId}", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){
-		
+		try {
+			UserProfileView user = userProfileService.getProfile(userId, zfgcUser);
+			
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		} 
+		catch(ZfgcNotFoundException ex){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested resource could not be found.");
+		}
+		catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+		}
 	}
 }

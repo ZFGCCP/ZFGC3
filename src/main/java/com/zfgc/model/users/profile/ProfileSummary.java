@@ -166,26 +166,6 @@ public class ProfileSummary extends BaseZfgcModel {
 	
 	@JsonIgnore
 	public String getHMAC() throws Exception{
-		String classAsString = loginName + 
-				               displayName +
-				               primaryIp +
-				               (primaryMemberGroupId + "") +
-				               getDateRegisteredAsString() +
-				               emailAddress +
-				               getLastLoginAsString() +
-				               personalText +
-				               gender +
-				               getBirthDateAsString() +
-				               userTitle +
-				               hideEmailFlag +
-				               hideGenderFlag +
-				               hideBirthDateFlag +
-				               hideAgeFlag +
-				               (timeOffset + "") +
-				               avatarFilename +
-				               timeZone;
-		
-		String HMAC = AuthenticationService.generateSha256(classAsString);
-		return HMAC;
+		return null;
 	}
 }
