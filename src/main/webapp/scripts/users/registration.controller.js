@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UsersCtrl(LookupsService){
+	function RegistrationCtrl(LookupsService, UserService){
 		var vm = this;
 		vm.somevalue = 'swipe all day';
 		
@@ -23,6 +23,14 @@
 			}
 		};
 		
+		vm.newUser= function(){
+			UserService.register(vm.user).$promise.then(function(data){
+				
+			});
+			
+		};
+		
+		
 		vm.lookups.$promise.then(function(data){
 			//sample usage
 			vm.usertimezone= { id: vm.getCurrentTimeZoneId() };
@@ -31,5 +39,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.controller('UsersCtrl', ['LookupsService',UsersCtrl])
+		.controller('RegistrationCtrl', ['LookupsService','UserService', RegistrationCtrl])
 })();

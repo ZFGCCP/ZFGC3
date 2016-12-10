@@ -23,7 +23,7 @@ class UsersController extends BaseController{
 	@Autowired
 	UsersService usersService;
 	
-	@RequestMapping(value="/new-user", method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
