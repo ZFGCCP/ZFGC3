@@ -1,5 +1,6 @@
 package com.zfgc.validation.uservalidation;
 
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.Users;
 import com.zfgc.rules.Rule;
 import com.zfgc.services.lookups.LookupService;
@@ -13,13 +14,15 @@ import org.springframework.stereotype.Component;
 public class UserValidator extends AbstractValidator<Users> {
 
 	@Override
-	public void validator(Users model) throws Exception {
+	public void validator(Users model) throws ZfgcValidationException {
 		checkEmailFormat(model);
 		checkEmailLength(model);
 		checkLoginNameFormat(model);
 		checkDisplayNameFormat(model);
 		checkLocationFormat(model);
 		checkTimeZoneValid(model);
+		
+		super.checkErrorsFound("Users", model);
 	}
 	
 	private void checkEmailFormat(Users model){

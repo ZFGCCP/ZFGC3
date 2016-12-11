@@ -4,6 +4,7 @@ import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.rules.Rule;
 import com.zfgc.services.lookups.LookupService;
@@ -41,6 +42,12 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 			loginNameFormat.setRuleName(fieldName.replace(' ', '_').toUpperCase() + "_INVALID_CHARACTER");
 			loginNameFormat.setErrorMessage(fieldName + " contains an invalid character.  Login Names may only contain alphanumeric and the following characters: .-_?()@");
 			model.getErrors().getValidationErrors().add(loginNameFormat);
+		}
+	}
+	
+	protected void checkErrorsFound(String typeName, T model) throws ZfgcValidationException{
+		if(model.getErrors().getValidationErrors().size() > 0){
+			throw new ZfgcValidationException(typeName);
 		}
 	}
 }

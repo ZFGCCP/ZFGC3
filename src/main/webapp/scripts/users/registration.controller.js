@@ -3,9 +3,10 @@
 	
 	function RegistrationCtrl(LookupsService, UserService){
 		var vm = this;
+		vm.user = {};
 		vm.somevalue = 'swipe all day';
 		
-		vm.lookups = LookupsService.getLookupsList("TIMEZONE,LANGUAGE");
+		vm.lookups = LookupsService.getLookupsList("TIMEZONE");
 		
 		vm.getCurrentTimeZone = function(){
 			var tz = jstz.determine();
@@ -24,16 +25,20 @@
 		};
 		
 		vm.newUser= function(){
+			vm.setDisplayNameOnSubmit();
 			UserService.register(vm.user).$promise.then(function(data){
 				
 			});
-			
 		};
 		
+		vm.setDisplayNameOnSubmit = function(){
+			if(!vm.user.displayName || vm.user.displayName === null || vm.user.displayName === ""){
+				vm.user.displayName = vm.user.loginName;
+			}
+		};
 		
 		vm.lookups.$promise.then(function(data){
-			//sample usage
-			vm.usertimezone= { id: vm.getCurrentTimeZoneId() };
+			vm.user.timeOffset= vm.getCurrentTimeZoneId();
 		});
 	}
 	

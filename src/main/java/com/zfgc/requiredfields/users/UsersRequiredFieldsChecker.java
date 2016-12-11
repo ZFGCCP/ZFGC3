@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
-import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.AbstractRequiredFieldsChecker;
 
@@ -13,7 +13,7 @@ import com.zfgc.requiredfields.AbstractRequiredFieldsChecker;
 public class UsersRequiredFieldsChecker extends AbstractRequiredFieldsChecker<Users>{
 
 	@Override
-	public void requiredFieldsCheck(Users model) {
+	public void requiredFieldsCheck(Users model) throws ZfgcValidationException {
 
 		checkRequiredField(model.getLoginName(), "loginName", "Username" + IS_REQUIRED_FIELD, model.getErrors().getRequiredFieldsErrors());
 		checkRequiredField(model.getDisplayName(), "displayName", "Display name" + IS_REQUIRED_FIELD, model.getErrors().getRequiredFieldsErrors());
@@ -21,6 +21,8 @@ public class UsersRequiredFieldsChecker extends AbstractRequiredFieldsChecker<Us
 		checkRequiredField(model.getEmailAddress(), "emailAddress", "Email Address" + IS_REQUIRED_FIELD,model.getErrors().getRequiredFieldsErrors());
 		checkRequiredField(model.getBirthDate(), "birthDate", "Birth Date" + IS_REQUIRED_FIELD, model.getErrors().getRequiredFieldsErrors());
 		checkRequiredField(model.getTimeOffset(), "timeOffset", "Timezone" + IS_REQUIRED_FIELD, model.getErrors().getRequiredFieldsErrors());
+		
+		super.checkErrorsFound("Users", model);
 	}
 	
 }

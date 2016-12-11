@@ -32,7 +32,7 @@
 				    </select>
 				  </div>
 				  <div class="checkbox">
-				    <label><input type="checkbox">I agree to the terms and am 13 years of age or older checkbox</label>
+				    <label><input ng-model="vm.user.agreeToTermsFlag" type="checkbox">I agree to the terms and am 13 years of age or older checkbox</label>
 				  </div>
 				  <button ng-click="vm.newUser()" type="button" class="btn btn-default">Submit</button>
 				</form>

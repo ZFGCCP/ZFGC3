@@ -48,7 +48,7 @@ public class Users extends BaseZfgcModel {
 	private Date loginFailedAttempts;
 	private Integer timeOffset;
 	private String location;
-	private Boolean agreeToTermsFlag;
+	private Boolean agreeToTermsFlag = false;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -62,7 +62,7 @@ public class Users extends BaseZfgcModel {
 	@JsonIgnore
 	private UserHashInfo userHashInfo = new UserHashInfo();
 	
-	@JsonIgnore
+	
 	public String getPassword() {
 		return password;
 	}
@@ -131,12 +131,8 @@ public class Users extends BaseZfgcModel {
 	public EmailAddress getEmailAddress() {
 		return emailAddress;
 	}
-	public void setEmailAddressObj(EmailAddress emailAddress) {
+	public void setEmailAddress(EmailAddress emailAddress){
 		this.emailAddress = emailAddress;
-	}
-	public void setEmailAddress(String emailAddress){
-		this.emailAddress = new EmailAddress();
-		this.emailAddress.setEmailAddress(emailAddress);
 	}
 	public Date getBirthDate() {
 		return birthDate;
