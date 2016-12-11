@@ -21,12 +21,12 @@
 	      
 	      InterceptorService.responseError = function(resE){
 	    	    var state = $injector.get('$state');
-
+	    	    var modalService = $injector.get('ModalService');
 	    	  	if(resE.status === 404){
 	    	  		state.go('notFound');
 	    	  	}
 	    	  	else if(resE.status === 500){
-	    	  		//window.location = "/forum/#/internalServer"
+	    	  		modalService.createGeneralErrorPopup();
 	    	  	}
 	    	  
 	    	  	return resE;
