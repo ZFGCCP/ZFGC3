@@ -11,15 +11,29 @@ import org.springframework.stereotype.Service;
 public class ZfgcTimeUtils extends DateUtils {
 	public static final long MILIS_PER_YEAR = 31540000000L;
 	
+	public static SimpleDateFormat getZfgcSimpleDateTimeFormat(){
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		
+		return sdf;
+	}
+	
+	public static SimpleDateFormat getZfgcSimpleDateTimeFormat(String timezone){
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+		sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+		
+		return sdf;
+	}
+	
 	public static SimpleDateFormat getZfgcSimpleDateFormat(){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
 		
 		return sdf;
 	}
 	
 	public static SimpleDateFormat getZfgcSimpleDateFormat(String timezone){
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 		sdf.setTimeZone(TimeZone.getTimeZone(timezone));
 		
 		return sdf;

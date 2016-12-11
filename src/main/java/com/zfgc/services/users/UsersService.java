@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
@@ -50,7 +51,11 @@ public class UsersService extends AbstractService {
 			validator.validator(user);
 			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
 			ruleChecker.rulesCheck(user);
-		} catch (Exception ex) {
+		} 
+		catch(ZfgcValidationException ex){
+			
+		}
+		catch (Exception ex) {
 			ex.printStackTrace();
 			return null;
 		}
