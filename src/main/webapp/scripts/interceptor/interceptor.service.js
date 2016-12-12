@@ -25,6 +25,9 @@
 	    	  	if(resE.status === 404){
 	    	  		state.go('notFound');
 	    	  	}
+	    	  	else if(resE.status === 422){
+	    	  		modalService.createValidationErrorPopup(resE.data);
+	    	  	}
 	    	  	else if(resE.status === 500){
 	    	  		modalService.createGeneralErrorPopup();
 	    	  	}

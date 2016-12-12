@@ -27,7 +27,7 @@ public class UserValidator extends AbstractValidator<Users> {
 	
 	private void checkEmailFormat(Users model){
 		if(model.getEmailAddress() != null &&
-		   !Pattern.matches(GENERAL_STRING_FORMAT, model.getEmailAddress().getEmailAddress()) &&
+		   !Pattern.matches(GENERAL_STRING_FORMAT, model.getEmailAddress().getEmailAddress()) ||
 		   !Pattern.matches(EMAIL_FORMAT, model.getEmailAddress().getEmailAddress())){
 			
 			Rule emailFormatRule = new Rule();
