@@ -82,7 +82,7 @@ public class Users extends BaseZfgcModel {
 		this.displayName = displayName;
 	}
 	public String getLoginName() {
-		if(loginName == null || loginName.equals("")){
+		if(request != null && request.getHeader("authorization") != null && (loginName == null || loginName.equals(""))){
 			return usersDataProvider.getLoginNameByToken(request.getHeader("authorization"));
 		}
 		return loginName;
@@ -104,7 +104,7 @@ public class Users extends BaseZfgcModel {
 		this.dateRegistered = dateRegistered;
 	}
 	public Boolean getActiveFlag() {
-		if(activeFlag == null){
+		if(request != null && request.getHeader("authorization") != null && activeFlag == null){
 			return usersDataProvider.getActiveFlagByToken(request.getHeader("authorization"));
 		}
 		
@@ -114,7 +114,7 @@ public class Users extends BaseZfgcModel {
 		this.activeFlag = isActiveFlag;
 	}
 	public IpAddress getPrimaryIpAddress() {
-		if(primaryIpAddress == null){
+		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
 			return ipDataProvider.getPrimaryIpByToken(request.getHeader("authorization"));
 		}
 		return primaryIpAddress;
