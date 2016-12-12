@@ -23,6 +23,7 @@ import com.zfgc.util.time.ZfgcTimeUtils;
 @Component
 public class Users extends BaseZfgcModel {
 	@Autowired
+	@JsonIgnore
 	private HttpServletRequest request;
 	
 	@Autowired
