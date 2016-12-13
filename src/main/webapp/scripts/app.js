@@ -1,4 +1,4 @@
-angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'zfgc.modules'
+angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'datePicker', 'zfgc.modules'
         ])
 	.config(['$resourceProvider','$urlRouterProvider','$httpProvider',
 	         function($resourceProvider,$urlRouterProvider,$httpProvider) {
@@ -16,6 +16,5 @@ angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'z
 angular.module('zfgc.modules', [
     'zfgc.users',
     'zfgc.forum',
-    'zfgc.error',
-    '720kb.datepicker'
+    'zfgc.error'
 ]);

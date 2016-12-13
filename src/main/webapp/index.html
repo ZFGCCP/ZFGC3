@@ -7,13 +7,22 @@
     
   <title>zfgc3</title>
   <!-- inject:css -->
+  <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog.css">
+  <link rel="stylesheet" href="bower_components/ng-dialog/css/ngDialog-theme-default.css">
+  <link rel="stylesheet" href="bower_components/angular-datepicker/dist/angular-datepicker.css">
+  <link rel="stylesheet" href="assets/dist/site.css">
   <link rel="stylesheet" href="assets/dist/bootstrap/scss/bootstrap-flex.css">
   <link rel="stylesheet" href="assets/dist/bootstrap/scss/bootstrap-grid.css">
   <link rel="stylesheet" href="assets/dist/bootstrap/scss/bootstrap-reboot.css">
   <link rel="stylesheet" href="assets/dist/bootstrap/scss/bootstrap.css">
+  <!-- endinject -->
   
-  <link rel="stylesheet" href="assets/dist/ext/angular-datepicker.min.css">
-  <link rel="stylesheet" href="assets/dist/ext/ngDialog.min.css">
+  
+</head>
+<body>
+  <div id="header" ng-include="" src="'scripts/header/header.html'"></div>
+  <div class="zfgc-application" ui-view></div>
+  
   
   <!-- inject:js -->
   <script src="bower_components/angular/angular.js"></script>
@@ -21,36 +30,24 @@
   <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
   <script src="bower_components/angular-resource/angular-resource.js"></script>
   <script src="bower_components/tether/dist/js/tether.js"></script>
+  <script src="bower_components/moment/moment.js"></script>
+  <script src="bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js"></script>
+  <script src="bower_components/ng-dialog/js/ngDialog.js"></script>
   <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-  
-  <!-- modules -->
+  <script src="bower_components/angular-datepicker/dist/angular-datepicker.js"></script>
+  <script src="scripts/vendor/jstz/jstz.min.js"></script>
   <script src="scripts/users/users.module.js"></script>
-  <script src="scripts/error/error.module.js"></script>
+  <script src="scripts/users/users.service.js"></script>
+  <script src="scripts/users/registration.controller.js"></script>
   <script src="scripts/potm/potm.module.js"></script>
   <script src="scripts/forum/forum.module.js"></script>
-  
-  <!-- controllers -->
-  <script src="scripts/users/registration.controller.js"></script>
-  <script src="scripts/modal/modal.controller.js"></script>
-  
-  <!-- services -->
-  <script src="scripts/lookups/lookups.service.js"></script>
-  <script src="scripts/users/users.service.js"></script>
   <script src="scripts/modal/modal.service.js"></script>
+  <script src="scripts/modal/modal.controller.js"></script>
+  <script src="scripts/lookups/lookups.service.js"></script>
   <script src="scripts/interceptor/interceptor.service.js"></script>
+  <script src="scripts/error/error.module.js"></script>
   <script src="scripts/app.js"></script>
   <script src="scripts/app.config.js"></script>
-  
-  <script src="scripts/datepicker/angular-datepicker.min.js"></script>
-  
-  <script src="scripts/jstz/jstz.min.js"></script>
-  <script src="scripts/ngDialog/ngDialog.min.js"></script>
-  <!-- endinject -->
-</head>
-<body>
-  <div id="header" ng-include="" src="'scripts/header/header.html'"></div>
-  <div class="zfgc-application" ui-view></div>
-  
   <!-- endinject -->
 </body>
 </html>
