@@ -137,11 +137,18 @@ public class UsersService extends AbstractService {
 			return authenticatedUser;
 		}
 		else{
+			IpAddress ipAddress = ipAddressService.createIpAddress(sourceIp);
 			Integer attempts = usersDataProvider.incrementLoginFailCount(user.getLoginName());
-			user.getErrors().getGeneralErrors().add("Login failed for user " + user.getLoginName() + ". Incorrect username or password.  " + (5 - attempts) + " attempts remaining.");
-			loggingService.logAction(3, "Login failed for user " + user.getLoginName() + ". " + (5 - attempts) + " attempts remaining.", null, sourceIp);
+			Integer ipAttempts = ipAddressService.incrementLoginFailCount(ipAddress);
+
+			user.getErrors().getGeneralErrors().add("Login failed for user " + user.getLoginName() + ". Incorrect username or password.  " + (5 - ipAttempts) + " attempts remaining.");
+			loggingService.logAction(3, "Login failed for user " + user.getLoginName() + ". " + (5 - ipAttempts) + " attempts remaining.", null, sourceIp);
+			
 			if(attempts >= 5){
 				lockAccount(user.getLoginName(), sourceIp);
+			}
+			if(ipAttempts >= 5){
+				ipAddressService.lockIp(ipAddress);
 			}
 		}
 		return user;

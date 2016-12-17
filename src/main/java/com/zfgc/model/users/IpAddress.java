@@ -1,8 +1,11 @@
 package com.zfgc.model.users;
 
+import java.util.Date;
+
 public class IpAddress{
 	private String ipAddress;
 	private Integer version;
+	private Date lockedUntil;
 	private Boolean isSpammerFlag = true; //just assume everyone is a spammer by default, we'll have a proper check for this during registration
 	public String getIpAddress() {
 		return ipAddress;
@@ -21,6 +24,12 @@ public class IpAddress{
 	}
 	public void setIsSpammerFlag(Boolean isSpammerFlag) {
 		this.isSpammerFlag = isSpammerFlag;
+	}
+	public Date getLockedUntil() {
+		return lockedUntil;
+	}
+	public void setLockedUntil(Date lockedUntil) {
+		this.lockedUntil = lockedUntil;
 	}
 	
 	
