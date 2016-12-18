@@ -64,8 +64,7 @@ public class IpDao extends AbstractDao {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
-		   .append("SET LOGIN_ATTEMPTS = \n")
-		   .append("(SELECT LOGIN_ATTEMPTS + 1 FROM IP_ADDRESS WHERE IP_ADDRESS = :ipAddress) \n")
+		   .append("SET LOGIN_ATTEMPTS = LOGIN_ATTEMPTS + 1 \n")
 		   .append("WHERE IP_ADDRESS = :ipAddress");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
@@ -128,7 +127,7 @@ public class IpDao extends AbstractDao {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
-		   .append("SET LOCKED_UNTIL = null, LOGIN_ATTEMPS = 0 \n")
+		   .append("SET LOCKED_UNTIL = null, LOGIN_ATTEMPTS = 0 \n")
 		   .append("WHERE IP_ADDRESS = :ipAddress");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
@@ -147,8 +146,7 @@ public class IpDao extends AbstractDao {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
-		   .append("SET LOGIN_ATTEMPTS = \n")
-		   .append("(SELECT LOGIN_ATTEMPTS + 1 FROM IP_ADDRESS I WHERE I.IP_ADDRESS = :ipAddress) \n")
+		   .append("SET LOGIN_ATTEMPTS = LOGIN_ATTEMPTS + 1  \n")
 		   .append("WHERE IP_ADDRESS = :ipAddress");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();

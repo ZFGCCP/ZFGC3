@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -123,9 +124,11 @@ public class UsersService extends AbstractService {
 		}
 	}
 	
+	@Transactional
 	public Users authenticateUser(Users user, String sourceIp) throws Exception{
+		IpAddress ipAddress = ipAddressService.createIpAddress(sourceIp);
 		Boolean doesUserExist = doesLoginNameExist(user.getLoginName());
-		if(isAccountLocked(user)){
+		if(isAccountLocked(user) || ipAddressService.isIpLocked(ipAddress)){
 			loggingService.logAction(7, "Login failed for user " + user.getLoginName() + ". Account is locked.", null, sourceIp);
 			user.getErrors().getGeneralErrors().add("You have exceeded the allowed number of login attempts.  Please try again later.");
 		}
@@ -138,7 +141,6 @@ public class UsersService extends AbstractService {
 			return authenticatedUser;
 		}
 		else{
-			IpAddress ipAddress = ipAddressService.createIpAddress(sourceIp);
 			Integer attempts = 0;
 			if(doesUserExist){
 				attempts = usersDataProvider.incrementLoginFailCount(user.getLoginName());

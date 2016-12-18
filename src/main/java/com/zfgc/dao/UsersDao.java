@@ -207,8 +207,7 @@ public class UsersDao extends AbstractDao {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE users \n")
-		   .append("SET LOGIN_FAILED_ATTEMPTS = \n")
-		   .append("(SELECT LOGIN_FAILED_ATTEMPTS + 1 FROM users WHERE LOGIN_NAME = :loginName) \n")
+		   .append("SET LOGIN_FAILED_ATTEMPTS =  LOGIN_FAILED_ATTEMPTS + 1\n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
@@ -252,7 +251,7 @@ public class UsersDao extends AbstractDao {
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE users \n")
-		   .append("SET LOCKED_UNTIL = null, LOGIN_FAILED_ATTEMPS = 0 \n")
+		   .append("SET LOCKED_UNTIL = null, LOGIN_FAILED_ATTEMPTS = 0 \n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
