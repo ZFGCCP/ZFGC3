@@ -44,10 +44,14 @@
     </table>
     
     <table schema="zfgc3" tableName="BR_USERS_IP_ADDRESS" domainObjectName="BrUsersIpAddressDbObj">
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="AUTH_TOKEN" domainObjectName="AuthTokenDbObj">
     	<generatedKey column="AUTH_TOKEN_ID" sqlStatement="SELECT COALESCE(MAX(AUTH_TOKEN_ID) + 1,0) FROM AUTH_TOKEN"/>
+    </table>-->
+    
+    <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
+    	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
     <!-- views -->
