@@ -124,11 +124,12 @@ public class UsersService extends AbstractService {
 	}
 	
 	public Users authenticateUser(Users user, String sourceIp) throws Exception{
+		Boolean doesUserExist = doesLoginNameExist(user.getLoginName());
 		if(isAccountLocked(user)){
 			loggingService.logAction(7, "Login failed for user " + user.getLoginName() + ". Account is locked.", null, sourceIp);
 			user.getErrors().getGeneralErrors().add("You have exceeded the allowed number of login attempts.  Please try again later.");
 		}
-		else if (doesLoginNameExist(user.getLoginName()) && authenticationService.checkUserPassword(user)){
+		else if (doesUserExist && authenticationService.checkUserPassword(user)){
 			Users authenticatedUser = usersDataProvider.getUserByLoginName(user.getLoginName());
 			loggingService.logAction(7, "Login success for user " + user.getLoginName(), authenticatedUser.getUsersId(), sourceIp);
 			setPrimaryIp(authenticatedUser,sourceIp);
@@ -138,7 +139,10 @@ public class UsersService extends AbstractService {
 		}
 		else{
 			IpAddress ipAddress = ipAddressService.createIpAddress(sourceIp);
-			Integer attempts = usersDataProvider.incrementLoginFailCount(user.getLoginName());
+			Integer attempts = 0;
+			if(doesUserExist){
+				attempts = usersDataProvider.incrementLoginFailCount(user.getLoginName());
+			}
 			Integer ipAttempts = ipAddressService.incrementLoginFailCount(ipAddress);
 
 			user.getErrors().getGeneralErrors().add("Login failed for user " + user.getLoginName() + ". Incorrect username or password.  " + (5 - ipAttempts) + " attempts remaining.");

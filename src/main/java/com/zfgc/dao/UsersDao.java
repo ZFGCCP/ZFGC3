@@ -206,7 +206,7 @@ public class UsersDao extends AbstractDao {
 	public Integer incrementLoginFails(String loginName) throws Exception{
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("UPDATE USERS \n")
+		sql.append("UPDATE users \n")
 		   .append("SET LOGIN_FAILED_ATTEMPTS = \n")
 		   .append("(SELECT LOGIN_FAILED_ATTEMPTS + 1 FROM users WHERE LOGIN_NAME = :loginName) \n")
 		   .append("WHERE LOGIN_NAME = :loginName");
@@ -231,7 +231,7 @@ public class UsersDao extends AbstractDao {
 	public void lockAccount(String loginName, Date lockTime) throws Exception{
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("UPDATE USERS \n")
+		sql.append("UPDATE users \n")
 		   .append("SET LOCKED_UNTIL = :lockTime \n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
@@ -251,7 +251,7 @@ public class UsersDao extends AbstractDao {
 	public void unlockAccount(String loginName) throws Exception{
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("UPDATE USERS \n")
+		sql.append("UPDATE users \n")
 		   .append("SET LOCKED_UNTIL = null, LOGIN_FAILED_ATTEMPS = 0 \n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
