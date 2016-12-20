@@ -9,5 +9,5 @@ It's a secret to everyone.
 Gulp is used to compile sass and inject CSS/JS files into the index.html.  
 `gulp`
 
-To run tests, use:
+To run tests, use:  
 `gulp test`
