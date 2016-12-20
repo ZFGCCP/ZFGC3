@@ -8,3 +8,6 @@ It's a secret to everyone.
 ## Development Tools
 Gulp is used to compile sass and inject CSS/JS files into the index.html.  
 `gulp`
+
+To run tests, use:
+`gulp test`
