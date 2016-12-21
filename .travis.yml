@@ -1,0 +1,17 @@
+language: java
+language: node_js
+
+node_js:
+  - "6"
+
+sudo: false
+
+before_script:
+  - npm install -g gulp
+script: gulp test
+
+jdk:
+  - oraclejdk8
+
+os:
+  - linux
