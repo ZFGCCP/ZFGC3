@@ -8,6 +8,7 @@ sudo: false
 
 before_script:
   - npm install -g gulp bower
+  
 script: gulp test
 
 jdk:
