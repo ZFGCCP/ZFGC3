@@ -1,0 +1,80 @@
+package com.zfgc.services.forum;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.zfgc.dataprovider.ForumDataProvider;
+import com.zfgc.model.forum.Category;
+import com.zfgc.model.forum.Forum;
+import com.zfgc.model.forum.ForumIndex;
+import com.zfgc.model.users.Users;
+import com.zfgc.services.AbstractService;
+
+@Component
+public class ForumService extends AbstractService {
+	@Autowired
+	ForumDataProvider forumDataProvider;
+
+	@Autowired
+	CategoryService categoryService;
+	
+	public ForumIndex getForumIndex(Users user){
+		ForumIndex index = new ForumIndex();
+		
+		
+		try{
+			//get all categories
+			List<Category> cats = categoryService.getCategories();
+			
+			//get all forums for at the top level
+			List<Forum> forums = forumDataProvider.getForumsByParent(Arrays.asList(new Short[]{null}));
+			
+			//map the results
+			Map<Integer,Category> results = new HashMap<>();
+			
+			for(Category cat : cats){
+				results.put(cat.getCategoryId(), cat);
+			}
+			
+			for(Forum forum : forums){
+				results.get(forum.getCategoryId()).getForums().add(forum);
+			}
+			
+			List<Short> forumIds = getForumIds(forums);
+			List<Forum> subForums = forumDataProvider.getForumsByParent(forumIds);
+			Map<Short,Forum> forumResults = new HashMap<>();
+			
+			for(Forum forum : forums){
+				forumResults.put(forum.getForumId(), forum);
+			}
+			
+			for(Forum subForum : subForums){
+				forumResults.get(subForum.getParentForumId()).getSubForums().add(subForum);
+			}
+			
+			List<Category> mappedCategories = new ArrayList<Category>(results.values());
+			index.setCategories(categoryService.removeEmptyCategories(mappedCategories));
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			return null;
+		}
+		return index;
+	}
+	
+	public List<Short> getForumIds(List<Forum> forums){
+		List<Short> ids = new ArrayList<>();
+		
+		for(Forum forum : forums){
+			ids.add(forum.getForumId());
+		}
+		
+		return ids;
+	}
+}
