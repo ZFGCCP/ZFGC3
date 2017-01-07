@@ -1,6 +1,15 @@
 <div ng-controller="ForumController as vm">
 
-
+	<div ng-repeat="category in vm.categories">
+	{{category.name}}
+		<div ng-repeat="forum in category.forums">
+		{{forum.name}}
+		childboards:
+		<div ng-repeat="subforum in forum.subForums">
+		{{subforum.name}}
+		</div>	
+		</div>
+	</div>
 
 
 
