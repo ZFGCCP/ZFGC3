@@ -53,6 +53,10 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
+	"./src/main/webapp/scripts/forum/forum.service.js",
+	    
+	"./src/main/webapp/scripts/forum/forum.controller.js",
+	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/app.js",
@@ -62,6 +66,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/error/internalServerError.html",
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
+	    
+	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/header/header.html",
 	    
