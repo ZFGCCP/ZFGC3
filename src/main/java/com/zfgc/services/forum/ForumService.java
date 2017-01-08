@@ -33,7 +33,7 @@ public class ForumService extends AbstractService {
 			List<Category> cats = categoryService.getCategories();
 			
 			//get all forums for at the top level
-			List<Forum> forums = forumDataProvider.getForumsByParent(Arrays.asList(new Short[]{null}));
+			List<Forum> forums = forumDataProvider.getForumsByParent(Arrays.asList(new Short[]{null}), user);
 			
 			//map the results
 			Map<Integer,Category> results = new HashMap<>();
@@ -47,7 +47,7 @@ public class ForumService extends AbstractService {
 			}
 			
 			List<Short> forumIds = getForumIds(forums);
-			List<Forum> subForums = forumDataProvider.getForumsByParent(forumIds);
+			List<Forum> subForums = forumDataProvider.getForumsByParent(forumIds, user);
 			Map<Short,Forum> forumResults = new HashMap<>();
 			
 			for(Forum forum : forums){
