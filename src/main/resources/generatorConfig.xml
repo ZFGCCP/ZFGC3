@@ -52,7 +52,7 @@
     
     <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
     	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="CATEGORY" domainObjectName="CategoryDbObj">
     	<generatedKey column="CATEGORY_ID" sqlStatement="SELECT COALESCE(MAX(CATEGORY_ID) + 1,0) FROM CATEGORY"/>
@@ -60,6 +60,11 @@
     
     <table schema="zfgc3" tableName="FORUM" domainObjectName="ForumDbObj">
     	<generatedKey column="FORUM_ID" sqlStatement="SELECT COALESCE(MAX(FORUM_ID) + 1,0) FROM FORUM"/>
+    </table>-->
+    
+    <table schema="zfgc3" tableName="BR_MEMBER_GROUP_FORUM" domainObjectName="brMemberGroupForumDbObj">
+		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="WRITE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
     <!-- views -->

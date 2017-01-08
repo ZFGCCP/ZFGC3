@@ -11,6 +11,8 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dbobj.ForumDbObj;
 import com.zfgc.dbobj.ForumDbObjExample;
 import com.zfgc.mappers.ForumDbObjMapper;
+import com.zfgc.model.forum.BrMemberGroupForum;
+import com.zfgc.model.users.Users;
 
 @Component
 public class ForumDao extends AbstractDao {
@@ -19,36 +21,35 @@ public class ForumDao extends AbstractDao {
 	@Autowired
 	ForumDbObjMapper forumDbObjMapper;
 	
-	public List<ForumDbObj> getForumsByParent(Short parentId) throws Exception{
-		ForumDbObjExample forumDbObjExample = new ForumDbObjExample();
-		forumDbObjExample.createCriteria().andParentForumIdEqualTo(parentId);
-		
-		try{
-		return forumDbObjMapper.selectByExample(forumDbObjExample);
-		}
-		catch(Exception ex){
-			super.logDbGeneralError(LOGGER, "FORUM");
-			ex.printStackTrace();
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
-	public List<ForumDbObj> getForumsByParent(List<Short> parentId) throws Exception{
+	public List<ForumDbObj> getForumsByParent(List<Short> parentId, Users user) throws Exception{
 		
 		StringBuilder sql = new StringBuilder();
-		
-		sql.append("SELECT FORUM_ID,CATEGORY_ID,PARENT_FORUM_ID,SEQ_NO,NAME,DESCRIPTION \n")
-		   .append("FROM FORUM \n")
+		List<Integer> groups = user.getMemberGroups();
+		//show all forums this user has permission to read.
+		//this includes anything permission with a read or write flag
+		//including the guest role
+		sql.append("SELECT F.FORUM_ID,F.CATEGORY_ID,F.PARENT_FORUM_ID,F.SEQ_NO,F.NAME,F.DESCRIPTION \n")
+		   .append("FROM FORUM F\n")
+		   .append("INNER JOIN BR_MEMBER_GROUP_FORUM M ON M.FORUM_ID = F.FORUM_ID AND (");
+		   
+		   if(groups.size() > 0){
+			   sql.append("M.MEMBER_GROUP_ID IN (:secondaryGroups) OR ");
+		   }
+		   sql.append("M.MEMBER_GROUP_ID = :primaryGroup) \n")
 		   .append("WHERE PARENT_FORUM_ID IN (:parentIds)");
 		
 		if(parentId.contains(null)){
 			sql.append(" OR PARENT_FORUM_ID IS NULL");
 		}
 		
-		sql.append(" ORDER BY PARENT_FORUM_ID ASC, SEQ_NO ASC");
+		sql.append(" AND (M.READ_FLAG = 1 OR M.WRITE_FLAG = 1) \n")
+		   .append("GROUP BY F.FORUM_ID \n")
+		   .append("ORDER BY PARENT_FORUM_ID ASC, SEQ_NO ASC");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
 		params.addValue("parentIds", parentId);
+		params.addValue("secondaryGroups", groups);
+		params.addValue("primaryGroup", user.getPrimaryMemberGroupId());
 		try{
 			return jdbcTemplate.query(sql.toString(), params, new BeanPropertyRowMapper(ForumDbObj.class));
 		}
@@ -85,5 +86,17 @@ public class ForumDao extends AbstractDao {
 			ex.printStackTrace();
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	public void createNewForumViewPermissions(Integer memberGroupId, List<BrMemberGroupForum> memberGroupForums){
+		//TODO
+		/*StringBuilder sql = new StringBuilder();
+		
+		sql.append("INSERT INTO BR_MEMBER_GROUP_FORUM \n")
+		   .append("(FORUM_ID,MEMBER_GROUP_ID,READ_FLAG,WRITE_FLAG) \n");
+		
+		for(BrMemberGroupForum brMemberGroupForum : memberGroupForums){
+			sql.append("(")
+		}*/
 	}
 }

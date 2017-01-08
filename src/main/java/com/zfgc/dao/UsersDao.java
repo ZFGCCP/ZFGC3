@@ -354,5 +354,40 @@ public class UsersDao extends AbstractDao {
 		}
 	}
 	
+	public List<Integer> getMemberGroupsByToken(String token){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT M.MEMBER_GROUP_ID AS MEMBER_GROUP_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForList(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting membergroups for " + token);
+			return null;
+		}
+	}
+	
+	public Integer getPrimaryMemberGroupByToken(String token){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT M.PRIMARY_MEMBER_GROUP_ID AS MEMBER_GROUP_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting primary member group for " + token);
+			return null;
+		}
+	}
 	
 }

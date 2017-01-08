@@ -9,16 +9,17 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dao.ForumDao;
 import com.zfgc.dbobj.ForumDbObj;
 import com.zfgc.model.forum.Forum;
+import com.zfgc.model.users.Users;
 
 @Component
 public class ForumDataProvider extends AbstractDataProvider {
 	@Autowired
 	ForumDao forumDao;
 	
-	public List<Forum> getForumsByParent(List<Short> parentId) throws Exception{
+	public List<Forum> getForumsByParent(List<Short> parentId, Users user) throws Exception{
 		List<ForumDbObj> forumsDb = null;
 		try{
-			forumsDb = forumDao.getForumsByParent(parentId);
+			forumsDb = forumDao.getForumsByParent(parentId, user);
 		}
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
