@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dbobj.ForumDbObj;
 import com.zfgc.dbobj.ForumDbObjExample;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.ForumDbObjMapper;
 import com.zfgc.model.forum.BrMemberGroupForum;
 import com.zfgc.model.users.Users;
@@ -72,6 +73,45 @@ public class ForumDao extends AbstractDao {
 			ex.printStackTrace();
 			throw new Exception(ex.getMessage());
 		}
+	}
+	
+	public ForumDbObj getForum(Short forumId, Users user) throws ZfgcNotFoundException, Exception{
+		StringBuilder sql = new StringBuilder();
+		
+		List<Integer> groups = user.getMemberGroups();
+		
+		sql.append("SELECT F.FORUM_ID, F.NAME, F.CATEGORY_ID, F.PARENT_FORUM_ID \n")
+		   .append("FROM FORUM F \n")
+		   .append("INNER JOIN BR_MEMBER_GROUP_FORUM M ON M.FORUM_ID = F.FORUM_ID AND (");
+		
+		if(groups.size() > 0){
+			sql.append("M.MEMBER_GROUP_ID IN (:secondaryGroups) OR");
+		}
+		
+		sql.append("M.MEMBER_GROUP_ID = :primaryGroupId) \n")
+		   .append("WHERE (M.READ_FLAG = 1 OR M.WRITE_FLAG = 1) AND\n")
+		   .append("      F.FORUM_ID = :forumId");
+
+		List<ForumDbObj> results = null;
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("secondaryGroups", groups);
+		params.addValue("primaryGroupId", user.getPrimaryMemberGroupId());
+		params.addValue("forumId",forumId);
+		try{
+			results = jdbcTemplate.query(sql.toString(), params,new BeanPropertyRowMapper(ForumDbObj.class));
+		}
+		catch(Exception ex){
+			super.logDbSelectError(LOGGER, "FORUM");
+			ex.printStackTrace();
+			throw new Exception(ex.getMessage());
+		}
+		
+		if(results.size() == 0){
+			throw new ZfgcNotFoundException("Forum Id" + forumId);
+		}
+		
+		return results.get(0);
+		   
 	}
 	
 	public List<ForumDbObj> getForumsByCategory(List<Integer> categoryId) throws Exception{

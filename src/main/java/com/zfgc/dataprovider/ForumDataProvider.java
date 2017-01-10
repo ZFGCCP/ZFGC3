@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.ForumDao;
 import com.zfgc.dbobj.ForumDbObj;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.Forum;
 import com.zfgc.model.users.Users;
 
@@ -62,5 +63,17 @@ public class ForumDataProvider extends AbstractDataProvider {
 		}
 		
 		return forums;
+	}
+	
+	public Forum getForum(Short forumId, Users user) throws ZfgcNotFoundException, Exception{
+		try{
+			return mapper.map(forumDao.getForum(forumId, user), Forum.class);
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException("Forum Id " + forumId);
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
 	}
 }
