@@ -85,4 +85,9 @@ public class AuthToken extends BaseZfgcModel {
 			ttl = null;
 		}
 	}
+	@Override
+	public String getHMAC() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

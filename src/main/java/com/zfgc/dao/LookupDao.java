@@ -7,6 +7,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.lookups.Lookup;
 
 @Component
@@ -38,5 +39,12 @@ public class LookupDao extends AbstractDao{
 			throw new Exception(ex.getMessage());
 		}
 	}
+
+	@Override
+	public Boolean validateIntegrity(BaseZfgcModel model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }

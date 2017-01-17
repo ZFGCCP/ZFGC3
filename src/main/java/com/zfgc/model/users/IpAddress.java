@@ -2,7 +2,9 @@ package com.zfgc.model.users;
 
 import java.util.Date;
 
-public class IpAddress{
+import com.zfgc.model.BaseZfgcModel;
+
+public class IpAddress extends BaseZfgcModel{
 	private String ipAddress;
 	private Integer version;
 	private Date lockedUntil;
@@ -30,6 +32,11 @@ public class IpAddress{
 	}
 	public void setLockedUntil(Date lockedUntil) {
 		this.lockedUntil = lockedUntil;
+	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

@@ -36,4 +36,9 @@ public class Category extends BaseZfgcModel{
 	public void setForums(List<Forum> forums) {
 		this.forums = forums;
 	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -164,4 +164,12 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public Integer getPrimaryMemberGroupByToken(String token){
 		return usersDao.getPrimaryMemberGroupByToken(token);
 	}
+	
+	public Integer getUsersIdByToken(String token){
+		return usersDao.getUsersIdByToken(token);
+	}
+
+	public Integer getPrimaryMemberGroupIdByToken(String token) {
+		return usersDao.getPrimaryMemberGroupIdByToken(token);
+	}
 }

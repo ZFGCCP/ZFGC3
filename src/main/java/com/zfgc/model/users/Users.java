@@ -72,6 +72,10 @@ public class Users extends BaseZfgcModel {
 		this.password = password;
 	}
 	public Integer getUsersId() {
+		if(usersId == null){
+			return usersDataProvider.getUsersIdByToken(request.getHeader("authorization"));
+		}
+		
 		return usersId;
 	}
 	public void setUsersId(Integer usersId) {
@@ -271,5 +275,10 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setPrimaryMemberGroupId(Integer primaryMemberGroupId) {
 		this.primaryMemberGroupId = primaryMemberGroupId;
+	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

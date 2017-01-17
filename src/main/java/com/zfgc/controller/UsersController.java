@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -13,7 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.userprofile.UserProfileService;
 import com.zfgc.services.users.UsersService;
 
 @RestController
@@ -23,8 +26,9 @@ class UsersController extends BaseController{
 	@Autowired
 	UsersService usersService;
 	
-	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
+	@Autowired
+	UserProfileService userProfileService;
+	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
 		user = usersService.createNewUser(user, request);
@@ -69,6 +73,22 @@ class UsersController extends BaseController{
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authorized to access this resource.");
 		}
 		catch(Exception ex){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+		}
+	}
+	
+	@RequestMapping(value="/profile/{userId}", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){
+		try {
+			UserProfileView user = userProfileService.getProfile(userId, zfgcUser);
+			
+			return ResponseEntity.status(HttpStatus.OK).body(user);
+		} 
+		catch(ZfgcNotFoundException ex){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested resource could not be found.");
+		}
+		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
 	}

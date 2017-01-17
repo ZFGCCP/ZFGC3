@@ -23,7 +23,7 @@ public class ForumController extends BaseController {
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity getForumIndex(){
-		ForumIndex forumIndex = forumService.getForumIndex(ZfgcUser);
+		ForumIndex forumIndex = forumService.getForumIndex(zfgcUser);
 		
 		if(forumIndex == null){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
@@ -36,7 +36,7 @@ public class ForumController extends BaseController {
 			                       @RequestParam("itemsPerPage") Integer itemsPerPage, 
 			                       @RequestParam("pageNo") Integer pageNo){
 		try {
-			Forum forum = forumService.getForum(forumId, itemsPerPage, pageNo,ZfgcUser);
+			Forum forum = forumService.getForum(forumId, itemsPerPage, pageNo,zfgcUser);
 			
 			if(forum == null){
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});

@@ -31,4 +31,9 @@ public class BrMemberGroupForum extends BaseZfgcModel{
 	public void setWriteFlag(Boolean writeFlag) {
 		this.writeFlag = writeFlag;
 	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

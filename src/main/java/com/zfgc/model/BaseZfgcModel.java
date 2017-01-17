@@ -1,6 +1,6 @@
 package com.zfgc.model;
 
-public class BaseZfgcModel{
+public abstract class BaseZfgcModel{
 	private ZfgcValidationErrors errors = new ZfgcValidationErrors();
 
 	public ZfgcValidationErrors getErrors() {
@@ -10,4 +10,6 @@ public class BaseZfgcModel{
 	public void setErrors(ZfgcValidationErrors errors) {
 		this.errors = errors;
 	}
+	
+	public abstract String getHMAC() throws Exception; 
 }

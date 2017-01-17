@@ -14,6 +14,7 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.AuthTokenDbObjMapper;
 import com.zfgc.mappers.EmailAddressDbObjMapper;
 import com.zfgc.mappers.IpAddressDbObjMapper;
+import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
@@ -108,5 +109,11 @@ public class AuthenticationDao extends AbstractDao{
 		}
 		
 		return dbObj.get(0);
+	}
+
+	@Override
+	public Boolean validateIntegrity(BaseZfgcModel model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
