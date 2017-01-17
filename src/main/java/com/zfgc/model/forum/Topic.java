@@ -94,6 +94,11 @@ public class Topic extends BaseZfgcModel {
 	public void setPostCount(Integer postCount) {
 		this.postCount = postCount;
 	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

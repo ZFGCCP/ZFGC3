@@ -99,4 +99,9 @@ public class Forum extends BaseZfgcModel {
 	public void setTotalPages(Integer totalPages) {
 		this.totalPages = totalPages;
 	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

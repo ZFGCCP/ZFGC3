@@ -12,6 +12,7 @@ import com.zfgc.dbobj.ForumDbObj;
 import com.zfgc.dbobj.ForumDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.ForumDbObjMapper;
+import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.forum.BrMemberGroupForum;
 import com.zfgc.model.users.Users;
 
@@ -138,5 +139,11 @@ public class ForumDao extends AbstractDao {
 		for(BrMemberGroupForum brMemberGroupForum : memberGroupForums){
 			sql.append("(")
 		}*/
+	}
+
+	@Override
+	public Boolean validateIntegrity(BaseZfgcModel model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

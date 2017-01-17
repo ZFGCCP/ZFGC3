@@ -51,7 +51,6 @@ public class Users extends BaseZfgcModel {
 	private Boolean agreeToTermsFlag = false;
 	private List<Integer> memberGroups = new ArrayList<>();
 	private Integer primaryMemberGroupId = 0;
-	private Integer primaryMemberGroupId;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -276,5 +275,10 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setPrimaryMemberGroupId(Integer primaryMemberGroupId) {
 		this.primaryMemberGroupId = primaryMemberGroupId;
+	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

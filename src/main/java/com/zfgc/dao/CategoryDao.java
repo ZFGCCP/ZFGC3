@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dbobj.CategoryDbObj;
 import com.zfgc.dbobj.CategoryDbObjExample;
 import com.zfgc.mappers.CategoryDbObjMapper;
+import com.zfgc.model.BaseZfgcModel;
 
 @Component
 public class CategoryDao extends AbstractDao {
@@ -28,5 +29,11 @@ public class CategoryDao extends AbstractDao {
 			e.printStackTrace();
 			throw new Exception(e.getMessage());
 		}
+	}
+
+	@Override
+	public Boolean validateIntegrity(BaseZfgcModel model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

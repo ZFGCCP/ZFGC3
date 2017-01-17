@@ -12,6 +12,7 @@ import com.zfgc.dbobj.ForumDbObj;
 import com.zfgc.dbobj.ThreadDbObj;
 import com.zfgc.dbobj.ThreadDbObjExample;
 import com.zfgc.mappers.ThreadDbObjMapper;
+import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
 
 @Component
@@ -76,5 +77,11 @@ public class ThreadDao extends AbstractDao {
 		}
 		
 		
+	}
+
+	@Override
+	public Boolean validateIntegrity(BaseZfgcModel model) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
