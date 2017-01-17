@@ -39,6 +39,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
+	"./src/main/webapp/scripts/users/users.controller.js",
+	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
@@ -77,7 +79,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
-	"./src/main/webapp/scripts/modal/templates/modalValidationError.html"
+	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/user-profile.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/user-summary.html"
 	    
 	],
 

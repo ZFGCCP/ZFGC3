@@ -5,7 +5,7 @@
 }
 
 .section-header{
-	
+	border-bottom:1px solid;	
 
 	.section-title{
 		
@@ -19,19 +19,23 @@
 }
 
 .section-body{
-
+	margin-top:20px;
 }
 
 .widget-container{
    width:90%;
    margin-left:12px;
    margin-right: auto;
+   min-height:300px;
    
    .widget-title{
    
    }
    
    .widget-body{
-   
+   		.column-data{
+   			margin-left:12px;
+   			margin-top:12px;
+   		}
    }
 }
