@@ -5,6 +5,7 @@ import com.zfgc.model.BaseZfgcModel;
 public class IpAddress extends BaseZfgcModel{
 	private String ipAddress;
 	private Integer version;
+	private Date lockedUntil;
 	private Boolean isSpammerFlag = true; //just assume everyone is a spammer by default, we'll have a proper check for this during registration
 	public String getIpAddress() {
 		return ipAddress;
@@ -24,10 +25,11 @@ public class IpAddress extends BaseZfgcModel{
 	public void setIsSpammerFlag(Boolean isSpammerFlag) {
 		this.isSpammerFlag = isSpammerFlag;
 	}
-	@Override
-	public String getHMAC() {
-		// TODO Auto-generated method stub
-		return null;
+	public Date getLockedUntil() {
+		return lockedUntil;
+	}
+	public void setLockedUntil(Date lockedUntil) {
+		this.lockedUntil = lockedUntil;
 	}
 	
 	

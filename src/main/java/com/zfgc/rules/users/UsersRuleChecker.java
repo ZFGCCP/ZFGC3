@@ -3,6 +3,7 @@ package com.zfgc.rules.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
 import com.zfgc.rules.AbstractRulesChecker;
@@ -20,41 +21,36 @@ public class UsersRuleChecker extends AbstractRulesChecker<Users>{
 	UsersService usersService;
 	
 	@Override
-	public void rulesCheck(Users model) throws Exception {
-		try {
-			if(authenticationService.doesEmailExist(model.getEmailAddress())){
-				Rule emailDuplicate = new Rule();
-				emailDuplicate.setRuleName("EMAIL_DUPLICATE");
-				emailDuplicate.setErrorMessage("Email Address already exists");
-				model.getErrors().getRuleErrors().add(emailDuplicate);
-			}
-			
-			if(usersService.doesDisplayNameExist(model.getDisplayName())){
-				Rule displayNameDuplicate = new Rule();
-				displayNameDuplicate.setRuleName("DISPLAY_NAME_DUPLICATE");
-				displayNameDuplicate.setErrorMessage("That display name is already taken");
-				model.getErrors().getRuleErrors().add(displayNameDuplicate);
-			}
-			
-			if(usersService.doesLoginNameExist(model.getLoginName())){
-				Rule loginNameDuplicate = new Rule();
-				loginNameDuplicate.setRuleName("LOGIN_NAME_DUPLICATE");
-				loginNameDuplicate.setErrorMessage("That login name is already taken");
-				model.getErrors().getRuleErrors().add(loginNameDuplicate);
-			}
-			
-			if(model.getAge() < 13){
-				Rule coppaViolation = new Rule();
-				coppaViolation.setRuleName("COPPA_VIOLATION_AGE");
-				coppaViolation.setErrorMessage("You must be 13 years of age or older to use this forum.");
-				model.getErrors().getRuleErrors().add(coppaViolation);
-			}
-			
-			checkAgreeToTerms(model);
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+	public void rulesCheck(Users model) throws ZfgcValidationException, Exception {
+		if(authenticationService.doesEmailExist(model.getEmailAddress())){
+			Rule emailDuplicate = new Rule();
+			emailDuplicate.setRuleName("EMAIL_DUPLICATE");
+			emailDuplicate.setErrorMessage("Email Address already exists");
+			model.getErrors().getRuleErrors().add(emailDuplicate);
 		}
 		
+		if(usersService.doesDisplayNameExist(model.getDisplayName())){
+			Rule displayNameDuplicate = new Rule();
+			displayNameDuplicate.setRuleName("DISPLAY_NAME_DUPLICATE");
+			displayNameDuplicate.setErrorMessage("That display name is already taken");
+			model.getErrors().getRuleErrors().add(displayNameDuplicate);
+		}
+		
+		if(usersService.doesLoginNameExist(model.getLoginName())){
+			Rule loginNameDuplicate = new Rule();
+			loginNameDuplicate.setRuleName("LOGIN_NAME_DUPLICATE");
+			loginNameDuplicate.setErrorMessage("That login name is already taken");
+			model.getErrors().getRuleErrors().add(loginNameDuplicate);
+		}
+		
+		if(model.getAge() < 13){
+			Rule coppaViolation = new Rule();
+			coppaViolation.setRuleName("COPPA_VIOLATION_AGE");
+			coppaViolation.setErrorMessage("You must be 13 years of age or older to use this forum.");
+			model.getErrors().getRuleErrors().add(coppaViolation);
+		}
+		
+		checkAgreeToTerms(model);
 	}
 	
 	protected void checkAgreeToTerms(Users model){

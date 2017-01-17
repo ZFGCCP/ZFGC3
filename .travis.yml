@@ -1,0 +1,31 @@
+language: java
+
+node_js:
+  - "6"
+  
+install: npm install
+
+sudo: false
+
+before_script:
+  - npm install -g gulp bower
+  
+script:
+  - gulp test
+  - mvn test
+
+jdk:
+  - oraclejdk8
+
+os:
+  - linux
+  
+env:
+  - CXX=g++-4.8
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - g++-4.8

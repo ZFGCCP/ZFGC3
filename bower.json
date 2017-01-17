@@ -2,9 +2,6 @@
   "name": "zfgc3",
   "version": "0.0.0",
   "homepage": "https://github.com/ZFGCCP/ZFGC3",
-  "authors": [
-    "Christopher Bebry <invalidsyntax@gmail.com>"
-  ],
   "description": "",
   "main": "",
   "moduleType": [],
@@ -24,6 +21,8 @@
     "jquery": "~2.1.4",
     "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.4.8",
-    "tether": "~1.1.1"
+    "tether": "~1.1.1",
+    "angular-datepicker": "^2.0.3",
+    "ng-dialog": "^0.6.4"
   }
 }

@@ -48,7 +48,9 @@ public class Users extends BaseZfgcModel {
 	private Date loginFailedAttempts;
 	private Integer timeOffset;
 	private String location;
-	private Boolean agreeToTermsFlag;
+	private Boolean agreeToTermsFlag = false;
+	private List<Integer> memberGroups = new ArrayList<>();
+	private Integer primaryMemberGroupId = 0;
 	private Integer primaryMemberGroupId;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
@@ -63,7 +65,7 @@ public class Users extends BaseZfgcModel {
 	@JsonIgnore
 	private UserHashInfo userHashInfo = new UserHashInfo();
 	
-	@JsonIgnore
+	
 	public String getPassword() {
 		return password;
 	}
@@ -87,7 +89,7 @@ public class Users extends BaseZfgcModel {
 		this.displayName = displayName;
 	}
 	public String getLoginName() {
-		if(loginName == null || loginName.equals("")){
+		if(request != null && request.getHeader("authorization") != null && (loginName == null || loginName.equals(""))){
 			return usersDataProvider.getLoginNameByToken(request.getHeader("authorization"));
 		}
 		return loginName;
@@ -109,7 +111,7 @@ public class Users extends BaseZfgcModel {
 		this.dateRegistered = dateRegistered;
 	}
 	public Boolean getActiveFlag() {
-		if(activeFlag == null){
+		if(request != null && request.getHeader("authorization") != null && activeFlag == null){
 			return usersDataProvider.getActiveFlagByToken(request.getHeader("authorization"));
 		}
 		
@@ -119,7 +121,7 @@ public class Users extends BaseZfgcModel {
 		this.activeFlag = isActiveFlag;
 	}
 	public IpAddress getPrimaryIpAddress() {
-		if(primaryIpAddress == null){
+		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
 			return ipDataProvider.getPrimaryIpByToken(request.getHeader("authorization"));
 		}
 		return primaryIpAddress;
@@ -136,12 +138,8 @@ public class Users extends BaseZfgcModel {
 	public EmailAddress getEmailAddress() {
 		return emailAddress;
 	}
-	public void setEmailAddressObj(EmailAddress emailAddress) {
+	public void setEmailAddress(EmailAddress emailAddress){
 		this.emailAddress = emailAddress;
-	}
-	public void setEmailAddress(String emailAddress){
-		this.emailAddress = new EmailAddress();
-		this.emailAddress.setEmailAddress(emailAddress);
 	}
 	public Date getBirthDate() {
 		return birthDate;
@@ -259,14 +257,19 @@ public class Users extends BaseZfgcModel {
 	public void setTimeOffsetLkup(String timeOffsetLkup) {
 		this.timeOffsetLkup = timeOffsetLkup;
 	}
-	@Override
-	public String getHMAC() {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Integer> getMemberGroups() {
+		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
+			return usersDataProvider.getMemberGroupsByToken(request.getHeader("authorization"));
+		}
+		
+		return memberGroups;
+	}
+	public void setMemberGroups(List<Integer> memberGroups) {
+		this.memberGroups = memberGroups;
 	}
 	public Integer getPrimaryMemberGroupId() {
-		if(primaryMemberGroupId == null){
-			return usersDataProvider.getPrimaryMemberGroupIdByToken(request.getHeader("authorization"));
+		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
+			return usersDataProvider.getPrimaryMemberGroupByToken(request.getHeader("authorization"));
 		}
 		
 		return primaryMemberGroupId;

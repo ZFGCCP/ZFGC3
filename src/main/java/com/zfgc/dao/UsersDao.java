@@ -206,9 +206,8 @@ public class UsersDao extends AbstractDao<Users> {
 	public Integer incrementLoginFails(String loginName) throws Exception{
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("UPDATE USERS \n")
-		   .append("SET LOGIN_FAILED_ATTEMPTS = \n")
-		   .append("(SELECT LOGIN_FAILED_ATTEMPTS + 1 FROM users WHERE LOGIN_NAME = :loginName) \n")
+		sql.append("UPDATE users \n")
+		   .append("SET LOGIN_FAILED_ATTEMPTS =  LOGIN_FAILED_ATTEMPTS + 1\n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
@@ -231,7 +230,7 @@ public class UsersDao extends AbstractDao<Users> {
 	public void lockAccount(String loginName, Date lockTime) throws Exception{
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("UPDATE USERS \n")
+		sql.append("UPDATE users \n")
 		   .append("SET LOCKED_UNTIL = :lockTime \n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
@@ -251,8 +250,8 @@ public class UsersDao extends AbstractDao<Users> {
 	public void unlockAccount(String loginName) throws Exception{
 		StringBuilder sql = new StringBuilder();
 		
-		sql.append("UPDATE USERS \n")
-		   .append("SET LOCKED_UNTIL = null, LOGIN_FAILED_ATTEMPS = 0 \n")
+		sql.append("UPDATE users \n")
+		   .append("SET LOCKED_UNTIL = null, LOGIN_FAILED_ATTEMPTS = 0 \n")
 		   .append("WHERE LOGIN_NAME = :loginName");
 		
 		MapSqlParameterSource params = new MapSqlParameterSource();
@@ -397,5 +396,40 @@ public class UsersDao extends AbstractDao<Users> {
 		}
 	}
 	
+	public List<Integer> getMemberGroupsByToken(String token){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT M.MEMBER_GROUP_ID AS MEMBER_GROUP_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForList(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting membergroups for " + token);
+			return null;
+		}
+	}
+	
+	public Integer getPrimaryMemberGroupByToken(String token){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT M.PRIMARY_MEMBER_GROUP_ID AS MEMBER_GROUP_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting primary member group for " + token);
+			return null;
+		}
+	}
 	
 }

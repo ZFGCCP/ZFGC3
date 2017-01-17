@@ -14,6 +14,7 @@ hs_err_pid*
 
 # nodejs
 node_modules/
+npm-debug.log
 
 # maven
 pom.xml.tag
@@ -33,3 +34,5 @@ src/main/resources/application.properties
 
 .settings/
 /bin/
+
+src/main/webapp/assets/dist

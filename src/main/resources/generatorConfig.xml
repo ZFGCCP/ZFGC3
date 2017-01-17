@@ -50,6 +50,31 @@
     	<generatedKey column="AUTH_TOKEN_ID" sqlStatement="SELECT COALESCE(MAX(AUTH_TOKEN_ID) + 1,0) FROM AUTH_TOKEN"/>
     </table>-->
     
+    <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
+    	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <table schema="zfgc3" tableName="CATEGORY" domainObjectName="CategoryDbObj">
+    	<generatedKey column="CATEGORY_ID" sqlStatement="SELECT COALESCE(MAX(CATEGORY_ID) + 1,0) FROM CATEGORY"/>
+    </table>
+    
+    <table schema="zfgc3" tableName="FORUM" domainObjectName="ForumDbObj">
+    	<generatedKey column="FORUM_ID" sqlStatement="SELECT COALESCE(MAX(FORUM_ID) + 1,0) FROM FORUM"/>
+    </table>
+    
+    <table schema="zfgc3" tableName="BR_MEMBER_GROUP_FORUM" domainObjectName="brMemberGroupForumDbObj">
+		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="WRITE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>-->
+    
+    <table schema="zfgc3" tableName="THREAD" domainObjectName="ThreadDbObj">
+    	<generatedKey column="THREAD_ID" sqlStatement="SELECT COALESCE(MAX(THREAD_ID) + 1,0) FROM THREAD"/>
+    	<columnOverride column="NEW_POSTS_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="LOCKED_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="STICKY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="POLL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
     <!-- views -->
     
     <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">

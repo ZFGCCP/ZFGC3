@@ -26,6 +26,8 @@ public class LookupService{
 	public static final String MEMBER_GROUP = "MEMBER_GROUP";
 	public static final String LANGUAGE = "LANGUAGE";
 	public static final String LOG_TYPE = "LOG_TYPE";
+	public static final String THREAD_STATUS = "THREAD_STATUS";
+	public static final String POST_ICON = "POST_ICON";
 	
 	@PostConstruct
 	public void loadLookups(){
@@ -36,6 +38,8 @@ public class LookupService{
 			lookups.put(MEMBER_GROUP, lookupDao.getLookup(MEMBER_GROUP));
 			lookups.put(LANGUAGE, lookupDao.getLookup(LANGUAGE));
 			lookups.put(LOG_TYPE, lookupDao.getLookup(LOG_TYPE));
+			lookups.put(THREAD_STATUS, lookupDao.getLookup(THREAD_STATUS));
+			lookups.put(POST_ICON, lookupDao.getLookup(POST_ICON));
 			LOGGER.info("Finished loading lookups.");
 		} catch (Exception e) {
 			LOGGER.error("Failed to load lookups due to exception.");

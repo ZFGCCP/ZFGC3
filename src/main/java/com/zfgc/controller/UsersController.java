@@ -28,9 +28,7 @@ class UsersController extends BaseController{
 	
 	@Autowired
 	UserProfileService userProfileService;
-	
-	@RequestMapping(value="/new-user", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
+	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
 		user = usersService.createNewUser(user, request);
@@ -39,7 +37,7 @@ class UsersController extends BaseController{
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
 		else if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(user.getErrors());
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
 		}
 		return ResponseEntity.status(HttpStatus.OK).body(new String[]{"Created user successfully."});
 	}
@@ -54,7 +52,7 @@ class UsersController extends BaseController{
 		}
 		
 		if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.CONFLICT).body(user.getErrors());
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user.getErrors());
 		}
 
 		return ResponseEntity.status(HttpStatus.OK).body(new String[]{user.getAuthToken()});
