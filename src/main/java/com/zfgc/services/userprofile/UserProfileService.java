@@ -27,8 +27,9 @@ public class UserProfileService {
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
 		
+		Integer currentUserId = zfgcUser.getUsersId();
 		//permissions
-		if(!zfgcUser.getUsersId().equals(userId) && 
+		if(currentUserId != null && !currentUserId.equals(userId) && 
 			!lookupService.getLkupValue(LookupService.MEMBER_GROUP,zfgcUser.getPrimaryMemberGroupId()).equals("Manager")){
 			
 			ProfileSummary summary = profileView.getProfileSummary();

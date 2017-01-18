@@ -1,38 +1,43 @@
 <div class="widget-container">
-   <div class="widget-title">Contact Info</div>
-   <div class="widget-body">
+   <div class="widget-header">
+   		<div class="widget-control">
+   			<span data-toggle="collapse" data-target="#contact-info">+</span>
+   			<span class="widget-title">Contact Info</span>
+   		</div>
+   </div>
+   <div class="widget-body collapse" id="contact-info">
    
    	   <div class="column-data">
 	   	   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-3 row-label">
 			      <label>Email:</label> 
 			   </div>
-			   <div class="user-contact-title col-xs-9">x</div>
+			   <div class="user-contact-title col-xs-9">{{vm.profile.emailAddress}}</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-3 row-label">
 		      		<label>Facebook:</label> 
 		   	   </div>
 			   <div class="user-contact-title col-xs-9">x</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-3 row-label">
 		      		<label>Skype:</label> 
 		   	   </div>
 			   <div class="user-contact-title col-xs-9">x</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-3 row-label">
 		      		<label>AIM:</label> 
 		   	   </div>
 			   <div class="user-contact-title col-xs-9">x</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-3 row-label">
 		      		<label>Hangouts:</label> 
 		   	   </div>
 			   <div class="user-contact-title col-xs-9">x</div>
@@ -42,50 +47,55 @@
 </div>
 
 <div class="widget-container">
-   <div class="widget-title">Summary</div>
-   <div class="widget-body">
-   
+	<div class="widget-header">
+  		<div class="widget-control">
+  			<span data-toggle="collapse" data-target="#summary">+</span>
+  			<span class="widget-title">Summary</span>
+  		</div>
+    </div>
+
+   <div class="widget-body collapse" id="summary">
    	   <div class="column-data">
 	   	   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-12 col-sm-3 row-label">
 			      <label>Username:</label> 
 			   </div>
-			   <div class="user-contact-title col-xs-9">{{}}</div>
+			   <div class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.loginName}}</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-12 col-sm-3 row-label">
 		      		<label>Date Registered:</label> 
 		   	   </div>
-			   <div class="user-contact-title col-xs-9">{{}}</div>
+			   <div class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.dateRegisteredAsString}}</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-12 col-sm-3 row-label">
 		      		<label>Primary IP:</label> 
 		   	   </div>
-			   <div class="user-contact-title col-xs-9">{{}}</div>
+			   <div class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.primaryIp}}</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-12 col-sm-3 row-label">
 		      		<label>Primary Host:</label> 
 		   	   </div>
-			   <div class="user-contact-title col-xs-9">{{}}</div>
+			   <div class="user-contact-title col-xs-12 col-sm-9">{{}}</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-12 col-sm-3 row-label">
 		      		<label>Local Time:</label> 
 		   	   </div>
-			   <div class="user-contact-title col-xs-9">{{}}</div>
+			   <div class="user-contact-title col-xs-12 col-sm-9">{{}}</div>
 		   </div>
 		   
 		   <div class="row">
-			   <div class="col-xs-3">
+			   <div class="col-xs-12 col-sm-3 row-label">
 		      		<label>Last Active At:</label> 
 		   	   </div>
-			   <div class="user-contact-title col-xs-9">{{}}</div>
+			   <div class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.lastLoginAsString}}</div>
 		   </div>
 	   </div>
    </div>

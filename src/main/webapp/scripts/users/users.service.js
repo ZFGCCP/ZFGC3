@@ -4,7 +4,7 @@
 	function UserService($resource){
 		var UserService = {};
 		
-		UserService.resource = $resource('/forum/users/newuser', {},
+		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
 		{
 			newUser:{
 			         url: '/forum/users/newuser',
@@ -20,9 +20,9 @@
 		                                      
 		};
 		UserService.loadProfile = function(userId,vm){
-	         var profile = UserService.resource.userProfile(userId);   
+	         var profile = UserService.resource.userProfile({'userId':userId});   
 	         profile.$promise.then(function(data){
-	        	vm.profile = data; 
+	        	vm.profile = data.profileSummary; 
 	         });
 	         	                                      
 		};
