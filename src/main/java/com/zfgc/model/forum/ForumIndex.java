@@ -17,4 +17,10 @@ public class ForumIndex extends BaseZfgcModel{
 	public void setCategories(List<Category> categories) {
 		this.categories = categories;
 	}
+
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

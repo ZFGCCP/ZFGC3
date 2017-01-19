@@ -30,7 +30,7 @@ import java.util.Random;
 @Service
 public class AuthenticationService  extends AbstractService {
 	
-	private final String HASH_ALGORITHM = "SHA-256";
+	private final static String HASH_ALGORITHM = "SHA-256";
 	private final int SALT_LENGTH = 128;
 	private Logger LOGGER = Logger.getLogger(AuthenticationService.class);
 	
@@ -43,26 +43,11 @@ public class AuthenticationService  extends AbstractService {
 	@Autowired
 	private UsersDataProvider usersDataProvider;
 	
-	//returns null if the hash fails
 	public String createPasswordHash(String password, String salt) throws Exception{
 		String hashThis = password + salt;
 		
 		try{
-			MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
-			digest.update(hashThis.getBytes());
-			byte[] hash = digest.digest();
-			
-			StringBuffer hexString = new StringBuffer();
-			for (int i = 0; i < hash.length; i++) {
-			    if ((0xff & hash[i]) < 0x10) {
-			        hexString.append("0"
-			                + Integer.toHexString((0xFF & hash[i])));
-			    } else {
-			        hexString.append(Integer.toHexString(0xFF & hash[i]));
-			    }
-			}
-			
-			return hexString.toString();
+			return generateSha256(hashThis);
 		}
 		catch(NoSuchAlgorithmException ex){
 			LOGGER.error(ex.getMessage());
@@ -75,11 +60,24 @@ public class AuthenticationService  extends AbstractService {
 		return generateCryptoString(SALT_LENGTH);
 	}
 	
-	private String generateCryptoString(int unencodedLength){
+	public static String generateCryptoString(int unencodedLength){
 		Random cryptoRand = new SecureRandom();
 		byte[] salt = new byte[unencodedLength];
 		cryptoRand.nextBytes(salt);
 		return Base64.encodeBase64URLSafeString(salt);
+	}
+	
+	public static String generateSha256(String digestStr) throws Exception{
+		try{
+			MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
+			digest.update(digestStr.getBytes());
+			byte[] hash = digest.digest();
+			
+			return Base64.encodeBase64URLSafeString(hash);
+		}
+		catch(NoSuchAlgorithmException ex){
+			throw new Exception(ex.getMessage());
+		}
 	}
 	
 	public String generateAuthenticationToken(Users user, Integer ttl) throws Exception{
