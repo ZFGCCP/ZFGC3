@@ -1,11 +1,11 @@
 <div class="widget-container">
    <div class="widget-header">
    		<div class="widget-control">
-   			<span data-toggle="collapse" data-target="{{'#' + widgetId}}">+</span>
+   			<span ng-click="toggle()">+</span>
    			<span class="widget-title">{{widgetTitle}}</span>
    		</div>
    </div>
-   <div class="widget-body collapse" ng-attr-id="{{widgetId}}">
-   		<ng-include src="templateUrl"> </ng-include>
+   <div class="widget-body" uib-collapse="{{isCollapsed}}">
+   		<ng-transclude src="templateUrl"> </ng-transclude>
    </div>
 </div>
