@@ -37,8 +37,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
-	"./src/main/webapp/scripts/directives/tabbed-nav/tabbed-nav.directive.js",
-	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
@@ -57,19 +55,21 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
-	"./src/main/webapp/scripts/error/error.module.js",
-	    
 	"./src/main/webapp/scripts/app.js",
 	    
 	"./src/main/webapp/scripts/app.config.js",
+	    
+	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/error/internalServerError.html",
 	    
@@ -77,15 +77,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/header/header.html",
 	    
-	"./src/main/webapp/scripts/forum/forum.html",
-	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
-	    
-	"./src/main/webapp/scripts/directives/tabbed-nav/tabbed-nav.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
