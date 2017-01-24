@@ -17,17 +17,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/jquery/dist/jquery.js",
 	    
+	"./src/main/webapp/bower_components/tether/dist/js/tether.js",
+	    
 	"./src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js",
 	    
 	"./src/main/webapp/bower_components/angular-resource/angular-resource.js",
-	    
-	"./src/main/webapp/bower_components/tether/dist/js/tether.js",
 	    
 	"./src/main/webapp/bower_components/moment/moment.js",
 	    
 	"./src/main/webapp/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
 	    
 	"./src/main/webapp/bower_components/ng-dialog/js/ngDialog.js",
+	    
+	"./src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
 	    
@@ -53,25 +55,25 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
-	"./src/main/webapp/scripts/error/error.module.js",
-	    
 	"./src/main/webapp/scripts/app.js",
 	    
 	"./src/main/webapp/scripts/app.config.js",
 	    
+	"./src/main/webapp/scripts/forum/forum.html",
+	    
 	"./src/main/webapp/scripts/error/internalServerError.html",
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
-	    
-	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/header/header.html",
 	    
