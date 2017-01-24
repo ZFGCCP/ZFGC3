@@ -17,11 +17,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/jquery/dist/jquery.js",
 	    
+	"./src/main/webapp/bower_components/tether/dist/js/tether.js",
+	    
 	"./src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js",
 	    
 	"./src/main/webapp/bower_components/angular-resource/angular-resource.js",
-	    
-	"./src/main/webapp/bower_components/tether/dist/js/tether.js",
 	    
 	"./src/main/webapp/bower_components/moment/moment.js",
 	    
@@ -29,17 +29,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/ng-dialog/js/ngDialog.js",
 	    
+	"./src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+	    
 	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
+	"./src/main/webapp/scripts/directives/tabbed-nav/tabbed-nav.directive.js",
+	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
-	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
@@ -48,6 +50,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/users.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
+	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
@@ -71,15 +75,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
-	"./src/main/webapp/scripts/forum/forum.html",
-	    
 	"./src/main/webapp/scripts/header/header.html",
+	    
+	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
+	    
+	"./src/main/webapp/scripts/directives/tabbed-nav/tabbed-nav.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
@@ -91,7 +97,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
 	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html"
+	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html"
 	    
 	],
 
