@@ -39,8 +39,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
-	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
@@ -48,6 +46,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/users.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
+	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
@@ -91,7 +91,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
 	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html"
+	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html"
 	    
 	],
 
