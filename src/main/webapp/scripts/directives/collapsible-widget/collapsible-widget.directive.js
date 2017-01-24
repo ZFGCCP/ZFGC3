@@ -16,7 +16,7 @@
 		directive.link = function ($scope, element, attrs) 
 		{ 
 			$scope.vm = $scope.contentModel;
-			$scope.isCollapsed = false;
+			$scope.isCollapsed = true;
 			
 			$scope.toggle = function(){
 				$scope.isCollapsed = !$scope.isCollapsed;

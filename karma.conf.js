@@ -31,6 +31,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
 	    
+	"./src/main/webapp/bower_components/angular-animate/angular-animate.js",
+	    
 	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
@@ -55,25 +57,25 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
-	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
-	"./src/main/webapp/scripts/error/error.module.js",
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
+	"./src/main/webapp/scripts/error/error.module.js",
+	    
 	"./src/main/webapp/scripts/app.js",
 	    
 	"./src/main/webapp/scripts/app.config.js",
 	    
-	"./src/main/webapp/scripts/forum/forum.html",
-	    
 	"./src/main/webapp/scripts/error/internalServerError.html",
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
+	    
+	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/header/header.html",
 	    
