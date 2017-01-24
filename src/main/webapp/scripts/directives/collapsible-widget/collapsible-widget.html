@@ -5,7 +5,7 @@
    			<span class="widget-title">{{widgetTitle}}</span>
    		</div>
    </div>
-   <div class="widget-body" uib-collapse="{{isCollapsed}}">
-   		<ng-transclude src="templateUrl"> </ng-transclude>
+   <div class="widget-body" uib-collapse="isCollapsed">
+   		<ng-include src="templateUrl"> </ng-include>
    </div>
 </div>
