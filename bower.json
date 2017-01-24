@@ -17,12 +17,15 @@
   ],
   "dependencies": {
     "angular": "~1.4.8",
-    "bootstrap": "v4.0.0-alpha.2",
+    "bootstrap": "v4.0.0-alpha.6",
     "jquery": "~2.1.4",
     "angular-ui-router": "~0.2.15",
     "angular-resource": "~1.4.8",
     "tether": "~1.1.1",
     "angular-datepicker": "^2.0.3",
     "ng-dialog": "^0.6.4"
+  },
+  "resolutions": {
+    "tether": "^1.4.0"
   }
 }
