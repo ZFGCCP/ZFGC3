@@ -1,11 +1,7 @@
-<collapsible-widget widget-id="contact-info" 
-				    widget-title="Contact Info" 
-				    template-url="scripts/widget-templates/user-profile/contact-data.html" 
-				    content-model="vm.profile">
+<collapsible-widget widget-title="Contact Info">
+				    <span ng-include="'scripts/widget-templates/user-profile/contact-data.html'"> </span>
 </collapsible-widget>
 
-<collapsible-widget widget-id="summary" 
-				    widget-title="Summary" 
-				    template-url="scripts/widget-templates/user-profile/summary.html" 
-				    content-model="vm.profile">
+<collapsible-widget widget-title="Summary">
+					<span ng-include="'scripts/widget-templates/user-profile/summary.html'"> </span>
 </collapsible-widget>
