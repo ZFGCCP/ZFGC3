@@ -17,11 +17,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/jquery/dist/jquery.js",
 	    
-	"./src/main/webapp/bower_components/tether/dist/js/tether.js",
-	    
 	"./src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js",
 	    
 	"./src/main/webapp/bower_components/angular-resource/angular-resource.js",
+	    
+	"./src/main/webapp/bower_components/tether/dist/js/tether.js",
 	    
 	"./src/main/webapp/bower_components/moment/moment.js",
 	    
