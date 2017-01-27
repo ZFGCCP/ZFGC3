@@ -26,6 +26,52 @@
 	         });
 	         	                                      
 		};
+		UserService.setTabActive = function(vm,tab){
+			if(vm.navTabs && vm.navTabs !== null && Array.isArray(vm.navTabs) && tab && tab !== null){
+				for(var i = 0; i < vm.navTabs.length; i++){
+					vm.navTabs[i].active = false;
+				}
+			}
+			
+			tab.active = true;
+		};
+		UserService.getProfileNavigationTabs = function(vm){
+			//todo: write a back end service for this
+			vm.navTabs = [
+			   {
+				   "title":"Profile Info",
+				   "active":true,
+				   "subTabs":[
+				              {
+				            	  "title":"Summary"
+				              }
+				   ]
+			   },
+			   {
+				   "title":"Modify Profile",
+				   "active":false,
+				   "subTabs":[
+								{
+									  "title":"Account Settings"
+								}
+				   ]
+			   },
+			   {
+				   "title":"Messaging",
+				   "active":false,
+				   "subTabs":[
+				   
+				   ]
+			   },
+			   {
+				   "title":"Track User",
+				   "active":false,
+				   "subTabs":[
+				   
+				   ]
+			   }
+			];
+		};
 		return UserService;
 	}
 	

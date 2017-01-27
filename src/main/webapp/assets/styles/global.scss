@@ -6,22 +6,27 @@
     margin: 0 auto;
 	
 	.section-header{
-	border-bottom:1px solid;	
-	padding-left:20px;
-	min-height:40px;
+		border-bottom:1px solid;	
+		padding-left:20px;
+		min-height:40px;
+		height:40px;
 	
-		.section-title{
-			font-weight:600;
-			font-size: 18px;
-    		font-family: cambria math;
-    		padding-top: 7px;
-		}
+		.section-title-wrapper{
+			float:left;
 		
-		.subsection-title{
-			font-size:12px;
-			margin-left:4px;
-			margin-top:-4px;
-			padding-top:2px;
+			.section-title{
+				font-weight:600;
+				font-size: 18px;
+	    		font-family: cambria math;
+	    		padding-top: 7px;
+			}
+		
+			.subsection-title{
+				font-size:12px;
+				margin-left:4px;
+				margin-top:-4px;
+				padding-top:2px;
+			}
 		}
 	}
 
@@ -72,4 +77,39 @@
 
 .padded-row{
 	padding-bottom:.8rem;
+}
+
+.navigation-wrapper{
+	float: right;
+    padding-right: 10px;
+    height: 100%;
+    padding-left: 5px;
+	
+	.navigation{
+	    display: inline-block;
+	    height: 39px;
+	    border-left: 1px solid;
+	    padding-left: 4px;
+	    padding-right: 10px;
+	    padding-top: 15px;
+	    position:relative;
+	    
+	    .selected-indicator{
+	    	display: inline-block;
+		    width: 5px;
+		    height: 39px;
+		    float: left;
+		    background-color: red;
+		    position: absolute;
+		    left: 0px;
+		    top: 0px;
+	    }
+	
+		a{
+			color:#FFF;
+			font-size:15px;
+			float:right;
+			margin-left: 5px;
+		}
+	}
 }
