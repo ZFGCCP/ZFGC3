@@ -48,7 +48,7 @@
     
     <table schema="zfgc3" tableName="AUTH_TOKEN" domainObjectName="AuthTokenDbObj">
     	<generatedKey column="AUTH_TOKEN_ID" sqlStatement="SELECT COALESCE(MAX(AUTH_TOKEN_ID) + 1,0) FROM AUTH_TOKEN"/>
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
     	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
@@ -65,7 +65,7 @@
     <table schema="zfgc3" tableName="BR_MEMBER_GROUP_FORUM" domainObjectName="brMemberGroupForumDbObj">
 		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="WRITE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="THREAD" domainObjectName="ThreadDbObj">
     	<generatedKey column="THREAD_ID" sqlStatement="SELECT COALESCE(MAX(THREAD_ID) + 1,0) FROM THREAD"/>
@@ -73,15 +73,25 @@
     	<columnOverride column="LOCKED_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="STICKY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="POLL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>-->
+    
+    <table schema="Zfgc3" tableName="NAV_TAB" domainObjectName="NavTabDbObj">
+    	<generatedKey column="NAV_TAB_ID" sqlStatement="SELECT COALESCE(MAX(NAV_TAB_ID) + 1,0) FROM NAV_TAB"/>
+    </table>
+    
+    <table schema="Zfgc3" tableName="BR_MEMBER_GROUP_NAV_TAB" domainObjectName="BrMemberGroupNavTabDbObj">
     </table>
     
     <!-- views -->
     
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="HIDE_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_GENDER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_AGE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_BIRTH_DATE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>-->
+    
+    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     </table>
     
   </context>
