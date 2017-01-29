@@ -57,9 +57,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
-	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
@@ -75,9 +75,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
-	"./src/main/webapp/scripts/forum/forum.html",
-	    
 	"./src/main/webapp/scripts/header/header.html",
+	    
+	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
@@ -89,15 +89,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
+	    
 	"./src/main/webapp/scripts/users/user-profile/user-profile.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
 	    
-	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
-	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
-	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html"
+	"./src/main/webapp/scripts/users/user-profile/user-summary.html"
 	    
 	],
 

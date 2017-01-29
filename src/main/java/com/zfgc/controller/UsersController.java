@@ -1,5 +1,7 @@
 package com.zfgc.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,11 +11,13 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.userprofile.UserProfileService;
@@ -25,9 +29,10 @@ class UsersController extends BaseController{
 	
 	@Autowired
 	UsersService usersService;
-	
+
 	@Autowired
 	UserProfileService userProfileService;
+	
 	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
@@ -91,5 +96,17 @@ class UsersController extends BaseController{
 		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
+	}
+	
+	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getProfileNavigationTabs(@RequestParam Integer usersId){
+		List<NavTab> navTabs = userProfileService.getProfileNavTabs(zfgcUser, usersId);
+		
+		if(navTabs == null){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(navTabs);
 	}
 }

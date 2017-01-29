@@ -79,8 +79,8 @@
     	<generatedKey column="NAV_TAB_ID" sqlStatement="SELECT COALESCE(MAX(NAV_TAB_ID) + 1,0) FROM NAV_TAB"/>
     </table>
     
-    <table schema="Zfgc3" tableName="BR_MEMBER_GROUP_NAV_TAB" domainObjectName="BrMemberGroupNavTabDbObj">
-    </table>
+    <!--<table schema="Zfgc3" tableName="BR_MEMBER_GROUP_NAV_TAB" domainObjectName="BrMemberGroupNavTabDbObj">
+    </table>-->
     
     <!-- views -->
     
@@ -92,6 +92,7 @@
     </table>-->
     
     <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
   </context>

@@ -9,7 +9,7 @@
 				<span class="selected-indicator" ng-show="tab.active"></span>
 				<a href uib-dropdown-toggle>{{tab.title}}</a>
 				<ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu">
-					<li ng-repeat="subTab in tab.subTabs" ng-click="vm.tabClick(tab)">{{subTab.title}}</li>
+					<li class="nav-item" ng-repeat="subTab in tab.subTabs" ng-click="vm.tabClick(tab)">{{subTab.title}}</li>
 				</ul>
 			</span>
 		</div>

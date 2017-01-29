@@ -13,6 +13,11 @@
 			userProfile:{
 			         url: '/forum/users/profile/:userId',
 			         method: 'GET'
+			},
+			profileNavigation:{
+				url: '/forum/users/navigation',
+				method: 'GET',
+				isArray: true
 			}
 		});
 		UserService.register = function(user){
@@ -23,6 +28,10 @@
 	         var profile = UserService.resource.userProfile({'userId':userId});   
 	         profile.$promise.then(function(data){
 	        	vm.profile = data.profileSummary; 
+	        	
+	        	UserService.resource.profileNavigation({"usersId":userId}).$promise.then(function(data){
+					vm.navTabs = data;
+				});
 	         });
 	         	                                      
 		};
@@ -37,7 +46,10 @@
 		};
 		UserService.getProfileNavigationTabs = function(vm){
 			//todo: write a back end service for this
-			vm.navTabs = [
+			UserService.resource.profileNavigation().$promise.then(function(data){
+				vm.navTabs = data;
+			});
+			/*vm.navTabs = [
 			   {
 				   "title":"Profile Info",
 				   "active":true,
@@ -70,7 +82,7 @@
 				   
 				   ]
 			   }
-			];
+			];*/
 		};
 		return UserService;
 	}
