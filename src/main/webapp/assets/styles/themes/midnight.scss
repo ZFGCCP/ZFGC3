@@ -29,8 +29,16 @@
 }
 
 .navigation-wrapper{
-	.navigation :hover{
-		background-color:$midnight-background-hover-color;
+	.navigation{
+		ul{
+			background-color:$midnight-header-bg-color;
+		}
+		
+		.nav-item{
+			:hover{
+				background-color:$midnight-background-hover-color;
+			}
+		}
 	}
 }
 

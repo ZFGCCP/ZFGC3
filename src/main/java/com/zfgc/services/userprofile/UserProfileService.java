@@ -1,11 +1,14 @@
 package com.zfgc.services.userprofile;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.lookups.LookupService;
@@ -17,6 +20,13 @@ public class UserProfileService {
 	
 	@Autowired
 	LookupService lookupService;
+	
+	@Autowired
+	NavTabService navTabService;
+	
+	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
+		return navTabService.getUserProfileNavTabs(user, usersId);
+	}
 	
 	public UserProfileView getProfile(Integer userId, Users zfgcUser) throws Exception{
 		UserProfileView profileView = null;
