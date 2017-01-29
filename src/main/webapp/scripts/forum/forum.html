@@ -2,18 +2,29 @@
 
 	<div ng-repeat="category in vm.categories" class="row">
 		<div class="col-xs-12 category">
-			{{category.name}}
-			
-			<div ng-repeat="forum in category.forums">
-			<span class="col-xs-6 forum">
-				{{forum.name}}
-			</span>
-			<span class="col-xs-6 childboard">
-				childboards:
-				<span ng-repeat="subforum in forum.subForums">
-				{{subforum.name}}
-				</span>
-			</span>	
+			<div class="row">
+				<div class="col-xs-12 title">
+					{{category.name}}
+				</div>
+			</div>
+			<div ng-repeat="forum in category.forums" class="row entire-inside">
+				<div class="col-xs-1 forum">
+				W
+				</div>
+				<div class="col-xs-7 forum">
+					{{forum.name}}
+					<br/>
+					childboards:
+					<span ng-repeat="subforum in forum.subForums">
+					{{subforum.name}}
+					</span>
+				</div>
+				<div class="col-xs-2">
+					1234
+				</div>
+				<div class="col-xs-2">
+					1234
+				</div>	
 			</div>
 		</div>
 	</div>
