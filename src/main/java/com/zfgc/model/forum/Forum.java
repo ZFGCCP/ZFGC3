@@ -12,8 +12,14 @@ public class Forum extends BaseZfgcModel {
 	private Integer seqNo;
 	private String name;
 	private String description;
+	private Integer threadsCount;
+	private Integer totalThreadsCount;
+	private Integer totalPages;
 	
 	private List<Forum> subForums = new ArrayList<>();
+	
+	private List<Topic> stickyThreads = new ArrayList<>();
+	private List<Topic> threads = new ArrayList<>();
 	
 	public Short getForumId() {
 		return forumId;
@@ -56,5 +62,46 @@ public class Forum extends BaseZfgcModel {
 	}
 	public void setSubForums(List<Forum> subForums) {
 		this.subForums = subForums;
+	}
+	public List<Topic> getThreads() {
+		return threads;
+	}
+	public void setThreads(List<Topic> threads) {
+		this.threads = threads;
+	}
+	public List<Topic> getStickyThreads() {
+		return stickyThreads;
+	}
+	public void setStickyThreads(List<Topic> stickyThreads) {
+		this.stickyThreads = stickyThreads;
+	}
+	public Integer getThreadsCount() {
+		return threadsCount;
+	}
+	public void setThreadsCount(Integer threadsCount) {
+		this.threadsCount = threadsCount;
+	}
+	public Integer getTotalThreadsCount() {
+		Integer total = threadsCount;
+		
+		for(Forum forum : subForums){
+			total += forum.getTotalThreadsCount();
+		}
+		
+		return total;
+	}
+	public void setTotalThreadsCount(Integer totalThreadsCount) {
+		this.totalThreadsCount = totalThreadsCount;
+	}
+	public Integer getTotalPages() {
+		return totalPages;
+	}
+	public void setTotalPages(Integer totalPages) {
+		this.totalPages = totalPages;
+	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

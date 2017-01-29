@@ -49,6 +49,8 @@ public class Users extends BaseZfgcModel {
 	private Integer timeOffset;
 	private String location;
 	private Boolean agreeToTermsFlag = false;
+	private List<Integer> memberGroups = new ArrayList<>();
+	private Integer primaryMemberGroupId = 0;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -70,6 +72,10 @@ public class Users extends BaseZfgcModel {
 		this.password = password;
 	}
 	public Integer getUsersId() {
+		if(usersId == null){
+			return usersDataProvider.getUsersIdByToken(request.getHeader("authorization"));
+		}
+		
 		return usersId;
 	}
 	public void setUsersId(Integer usersId) {
@@ -249,5 +255,30 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setTimeOffsetLkup(String timeOffsetLkup) {
 		this.timeOffsetLkup = timeOffsetLkup;
+	}
+	public List<Integer> getMemberGroups() {
+		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
+			return usersDataProvider.getMemberGroupsByToken(request.getHeader("authorization"));
+		}
+		
+		return memberGroups;
+	}
+	public void setMemberGroups(List<Integer> memberGroups) {
+		this.memberGroups = memberGroups;
+	}
+	public Integer getPrimaryMemberGroupId() {
+		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
+			return usersDataProvider.getPrimaryMemberGroupByToken(request.getHeader("authorization"));
+		}
+		
+		return primaryMemberGroupId;
+	}
+	public void setPrimaryMemberGroupId(Integer primaryMemberGroupId) {
+		this.primaryMemberGroupId = primaryMemberGroupId;
+	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

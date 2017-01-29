@@ -1,0 +1,27 @@
+<div class="section-container" x-ng-controller="UsersCtrl as vm">
+	<div class="section-header">
+		<div class="section-title-wrapper">
+			<div class="section-title">Profile Info</div>
+			<div class="subsection-title">Summary</div>
+		</div>
+		<div class="navigation-wrapper">
+			<span class="navigation" uib-dropdown ng-repeat="tab in vm.navTabs">
+				<span class="selected-indicator" ng-show="tab.active"></span>
+				<a href uib-dropdown-toggle>{{tab.title}}</a>
+				<ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu">
+					<li class="nav-item" ng-repeat="subTab in tab.subTabs" ng-click="vm.tabClick(tab)">{{subTab.title}}</li>
+				</ul>
+			</span>
+		</div>
+	</div>
+	<div class="section-body">
+		<div class="row">
+			<div class="col-md-4 col-xs-12 ">
+				<span ng-include="'scripts/users/user-profile/user-sidebar.html'"></span>
+			</div>
+			<div class="col-md-8 col-xs-12">
+				<span ng-include="'scripts/users/user-profile/user-summary.html'"></span>
+			</div>
+		</div>
+	</div>
+</div>

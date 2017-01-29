@@ -29,29 +29,41 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/ng-dialog/js/ngDialog.js",
 	    
+	"./src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+	    
+	"./src/main/webapp/bower_components/angular-animate/angular-animate.js",
+	    
 	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
+	"./src/main/webapp/scripts/forum/forum.module.js",
+	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
+	    
+	"./src/main/webapp/scripts/users/users.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
-	"./src/main/webapp/scripts/forum/forum.module.js",
-	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	"./src/main/webapp/scripts/forum/forum.service.js",
+	    
+	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
@@ -65,13 +77,27 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/header/header.html",
 	    
+	"./src/main/webapp/scripts/forum/forum.html",
+	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
+	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
-	"./src/main/webapp/scripts/modal/templates/modalValidationError.html"
+	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/user-profile.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/user-summary.html"
 	    
 	],
 

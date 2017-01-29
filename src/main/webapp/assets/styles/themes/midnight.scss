@@ -1,0 +1,44 @@
+@import 'midnight-variables';
+
+.midnight{
+
+		background-color:$midnight-bg-color;
+		color:$midnight-color;
+		font:95%/90% Verdana, Helvetica, sans-serif !important;
+		
+		.section-container{
+			.section-header{
+				background-color:$midnight-header-bg-color;
+			}
+	
+			.section-body{
+				background-color:$midnight-section-body-bg-color;
+			}
+		}
+
+		.widget-container{
+			.widget-header{
+				background-color:$midnight-header-bg-color;
+			}
+			
+			.widget-body{
+				background-color:$midnight-widget-body-bg-color;
+			}
+		}
+
+}
+
+.navigation-wrapper{
+	.navigation{
+		ul{
+			background-color:$midnight-header-bg-color;
+		}
+		
+		.nav-item{
+			:hover{
+				background-color:$midnight-background-hover-color;
+			}
+		}
+	}
+}
+

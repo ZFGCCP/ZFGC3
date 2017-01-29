@@ -1,0 +1,44 @@
+.navigation-wrapper{
+	float: right;
+    padding-right: 10px;
+    height: 100%;
+    padding-left: 5px;
+	
+	.navigation{
+	    display: inline-block;
+	    height: 39px;
+	    border-left: 1px solid;
+	    padding-left: 4px;
+	    padding-right: 10px;
+	    padding-top: 15px;
+	    position:relative;
+	    
+	    .selected-indicator{
+	    	display: inline-block;
+		    width: 5px;
+		    height: 39px;
+		    float: left;
+		    background-color: red;
+		    position: absolute;
+		    left: 0px;
+		    top: 0px;
+	    }
+	
+		a{
+			color:#FFF;
+			font-size:15px;
+			float:right;
+			margin-left: 5px;
+		}
+		
+		ul{
+			border-radius:0px;
+			border-bottom:1px solid;
+			
+			.nav-item {
+				padding-top:10px;
+				padding-bottom:10px;
+			}
+		}
+	}
+}

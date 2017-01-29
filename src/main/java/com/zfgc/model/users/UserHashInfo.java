@@ -17,6 +17,11 @@ public class UserHashInfo extends BaseZfgcModel{
 	public void setPassSalt(String passSalt) {
 		this.passSalt = passSalt;
 	}
+	@Override
+	public String getHMAC() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 	
 }

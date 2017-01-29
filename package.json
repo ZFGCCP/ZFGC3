@@ -4,7 +4,6 @@
   "description": "It's a secret to everyone.",
   "main": "index.js",
   "scripts": {
-    "install": "bower install && gulp",
     "watch": "gulp watch",
     "build": "gulp",
     "install-tools": "npm install -g bower gulp protractor",

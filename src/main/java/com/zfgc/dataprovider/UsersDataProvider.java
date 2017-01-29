@@ -1,6 +1,7 @@
 package com.zfgc.dataprovider;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
@@ -154,5 +155,21 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	public Boolean getActiveFlagByToken(String token){
 		return usersDao.getActiveFlagByToken(token);
+	}
+	
+	public List<Integer> getMemberGroupsByToken(String token){
+		return usersDao.getMemberGroupsByToken(token);
+	}
+	
+	public Integer getPrimaryMemberGroupByToken(String token){
+		return usersDao.getPrimaryMemberGroupByToken(token);
+	}
+	
+	public Integer getUsersIdByToken(String token){
+		return usersDao.getUsersIdByToken(token);
+	}
+
+	public Integer getPrimaryMemberGroupIdByToken(String token) {
+		return usersDao.getPrimaryMemberGroupIdByToken(token);
 	}
 }

@@ -23,7 +23,7 @@ import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
 
 @Component
-public class UsersDao extends AbstractDao {
+public class UsersDao extends AbstractDao<Users> {
 	@Autowired 
 	UsersDbObjMapper usersDbObjMapper;
 
@@ -32,7 +32,7 @@ public class UsersDao extends AbstractDao {
 	
 	Logger LOGGER = Logger.getLogger(UsersDao.class);
 	
-	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_KEY A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
+	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_TOKEN A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
 	
 	public UsersDbObj getUserByToken(String authToken) throws Exception{
 		StringBuilder sql = new StringBuilder();
@@ -353,6 +353,83 @@ public class UsersDao extends AbstractDao {
 			return null;
 		}
 	}
+
+	@Override
+	public Boolean validateIntegrity(Users model) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public Integer getUsersIdByToken(String token) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT U.USERS_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting users Id for " + token);
+			return null;
+		}
+	}
+
+	public Integer getPrimaryMemberGroupIdByToken(String token) {
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT U.PRIMARY_MEMBER_GROUP_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting primary member group Id for " + token);
+			return null;
+		}
+	}
 	
+	public List<Integer> getMemberGroupsByToken(String token){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT M.MEMBER_GROUP_ID AS MEMBER_GROUP_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForList(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting membergroups for " + token);
+			return null;
+		}
+	}
+	
+	public Integer getPrimaryMemberGroupByToken(String token){
+		StringBuilder sql = new StringBuilder();
+		
+		sql.append("SELECT M.PRIMARY_MEMBER_GROUP_ID AS MEMBER_GROUP_ID \n")
+		   .append(SQL_FOR_FIELD);
+		
+		MapSqlParameterSource params = new MapSqlParameterSource();
+		params.addValue("token", token);
+		
+		try{
+			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
+		}
+		catch(Exception ex){
+			LOGGER.error("Error getting primary member group for " + token);
+			return null;
+		}
+	}
 	
 }

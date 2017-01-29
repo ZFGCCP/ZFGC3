@@ -6,5 +6,5 @@ import com.zfgc.model.users.Users;
 
 public abstract class BaseController {
 	@Autowired
-	Users ZfgcUser;
+	Users zfgcUser;
 }

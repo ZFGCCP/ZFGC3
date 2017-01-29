@@ -1,0 +1,11 @@
+<div class="widget-container">
+   <div class="widget-header">
+   		<div class="widget-control">
+   			<span ng-click="toggle()">+</span>
+   			<span class="widget-title">{{widgetTitle}}</span>
+   		</div>
+   </div>
+   <div class="widget-body" uib-collapse="isCollapsed">
+   		<div ng-transclude></div>
+   </div>
+</div>
