@@ -82,13 +82,14 @@ public class Forum extends BaseZfgcModel {
 		this.threadsCount = threadsCount;
 	}
 	public Integer getTotalThreadsCount() {
-		Integer total = threadsCount;
-		
-		for(Forum forum : subForums){
-			total += forum.getTotalThreadsCount();
-		}
-		
-		return total;
+//		Integer total = threadsCount;
+//		
+//		for(Forum forum : subForums){
+//			total += forum.getTotalThreadsCount();
+//		}
+//		
+//		return total;
+		return 0;
 	}
 	public void setTotalThreadsCount(Integer totalThreadsCount) {
 		this.totalThreadsCount = totalThreadsCount;

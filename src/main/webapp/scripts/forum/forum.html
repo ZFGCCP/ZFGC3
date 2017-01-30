@@ -1,13 +1,31 @@
 <div ng-controller="ForumController as vm">
 
-	<div ng-repeat="category in vm.categories">
-	{{category.name}}
-		<div ng-repeat="forum in category.forums">
-		{{forum.name}}
-		childboards:
-		<div ng-repeat="subforum in forum.subForums">
-		{{subforum.name}}
-		</div>	
+	<div ng-repeat="category in vm.categories" class="row">
+		<div class="col-xs-12 category">
+			<div class="row">
+				<div class="col-xs-12 title">
+					{{category.name}}
+				</div>
+			</div>
+			<div ng-repeat="forum in category.forums" class="row entire-inside">
+				<div class="col-xs-1 forum">
+				W
+				</div>
+				<div class="col-xs-7 forum">
+					{{forum.name}}
+					<br/>
+					childboards:
+					<span ng-repeat="subforum in forum.subForums">
+					{{subforum.name}}
+					</span>
+				</div>
+				<div class="col-xs-2">
+					1234
+				</div>
+				<div class="col-xs-2">
+					1234
+				</div>	
+			</div>
 		</div>
 	</div>
 
