@@ -8,22 +8,25 @@
 				</div>
 			</div>
 			<div ng-repeat="forum in category.forums" class="row entire-inside">
-				<div class="col-xs-1 forum">
-				W
+				<div class="col-xs-2 col-sm-1 forum">
+					<img src="http://zfgc.com/forum/Themes/midnight/images/off.gif"/>
 				</div>
-				<div class="col-xs-7 forum">
+				<div class="col-xs-6 col-sm-5 forum">
 					{{forum.name}}
+					<br>
+					{{forum.description}}
 					<br/>
 					childboards:
 					<span ng-repeat="subforum in forum.subForums">
-					{{subforum.name}}
+						<a ng-href="/forum/#/forum?forumId={{subforum.forumId}}">{{subforum.name}}</a>
 					</span>
 				</div>
-				<div class="col-xs-2">
-					1234
+				<div class="col-xs-4 col-sm-3">
+					{{forum.totalThreadsCount}} threads
 				</div>
-				<div class="col-xs-2">
-					1234
+				<div class="col-xs-12 col-sm-3">
+					Latest post by<br>
+					in<br>
 				</div>	
 			</div>
 		</div>

@@ -75,9 +75,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
-	"./src/main/webapp/scripts/forum/forum.html",
-	    
 	"./src/main/webapp/scripts/header/header.html",
+	    
+	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    

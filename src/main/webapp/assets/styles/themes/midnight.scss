@@ -25,28 +25,6 @@
 				background-color:$midnight-widget-body-bg-color;
 			}
 		}
-		.title{
-				background-color:$midnight-header-bg-color;
-				padding-top: 10px;
-    			padding-bottom: 10px;
-    			border: 1px solid;
-			}
-		.inner{
-		    	
-    			
-		}
-		.entire-inside{
-				border: 1px solid;
-				border-top: 0;
-				
-				div {
-					margin-top: 12px;
-	    			margin-bottom: 12px;
-	    			font-size: 12px;
-	    			line-height: normal;
-				}
-		}
-
 }
 
 .navigation-wrapper{
@@ -63,3 +41,10 @@
 	}
 }
 
+.title{
+	background-color:$midnight-header-bg-color;
+}
+
+.entire-inside{
+	background-color:$midnight-widget-body-bg-color;
+}
