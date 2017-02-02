@@ -28,6 +28,64 @@ public class ProfileSummary extends BaseZfgcModel {
 	private String avatarFilename;
 	private String timeZone;
 	
+	private String skype;
+	private String aim;
+	private String gtalk;
+	private String facebook;
+	private String psn;
+	private String xboxLive;
+	private String steam;
+	private String nnid;
+	private String yim;
+	
+	public String getSkype() {
+		return skype;
+	}
+	public void setSkype(String skype) {
+		this.skype = skype;
+	}
+	public String getAim() {
+		return aim;
+	}
+	public void setAim(String aim) {
+		this.aim = aim;
+	}
+	public String getGtalk() {
+		return gtalk;
+	}
+	public void setGtalk(String gtalk) {
+		this.gtalk = gtalk;
+	}
+	public String getFacebook() {
+		return facebook;
+	}
+	public void setFacebook(String facebook) {
+		this.facebook = facebook;
+	}
+	public String getPsn() {
+		return psn;
+	}
+	public void setPsn(String psn) {
+		this.psn = psn;
+	}
+	public String getXboxLive() {
+		return xboxLive;
+	}
+	public void setXboxLive(String xboxLive) {
+		this.xboxLive = xboxLive;
+	}
+	public String getSteam() {
+		return steam;
+	}
+	public void setSteam(String steam) {
+		this.steam = steam;
+	}
+	public String getNnid() {
+		return nnid;
+	}
+	public void setNnid(String nnid) {
+		this.nnid = nnid;
+	}
 	public String getLoginName() {
 		return loginName;
 	}
@@ -167,5 +225,11 @@ public class ProfileSummary extends BaseZfgcModel {
 	@JsonIgnore
 	public String getHMAC() throws Exception{
 		return null;
+	}
+	public String getYim() {
+		return yim;
+	}
+	public void setYim(String yim) {
+		this.yim = yim;
 	}
 }
