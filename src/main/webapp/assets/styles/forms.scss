@@ -1,0 +1,31 @@
+form{
+	.small-input{
+		height:25px;
+	}
+	
+	.labeled-checkbox{
+		label{
+			padding-bottom:2px;
+		}
+	}
+	
+	.form-control{
+		&[disabled],
+  		&[readonly],
+  		fieldset[disabled] & {
+    		opacity: .3;
+  		}
+	}
+	
+	.btn{
+		margin-bottom:10px;
+	}
+	
+	.xl-button-wrapper{
+	    width: 90%;
+	    padding-left: 10px;
+	    padding-right: 10px;
+	    margin: 0 auto;
+	    margin-bottom:10px;
+	}
+}

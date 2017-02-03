@@ -31,11 +31,13 @@
 	        	
 	        	UserService.resource.profileNavigation({"usersId":userId}).$promise.then(function(data){
 					vm.navTabs = data;
+					
+					UserService.setTabActive(vm,data[0],data[0].subTabs[0]);
 				});
 	         });
 	         	                                      
 		};
-		UserService.setTabActive = function(vm,tab){
+		UserService.setTabActive = function(vm,tab, subTab){
 			if(vm.navTabs && vm.navTabs !== null && Array.isArray(vm.navTabs) && tab && tab !== null){
 				for(var i = 0; i < vm.navTabs.length; i++){
 					vm.navTabs[i].active = false;
@@ -43,6 +45,9 @@
 			}
 			
 			tab.active = true;
+			vm.activeTabSectionId = subTab.navSectionId;
+			vm.activeTabNameId = subTab.title;
+			vm.activeParentName = tab.title;
 		};
 		UserService.getProfileNavigationTabs = function(vm){
 			//todo: write a back end service for this

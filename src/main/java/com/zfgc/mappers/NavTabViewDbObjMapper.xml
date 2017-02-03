@@ -285,7 +285,7 @@
   </sql>
   
   <select id="getNavigationTabs" parameterType="map" resultMap="BaseResultMap">
-  	SELECT
+  	SELECT DISTINCT
   	<include refid="Named_Column_List" />
   	FROM NAV_TAB_VIEW V
   	INNER JOIN BR_MEMBER_GROUP_NAV_TAB M ON M.NAV_TAB_ID = V.NAV_TAB_ID

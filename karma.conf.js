@@ -89,6 +89,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
+	"./src/main/webapp/scripts/users/user-profile/modify-profile.html",
+	    
 	"./src/main/webapp/scripts/users/user-profile/user-profile.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",

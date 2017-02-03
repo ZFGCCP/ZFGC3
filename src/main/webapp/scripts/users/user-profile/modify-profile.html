@@ -1,0 +1,178 @@
+<form>
+	<collapsible-widget widget-title="User Settings">
+		<div class="column-data">
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>User Name</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" ng-model="vm.profile.loginName" class="form-control small-input" ng-disabled="true"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Display Name</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" ng-model="vm.profile.displayName" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">	
+				<div class="col-xs-12 col-sm-4">
+					<label>Date Registered</label>
+				</div>
+				<div class="col-xs-12 col-sm-4 datepicker" date-format="MM/dd/yyyy">
+					<input type="text" ng-model="vm.profile.dateRegisteredAsString" class="form-control small-input" ng-disabled="true"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">	
+				<div class="col-xs-12 col-sm-4">
+					<label>Primary Membergroup</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control small-input" ng-disabled="true"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Secondary Membergroups</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					Click to view
+				</div>
+			</div>
+		</div>
+	</collapsible-widget>
+	
+	<collapsible-widget widget-title="Contact Settings">
+		<div class="column-data">
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Email Address</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input type="checkbox"/>
+					<span>Hide</span>
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>AIM</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>YIM</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Hangouts</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Steam</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>XBox Live</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Playstation Network</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Nintendo Network ID</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input type="checkbox"/>Hide
+				</span>
+			</div>
+		</div>
+	</collapsible-widget>
+	
+	<collapsible-widget widget-title="Security Settings">
+		<div class="column-data">
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>New password</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Confirm password</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+			</div>
+		</div>
+	</collapsible-widget>
+	
+	<div class="xl-button-wrapper">
+			<button type="button" class="btn btn-save col-xs-12">Save</button>
+	</div>
+</form>
+

@@ -5,8 +5,8 @@
 		var vm = this;
 		UserService.loadProfile($location.search().userId,vm);
 		
-		vm.tabClick = function(tab){
-			UserService.setTabActive(vm,tab);
+		vm.tabClick = function(tab, subTab){
+			UserService.setTabActive(vm,tab, subTab);
 		};
 	}
 	

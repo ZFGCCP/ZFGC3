@@ -13,7 +13,8 @@
 	
 		.section-title-wrapper{
 			float:left;
-		
+			margin-top:3px;
+			
 			.section-title{
 				font-weight:600;
 				font-size: 18px;
@@ -24,7 +25,7 @@
 			.subsection-title{
 				font-size:12px;
 				margin-left:4px;
-				margin-top:-4px;
+				margin-top:4px;
 				padding-top:2px;
 			}
 		}
@@ -39,7 +40,6 @@
 .widget-container{
    width:90%;
    margin:0 auto;
-   max-height:300px;
    border:1px solid;
    margin-bottom:12px;
    
