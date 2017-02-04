@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($resource){
+	function UserService($resource, $window){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
@@ -49,50 +49,25 @@
 			vm.activeTabNameId = subTab.title;
 			vm.activeParentName = tab.title;
 		};
+		
 		UserService.getProfileNavigationTabs = function(vm){
-			//todo: write a back end service for this
 			UserService.resource.profileNavigation().$promise.then(function(data){
 				vm.navTabs = data;
 			});
-			/*vm.navTabs = [
-			   {
-				   "title":"Profile Info",
-				   "active":true,
-				   "subTabs":[
-				              {
-				            	  "title":"Summary"
-				              }
-				   ]
-			   },
-			   {
-				   "title":"Modify Profile",
-				   "active":false,
-				   "subTabs":[
-								{
-									  "title":"Account Settings"
-								}
-				   ]
-			   },
-			   {
-				   "title":"Messaging",
-				   "active":false,
-				   "subTabs":[
-				   
-				   ]
-			   },
-			   {
-				   "title":"Track User",
-				   "active":false,
-				   "subTabs":[
-				   
-				   ]
-			   }
-			];*/
 		};
+
+		UserService.isUserAdmin = function(user){
+			return user.getPrimaryMemberGroupId === 2;
+		};
+		
+		UserService.isCurrentUser = function(vm,user){
+			return vm.profile.usersId === user.getUsersId;
+		};
+		
 		return UserService;
 	}
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$resource',UserService])
+		.service('UserService', ['$resource','$window',UserService])
 })();

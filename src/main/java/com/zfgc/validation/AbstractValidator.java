@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.users.Users;
 import com.zfgc.rules.Rule;
 import com.zfgc.services.lookups.LookupService;
 
@@ -48,6 +49,30 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 	protected void checkErrorsFound(String typeName, T model) throws ZfgcValidationException{
 		if(model.getErrors().getValidationErrors().size() > 0){
 			throw new ZfgcValidationException(typeName);
+		}
+	}
+	
+	protected void checkEmailFormat(Users model){
+		if(model.getEmailAddress() != null &&
+		   !Pattern.matches(GENERAL_STRING_FORMAT, model.getEmailAddress().getEmailAddress()) ||
+		   !Pattern.matches(EMAIL_FORMAT, model.getEmailAddress().getEmailAddress())){
+			
+			Rule emailFormatRule = new Rule();
+			emailFormatRule.setRuleName("INVALID_EMAIL_FORMAT");
+			emailFormatRule.setErrorMessage("Email address was not in the correct format.");
+			model.getErrors().getValidationErrors().add(emailFormatRule);
+		}
+	}
+	
+	protected void checkEmailLength(Users model){
+		if(model.getEmailAddress() != null &&
+		   !model.getEmailAddress().getEmailAddress().equals("") &&
+		   model.getEmailAddress().getEmailAddress().length() > 254){
+			
+			Rule emailLengthRule = new Rule();
+			emailLengthRule.setRuleName("EMAIL_LENGTH");
+			emailLengthRule.setErrorMessage("Email address must not be greater than 254 characters.");
+			model.getErrors().getValidationErrors().add(emailLengthRule);
 		}
 	}
 }

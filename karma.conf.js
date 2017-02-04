@@ -65,6 +65,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/app.js",

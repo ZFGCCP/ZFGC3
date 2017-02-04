@@ -61,4 +61,11 @@ public class UserProfileService {
 		return profileView;
 		
 	}
+
+	public void saveAccountSettings(UserProfileView accountSettings,Users zfgcUser) {
+
+		
+		
+		
+	}
 }

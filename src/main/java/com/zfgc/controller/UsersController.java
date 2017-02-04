@@ -98,6 +98,12 @@ class UsersController extends BaseController{
 		}
 	}
 	
+	@RequestMapping(value="/profile/account", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity saveAccountSettings(@RequestBody UserProfileView accountSettings){
+		userProfileService.saveAccountSettings(accountSettings,zfgcUser);
+	}
+	
 	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getProfileNavigationTabs(@RequestParam Integer usersId){
