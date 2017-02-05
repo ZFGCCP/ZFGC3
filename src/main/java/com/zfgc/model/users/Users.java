@@ -56,6 +56,9 @@ public class Users extends BaseZfgcModel {
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
 	
 	private EmailAddress emailAddress;
+	
+	private UserContactInfo contactInfo = new UserContactInfo();
+	
 	private String authToken;
 	
 	@JsonIgnore
@@ -232,9 +235,16 @@ public class Users extends BaseZfgcModel {
 	}
 	public Long getAge(){
 		long age = 0;
+		
+		if(timeOffsetLkup == null){
+			return age;
+		}
+		
 		Date today = ZfgcTimeUtils.getToday(timeOffsetLkup);
 		
-		age = ZfgcTimeUtils.getYearsBetween(birthDate, today);
+		if(birthDate != null){
+			age = ZfgcTimeUtils.getYearsBetween(birthDate, today);
+		}
 
 		return age;
 	}
@@ -280,5 +290,11 @@ public class Users extends BaseZfgcModel {
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public UserContactInfo getContactInfo() {
+		return contactInfo;
+	}
+	public void setContactInfo(UserContactInfo contactInfo) {
+		this.contactInfo = contactInfo;
 	}
 }

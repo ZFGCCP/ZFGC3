@@ -33,7 +33,11 @@
 					<label>Primary Membergroup</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input" ng-disabled="true"/>
+					<select ng-disabled="true" 
+					        ng-model="vm.user.timeOffset" 
+					        ng-options="memberGroup.id as memberGroup.value for memberGroup in vm.lookups.MEMBER_GROUP track by memberGroup.id" 
+					        class="form-control small-input">
+				    </select>
 				</div>
 			</div>
 			
@@ -58,7 +62,7 @@
 					<input type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input type="checkbox"/>
+					<input ng-model="vm.profile.hideEmailFlag" value="true" type="checkbox"/>
 					<span>Hide</span>
 				</span>
 			</div>
@@ -68,10 +72,10 @@
 					<label>AIM</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.emailAddress.emailAddress" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input type="checkbox"/>Hide
+					<input ng-model="vm.profile.contactInfo.hideAimFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -80,10 +84,10 @@
 					<label>YIM</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.contactInfo.yim" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input type="checkbox"/>Hide
+					<input ng-model="vm.profile.contactInfo.hideYimFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -92,10 +96,10 @@
 					<label>Hangouts</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.contactInfo.gTalk" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input type="checkbox"/>Hide
+					<input ng-model="vm.profile.contactInfo.hideGtalkFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -104,10 +108,10 @@
 					<label>Steam</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.contactInfo.steam" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input type="checkbox"/>Hide
+					<input ng-model="vm.profile.contactInfo.hideSteamFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -116,10 +120,10 @@
 					<label>XBox Live</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.contactInfo.xboxLive" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input type="checkbox"/>Hide
+					<input ng-model="vm.profile.contactInfo.hideXboxLive" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -128,10 +132,10 @@
 					<label>Playstation Network</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.contactInfo.psn" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input type="checkbox"/>Hide
+					<input ng-model="vm.profile.contactInfo.hidePsnFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -140,10 +144,10 @@
 					<label>Nintendo Network ID</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.contactInfo.nnid" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input type="checkbox"/>Hide
+					<input ng-model="vm.profile.contactInfo.hideNnidFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 		</div>
@@ -168,11 +172,23 @@
 					<input type="text" class="form-control small-input"/>
 				</div>
 			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12">
+					<input type="checkbox"/>Hide Birthdate
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12">
+					<input type="checkbox"/>Hide Gender
+				</div>
+			</div>
 		</div>
 	</collapsible-widget>
 	
 	<div class="xl-button-wrapper">
-			<button type="button" class="btn btn-save col-xs-12">Save</button>
+			<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveAccountSettings()">Save</button>
 	</div>
 </form>
 

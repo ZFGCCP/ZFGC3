@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
@@ -11,6 +12,15 @@ public class UserProfileView extends BaseZfgcModel {
 	private Integer usersId;
 	private ProfileSummary profileSummary;
 	
+	@JsonIgnore
+	private UserProfileView savedProfile;
+	
+	public UserProfileView getSavedProfile() {
+		return savedProfile;
+	}
+	public void setSavedSummary(UserProfileView savedProfile) {
+		this.savedProfile = savedProfile;
+	}
 	public Integer getUsersId() {
 		return usersId;
 	}

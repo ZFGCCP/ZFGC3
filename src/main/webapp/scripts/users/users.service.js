@@ -18,6 +18,10 @@
 				url: '/forum/users/navigation',
 				method: 'GET',
 				isArray: true
+			},
+			saveAccountSettings:{
+				url: '/forum/users/profile/account',
+				method: 'POST'
 			}
 		});
 		UserService.register = function(user){
@@ -27,7 +31,7 @@
 		UserService.loadProfile = function(userId,vm){
 	         var profile = UserService.resource.userProfile({'userId':userId});   
 	         profile.$promise.then(function(data){
-	        	vm.profile = data.profileSummary; 
+	        	vm.profile = data;
 	        	
 	        	UserService.resource.profileNavigation({"usersId":userId}).$promise.then(function(data){
 					vm.navTabs = data;
@@ -56,6 +60,10 @@
 			});
 		};
 
+		UserService.saveAccountSettings = function(vm){
+			UserService.resource.saveAccountSettings(vm.profile);
+		};
+		
 		UserService.isUserAdmin = function(user){
 			return user.getPrimaryMemberGroupId === 2;
 		};

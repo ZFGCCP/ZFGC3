@@ -225,6 +225,7 @@ public class ProfileSummary extends BaseZfgcModel {
 	@JsonIgnore
 	public String getHMAC() throws Exception{
 		return null;
+				        
 	}
 	public String getYim() {
 		return yim;
