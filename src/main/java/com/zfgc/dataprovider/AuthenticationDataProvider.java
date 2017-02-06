@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.AuthenticationDao;
 import com.zfgc.dbobj.AuthTokenDbObj;
+import com.zfgc.exception.ZfgcDataExistsException;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
@@ -37,6 +38,9 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 	public void logEmailAddress(EmailAddress emailAddress) throws Exception{
 		try{
 			authenticationDao.logEmailAddress(emailAddress);
+		}
+		catch(ZfgcDataExistsException ex){
+			
 		}
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());

@@ -67,6 +67,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
 	"./src/main/webapp/scripts/app.js",
 	    
 	"./src/main/webapp/scripts/app.config.js",
@@ -75,9 +77,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
-	"./src/main/webapp/scripts/header/header.html",
-	    
 	"./src/main/webapp/scripts/forum/forum.html",
+	    
+	"./src/main/webapp/scripts/header/header.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
@@ -88,6 +90,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/modify-profile.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-profile.html",
 	    

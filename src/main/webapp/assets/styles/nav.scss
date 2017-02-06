@@ -4,6 +4,12 @@
     height: 100%;
     padding-left: 5px;
 	
+	@media (max-width:768px){
+		.nav-medium{
+			visibility:hidden;
+		}
+	}
+	
 	.navigation{
 	    display: inline-block;
 	    height: 39px;

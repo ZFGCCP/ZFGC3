@@ -192,6 +192,10 @@ public class AuthenticationService  extends AbstractService {
 		}
 	}
 	
+	public void logEmailAddress(EmailAddress emailAddress) throws Exception{
+		authenticationDataProvider.logEmailAddress(emailAddress);
+	}
+	
 	public Boolean checkIpIsSpammer(IpAddress ipAddress) throws Exception{
 		return authenticationDataProvider.getIpSpamInfo(ipAddress).getIsSpammerFlag();
 	}

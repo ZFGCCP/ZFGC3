@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($resource){
+	function UserService($resource, $window){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
@@ -18,6 +18,10 @@
 				url: '/forum/users/navigation',
 				method: 'GET',
 				isArray: true
+			},
+			saveAccountSettings:{
+				url: '/forum/users/profile/account',
+				method: 'POST'
 			}
 		});
 		UserService.register = function(user){
@@ -27,15 +31,17 @@
 		UserService.loadProfile = function(userId,vm){
 	         var profile = UserService.resource.userProfile({'userId':userId});   
 	         profile.$promise.then(function(data){
-	        	vm.profile = data.profileSummary; 
+	        	vm.profile = data;
 	        	
 	        	UserService.resource.profileNavigation({"usersId":userId}).$promise.then(function(data){
 					vm.navTabs = data;
+					
+					UserService.setTabActive(vm,data[0],data[0].subTabs[0]);
 				});
 	         });
 	         	                                      
 		};
-		UserService.setTabActive = function(vm,tab){
+		UserService.setTabActive = function(vm,tab, subTab){
 			if(vm.navTabs && vm.navTabs !== null && Array.isArray(vm.navTabs) && tab && tab !== null){
 				for(var i = 0; i < vm.navTabs.length; i++){
 					vm.navTabs[i].active = false;
@@ -43,51 +49,33 @@
 			}
 			
 			tab.active = true;
+			vm.activeTabSectionId = subTab.navSectionId;
+			vm.activeTabNameId = subTab.title;
+			vm.activeParentName = tab.title;
 		};
+		
 		UserService.getProfileNavigationTabs = function(vm){
-			//todo: write a back end service for this
 			UserService.resource.profileNavigation().$promise.then(function(data){
 				vm.navTabs = data;
 			});
-			/*vm.navTabs = [
-			   {
-				   "title":"Profile Info",
-				   "active":true,
-				   "subTabs":[
-				              {
-				            	  "title":"Summary"
-				              }
-				   ]
-			   },
-			   {
-				   "title":"Modify Profile",
-				   "active":false,
-				   "subTabs":[
-								{
-									  "title":"Account Settings"
-								}
-				   ]
-			   },
-			   {
-				   "title":"Messaging",
-				   "active":false,
-				   "subTabs":[
-				   
-				   ]
-			   },
-			   {
-				   "title":"Track User",
-				   "active":false,
-				   "subTabs":[
-				   
-				   ]
-			   }
-			];*/
 		};
+
+		UserService.saveAccountSettings = function(vm){
+			UserService.resource.saveAccountSettings(vm.profile);
+		};
+		
+		UserService.isUserAdmin = function(user){
+			return user.getPrimaryMemberGroupId === 2;
+		};
+		
+		UserService.isCurrentUser = function(vm,user){
+			return vm.profile.usersId === user.getUsersId;
+		};
+		
 		return UserService;
 	}
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$resource',UserService])
+		.service('UserService', ['$resource','$window',UserService])
 })();

@@ -1,15 +1,15 @@
 <div class="section-container" x-ng-controller="UsersCtrl as vm">
 	<div class="section-header">
 		<div class="section-title-wrapper">
-			<div class="section-title">Profile Info</div>
-			<div class="subsection-title">Summary</div>
+			<div class="section-title">{{vm.activeParentName}}</div>
+			<div class="subsection-title">{{vm.activeTabNameId}}</div>
 		</div>
 		<div class="navigation-wrapper">
-			<span class="navigation" uib-dropdown ng-repeat="tab in vm.navTabs">
+			<span class="navigation nav-medium" uib-dropdown ng-repeat="tab in vm.navTabs">
 				<span class="selected-indicator" ng-show="tab.active"></span>
 				<a href uib-dropdown-toggle>{{tab.title}}</a>
 				<ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu">
-					<li class="nav-item" ng-repeat="subTab in tab.subTabs" ng-click="vm.tabClick(tab)">{{subTab.title}}</li>
+					<li class="nav-item" ng-repeat="subTab in tab.subTabs" ng-click="vm.tabClick(tab, subTab)">{{subTab.title}}</li>
 				</ul>
 			</span>
 		</div>
@@ -20,7 +20,8 @@
 				<span ng-include="'scripts/users/user-profile/user-sidebar.html'"></span>
 			</div>
 			<div class="col-md-8 col-xs-12">
-				<span ng-include="'scripts/users/user-profile/user-summary.html'"></span>
+				<span ng-if="vm.activeTabSectionId == 7" ng-include="'scripts/users/user-profile/user-summary.html'"></span>
+				<span ng-if="vm.activeTabSectionId == 1" ng-include="'scripts/users/user-profile/modify-profile.html'"></span>
 			</div>
 		</div>
 	</div>

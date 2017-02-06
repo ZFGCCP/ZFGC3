@@ -32,12 +32,12 @@ public class NavTabService extends AbstractService {
 		
 		for(Iterator<NavTab> itr = navTabs.iterator(); itr.hasNext();){
 			NavTab navTab = itr.next();
-			for(Iterator<NavTab> iterator = navTab.getSubTabs().iterator(); iterator.hasNext();){
+			/*for(Iterator<NavTab> iterator = navTab.getSubTabs().iterator(); iterator.hasNext();){
 				NavTab childTab = iterator.next();
 				if(childTab.getAllowSelfFlag() && !canViewSelfTab(userProfileId, user)){
 					iterator.remove();
 				}
-			}
+			}*/
 			
 			if(navTab.getSubTabs().size() == 0){
 				itr.remove();

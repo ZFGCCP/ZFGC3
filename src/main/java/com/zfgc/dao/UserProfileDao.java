@@ -8,14 +8,21 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dbobj.UserProfileViewDbObj;
 import com.zfgc.dbobj.UserProfileViewDbObjExample;
+import com.zfgc.dbobj.UsersDbObj;
+import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.UserProfileViewDbObjMapper;
+import com.zfgc.mappers.UsersDbObjMapper;
+import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.UserProfileView;
 
 @Component
 public class UserProfileDao extends AbstractDao<UserProfileView> {
 	@Autowired
 	private UserProfileViewDbObjMapper userProfileViewDbObjMapper;
+	
+	@Autowired
+	private UsersDbObjMapper usersDbObjMapper;
 	
 	Logger LOGGER = Logger.getLogger(UserProfileDao.class);
 	
@@ -43,5 +50,10 @@ public class UserProfileDao extends AbstractDao<UserProfileView> {
 	public Boolean validateIntegrity(UserProfileView model) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public void saveAccountSettings(Users accountSettings) {
+		UsersDbObj dbObj = mapper.map(accountSettings, UsersDbObj.class);
+		usersDbObjMapper.updateByPrimaryKeySelective(dbObj);
 	}
 }

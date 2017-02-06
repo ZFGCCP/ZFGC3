@@ -51,7 +51,7 @@ public class UsersService extends AbstractService {
 			requiredFieldsChecker.requiredFieldsCheck(user);
 			validator.validator(user);
 			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
-			ruleChecker.rulesCheck(user);
+			ruleChecker.rulesCheck(user, null);
 		} 
 		catch(ZfgcValidationException ex){
 			

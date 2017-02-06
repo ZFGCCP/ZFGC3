@@ -86,7 +86,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){
 		try {
-			UserProfileView user = userProfileService.getProfile(userId, zfgcUser);
+			Users user = userProfileService.getProfile(userId, zfgcUser);
 			
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} 
@@ -96,6 +96,19 @@ class UsersController extends BaseController{
 		catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
+	}
+	
+	@RequestMapping(value="/profile/account", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity saveAccountSettings(@RequestBody Users accountSettings){
+		try {
+			userProfileService.saveAccountSettings(accountSettings,zfgcUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(accountSettings);
 	}
 	
 	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
