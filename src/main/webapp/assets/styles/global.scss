@@ -101,3 +101,24 @@
     padding-right: 10px;
     padding-left: 10px;
 }
+
+.title{
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border: 1px solid;
+}
+.inner{
+    	
+		
+}
+.entire-inside{
+		border: 1px solid;
+		border-top: 0;
+		
+		div {
+			margin-top: 12px;
+			margin-bottom: 12px;
+			font-size: 12px;
+			line-height: normal;
+		}
+}
