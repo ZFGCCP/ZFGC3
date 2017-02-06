@@ -53,7 +53,7 @@ public class UserProfileDao extends AbstractDao<UserProfileView> {
 	}
 
 	public void saveAccountSettings(Users accountSettings) {
-		UsersDbObj dbObj = mapper.map(accountSettings, UsersDbObj.class,"a");
+		UsersDbObj dbObj = mapper.map(accountSettings, UsersDbObj.class);
 		usersDbObjMapper.updateByPrimaryKeySelective(dbObj);
 	}
 }

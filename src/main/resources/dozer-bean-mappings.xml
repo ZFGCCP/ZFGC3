@@ -4,13 +4,204 @@
           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
 
-	<mapping map-id="a">
-	    <class-a>com.zfgc.model.users.Users</class-a>
-	    <class-b>com.zfgc.dbObj.UsersDbObj</class-b>
+	<mapping>
+	    <class-a>com.zfgc.dbobj.UserProfileViewDbObj</class-a>
+	    <class-b>com.zfgc.model.users.Users</class-b>
     	
     	<field>
-    		<a>contactInfo.steam</a>
-    		<b>steam</b>
+    		<a>steam</a>
+    		<b>contactInfo.steam</b>
+    	</field>
+    	
+    	<field>
+    		<a>gtalk</a>
+    		<b>contactInfo.gtalk</b>
+    	</field>
+    	
+    	<field>
+    		<a>aim</a>
+    		<b>contactInfo.aim</b>
+    	</field>
+    	
+    	<field>
+    		<a>yim</a>
+    		<b>contactInfo.yim</b>
+    	</field>
+    	
+    	<field>
+    		<a>nnid</a>
+    		<b>contactInfo.nnid</b>
+    	</field>
+    	
+    	<field>
+    		<a>psn</a>
+    		<b>contactInfo.psn</b>
+    	</field>
+    	
+    	<field>
+    		<a>xboxLive</a>
+    		<b>contactInfo.xboxLive</b>
+    	</field>
+    	
+    	<field>
+    		<a>skype</a>
+    		<b>contactInfo.skype</b>
+    	</field>
+    	
+    	<field>
+    		<a>emailAddress</a>
+    		<b>emailAddress.emailAddress</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideSteamFlag</a>
+    		<b>contactInfo.hideSteamFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideGtalkFlag</a>
+    		<b>contactInfo.hideGtalkFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideAimFlag</a>
+    		<b>contactInfo.hideAimFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideYimFlag</a>
+    		<b>contactInfo.hideYimFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideNnidFlag</a>
+    		<b>contactInfo.hideNnidFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hidePsnFlag</a>
+    		<b>contactInfo.hidePsnFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideXboxLiveFlag</a>
+    		<b>contactInfo.hideXboxLiveFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideSkypeFlag</a>
+    		<b>contactInfo.hideSkypeFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideGenderFlag</a>
+    		<b>securityInfo.hideGenderFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideBirthDateFlag</a>
+    		<b>securityInfo.hideBirthDateFlag</b>
+    	</field>
+  	</mapping>
+
+
+	<mapping>
+	    <class-a>com.zfgc.dbobj.UsersDbObj</class-a>
+	    <class-b>com.zfgc.model.users.Users</class-b>
+    	
+    	<field>
+    		<a>steam</a>
+    		<b>contactInfo.steam</b>
+    	</field>
+    	
+    	<field>
+    		<a>gtalk</a>
+    		<b>contactInfo.gtalk</b>
+    	</field>
+    	
+    	<field>
+    		<a>aim</a>
+    		<b>contactInfo.aim</b>
+    	</field>
+    	
+    	<field>
+    		<a>yim</a>
+    		<b>contactInfo.yim</b>
+    	</field>
+    	
+    	<field>
+    		<a>nnid</a>
+    		<b>contactInfo.nnid</b>
+    	</field>
+    	
+    	<field>
+    		<a>psn</a>
+    		<b>contactInfo.psn</b>
+    	</field>
+    	
+    	<field>
+    		<a>xboxLive</a>
+    		<b>contactInfo.xboxLive</b>
+    	</field>
+    	
+    	<field>
+    		<a>skype</a>
+    		<b>contactInfo.skype</b>
+    	</field>
+    	
+    	<field>
+    		<a>emailAddress</a>
+    		<b>emailAddress.emailAddress</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideSteamFlag</a>
+    		<b>contactInfo.hideSteamFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideGtalkFlag</a>
+    		<b>contactInfo.hideGtalkFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideAimFlag</a>
+    		<b>contactInfo.hideAimFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideYimFlag</a>
+    		<b>contactInfo.hideYimFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideNnidFlag</a>
+    		<b>contactInfo.hideNnidFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hidePsnFlag</a>
+    		<b>contactInfo.hidePsnFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideXboxLiveFlag</a>
+    		<b>contactInfo.hideXboxLiveFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideSkypeFlag</a>
+    		<b>contactInfo.hideSkypeFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideGenderFlag</a>
+    		<b>securityInfo.hideGenderFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>hideBirthDateFlag</a>
+    		<b>securityInfo.hideBirthDateFlag</b>
     	</field>
   	</mapping>
 

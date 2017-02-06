@@ -28,14 +28,23 @@
 				</div>
 			</div>
 			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Birth Date</label>
+				</div>
+				<div class="col-xs-12 col-sm-4 datepicker" date-format="MM/dd/yyyy">
+					<input type="text" ng-model="vm.profile.birthDateAsString" class="form-control small-input" ng-disabled="true"/>
+				</div>
+			</div>
+			
 			<div class="row padded-row">	
 				<div class="col-xs-12 col-sm-4">
 					<label>Primary Membergroup</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<select ng-disabled="true" 
-					        ng-model="vm.user.timeOffset" 
-					        ng-options="memberGroup.id as memberGroup.value for memberGroup in vm.lookups.MEMBER_GROUP track by memberGroup.id" 
+					<select ng-disabled="true"
+					        ng-model="vm.profile.primaryMemberGroupId" 
+					        ng-options="memberGroup.id as memberGroup.value for memberGroup in vm.lookups.MEMBER_GROUP" 
 					        class="form-control small-input">
 				    </select>
 				</div>
@@ -59,7 +68,7 @@
 					<label>Email Address</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.emailAddress.emailAddress" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
 					<input ng-model="vm.profile.hideEmailFlag" value="true" type="checkbox"/>
@@ -72,7 +81,7 @@
 					<label>AIM</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.emailAddress.emailAddress" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.contactInfo.aim" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
 					<input ng-model="vm.profile.contactInfo.hideAimFlag" value="true" type="checkbox"/>Hide
@@ -96,10 +105,22 @@
 					<label>Hangouts</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.gTalk" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.contactInfo.gtalk" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
 					<input ng-model="vm.profile.contactInfo.hideGtalkFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Skype</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.skype" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hideSkypeFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -123,7 +144,7 @@
 					<input ng-model="vm.profile.contactInfo.xboxLive" type="text" class="form-control small-input"/>
 				</div>
 				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideXboxLive" value="true" type="checkbox"/>Hide
+					<input ng-model="vm.profile.contactInfo.hideXboxLiveFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -160,7 +181,7 @@
 					<label>New password</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.security.newPassword" type="text" class="form-control small-input"/>
 				</div>
 			</div>
 			
@@ -169,19 +190,19 @@
 					<label>Confirm password</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.security.confirmNewPassword" type="text" class="form-control small-input"/>
 				</div>
 			</div>
 			
 			<div class="row padded-row">
 				<div class="col-xs-12">
-					<input type="checkbox"/>Hide Birthdate
+					<input ng-model="vm.profile.security.hideBirthDtFlag" value="true" type="checkbox"/>Hide Birthdate
 				</div>
 			</div>
 			
 			<div class="row padded-row">
 				<div class="col-xs-12">
-					<input type="checkbox"/>Hide Gender
+					<input ng-model="vm.profile.security.hideGenderFlag" value="true" type="checkbox"/>Hide Gender
 				</div>
 			</div>
 		</div>

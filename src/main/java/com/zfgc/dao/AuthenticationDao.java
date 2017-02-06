@@ -6,10 +6,12 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.zfgc.dbobj.AuthTokenDbObj;
 import com.zfgc.dbobj.AuthTokenDbObjExample;
 import com.zfgc.dbobj.EmailAddressDbObj;
 import com.zfgc.dbobj.IpAddressDbObj;
+import com.zfgc.exception.ZfgcDataExistsException;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.AuthTokenDbObjMapper;
 import com.zfgc.mappers.EmailAddressDbObjMapper;
@@ -45,7 +47,11 @@ public class AuthenticationDao extends AbstractDao{
 		}
 	}
 	
-	public void logEmailAddress(EmailAddress emailAddress) throws Exception{
+	public void logEmailAddress(EmailAddress emailAddress) throws ZfgcDataExistsException, Exception{
+		if(getEmailAddress(emailAddress.getEmailAddress()) != null){
+			throw new ZfgcDataExistsException("EmailAddress: " + emailAddress.getEmailAddress());
+		}
+		
 		try{
 			EmailAddressDbObj emailAddressDbObj = mapper.map(emailAddress, EmailAddressDbObj.class);
 			emailAddressDbObjMapper.insertSelective(emailAddressDbObj);

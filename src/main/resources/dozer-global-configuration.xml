@@ -9,5 +9,7 @@ xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/sc
     	<date-format>yyyy/MM/dd HH:mm:ss</date-format>
 		<wildcard>false</wildcard>
 	</configuration>
+	
+	
 
 </mappings>

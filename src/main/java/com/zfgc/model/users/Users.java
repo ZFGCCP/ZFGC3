@@ -56,8 +56,10 @@ public class Users extends BaseZfgcModel {
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
 	
 	private EmailAddress emailAddress;
+	private Boolean hideEmailFlag;
 	
 	private UserContactInfo contactInfo = new UserContactInfo();
+	private UserSecurityInfo securityInfo = new UserSecurityInfo();
 	
 	private String authToken;
 	
@@ -234,7 +236,7 @@ public class Users extends BaseZfgcModel {
 		this.timeOffset = timeOffset;
 	}
 	public Long getAge(){
-		long age = 0;
+		Long age = null;
 		
 		if(timeOffsetLkup == null){
 			return age;
@@ -296,5 +298,17 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setContactInfo(UserContactInfo contactInfo) {
 		this.contactInfo = contactInfo;
+	}
+	public UserSecurityInfo getSecurityInfo() {
+		return securityInfo;
+	}
+	public void setSecurityInfo(UserSecurityInfo securityInfo) {
+		this.securityInfo = securityInfo;
+	}
+	public Boolean getHideEmailFlag() {
+		return hideEmailFlag;
+	}
+	public void setHideEmailFlag(Boolean hideEmailFlag) {
+		this.hideEmailFlag = hideEmailFlag;
 	}
 }
