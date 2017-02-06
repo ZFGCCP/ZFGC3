@@ -85,9 +85,17 @@
     
     <table schema="Zfgc3" tableName="NAV_TAB" domainObjectName="NavTabDbObj">
     	<generatedKey column="NAV_TAB_ID" sqlStatement="SELECT COALESCE(MAX(NAV_TAB_ID) + 1,0) FROM NAV_TAB"/>
-    </table>-->
+    </table>
     
-    <!--<table schema="Zfgc3" tableName="BR_MEMBER_GROUP_NAV_TAB" domainObjectName="BrMemberGroupNavTabDbObj">
+    <table schema="Zfgc3" tableName="BR_MEMBER_GROUP_NAV_TAB" domainObjectName="BrMemberGroupNavTabDbObj">
+    </table>
+    
+    <table schema="Zfgc3" tableName="AVATAR" domainObjectName="AvatarDbObj">
+    	<generatedKey column="AVATAR_ID" sqlStatement="SELECT COALSESCE(MAX(AVATAR_ID) + 1,0) FROM AVATAR"/>
+    </table>
+    
+    <table schema="Zfgc3" tableName="AVATAR_GALLERY" domainObjectName="AvatarGalleryDbObj">
+    	<generatedKey column="AVATAR_GALLERY_ID" sqlStatement="SELECT COALSESCE(MAX(AVATAR_GALLERY_ID) + 1,0) FROM AVATAR_GALLERY"/>
     </table>-->
     
     <!-- views -->
