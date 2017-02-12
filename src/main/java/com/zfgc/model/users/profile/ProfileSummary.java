@@ -17,7 +17,7 @@ public class ProfileSummary extends BaseZfgcModel {
 	private String emailAddress;
 	private Date lastLogin;
 	private String personalText;
-	private String gender;
+	private Integer gender;
 	private Date birthDate;
 	private String userTitle;
 	private Boolean hideEmailFlag;
@@ -218,10 +218,10 @@ public class ProfileSummary extends BaseZfgcModel {
 	public void setPersonalText(String personalText) {
 		this.personalText = personalText;
 	}
-	public String getGender() {
+	public Integer getGender() {
 		return gender;
 	}
-	public void setGender(String gender) {
+	public void setGender(Integer gender) {
 		this.gender = gender;
 	}
 	public Date getBirthDate() {

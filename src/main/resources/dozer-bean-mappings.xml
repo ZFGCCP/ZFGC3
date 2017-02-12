@@ -102,12 +102,32 @@ xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/sc
     		<a>hideBirthDateFlag</a>
     		<b>securityInfo.hideBirthDateFlag</b>
     	</field>
+    	
+    	<field>
+    		<a>avatarId</a>
+    		<b>avatar.avatarId</b>
+    	</field>
+    	
+		<field>
+			<a>avatarGalleryId</a>
+			<b>avatar.avatarGalleryId</b>
+		</field>
+		
+		<field>
+			<a>avatarTypeId</a>
+			<b>avatar.avatarTypeId</b>
+		</field>
   	</mapping>
 
 
 	<mapping>
 	    <class-a>com.zfgc.dbobj.UsersDbObj</class-a>
 	    <class-b>com.zfgc.model.users.Users</class-b>
+    	
+    	<field>
+    		<a>genderId</a>
+    		<b>gender</b>
+    	</field>
     	
     	<field>
     		<a>steam</a>

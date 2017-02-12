@@ -28,6 +28,9 @@ public class LookupService{
 	public static final String LOG_TYPE = "LOG_TYPE";
 	public static final String THREAD_STATUS = "THREAD_STATUS";
 	public static final String POST_ICON = "POST_ICON";
+	public static final String AVATAR_GALLERY = "AVATAR_GALLERY";
+	public static final String AVATAR_TYPE = "AVATAR_TYPE";
+	public static final String GENDER = "GENDER";
 	
 	@PostConstruct
 	public void loadLookups(){
@@ -40,6 +43,9 @@ public class LookupService{
 			lookups.put(LOG_TYPE, lookupDao.getLookup(LOG_TYPE));
 			lookups.put(THREAD_STATUS, lookupDao.getLookup(THREAD_STATUS));
 			lookups.put(POST_ICON, lookupDao.getLookup(POST_ICON));
+			lookups.put(AVATAR_GALLERY, lookupDao.getLookup(AVATAR_GALLERY));
+			lookups.put(AVATAR_TYPE, lookupDao.getLookup(AVATAR_TYPE));
+			lookups.put(GENDER, lookupDao.getLookup(GENDER));
 			LOGGER.info("Finished loading lookups.");
 		} catch (Exception e) {
 			LOGGER.error("Failed to load lookups due to exception.");

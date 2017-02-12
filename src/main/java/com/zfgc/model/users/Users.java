@@ -18,6 +18,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.avatar.Avatar;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
@@ -43,6 +44,7 @@ public class Users extends BaseZfgcModel {
 	private Date dateRegistered;
 	private Boolean activeFlag = null;
 	private Date birthDate;
+	private Integer gender;
 
 	private Date lockedUntil;
 	private Date loginFailedAttempts;
@@ -51,6 +53,10 @@ public class Users extends BaseZfgcModel {
 	private Boolean agreeToTermsFlag = false;
 	private List<Integer> memberGroups = new ArrayList<>();
 	private Integer primaryMemberGroupId = 0;
+	private String personalText;
+	private String customTitle;
+	private String websiteTitle;
+	private String websiteUrl;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -60,6 +66,7 @@ public class Users extends BaseZfgcModel {
 	
 	private UserContactInfo contactInfo = new UserContactInfo();
 	private UserSecurityInfo securityInfo = new UserSecurityInfo();
+	private Avatar avatar;
 	
 	private String authToken;
 	
@@ -310,5 +317,41 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setHideEmailFlag(Boolean hideEmailFlag) {
 		this.hideEmailFlag = hideEmailFlag;
+	}
+	public Avatar getAvatar() {
+		return avatar;
+	}
+	public void setAvatar(Avatar avatar) {
+		this.avatar = avatar;
+	}
+	public Integer getGender() {
+		return gender;
+	}
+	public void setGender(Integer gender) {
+		this.gender = gender;
+	}
+	public String getCustomTitle() {
+		return customTitle;
+	}
+	public void setCustomTitle(String customTitle) {
+		this.customTitle = customTitle;
+	}
+	public String getPersonalText() {
+		return personalText;
+	}
+	public void setPersonalText(String personalText) {
+		this.personalText = personalText;
+	}
+	public String getWebsiteUrl() {
+		return websiteUrl;
+	}
+	public void setWebsiteUrl(String websiteUrl) {
+		this.websiteUrl = websiteUrl;
+	}
+	public String getWebsiteTitle() {
+		return websiteTitle;
+	}
+	public void setWebsiteTitle(String websiteTitle) {
+		this.websiteTitle = websiteTitle;
 	}
 }

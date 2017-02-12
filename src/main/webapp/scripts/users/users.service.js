@@ -22,6 +22,10 @@
 			saveAccountSettings:{
 				url: '/forum/users/profile/account',
 				method: 'POST'
+			},
+			saveForumProfile:{
+				url: '/forum/users/profile',
+				method: 'POST'
 			}
 		});
 		UserService.register = function(user){
@@ -64,12 +68,29 @@
 			UserService.resource.saveAccountSettings(vm.profile);
 		};
 		
+		UserService.saveForumProfile = function(vm){
+			UserService.resource.saveForumProfile(vm.profile);
+		};
+		
 		UserService.isUserAdmin = function(user){
 			return user.getPrimaryMemberGroupId === 2;
 		};
 		
 		UserService.isCurrentUser = function(vm,user){
 			return vm.profile.usersId === user.getUsersId;
+		};
+		
+		UserService.getAvatarUrl = function(avatar){
+			switch(avatar.avatarTypeId){
+				case 2:
+				case 4:
+					return "http://localhost:8080/forum/contentstream/avatar/" + avatar.avatarId;
+					break;
+					
+				case 3:
+					return avatar.fileName;
+					break;
+			}
 		};
 		
 		return UserService;

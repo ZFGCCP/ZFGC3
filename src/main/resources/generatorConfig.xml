@@ -93,8 +93,8 @@
     <table schema="Zfgc3" tableName="AVATAR" domainObjectName="AvatarDbObj">
     	<generatedKey column="AVATAR_ID" sqlStatement="SELECT COALSESCE(MAX(AVATAR_ID) + 1,0) FROM AVATAR"/>
     </table>
-    
-    <table schema="Zfgc3" tableName="AVATAR_GALLERY" domainObjectName="AvatarGalleryDbObj">
+
+	<table schema="Zfgc3" tableName="AVATAR_GALLERY" domainObjectName="AvatarGalleryDbObj">
     	<generatedKey column="AVATAR_GALLERY_ID" sqlStatement="SELECT COALSESCE(MAX(AVATAR_GALLERY_ID) + 1,0) FROM AVATAR_GALLERY"/>
     </table>-->
     
