@@ -111,6 +111,19 @@ class UsersController extends BaseController{
 		return ResponseEntity.status(HttpStatus.OK).body(accountSettings);
 	}
 	
+	@RequestMapping(value="/profile", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity saveForumProfile(@RequestBody Users forumProfile){
+		try {
+			userProfileService.saveForumProfile(forumProfile,zfgcUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(forumProfile);
+	}
+	
 	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getProfileNavigationTabs(@RequestParam Integer usersId){

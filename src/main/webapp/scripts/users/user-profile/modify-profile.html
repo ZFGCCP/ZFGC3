@@ -1,215 +1,130 @@
 <form>
-	<collapsible-widget widget-title="User Settings">
+	<collapsible-widget widget-title="Avatar & Signature">
 		<div class="column-data">
 			<div class="row padded-row">
 				<div class="col-xs-12 col-sm-4">
-					<label>User Name</label>
+					<label>Avatar Type</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" ng-model="vm.profile.loginName" class="form-control small-input" ng-disabled="true"/>
+					<select class="form-control small-input" ng-model="vm.profile.avatar.avatarTypeId" ng-options="avatarType.id as avatarType.value for avatarType in vm.lookups.AVATAR_TYPE"></select>
 				</div>
 			</div>
 			
+			<div class="row padded-row" ng-if="vm.profile.avatar.avatarTypeId === 3">
+				<div class="col-xs-12 col-sm-4">
+					<label>Avatar Url</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row" ng-if="vm.profile.avatar.avatarTypeId === 2">
+				<div class="col-xs-12 col-sm-4">
+					<label>Select a file</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="file" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row" ng-if="vm.profile.avatar.avatarTypeId === 4">
+				<div class="col-xs-12 col-sm-4">
+					<label>Avatar Gallery</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<select class="form-control small-input" ng-model="vm.profile.avatar.avatarGalleryId" ng-options="avatarGallery.id as avatarGallery.value for avatarGallery in vm.lookups.AVATAR_GALLERY"></select>
+				</div>
+			</div>
+		
 			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>Display Name</label>
-				</div>
-				<div class="col-xs-12 col-sm-4">
-					<input type="text" ng-model="vm.profile.displayName" class="form-control small-input"/>
-				</div>
+				<img ng-src="http://localhost:8080/forum/contentstream/avatar/1"/>
 			</div>
-			
-			<div class="row padded-row">	
-				<div class="col-xs-12 col-sm-4">
-					<label>Date Registered</label>
-				</div>
-				<div class="col-xs-12 col-sm-4 datepicker" date-format="MM/dd/yyyy">
-					<input type="text" ng-model="vm.profile.dateRegisteredAsString" class="form-control small-input" ng-disabled="true"/>
-				</div>
-			</div>
-			
+		
 			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>Birth Date</label>
+				<div class="col-xs-12">
+					<label>Signature</label>
 				</div>
-				<div class="col-xs-12 col-sm-4 datepicker" date-format="MM/dd/yyyy">
-					<input type="text" ng-model="vm.profile.birthDateAsString" class="form-control small-input" ng-disabled="true"/>
-				</div>
-			</div>
-			
-			<div class="row padded-row">	
-				<div class="col-xs-12 col-sm-4">
-					<label>Primary Membergroup</label>
-				</div>
-				<div class="col-xs-12 col-sm-4">
-					<select ng-disabled="true"
-					        ng-model="vm.profile.primaryMemberGroupId" 
-					        ng-options="memberGroup.id as memberGroup.value for memberGroup in vm.lookups.MEMBER_GROUP" 
-					        class="form-control small-input">
-				    </select>
+				<div class="col-xs-12">
+					<textarea class="form-control" rows=10 cols=20></textarea>
 				</div>
 			</div>
 			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>Secondary Membergroups</label>
-				</div>
-				<div class="col-xs-12 col-sm-4">
-					Click to view
-				</div>
-			</div>
+			
 		</div>
 	</collapsible-widget>
 	
-	<collapsible-widget widget-title="Contact Settings">
+	<collapsible-widget widget-title="Personal Info">
 		<div class="column-data">
+		
 			<div class="row padded-row">
 				<div class="col-xs-12 col-sm-4">
-					<label>Email Address</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.emailAddress.emailAddress" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.hideEmailFlag" value="true" type="checkbox"/>
-					<span>Hide</span>
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>AIM</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.aim" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideAimFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>YIM</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.yim" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideYimFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>Hangouts</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.gtalk" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideGtalkFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>Skype</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.skype" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideSkypeFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>Steam</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.steam" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideSteamFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>XBox Live</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.xboxLive" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideXboxLiveFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>Playstation Network</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.psn" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hidePsnFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>Nintendo Network ID</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.nnid" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideNnidFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-		</div>
-	</collapsible-widget>
-	
-	<collapsible-widget widget-title="Security Settings">
-		<div class="column-data">
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>New password</label>
+					<label>Birthday</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input ng-model="vm.profile.security.newPassword" type="text" class="form-control small-input"/>
+					<input type="text" ng-model="vm.profile.birthDateAsString" class="form-control small-input"/>
 				</div>
 			</div>
 			
 			<div class="row padded-row">
 				<div class="col-xs-12 col-sm-4">
-					<label>Confirm password</label>
+					<label>Custom Title</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input ng-model="vm.profile.security.confirmNewPassword" type="text" class="form-control small-input"/>
+					<input type="text" class="form-control small-input" ng-model="vm.profile.customTitle"/>
 				</div>
 			</div>
 			
 			<div class="row padded-row">
-				<div class="col-xs-12">
-					<input ng-model="vm.profile.security.hideBirthDtFlag" value="true" type="checkbox"/>Hide Birthdate
+				<div class="col-xs-12 col-sm-4">
+					<label>Personal Text</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control small-input" ng-model="vm.profile.personalText"/>
 				</div>
 			</div>
 			
 			<div class="row padded-row">
-				<div class="col-xs-12">
-					<input ng-model="vm.profile.security.hideGenderFlag" value="true" type="checkbox"/>Hide Gender
+				<div class="col-xs-12 col-sm-4">
+					<label>Gender</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<select ng-model="vm.profile.gender" class="form-control small-input" ng-options="gender.id as gender.value for gender in vm.lookups.GENDER"></select>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Location</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control small-input" ng-model="vm.profile.location"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Website Title</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control small-input" ng-model="vm.profile.websiteTitle"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Website Url</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" class="form-control small-input" ng-model="vm.profile.websiteUrl"/>
 				</div>
 			</div>
 		</div>
 	</collapsible-widget>
 	
 	<div class="xl-button-wrapper">
-			<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveAccountSettings()">Save</button>
+			<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveForumProfile()">Save</button>
 	</div>
+	
+	
 </form>
-

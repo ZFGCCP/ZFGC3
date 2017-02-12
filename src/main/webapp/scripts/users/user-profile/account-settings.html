@@ -1,0 +1,215 @@
+<form>
+	<collapsible-widget widget-title="User Settings">
+		<div class="column-data">
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>User Name</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" ng-model="vm.profile.loginName" class="form-control small-input" ng-disabled="true"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Display Name</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input type="text" ng-model="vm.profile.displayName" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">	
+				<div class="col-xs-12 col-sm-4">
+					<label>Date Registered</label>
+				</div>
+				<div class="col-xs-12 col-sm-4 datepicker" date-format="MM/dd/yyyy">
+					<input type="text" ng-model="vm.profile.dateRegisteredAsString" class="form-control small-input" ng-disabled="true"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Birth Date</label>
+				</div>
+				<div class="col-xs-12 col-sm-4 datepicker" date-format="MM/dd/yyyy">
+					<input type="text" ng-model="vm.profile.birthDateAsString" class="form-control small-input" ng-disabled="true"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">	
+				<div class="col-xs-12 col-sm-4">
+					<label>Primary Membergroup</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<select ng-disabled="true"
+					        ng-model="vm.profile.primaryMemberGroupId" 
+					        ng-options="memberGroup.id as memberGroup.value for memberGroup in vm.lookups.MEMBER_GROUP" 
+					        class="form-control small-input">
+				    </select>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Secondary Membergroups</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					Click to view
+				</div>
+			</div>
+		</div>
+	</collapsible-widget>
+	
+	<collapsible-widget widget-title="Contact Settings">
+		<div class="column-data">
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Email Address</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.emailAddress.emailAddress" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.hideEmailFlag" value="true" type="checkbox"/>
+					<span>Hide</span>
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>AIM</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.aim" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hideAimFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>YIM</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.yim" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hideYimFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Hangouts</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.gtalk" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hideGtalkFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Skype</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.skype" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hideSkypeFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Steam</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.steam" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hideSteamFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>XBox Live</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.xboxLive" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hideXboxLiveFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Playstation Network</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.psn" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hidePsnFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Nintendo Network ID</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.nnid" type="text" class="form-control small-input"/>
+				</div>
+				<span class="col-xs-4 col-sm-4">
+					<input ng-model="vm.profile.contactInfo.hideNnidFlag" value="true" type="checkbox"/>Hide
+				</span>
+			</div>
+		</div>
+	</collapsible-widget>
+	
+	<collapsible-widget widget-title="Security Settings">
+		<div class="column-data">
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>New password</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input ng-model="vm.profile.security.newPassword" type="text" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Confirm password</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input ng-model="vm.profile.security.confirmNewPassword" type="text" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12">
+					<input ng-model="vm.profile.securityInfo.hideBirthDateFlag" value="true" type="checkbox"/>Hide Birthdate
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12">
+					<input ng-model="vm.profile.securityInfo.hideGenderFlag" value="true" type="checkbox"/>Hide Gender
+				</div>
+			</div>
+		</div>
+	</collapsible-widget>
+	
+	<div class="xl-button-wrapper">
+			<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveAccountSettings()">Save</button>
+	</div>
+</form>
+

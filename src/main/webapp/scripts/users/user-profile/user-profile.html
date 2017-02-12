@@ -21,7 +21,9 @@
 			</div>
 			<div class="col-md-8 col-xs-12">
 				<span ng-if="vm.activeTabSectionId == 7" ng-include="'scripts/users/user-profile/user-summary.html'"></span>
-				<span ng-if="vm.activeTabSectionId == 1" ng-include="'scripts/users/user-profile/modify-profile.html'"></span>
+				
+				<span ng-if="vm.activeTabSectionId == 1" ng-include="'scripts/users/user-profile/account-settings.html'"></span>
+				<span ng-if="vm.activeTabSectionId == 2" ng-include="'scripts/users/user-profile/modify-profile.html'"></span>
 			</div>
 		</div>
 	</div>

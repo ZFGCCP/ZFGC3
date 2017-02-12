@@ -116,7 +116,24 @@ public class UserProfileService {
 		}
 		
 		return accountSettings;
+	}
+	
+	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
+		try{
+			Users savedProfile = userProfileDataProvider.getUserProfile(forumProfile.getUsersId());
+			
+			if(!forumProfile.getErrors().hasErrors()){
+				userProfileDataProvider.saveForumProfile(forumProfile);
+			}
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getMessage());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
 		
+		return forumProfile;
 	}
 	
 	private Users mapProfileViewToUser(UserProfileView profileView){
