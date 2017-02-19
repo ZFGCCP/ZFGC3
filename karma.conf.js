@@ -65,9 +65,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
-	"./src/main/webapp/scripts/error/error.module.js",
-	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
+	"./src/main/webapp/scripts/filters/range.filter.js",
+	    
+	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -77,9 +79,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
-	"./src/main/webapp/scripts/forum/forum.html",
-	    
 	"./src/main/webapp/scripts/header/header.html",
+	    
+	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
@@ -87,11 +89,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.html",
+	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
+	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
+	    
 	"./src/main/webapp/scripts/users/user-profile/modify-profile.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/notification-settings.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-profile.html",
 	    

@@ -54,3 +54,28 @@ form{
 .entire-inside{
 	background-color:$midnight-widget-body-bg-color;
 }
+
+table{
+	tbody{
+		tr:nth-child(odd){
+			background-color:$midnight-zebra-odd;
+		}
+		
+		tr:nth-child(even){
+			background-color:$midnight-zebra-even;
+		}
+		
+		tr:hover{
+			background-color:$midnight-row-hover;
+		}
+	}
+}
+
+ul.pagination{
+	li{
+		a{
+			background-color:$midnight-header-bg-color;
+			color:$midnight-color;
+		}
+	}
+}

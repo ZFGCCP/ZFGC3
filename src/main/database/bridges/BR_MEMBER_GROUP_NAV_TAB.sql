@@ -12,8 +12,7 @@ ENGINE=InnoDB
 
 INSERT INTO `BR_MEMBER_GROUP_NAV_TAB` (`NAV_TAB_ID`, `MEMBER_GROUP_ID`) VALUES
 	(0, 0),
-	(1, 0),
-	(4, 0),
+	(7, 0),
 	(0, 1),
 	(1, 1),
 	(2, 1),
@@ -21,9 +20,14 @@ INSERT INTO `BR_MEMBER_GROUP_NAV_TAB` (`NAV_TAB_ID`, `MEMBER_GROUP_ID`) VALUES
 	(4, 1),
 	(5, 1),
 	(6, 1),
+	(7, 1),
+	(8, 1),
 	(0, 2),
 	(1, 2),
 	(2, 2),
 	(3, 2),
 	(4, 2),
 	(5, 2),
+	(6, 2),
+	(7, 2),
+	(8, 2);

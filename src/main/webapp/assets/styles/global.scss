@@ -102,6 +102,12 @@
     padding-left: 10px;
 }
 
+h1,h2,h3,h4,h5,h6{
+	margin:0 !important;
+	padding-bottom:5px !important;
+    font-family: cambria math !important;
+}
+
 .title{
 	padding-top: 10px;
 	padding-bottom: 10px;
@@ -121,4 +127,49 @@
 			font-size: 12px;
 			line-height: normal;
 		}
+}
+
+.top-padded{
+	padding-top:2px;
+}
+
+@media(max-width: 600px){
+	ul.paginator{
+		display:none;
+	}
+}
+
+@media(min-width: 601px){
+	select.paginator{
+		display:none;
+	}
+}
+
+select.paginator{
+	border-radius:0px;
+}
+
+ul.paginator{
+
+	margin:0 !important;
+	height:20px;
+	width:100%;
+	
+	li{
+		a{
+			border-radius:0 !important;
+		}
+	}
+}
+
+.unit-wrapper{
+	overflow:auto;
+	
+	.unit{
+		padding-bottom:20px;
+		
+		.unit-content{
+			padding-bottom:10px;
+		}
+	}
 }
