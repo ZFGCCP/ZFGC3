@@ -117,6 +117,77 @@ xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/sc
 			<a>avatarTypeId</a>
 			<b>avatar.avatarTypeId</b>
 		</field>
+		
+		<!--  notification settings -->
+    	<field>
+    		<a>notificationSettingsId</a>
+    		<b>notificationSettings.notificationSettingsId</b>
+    	</field>
+    	
+    	<field>
+    		<a>autoSubscribeFlag</a>
+    		<b>notificationSettings.autoSubscribeFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>sendPostInEmailFlag</a>
+    		<b>notificationSettings.sendPostInEmailFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>instantFlag</a>
+    		<b>notificationSettings.instantFlag</b>
+    	</field>
+    	
+		<field>
+			<a>frequencyId</a>
+			<b>notificationSettings.frequencyId</b>
+		</field>
+    	
+    	<field>
+    		<a>onlyFirstFlag</a>
+    		<b>notificationSettings.onlyFirstFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>karmaEmailFlag</a>
+    		<b>notificationSettings.karmaEmailFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>karmaPmFlag</a>
+    		<b>notificationSettings.karmaPmFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>taggedEmailFlag</a>
+    		<b>notificationSettings.taggedEmailFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>taggedPmFlag</a>
+    		<b>notificationSettings.taggedPmFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>pmEmailFlag</a>
+    		<b>notificationSettings.pmEmailFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>moderationFlag</a>
+    		<b>notificationSettings.moderationFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>onlyMeFlag</a>
+    		<b>notificationSettings.onlyMeFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>repliesFlag</a>
+    		<b>notificationSettings.repliesFlag</b>
+    	</field>
   	</mapping>
 
 
@@ -223,6 +294,7 @@ xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/sc
     		<a>hideBirthDateFlag</a>
     		<b>securityInfo.hideBirthDateFlag</b>
     	</field>
+
   	</mapping>
 
 </mappings>

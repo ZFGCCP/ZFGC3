@@ -20,6 +20,7 @@ import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.subscription.SubscriptionService;
 import com.zfgc.services.userprofile.UserProfileService;
 import com.zfgc.services.users.UsersService;
 
@@ -32,7 +33,7 @@ class UsersController extends BaseController{
 
 	@Autowired
 	UserProfileService userProfileService;
-	
+
 	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
@@ -123,6 +124,20 @@ class UsersController extends BaseController{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(forumProfile);
 	}
+	
+	@RequestMapping(value="/profile/notifications", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity saveNotificationSettings(@RequestBody Users notificationSettings){
+		try {
+			userProfileService.saveNotificationSettings(notificationSettings,zfgcUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(notificationSettings);
+	}
+	
 	
 	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody

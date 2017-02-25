@@ -53,6 +53,10 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
+	"./src/main/webapp/scripts/notifications/notifications.module.js",
+	    
+	"./src/main/webapp/scripts/notifications/notifications.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
@@ -79,9 +83,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
-	"./src/main/webapp/scripts/header/header.html",
-	    
 	"./src/main/webapp/scripts/forum/forum.html",
+	    
+	"./src/main/webapp/scripts/header/header.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    

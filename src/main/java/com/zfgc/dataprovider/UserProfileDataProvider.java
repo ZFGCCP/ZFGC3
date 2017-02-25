@@ -35,6 +35,10 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		return user;
 	}
 
+	public void saveNotificationSettings(Users notificationSettings) throws Exception{
+		userProfileDao.saveAccountSettings(notificationSettings);
+	}
+	
 	public void saveAccountSettings(Users accountSettings) throws Exception {
 		authenticationService.logEmailAddress(accountSettings.getEmailAddress());
 		userProfileDao.saveAccountSettings(accountSettings);

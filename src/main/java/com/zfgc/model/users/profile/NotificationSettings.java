@@ -8,9 +8,6 @@ public class NotificationSettings extends BaseZfgcModel{
     private Boolean autoSubscribeFlag;
     private Boolean sendPostInEmailFlag;
     private Boolean instantFlag;
-    private Boolean dailyFlag;
-    private Boolean weeklyFlag;
-    private Boolean monthlyFlag;
     private Boolean onlyFirstFlag;
     private Boolean repliesFlag;
     private Boolean moderationFlag;
@@ -20,6 +17,7 @@ public class NotificationSettings extends BaseZfgcModel{
     private Boolean taggedEmailFlag;
     private Boolean taggedPmFlag;
     private Boolean pmEmailFlag;
+    private Integer frequencyId;
 	
 	public Integer getNotificationSettingsId() {
 		return notificationSettingsId;
@@ -51,30 +49,6 @@ public class NotificationSettings extends BaseZfgcModel{
 
 	public void setInstantFlag(Boolean instantFlag) {
 		this.instantFlag = instantFlag;
-	}
-
-	public Boolean getDailyFlag() {
-		return dailyFlag;
-	}
-
-	public void setDailyFlag(Boolean dailyFlag) {
-		this.dailyFlag = dailyFlag;
-	}
-
-	public Boolean getWeeklyFlag() {
-		return weeklyFlag;
-	}
-
-	public void setWeeklyFlag(Boolean weeklyFlag) {
-		this.weeklyFlag = weeklyFlag;
-	}
-
-	public Boolean getMonthlyFlag() {
-		return monthlyFlag;
-	}
-
-	public void setMonthlyFlag(Boolean monthlyFlag) {
-		this.monthlyFlag = monthlyFlag;
 	}
 
 	public Boolean getOnlyFirstFlag() {
@@ -153,6 +127,14 @@ public class NotificationSettings extends BaseZfgcModel{
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Integer getFrequencyId() {
+		return frequencyId;
+	}
+
+	public void setFrequencyId(Integer frequencyId) {
+		this.frequencyId = frequencyId;
 	}
 	
 }

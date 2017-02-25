@@ -18,15 +18,21 @@ public class ThreadSubscriptionDao extends AbstractDao{
 	@Autowired
 	ThreadSubscriptionViewDbObjMapper threadSubscriptionViewDbObjMapper;
 	
-	public List<ThreadSubscriptionViewDbObj> getThreadSubscriptionsByUser(Integer userId){
+	public List<ThreadSubscriptionViewDbObj> getThreadSubscriptionsByUser(Integer userId, Integer lowerBound, Integer upperBound){
 		List<ThreadSubscriptionViewDbObj> dbObj = null;
-		
-		ThreadSubscriptionViewDbObjExample ex = new ThreadSubscriptionViewDbObjExample();
-		ex.createCriteria().andThreadStarterIdEqualTo(userId);
-		
-		dbObj = threadSubscriptionViewDbObjMapper.selectByExample(ex);
+
+		dbObj = threadSubscriptionViewDbObjMapper.getThreadSubs(userId,lowerBound,upperBound);
 		
 		return dbObj;
+	}
+	
+	public Integer totalSubscriptionThreads(Integer userId){
+		ThreadSubscriptionViewDbObjExample ex = new ThreadSubscriptionViewDbObjExample();
+		ex.createCriteria().andSubscriberIdEqualTo(userId);
+		
+		Integer result = threadSubscriptionViewDbObjMapper.countByExample(ex);
+		
+		return result;
 	}
 	
 	public void deleteThreadSubscriptions(List<ThreadSubscription> subsToRemove){

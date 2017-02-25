@@ -8,6 +8,8 @@ public class ThreadSubscription extends BaseZfgcModel{
     private String name;
     private Integer threadStarterId;
     private String threadStarterName;
+    private String subscriberId;
+    private String subscriberName;
     
 	public Integer getThreadId() {
 		return threadId;
@@ -55,6 +57,22 @@ public class ThreadSubscription extends BaseZfgcModel{
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getSubscriberName() {
+		return subscriberName;
+	}
+
+	public void setSubscriberName(String subscriberName) {
+		this.subscriberName = subscriberName;
+	}
+
+	public String getSubscriberId() {
+		return subscriberId;
+	}
+
+	public void setSubscriberId(String subscriberId) {
+		this.subscriberId = subscriberId;
 	}
 	
 }

@@ -6,8 +6,8 @@
 				<div class="unit-content">
 					<h5>Notify when my karma changes:</h5> 
 					<div>
-						<span class="col-xs-12 col-sm-6"><input type="checkbox"/><label>By PM</label></span>
-						<span class="col-xs-12 col-sm-6"><input type="checkbox"/><label>By E-mail</label></span>
+						<span class="col-xs-12 col-sm-6"><input type="checkbox" ng-model="vm.profile.notificationSettings.karmaPmFlag" value="true"/><label>By PM</label></span>
+						<span class="col-xs-12 col-sm-6"><input type="checkbox" ng-model="vm.profile.notificationSettings.karmaEmailFlag" value="true"/><label>By E-mail</label></span>
 					</div>
 				</div>
 			</div>
@@ -17,8 +17,8 @@
 				<div class="unit-content">
 					<h5>Notify when someone has tagged me in a post:</h5>
 					<div>
-						<span class="col-xs-12 col-sm-6"><input type="checkbox"/><label>By PM</label></span>
-						<span class="col-xs-12 col-sm-6"><input type="checkbox"/><label>By E-mail</label></span>
+						<span class="col-xs-12 col-sm-6"><input type="checkbox" ng-model="vm.profile.notificationSettings.taggedPmFlag" value="true"/><label>By PM</label></span>
+						<span class="col-xs-12 col-sm-6"><input type="checkbox" ng-model="vm.profile.notificationSettings.taggedEmailFlag" value="true"/><label>By E-mail</label></span>
 					</div>
 				</div>
 			</div>
@@ -28,22 +28,22 @@
 				<div class="unit-content">
 					<h5>For forums/threads I am subscribed to, notify me:</h5>
 					<div>
-						<span class="col-xs-12 col-sm-3"><input type="radio"/><label>Never</label></span>
-						<span class="col-xs-12 col-sm-3"><input type="radio"/><label>Daily</label></span>
-						<span class="col-xs-12 col-sm-3"><input type="radio"/><label>Weekly</label></span>
-						<span class="col-xs-12 col-sm-3"><input type="radio"/><label>Monthly</label></span>
+						<span class="col-xs-12 col-sm-3"><input type="radio" ng-model="vm.profile.notificationSettings.frequencyId" value="0"/><label>Never</label></span>
+						<span class="col-xs-12 col-sm-3"><input type="radio" ng-model="vm.profile.notificationSettings.frequencyId" value="1"/><label>Daily</label></span>
+						<span class="col-xs-12 col-sm-3"><input type="radio" ng-model="vm.profile.notificationSettings.frequencyId" value="2"/><label>Weekly</label></span>
+						<span class="col-xs-12 col-sm-3"><input type="radio" ng-model="vm.profile.notificationSettings.frequencyId" value="3"/><label>Monthly</label></span>
 					</div>
 					<div>
-						<span class="col-xs-12"><input type="checkbox"/><label>Only for my threads</label></span>
-						<span class="col-xs-12"><input type="checkbox"/><label>Only for threads/forums which I have posted in</label></span>
-						<span class="col-xs-12"><input type="checkbox"/><label>Only for posts that are replies to me</label></span>
+						<span class="col-xs-12"><input type="checkbox" ng-model="vm.profile.notificationSettings.onlyMeFlag" value="true"/><label>For threads that I have started</label></span>
+						<span class="col-xs-12"><input type="checkbox"/><label>For threads/forums which I have posted in</label></span>
+						<span class="col-xs-12"><input type="checkbox"/><label>For posts that are replies to me</label></span>
 					</div>
 				</div>
 				<div class="unit-content">
 					<h5>Notify me of:</h5>
 					<div>
-						<span class="col-xs-12 col-sm-3"><input type="checkbox"/><label>Replies</label></span>
-						<span class="col-xs-12 col-sm-9"><input type="checkbox"/><label>Moderation</label></span>
+						<span class="col-xs-12 col-sm-3"><input type="checkbox" ng-model="vm.profile.notificationSettings.repliesFlag" value="true"/><label>Replies</label></span>
+						<span class="col-xs-12 col-sm-9"><input type="checkbox" ng-model="vm.profile.notificationSettings.moderationFlag" value="true"/><label>Moderation</label></span>
 					</div>
 				</div>
 			</div>
@@ -62,10 +62,10 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr>
+					<tr ng-repeat="thread in vm.threadSubs.threadSubscriptions">
 						<td>Delete</td>
-						<td>Hardcoded test</td>
-						<td class="no-wrap">Hardcoded test</td>
+						<td>{{thread.name}}</td>
+						<td class="no-wrap"><a ng-href="/forum/#/userprofile?userId={{thread.threadStarterId}}">{{thread.threadStarterName}}</a></td>
 						<td class="no-wrap">
 							Hardcoded test
 							<div class="top-padded">By: Hardcoded test</div>
@@ -76,13 +76,13 @@
 		</div>
 		<div class="table-page-footer">
 			<ul uib-pagination 
-			    total-items="100" 
+			    total-items="vm.threadSubs.totalItems" 
 			    ng-model="bigCurrentPage" 
 			    max-size="vm.max" 
 			    class="pagination-sm paginator" 
 			    boundary-links="true" 
 			    force-ellipses="true"></ul>
-			 <select ng-model="vm.pageNo" class="form-control small-input paginator" ng-options="n for n in [] | range:1:30"></select>
+			 <select ng-model="vm.pageNo" class="form-control small-input paginator" ng-options="n for n in [] | range:1:vm.threadSubs.numberOfPages"></select>
 		</div>
 	</collapsible-widget>
 	
