@@ -11,6 +11,7 @@ import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.notifications.NotificationsService;
 
 @Component
 public class UserProfileDataProvider extends AbstractDataProvider {
@@ -19,6 +20,9 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	
 	@Autowired
 	AuthenticationService authenticationService;
+	
+	@Autowired
+	NotificationsService notificationsService;
 	
 	public Users getUserProfile(Integer userId) throws Exception{
 		UserProfileViewDbObj userProfileViewDbObj = null;
@@ -35,6 +39,10 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		return user;
 	}
 
+	public void saveNotificationSettings(Users notificationSettings) throws Exception{
+		notificationsService.saveNotificationSettings(notificationSettings.getNotificationSettings());
+	}
+	
 	public void saveAccountSettings(Users accountSettings) throws Exception {
 		authenticationService.logEmailAddress(accountSettings.getEmailAddress());
 		userProfileDao.saveAccountSettings(accountSettings);

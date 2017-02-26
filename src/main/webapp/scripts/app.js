@@ -16,5 +16,6 @@ angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'd
 angular.module('zfgc.modules', [
     'zfgc.users',
     'zfgc.forum',
-    'zfgc.error'
+    'zfgc.error',
+    'zfgc.notifications'
 ]);

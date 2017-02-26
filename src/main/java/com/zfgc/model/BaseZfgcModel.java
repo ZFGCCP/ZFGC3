@@ -1,6 +1,8 @@
 package com.zfgc.model;
 
-public abstract class BaseZfgcModel{
+import com.zfgc.model.subscriptions.ThreadSubscription;
+
+public abstract class BaseZfgcModel implements Comparable{
 	private ZfgcValidationErrors errors = new ZfgcValidationErrors();
 
 	public ZfgcValidationErrors getErrors() {
@@ -11,5 +13,8 @@ public abstract class BaseZfgcModel{
 		this.errors = errors;
 	}
 	
-	public abstract String getHMAC() throws Exception; 
+	public abstract String getHMAC() throws Exception;
+	
+	@Override
+	public int compareTo(Object other){return 0;}
 }

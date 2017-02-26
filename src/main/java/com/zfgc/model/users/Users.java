@@ -19,6 +19,7 @@ import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.avatar.Avatar;
+import com.zfgc.model.users.profile.NotificationSettings;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
@@ -66,6 +67,7 @@ public class Users extends BaseZfgcModel {
 	
 	private UserContactInfo contactInfo = new UserContactInfo();
 	private UserSecurityInfo securityInfo = new UserSecurityInfo();
+	private NotificationSettings notificationSettings = new NotificationSettings();
 	private Avatar avatar;
 	
 	private String authToken;
@@ -353,5 +355,11 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setWebsiteTitle(String websiteTitle) {
 		this.websiteTitle = websiteTitle;
+	}
+	public NotificationSettings getNotificationSettings() {
+		return notificationSettings;
+	}
+	public void setNotificationSettings(NotificationSettings notificationSettings) {
+		this.notificationSettings = notificationSettings;
 	}
 }

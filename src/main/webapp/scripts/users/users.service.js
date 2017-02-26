@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($resource, $window){
+	function UserService($resource, $window, NotificationsService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
@@ -26,6 +26,10 @@
 			saveForumProfile:{
 				url: '/forum/users/profile',
 				method: 'POST'
+			},
+			saveNotificationSettings:{
+				url:'/forum/users/profile/notifications',
+				method:'POST'
 			}
 		});
 		UserService.register = function(user){
@@ -42,6 +46,10 @@
 					
 					UserService.setTabActive(vm,data[0],data[0].subTabs[0]);
 				});
+	        	
+	        	NotificationsService.getThreadSubs(userId,1,10).$promise.then(function(data){
+	        		vm.threadSubs = data;
+	        	});
 	         });
 	         	                                      
 		};
@@ -72,6 +80,10 @@
 			UserService.resource.saveForumProfile(vm.profile);
 		};
 		
+		UserService.saveNotificationSettings = function(vm){
+			UserService.resource.saveNotificationSettings(vm.profile);
+		};
+		
 		UserService.isUserAdmin = function(user){
 			return user.getPrimaryMemberGroupId === 2;
 		};
@@ -98,5 +110,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$resource','$window',UserService])
+		.service('UserService', ['$resource','$window','NotificationsService',UserService])
 })();
