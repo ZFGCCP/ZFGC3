@@ -19,6 +19,10 @@
 			UserService.saveForumProfile(vm);
 		};
 		
+		vm.saveNotificationSettings = function(){
+			UserService.saveNotificationSettings(vm);
+		};
+		
 		vm.getAvatarUrl = function(){
 			if(vm.profile && vm.profile !== null){
 				return UserService.getAvatarUrl(vm.profile.avatar);

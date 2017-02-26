@@ -20,7 +20,7 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettings>{
 	
 	public void updateNotificationSettings(NotificationSettings notifSettings){
 		NotificationSettingsDbObj dbObj = mapper.map(notifSettings,NotificationSettingsDbObj.class);
-		notificationSettingsDbObjMapper.updateByPrimaryKey(dbObj);
+		notificationSettingsDbObjMapper.updateByPrimaryKeySelective(dbObj);
 	}
 	
 	public NotificationSettingsDbObj insertNotificationSettings(NotificationSettings notifSettings){

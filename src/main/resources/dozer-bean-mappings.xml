@@ -188,6 +188,16 @@ xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/sc
     		<a>repliesFlag</a>
     		<b>notificationSettings.repliesFlag</b>
     	</field>
+    	
+    	<field>
+    		<a>repliesToMeFlag</a>
+    		<b>notificationSettings.repliesToMeFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>postedInFlag</a>
+    		<b>notificationSettings.postedInFlag</b>
+    	</field>
   	</mapping>
 
 

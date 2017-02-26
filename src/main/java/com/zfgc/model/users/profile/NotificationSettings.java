@@ -12,6 +12,8 @@ public class NotificationSettings extends BaseZfgcModel{
     private Boolean repliesFlag;
     private Boolean moderationFlag;
     private Boolean onlyMeFlag;
+    private Boolean repliesToMeFlag;
+    private Boolean postedInFlag;
     private Boolean karmaEmailFlag;
     private Boolean karmaPmFlag;
     private Boolean taggedEmailFlag;
@@ -135,6 +137,22 @@ public class NotificationSettings extends BaseZfgcModel{
 
 	public void setFrequencyId(Integer frequencyId) {
 		this.frequencyId = frequencyId;
+	}
+
+	public Boolean getRepliesToMeFlag() {
+		return repliesToMeFlag;
+	}
+
+	public void setRepliesToMeFlag(Boolean repliesToMeFlag) {
+		this.repliesToMeFlag = repliesToMeFlag;
+	}
+
+	public Boolean getPostedInFlag() {
+		return postedInFlag;
+	}
+
+	public void setPostedInFlag(Boolean postedInFlag) {
+		this.postedInFlag = postedInFlag;
 	}
 	
 }

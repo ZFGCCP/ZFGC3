@@ -35,8 +35,8 @@
 					</div>
 					<div>
 						<span class="col-xs-12"><input type="checkbox" ng-model="vm.profile.notificationSettings.onlyMeFlag" value="true"/><label>For threads that I have started</label></span>
-						<span class="col-xs-12"><input type="checkbox"/><label>For threads/forums which I have posted in</label></span>
-						<span class="col-xs-12"><input type="checkbox"/><label>For posts that are replies to me</label></span>
+						<span class="col-xs-12"><input type="checkbox" ng-model="vm.profile.notificationSettings.postedInFlag" value="true"/><label>For threads/forums which I have posted in</label></span>
+						<span class="col-xs-12"><input type="checkbox" ng-model="vm.profile.notificationSettings.repliesToMeFlag" value="true"/><label>For posts that are replies to me</label></span>
 					</div>
 				</div>
 				<div class="unit-content">
@@ -114,6 +114,6 @@
 	</collapsible-widget>
 	
 	<div class="xl-button-wrapper">
-		<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveForumProfile()">Save</button>
+		<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveNotificationSettings()">Save</button>
 	</div>
 </form>

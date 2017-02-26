@@ -81,7 +81,7 @@
 		};
 		
 		UserService.saveNotificationSettings = function(vm){
-			UsersService.resource.saveNotificationSettings(vm.profile);
+			UserService.resource.saveNotificationSettings(vm.profile);
 		};
 		
 		UserService.isUserAdmin = function(user){
