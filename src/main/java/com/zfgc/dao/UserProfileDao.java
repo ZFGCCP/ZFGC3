@@ -6,11 +6,13 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dbobj.PersonalMessagingSettingsDbObj;
 import com.zfgc.dbobj.UserProfileViewDbObj;
 import com.zfgc.dbobj.UserProfileViewDbObjExample;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.mappers.PersonalMessagingSettingsDbObjMapper;
 import com.zfgc.mappers.UserProfileViewDbObjMapper;
 import com.zfgc.mappers.UsersDbObjMapper;
 import com.zfgc.model.users.Users;
@@ -23,6 +25,9 @@ public class UserProfileDao extends AbstractDao<UserProfileView> {
 	
 	@Autowired
 	private UsersDbObjMapper usersDbObjMapper;
+	
+	@Autowired
+	private PersonalMessagingSettingsDbObjMapper personalMessagingSettingsDbObjMapper;
 	
 	Logger LOGGER = Logger.getLogger(UserProfileDao.class);
 	
@@ -55,5 +60,10 @@ public class UserProfileDao extends AbstractDao<UserProfileView> {
 	public void saveAccountSettings(Users accountSettings) {
 		UsersDbObj dbObj = mapper.map(accountSettings, UsersDbObj.class);
 		usersDbObjMapper.updateByPrimaryKeySelective(dbObj);
+	}
+	
+	public void savePmSettings(Users pmSettings){
+		PersonalMessagingSettingsDbObj dbObj = mapper.map(pmSettings.getPersonalMessagingSettings(), PersonalMessagingSettingsDbObj.class);
+		personalMessagingSettingsDbObjMapper.updateByPrimaryKeySelective(dbObj);
 	}
 }

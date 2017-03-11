@@ -48,6 +48,10 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		userProfileDao.saveAccountSettings(accountSettings);
 	}
 	
+	public void savePmSettings(Users pmSettings) throws Exception{
+		userProfileDao.savePmSettings(pmSettings);
+	}
+	
 	public void saveForumProfile(Users forumProfile) throws Exception{
 		userProfileDao.saveAccountSettings(forumProfile);
 	}

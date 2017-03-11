@@ -132,6 +132,20 @@ public class UserProfileService {
 		return notificationSettings;
 	}
 	
+	public Users savePmSettings(Users pmSettings, Users zfgcUser) throws Exception{
+		try{
+			userProfileDataProvider.savePmSettings(pmSettings);
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getMessage());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
+		
+		return pmSettings;
+	}
+	
 	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
 		try{
 			Users savedProfile = userProfileDataProvider.getUserProfile(forumProfile.getUsersId());
