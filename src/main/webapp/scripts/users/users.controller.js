@@ -23,6 +23,10 @@
 			UserService.saveNotificationSettings(vm);
 		};
 		
+		vm.savePmSettings = function(){
+			UserService.savePmSettings(vm);
+		};
+		
 		vm.getAvatarUrl = function(){
 			if(vm.profile && vm.profile !== null){
 				return UserService.getAvatarUrl(vm.profile.avatar);

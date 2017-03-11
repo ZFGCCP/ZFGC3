@@ -138,6 +138,18 @@ class UsersController extends BaseController{
 		return ResponseEntity.status(HttpStatus.OK).body(notificationSettings);
 	}
 	
+	@RequestMapping(value="/profile/pmSettings", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity savePmSettings(@RequestBody Users pmSettings){
+		try {
+			userProfileService.savePmSettings(pmSettings,zfgcUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(pmSettings);
+	}
 	
 	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody

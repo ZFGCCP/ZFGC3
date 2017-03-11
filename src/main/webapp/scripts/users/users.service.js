@@ -30,6 +30,10 @@
 			saveNotificationSettings:{
 				url:'/forum/users/profile/notifications',
 				method:'POST'
+			},
+			savePmSettings:{
+				url:'/forum/users/profile/pmSettings',
+				method:'POST'
 			}
 		});
 		UserService.register = function(user){
@@ -82,6 +86,10 @@
 		
 		UserService.saveNotificationSettings = function(vm){
 			UserService.resource.saveNotificationSettings(vm.profile);
+		};
+		
+		UserService.savePmSettings = function(vm){
+			UserService.resource.savePmSettings(vm.profile);
 		};
 		
 		UserService.isUserAdmin = function(user){

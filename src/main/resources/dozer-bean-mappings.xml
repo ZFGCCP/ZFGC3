@@ -198,6 +198,38 @@ xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/sc
     		<a>postedInFlag</a>
     		<b>notificationSettings.postedInFlag</b>
     	</field>
+    	
+    	<!-- personal messaging settings -->
+    	<field>
+    		<a>personalMessagingSettingsId</a>
+    		<b>personalMessagingSettings.personalMessagingSettingsId</b>
+    	</field>
+    	
+    	
+    	<field>
+    		<a>displaySettingId</a>
+    		<b>personalMessagingSettings.displaySettingId</b>
+    	</field>
+    	
+    	<field>
+    		<a>recentAtTopFlag</a>
+    		<b>personalMessagingSettings.recentAtTopFlag</b>
+    	</field>
+    	
+    	<field>
+    		<a>receiveFromId</a>
+    		<b>personalMessagingSettings.receiveFromId</b>
+    	</field>
+    	
+    	<field>
+    		<a>notifyFrequencyId</a>
+    		<b>personalMessagingSettings.notifyFrequencyId</b>
+    	</field>
+    	
+    	<field>
+    		<a>saveToSentFlag</a>
+    		<b>personalMessagingSettings.saveToSentFlag</b>
+    	</field>
   	</mapping>
 
 
