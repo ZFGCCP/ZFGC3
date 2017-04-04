@@ -17,4 +17,6 @@ INSERT INTO `LKUP_NAV_SECTIONS` (`LKUP_NAV_SECTIONS_ID`, `SECTION_CODE`) VALUES
 	(6, 'SHST'),
 	(7, 'SUMM'),
 	(8, 'TRUS'),
-	(9, 'NTST');
+	(9, 'NTST'),
+	(10, 'PMST'),
+	(11, 'BDIG');

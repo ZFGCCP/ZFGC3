@@ -114,12 +114,15 @@
     	<columnOverride column="PM_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="REPLIES_TO_ME_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="POSTED_IN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>-->
+    </table>
     
     <table schema="Zfgc3" tableName="PERSONAL_MESSAGING_SETTINGS" domainObjectName="PersonalMessagingSettingsDbObj">
     	<generatedKey column="PERSONAL_MESSAGING_SETTINGS_ID" sqlStatement="SELECT COALSESCE(MAX(PERSONAL_MESSAGING_SETTINGS_ID) + 1,0) FROM PERSONAL_MESSAGING_SETTINGS"/>
     	<columnOverride column="RECENT_AT_TOP_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="SAVE_TO_SENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>-->
+    
+    <table schema="zfgc3" tableName="BR_BUDDY_IGNORE_LIST" domainObjectName="BrBuddyIgnoreListDbObj">
     </table>
     
     <!-- views -->

@@ -13,11 +13,15 @@ COLLATE='latin1_swedish_ci'
 ENGINE=InnoDB
 ;
 
-INSERT INTO `NAV_TAB` (`NAV_TAB_ID`, `PARENT_TAB_ID`, `TITLE`, `SEQUENCE_NO`, `SECTION_CODE`) VALUES
-	(0, NULL, 'Profile Info', -4, 'PLIN'),
-	(1, NULL, 'Modify Profile', -3, 'MDPL'),
-	(2, NULL, 'Messaging', -2, 'MSGS'),
-	(3, NULL, 'Track User', -1, 'TRUS'),
-	(4, 0, 'Summary', 1, 'SUMM'),
-	(5, 1, 'Account Settings', 1, 'ACTS'),
-	(6, 1, 'Forum Profile', 1, 'FMPL');
+INSERT INTO `NAV_TAB` (`NAV_TAB_ID`, `LKUP_NAV_SECTION_ID`, `PARENT_TAB_ID`, `TITLE`, `SEQUENCE_NO`, `ALLOW_SELF_FLAG`) VALUES
+	(0, 5, NULL, 'Profile Info', -4, b'0'),
+	(1, 3, NULL, 'Modify Profile', -3, b'1'),
+	(2, 4, NULL, 'Messaging', -2, b'0'),
+	(3, 8, NULL, 'Track User', -1, b'0'),
+	(4, 7, 0, 'Summary', 1, b'0'),
+	(5, 1, 1, 'Account Settings', 1, b'1'),
+	(6, 2, 1, 'Forum Profile', 1, b'1'),
+	(7, 6, 0, 'Show Stats', 2, b'0'),
+	(8, 9, 2, 'Notification Settings', 1, b'1'),
+	(9, 10, 2, 'PM Settings', 2, b'1'),
+	(10, 11, 2, 'Buddy/Ignore List', 3, b'1');
