@@ -51,11 +51,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
-	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.service.js",
+	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
@@ -65,15 +65,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
+	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
-	    
-	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -104,6 +104,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/user-profile/modify-profile.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/notification-settings.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/pm-settings.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-profile.html",
 	    
