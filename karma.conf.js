@@ -43,6 +43,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
+	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
@@ -51,29 +53,29 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
-	"./src/main/webapp/scripts/notifications/notifications.module.js",
-	    
-	"./src/main/webapp/scripts/notifications/notifications.service.js",
-	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
+	"./src/main/webapp/scripts/notifications/notifications.module.js",
+	    
+	"./src/main/webapp/scripts/notifications/notifications.service.js",
+	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
-	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
-	"./src/main/webapp/scripts/error/error.module.js",
+	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
+	    
+	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -85,11 +87,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.html",
 	    
-	"./src/main/webapp/scripts/header/header.html",
-	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
