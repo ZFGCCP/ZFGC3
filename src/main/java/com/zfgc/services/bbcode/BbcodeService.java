@@ -26,6 +26,7 @@ public class BbcodeService extends AbstractService{
 		b.setCode("b");
 		b.setEndTag("</span>");
 		b.setStartTag("<span class='bbCode-b'>");
+		b.setProcessContentFlag(false);
 		validBbCodes.put("b", b);
 		bbCodeCounts.put("b", 0);
 		
@@ -41,6 +42,7 @@ public class BbcodeService extends AbstractService{
 		StringBuilder output = new StringBuilder();
 		StringBuilder currentBuffer = new StringBuilder();
 		String currentState = null;
+		String currentCode = null;
 		int lastKnownFreshPosition = 0;
 		int i = 0;
 		int openBracePos = -1;
@@ -92,32 +94,53 @@ public class BbcodeService extends AbstractService{
 					
 					if(foundBbCode){
 						if(isClosingBrace){
-							//revert to previous state
-							bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) - 1);
-							states.pop();
-							output.append(inputChar,lastKnownFreshPosition,closeBracePos - lastKnownFreshPosition);
-							output.append(validBbCodes.get(bbCodetest).getEndTag());
-							if(states.size() == 0){
-								currentState = "";
+							
+							if(states.size() == 0){//we've got a stray closing tag
+								output.append(inputChar,lastKnownFreshPosition, i - lastKnownFreshPosition + 1);
+								lastKnownFreshPosition = i + 1;
 							}
-							else{
-								currentState = states.peek();
+							else{//this is a matched closing tag
+								//revert to previous state
+								
+								if(validBbCodes.get(currentCode).getProcessContentFlag() || (currentCode + "0").equals(states.peek())){
+									output.append(inputChar,lastKnownFreshPosition,closeBracePos - lastKnownFreshPosition);
+									output.append(validBbCodes.get(currentCode).getEndTag());
+									lastKnownFreshPosition = i + 1;
+								}
+								
+								bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) - 1);
+								states.pop();
+								if(states.size() == 0){
+									currentState = "";
+								}
+								else{
+									currentState = states.peek();
+								}
+								
+								if(validBbCodes.get(currentCode).getProcessContentFlag()){
+									currentCode = currentState;
+								}
 							}
 						}
 						else{
 							//state change
 							//record whatever we found up to this point
 							//replace the bbcode with its html opening
+							if(currentCode == null || currentCode.equals("") || validBbCodes.get(currentCode).getProcessContentFlag()){
+								if(lastKnownFreshPosition != openBracePos){
+									output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
+								}
+								output.append(validBbCodes.get(bbCodetest).getStartTag());
+								currentCode = bbCodetest;
+								lastKnownFreshPosition = i + 1;
+							}	
+							
 							currentState = bbCodetest + bbCodeCounts.get(bbCodetest);
 							states.push(currentState);
 							bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) + 1);
 							
-							if(lastKnownFreshPosition != openBracePos){
-								output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
-							}
-							output.append(validBbCodes.get(bbCodetest).getStartTag());
 						}
-						lastKnownFreshPosition = i + 1;
+						
 					}
 				}
 				else{ //it wasn't actually a bbcode..output what we found up to this point

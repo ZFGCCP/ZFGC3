@@ -4,6 +4,7 @@ public class BbcodeConfig{
 	private String code;
 	private String startTag;
 	private String endTag;
+	private Boolean processContentFlag = true;
 	
 	public String getCode() {
 		return code;
@@ -22,6 +23,12 @@ public class BbcodeConfig{
 	}
 	public void setEndTag(String endTag) {
 		this.endTag = endTag;
+	}
+	public Boolean getProcessContentFlag() {
+		return processContentFlag;
+	}
+	public void setProcessContentFlag(Boolean processContentFlag) {
+		this.processContentFlag = processContentFlag;
 	}
 	
 

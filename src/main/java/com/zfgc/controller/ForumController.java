@@ -56,7 +56,7 @@ public class ForumController extends BaseController {
 	@RequestMapping(value="/bbcode", method=RequestMethod.GET,produces="application/json")
 	public ResponseEntity getForum(){
 		try {
-			bbCodeService.parseText("test test test[b]this [b][i]is[/i][/b] a test[/b][b[b]]more test[/b]");
+			bbCodeService.parseText("test test test[b]this [b][i]is[/i][/b] a test[/b][bmore test[/b]");
 		} catch (NoSuchFieldException | SecurityException
 				| IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
