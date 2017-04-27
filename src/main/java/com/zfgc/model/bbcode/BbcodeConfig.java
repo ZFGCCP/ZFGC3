@@ -1,10 +1,18 @@
 package com.zfgc.model.bbcode;
 
+import java.util.regex.Pattern;
+
 public class BbcodeConfig{
 	private String code;
 	private String startTag;
 	private String endTag;
 	private Boolean processContentFlag = true;
+	private String attributeFormat = "^(?![\\s\\S])";
+	private Pattern attributePattern;
+	
+	public void compileAttributePattern(){
+		attributePattern = Pattern.compile(attributeFormat);
+	}
 	
 	public String getCode() {
 		return code;
@@ -30,7 +38,16 @@ public class BbcodeConfig{
 	public void setProcessContentFlag(Boolean processContentFlag) {
 		this.processContentFlag = processContentFlag;
 	}
-	
-
-	
+	public String getAttributeFormat() {
+		return attributeFormat;
+	}
+	public void setAttributeFormat(String attributeFormat) {
+		this.attributeFormat = attributeFormat;
+	}
+	public Pattern getAttributePattern() {
+		return attributePattern;
+	}
+	public void setAttributePattern(Pattern attributePattern) {
+		this.attributePattern = attributePattern;
+	}
 }

@@ -24,16 +24,18 @@ public class BbcodeService extends AbstractService{
 	public void parseText(String input) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		BbcodeConfig b = new BbcodeConfig();
 		b.setCode("b");
-		b.setEndTag("</span>");
+		b.setEndTag("</b>");
 		b.setStartTag("<span class='bbCode-b'>");
-		b.setProcessContentFlag(false);
+		b.setAttributeFormat("i");
+		b.compileAttributePattern();
 		validBbCodes.put("b", b);
 		bbCodeCounts.put("b", 0);
 		
 		BbcodeConfig il = new BbcodeConfig();
 		il.setCode("i");
-		il.setEndTag("</span>");
+		il.setEndTag("</i>");
 		il.setStartTag("<span class='bbCode-i'>");
+		il.compileAttributePattern();
 		validBbCodes.put("i", il);
 		bbCodeCounts.put("i", 0);
 		
@@ -41,13 +43,16 @@ public class BbcodeService extends AbstractService{
 		final int length = input.length();
 		StringBuilder output = new StringBuilder();
 		StringBuilder currentBuffer = new StringBuilder();
+		StringBuilder attributeBuffer = new StringBuilder();
 		String currentState = null;
 		String currentCode = null;
 		int lastKnownFreshPosition = 0;
 		int i = 0;
 		int openBracePos = -1;
 		int closeBracePos = -1;
+		int attributeBeginPos = -1;
 		Stack<String> states = new Stack<>();
+		Stack<String> codes = new Stack<>();
 		
 		for(i = 0; i < length; i++){
 			boolean isClosingBrace = false;
@@ -82,6 +87,7 @@ public class BbcodeService extends AbstractService{
 				//edge cases: we hit the end of the string, or we hit another [
 				//or we're already in a close brace
 				if(bbCodeCounts.keySet().contains(bbCodetest)){
+					attributeBeginPos = i;
 					boolean foundBbCode = true;
 					while(inputChar[i] != ']'){
 						if(i > length || inputChar[i] == '['){
@@ -104,40 +110,61 @@ public class BbcodeService extends AbstractService{
 								
 								if(validBbCodes.get(currentCode).getProcessContentFlag() || (currentCode + "0").equals(states.peek())){
 									output.append(inputChar,lastKnownFreshPosition,closeBracePos - lastKnownFreshPosition);
-									output.append(validBbCodes.get(currentCode).getEndTag());
+									output.append(validBbCodes.get(bbCodetest).getEndTag());
 									lastKnownFreshPosition = i + 1;
 								}
 								
 								bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) - 1);
 								states.pop();
+								codes.pop();
 								if(states.size() == 0){
 									currentState = "";
+									currentCode = "";
 								}
 								else{
 									currentState = states.peek();
-								}
-								
-								if(validBbCodes.get(currentCode).getProcessContentFlag()){
-									currentCode = currentState;
+									
+									if(validBbCodes.get(bbCodetest).getProcessContentFlag()){
+										currentCode = codes.peek();
+									}
 								}
 							}
 						}
 						else{
+							Pattern p = validBbCodes.get(bbCodetest).getAttributePattern();
+							attributeBuffer.setLength(0);
+							
+							if(attributeBeginPos != i){
+								attributeBuffer.append(inputChar, attributeBeginPos,i - attributeBeginPos);
+							}
+
+							Matcher m = p.matcher(attributeBuffer.toString());
 							//state change
 							//record whatever we found up to this point
 							//replace the bbcode with its html opening
-							if(currentCode == null || currentCode.equals("") || validBbCodes.get(currentCode).getProcessContentFlag()){
-								if(lastKnownFreshPosition != openBracePos){
-									output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
-								}
-								output.append(validBbCodes.get(bbCodetest).getStartTag());
-								currentCode = bbCodetest;
-								lastKnownFreshPosition = i + 1;
-							}	
-							
-							currentState = bbCodetest + bbCodeCounts.get(bbCodetest);
-							states.push(currentState);
-							bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) + 1);
+							if(m.matches()){
+								if(states.size() == 0 || validBbCodes.get(currentCode).getProcessContentFlag()){
+									if(lastKnownFreshPosition != openBracePos){
+										output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
+									}
+									output.append(validBbCodes.get(bbCodetest).getStartTag());
+									
+									if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
+										currentCode = bbCodetest;
+									}
+									lastKnownFreshPosition = i + 1;
+								}	
+								
+								currentState = bbCodetest + bbCodeCounts.get(bbCodetest);
+								states.push(currentState);
+								codes.push(bbCodetest);
+								bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) + 1);
+							}
+							else{
+								//it was a bbcode, but its attributes weren't formatted right..output what we found up to this point
+								output.append(inputChar,lastKnownFreshPosition, i - lastKnownFreshPosition);
+								lastKnownFreshPosition = i;
+							}
 							
 						}
 						
