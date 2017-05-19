@@ -11,6 +11,13 @@ import org.springframework.stereotype.Service;
 public class ZfgcTimeUtils extends DateUtils {
 	public static final long MILIS_PER_YEAR = 31540000000L;
 	
+	public static String createDateAsString(String timeInMs){
+		Long result = Long.parseLong(timeInMs);
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		
+		return sdf.format(new Date(result));
+	}
+	
 	public static SimpleDateFormat getZfgcSimpleDateTimeFormat(){
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
 		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));

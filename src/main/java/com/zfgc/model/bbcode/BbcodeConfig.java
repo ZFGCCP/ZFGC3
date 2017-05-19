@@ -1,5 +1,7 @@
 package com.zfgc.model.bbcode;
 
+import java.util.List;
+import java.util.Map;
 import java.util.regex.Pattern;
 
 public class BbcodeConfig{
@@ -7,12 +9,9 @@ public class BbcodeConfig{
 	private String startTag;
 	private String endTag;
 	private Boolean processContentFlag = true;
-	private String attributeFormat = "^(?![\\s\\S])";
-	private Pattern attributePattern;
-	
-	public void compileAttributePattern(){
-		attributePattern = Pattern.compile(attributeFormat);
-	}
+	private String allAttributeNamesAsString;
+
+	private Map<String,BbCodeAttributeMode> attributeConfig;
 	
 	public String getCode() {
 		return code;
@@ -38,16 +37,17 @@ public class BbcodeConfig{
 	public void setProcessContentFlag(Boolean processContentFlag) {
 		this.processContentFlag = processContentFlag;
 	}
-	public String getAttributeFormat() {
-		return attributeFormat;
+	public Map<String, BbCodeAttributeMode> getAttributeConfig() {
+		return attributeConfig;
 	}
-	public void setAttributeFormat(String attributeFormat) {
-		this.attributeFormat = attributeFormat;
+
+	public void setAttributeConfig(Map<String, BbCodeAttributeMode> attributeConfig) {
+		this.attributeConfig = attributeConfig;
 	}
-	public Pattern getAttributePattern() {
-		return attributePattern;
+	public String getAllAttributeNamesAsString() {
+		return allAttributeNamesAsString;
 	}
-	public void setAttributePattern(Pattern attributePattern) {
-		this.attributePattern = attributePattern;
+	public void setAllAttributeNamesAsString(String allAttributeNamesAsString) {
+		this.allAttributeNamesAsString = allAttributeNamesAsString;
 	}
 }

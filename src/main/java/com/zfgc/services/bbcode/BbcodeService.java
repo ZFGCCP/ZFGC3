@@ -5,11 +5,15 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.model.bbcode.BbCodeAttribute;
+import com.zfgc.model.bbcode.BbCodeAttributeMode;
 import com.zfgc.model.bbcode.Bbcode;
 import com.zfgc.model.bbcode.BbcodeConfig;
 import com.zfgc.services.AbstractService;
@@ -18,32 +22,15 @@ import com.zfgc.util.ZfgcStringUtils;
 @Component
 public class BbcodeService extends AbstractService{
 
-	private Map<String,BbcodeConfig> validBbCodes = new HashMap<>();
-	private Map<String,Integer> bbCodeCounts= new HashMap<>();
+	public Map<String,BbcodeConfig> validBbCodes = new HashMap<>();
+	public Map<String,Integer> bbCodeCounts= new HashMap<>();
 	
-	public void parseText(String input) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
-		BbcodeConfig b = new BbcodeConfig();
-		b.setCode("b");
-		b.setEndTag("</b>");
-		b.setStartTag("<span class='bbCode-b'>");
-		b.setAttributeFormat("i");
-		b.compileAttributePattern();
-		validBbCodes.put("b", b);
-		bbCodeCounts.put("b", 0);
-		
-		BbcodeConfig il = new BbcodeConfig();
-		il.setCode("i");
-		il.setEndTag("</i>");
-		il.setStartTag("<span class='bbCode-i'>");
-		il.compileAttributePattern();
-		validBbCodes.put("i", il);
-		bbCodeCounts.put("i", 0);
+	public String parseText(String input) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		
 		final char[] inputChar = ZfgcStringUtils.getUnderlyingStringArray(input);
 		final int length = input.length();
 		StringBuilder output = new StringBuilder();
 		StringBuilder currentBuffer = new StringBuilder();
-		StringBuilder attributeBuffer = new StringBuilder();
 		String currentState = null;
 		String currentCode = null;
 		int lastKnownFreshPosition = 0;
@@ -101,7 +88,7 @@ public class BbcodeService extends AbstractService{
 					if(foundBbCode){
 						if(isClosingBrace){
 							
-							if(states.size() == 0){//we've got a stray closing tag
+							if(states.size() == 0 || !currentCode.equals(bbCodetest) ){//we've got a stray closing tag
 								output.append(inputChar,lastKnownFreshPosition, i - lastKnownFreshPosition + 1);
 								lastKnownFreshPosition = i + 1;
 							}
@@ -131,43 +118,41 @@ public class BbcodeService extends AbstractService{
 							}
 						}
 						else{
-							Pattern p = validBbCodes.get(bbCodetest).getAttributePattern();
+							/*Pattern p = validBbCodes.get(bbCodetest).getAttributePattern();
 							attributeBuffer.setLength(0);
 							
 							if(attributeBeginPos != i){
 								attributeBuffer.append(inputChar, attributeBeginPos,i - attributeBeginPos);
 							}
 
-							Matcher m = p.matcher(attributeBuffer.toString());
+							Matcher m = p.matcher(attributeBuffer.toString());*/
+							
+							//just doing this lazy for now...
+							char[] attributes = new char[i - attributeBeginPos];
+							for(int j = 0; j < i - attributeBeginPos; j++){
+								attributes[j] = inputChar[attributeBeginPos + j];
+							}
+							String parsedTag = processAttributes(validBbCodes.get(bbCodetest),attributes);
 							//state change
 							//record whatever we found up to this point
 							//replace the bbcode with its html opening
-							if(m.matches()){
-								if(states.size() == 0 || validBbCodes.get(currentCode).getProcessContentFlag()){
-									if(lastKnownFreshPosition != openBracePos){
-										output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
-									}
-									output.append(validBbCodes.get(bbCodetest).getStartTag());
-									
-									if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
-										currentCode = bbCodetest;
-									}
-									lastKnownFreshPosition = i + 1;
-								}	
+							if(states.size() == 0 || validBbCodes.get(currentCode).getProcessContentFlag()){
+								if(lastKnownFreshPosition != openBracePos){
+									output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
+								}
+								output.append(parsedTag);
 								
-								currentState = bbCodetest + bbCodeCounts.get(bbCodetest);
-								states.push(currentState);
-								codes.push(bbCodetest);
-								bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) + 1);
-							}
-							else{
-								//it was a bbcode, but its attributes weren't formatted right..output what we found up to this point
-								output.append(inputChar,lastKnownFreshPosition, i - lastKnownFreshPosition);
-								lastKnownFreshPosition = i;
-							}
+								if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
+									currentCode = bbCodetest;
+								}
+								lastKnownFreshPosition = i + 1;
+							}	
 							
+							currentState = bbCodetest + bbCodeCounts.get(bbCodetest);
+							states.push(currentState);
+							codes.push(bbCodetest);
+							bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) + 1);
 						}
-						
 					}
 				}
 				else{ //it wasn't actually a bbcode..output what we found up to this point
@@ -183,5 +168,68 @@ public class BbcodeService extends AbstractService{
 		if(states.size() == 0){
 			output.append(inputChar,lastKnownFreshPosition,length - lastKnownFreshPosition);
 		}
+		
+		return output.toString();
+	}
+	
+	public String processAttributes(BbcodeConfig bbCode, char[] attributes){
+		String[] allAttributeNames = bbCode.getAllAttributeNamesAsString().split(",");
+		Map<String,String> attributeValues = new TreeMap<>();
+		StringBuilder atts = new StringBuilder();
+		atts.append(attributes);
+		StringBuilder attFormat = new StringBuilder();
+		
+		int nextAttPos = -1;
+		for(int i = 0; i < allAttributeNames.length; i++){
+			String attName = allAttributeNames[i];
+			
+			int attPos = 0;
+			if(nextAttPos > -1 && nextAttPos != atts.length() + 1){
+				attPos = nextAttPos;
+			}
+			else{
+				attPos = atts.indexOf(attName);
+			}
+			
+			if(i + 1< allAttributeNames.length){
+				nextAttPos = atts.indexOf(allAttributeNames[i + 1]);
+			}
+			else{
+				nextAttPos = atts.length() + 1;
+			}
+			
+			if(nextAttPos == -1){
+				nextAttPos = atts.length() + 1;
+			}
+			
+			
+			//if the attribute isn't found, then fuck it, abort!
+			if(attPos == -1 || nextAttPos - 1 <= attPos){
+				continue;
+			}
+			
+			//find the value
+			String value = atts.substring(attPos + attName.length(), nextAttPos - 1);
+			attributeValues.put(attName, value);
+			attFormat.append(attName);
+		}
+		
+		if(!bbCode.getAttributeConfig().containsKey(attFormat.toString())){
+			return atts.toString();
+		}
+		
+		BbCodeAttributeMode attMode = bbCode.getAttributeConfig().get(attFormat.toString());
+		StringBuilder result = new StringBuilder();
+		result.append(attMode.getOpenTag());
+		String output = result.toString();
+		for(int i = 0; i < attMode.getAttributes().size(); i++){
+			BbCodeAttribute attribute = attMode.getAttributes().get(i);
+			String attName = attribute.getName();
+			String value = attribute.transformValue(attributeValues.get(attName));
+			output = StringUtils.replace(output, attribute.getAttributeIndex(), value);
+		
+		}
+		
+		return output.toString();
 	}
 }
