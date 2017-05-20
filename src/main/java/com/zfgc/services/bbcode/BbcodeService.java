@@ -162,6 +162,11 @@ public class BbcodeService extends AbstractService{
 			output.append(inputChar,lastKnownFreshPosition,length - lastKnownFreshPosition);
 		}
 		
+		//if we have any unfinished states, close them out
+		//while(states.)
+		
+		resetCounts();
+		
 		return output.toString();
 	}
 	
@@ -223,7 +228,6 @@ public class BbcodeService extends AbstractService{
 		
 		}
 		
-		resetCounts();
 		return output.toString();
 	}
 	
