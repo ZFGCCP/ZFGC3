@@ -158,12 +158,18 @@ public class BbcodeService extends AbstractService{
 		
 		//if we reach the end, but we're not in a bbcode state
 		//append the remaining junk
-		if(states.size() == 0){
-			output.append(inputChar,lastKnownFreshPosition,length - lastKnownFreshPosition);
+		output.append(inputChar,lastKnownFreshPosition,length - lastKnownFreshPosition);
+
+		//if we have any unfinished states, close them out
+		while(!codes.isEmpty()){
+			output.append(validBbCodes.get(codes.pop()).getEndTag());
+			states.pop();
+			
 		}
 		
-		//if we have any unfinished states, close them out
-		//while(states.)
+		
+		
+		
 		
 		resetCounts();
 		

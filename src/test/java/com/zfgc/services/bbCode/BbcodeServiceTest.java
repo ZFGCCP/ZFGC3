@@ -264,7 +264,7 @@ public class BbcodeServiceTest {
 		try {
 			String result = service.parseText("This is my [code] house");
 			
-			assertTrue(result.equals("This is my [/quote] house"));
+			assertTrue(result.equals("This is my <span class='bbcode-code-header'>Code</span><span class='bbcode-code-block'> house</span>"));
 		} catch (NoSuchFieldException | SecurityException
 				| IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
