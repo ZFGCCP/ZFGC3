@@ -118,40 +118,33 @@ public class BbcodeService extends AbstractService{
 							}
 						}
 						else{
-							/*Pattern p = validBbCodes.get(bbCodetest).getAttributePattern();
-							attributeBuffer.setLength(0);
-							
-							if(attributeBeginPos != i){
-								attributeBuffer.append(inputChar, attributeBeginPos,i - attributeBeginPos);
-							}
-
-							Matcher m = p.matcher(attributeBuffer.toString());*/
-							
 							//just doing this lazy for now...
-							char[] attributes = new char[i - attributeBeginPos];
-							for(int j = 0; j < i - attributeBeginPos; j++){
-								attributes[j] = inputChar[attributeBeginPos + j];
-							}
-							String parsedTag = processAttributes(validBbCodes.get(bbCodetest),attributes);
-							//state change
-							//record whatever we found up to this point
-							//replace the bbcode with its html opening
-							if(states.size() == 0 || validBbCodes.get(currentCode).getProcessContentFlag()){
-								if(lastKnownFreshPosition != openBracePos){
-									output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
+							if(currentCode == null || currentCode.equals("") || validBbCodes.get(currentCode).getProcessContentFlag()){
+								char[] attributes = new char[i - attributeBeginPos];
+								for(int j = 0; j < i - attributeBeginPos; j++){
+									attributes[j] = inputChar[attributeBeginPos + j];
 								}
-								output.append(parsedTag);
+								String parsedTag = processAttributes(validBbCodes.get(bbCodetest),attributes);
+								//state change
+								//record whatever we found up to this point
+								//replace the bbcode with its html opening
+								if(states.size() == 0 || validBbCodes.get(currentCode).getProcessContentFlag()){
+									if(lastKnownFreshPosition != openBracePos){
+										output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
+									}
+									output.append(parsedTag);
+									
+									if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
+										currentCode = bbCodetest;
+									}
+									lastKnownFreshPosition = i + 1;
+								}	
 								
-								if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
-									currentCode = bbCodetest;
-								}
-								lastKnownFreshPosition = i + 1;
-							}	
-							
-							currentState = bbCodetest + bbCodeCounts.get(bbCodetest);
-							states.push(currentState);
-							codes.push(bbCodetest);
-							bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) + 1);
+								currentState = bbCodetest + bbCodeCounts.get(bbCodetest);
+								states.push(currentState);
+								codes.push(bbCodetest);
+								bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) + 1);
+							}
 						}
 					}
 				}
@@ -230,6 +223,13 @@ public class BbcodeService extends AbstractService{
 		
 		}
 		
+		resetCounts();
 		return output.toString();
+	}
+	
+	private void resetCounts(){
+		for(String x : bbCodeCounts.keySet()){
+			bbCodeCounts.put(x, 0);
+		}
 	}
 }

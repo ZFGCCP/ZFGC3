@@ -264,6 +264,19 @@ public class BbcodeServiceTest {
 	}
 	
 	@Test
+	public void parseTextStrayOpening(){
+		try {
+			String result = service.parseText("This is my [code] house");
+			
+			assertTrue(result.equals("This is my [/quote] house"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
 	public void parseTextStrayClosingEmbedded(){
 		try {
 			String result = service.parseText("[quote author=MG-Zero]This is [/code] my house[/quote]");
