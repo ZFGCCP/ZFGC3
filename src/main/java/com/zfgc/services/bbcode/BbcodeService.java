@@ -91,6 +91,23 @@ public class BbcodeService extends AbstractService{
 							if(states.size() == 0 || !currentCode.equals(bbCodetest) ){//we've got a stray closing tag
 								output.append(inputChar,lastKnownFreshPosition, i - lastKnownFreshPosition + 1);
 								lastKnownFreshPosition = i + 1;
+								
+								//revert to the previous state if one exists
+								
+								if(states.size() > 0){
+									output.append(validBbCodes.get(bbCodetest).getEndTag());
+									bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) - 1);
+									states.pop();
+									codes.pop();
+									if(states.size() == 0){
+										currentState = "";
+										currentCode = "";
+									}
+									else{
+										currentState = states.peek();
+										currentCode = codes.peek();
+									}
+								}
 							}
 							else{//this is a matched closing tag
 								//revert to previous state
@@ -110,10 +127,7 @@ public class BbcodeService extends AbstractService{
 								}
 								else{
 									currentState = states.peek();
-									
-									if(validBbCodes.get(bbCodetest).getProcessContentFlag()){
-										currentCode = codes.peek();
-									}
+									currentCode = codes.peek();
 								}
 							}
 						}
@@ -134,9 +148,9 @@ public class BbcodeService extends AbstractService{
 									}
 									output.append(parsedTag);
 									
-									if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
+									//if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
 										currentCode = bbCodetest;
-									}
+									//}
 									lastKnownFreshPosition = i + 1;
 								}	
 								
@@ -166,11 +180,7 @@ public class BbcodeService extends AbstractService{
 			states.pop();
 			
 		}
-		
-		
-		
-		
-		
+
 		resetCounts();
 		
 		return output.toString();

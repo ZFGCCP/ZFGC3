@@ -19,6 +19,78 @@ public class BbcodeServiceTest {
 	static BbcodeService service = new BbcodeService();
 	static BbcodeConfig bbCodeQuote = null;
 	static BbcodeConfig bbCodeCode = null;
+	static BbcodeConfig bbCodeB = null;
+	static BbcodeConfig bbCodeI = null;
+	static BbcodeConfig bbCodeU = null;
+	
+	private static void initU(){
+		bbCodeU = new BbcodeConfig();
+		bbCodeU.setAllAttributeNamesAsString("");
+		
+		BbCodeAttributeMode mode0 = new BbCodeAttributeMode();
+		mode0.setOpenTag("<span class='bbcode-u'>");
+		mode0.setCloseTag("</span>");
+		
+		List<BbCodeAttribute> mode0Att = new ArrayList<>();
+		
+		mode0.setAttributes(mode0Att);
+		bbCodeU.setAttributeConfig(new HashMap<>());
+		bbCodeU.getAttributeConfig().put("",mode0);
+		bbCodeU.setCode("u");
+		bbCodeU.setProcessContentFlag(true);
+		bbCodeU.setEndTag("</span>");
+		
+		bbCodeU.getAttributeConfig().put("",mode0);
+		
+		service.validBbCodes.put("u", bbCodeU);
+		service.bbCodeCounts.put("u", 0);
+	}
+	
+	private static void initI(){
+		bbCodeI = new BbcodeConfig();
+		bbCodeI.setAllAttributeNamesAsString("");
+		
+		BbCodeAttributeMode mode0 = new BbCodeAttributeMode();
+		mode0.setOpenTag("<span class='bbcode-i'>");
+		mode0.setCloseTag("</span>");
+		
+		List<BbCodeAttribute> mode0Att = new ArrayList<>();
+		
+		mode0.setAttributes(mode0Att);
+		bbCodeI.setAttributeConfig(new HashMap<>());
+		bbCodeI.getAttributeConfig().put("",mode0);
+		bbCodeI.setCode("i");
+		bbCodeI.setProcessContentFlag(true);
+		bbCodeI.setEndTag("</span>");
+		
+		bbCodeI.getAttributeConfig().put("",mode0);
+		
+		service.validBbCodes.put("i", bbCodeI);
+		service.bbCodeCounts.put("i", 0);
+	}
+	
+	private static void initB(){
+		bbCodeB = new BbcodeConfig();
+		bbCodeB.setAllAttributeNamesAsString("");
+		
+		BbCodeAttributeMode mode0 = new BbCodeAttributeMode();
+		mode0.setOpenTag("<span class='bbcode-b'>");
+		mode0.setCloseTag("</span>");
+		
+		List<BbCodeAttribute> mode0Att = new ArrayList<>();
+		
+		mode0.setAttributes(mode0Att);
+		bbCodeB.setAttributeConfig(new HashMap<>());
+		bbCodeB.getAttributeConfig().put("",mode0);
+		bbCodeB.setCode("b");
+		bbCodeB.setProcessContentFlag(true);
+		bbCodeB.setEndTag("</span>");
+		
+		bbCodeB.getAttributeConfig().put("",mode0);
+		
+		service.validBbCodes.put("b", bbCodeB);
+		service.bbCodeCounts.put("b", 0);
+	}
 	
 	private static void initCode(){
 		bbCodeCode = new BbcodeConfig();
@@ -100,6 +172,9 @@ public class BbcodeServiceTest {
 	public static void initialize(){
 		initQuote();
 		initCode();
+		initB();
+		initI();
+		initU();
 	}
 	
 	@Test
@@ -277,7 +352,20 @@ public class BbcodeServiceTest {
 		try {
 			String result = service.parseText("[quote author=MG-Zero]This is [/code] my house[/quote]");
 			
-			assertTrue(result.equals("<span class='bbcode-quote-header'>Authored by MG-Zero</span><span class='bbcode-quote-block'>This is [/code] my house</span>"));
+			assertTrue(result.equals("<span class='bbcode-quote-header'>Authored by MG-Zero</span><span class='bbcode-quote-block'>This is [/code]</span> my house[/quote]"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void parseTextStrayMismatched(){
+		try {
+			String result = service.parseText("[b][i]This is my house[/b][/i]");
+			
+			assertTrue(result.equals("<span class='bbcode-b'><span class='bbcode-i'>This is my house[/b]</span>[/i]</span>"));
 		} catch (NoSuchFieldException | SecurityException
 				| IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
@@ -296,5 +384,33 @@ public class BbcodeServiceTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	@Test
+	public void parseTextMattyBoyTestBadInput(){
+		try {
+			String result = service.parseText("[b][code]test[/code][/b][b]hey[b]yo[b]wassup[b][i][u]bitch!!![/i][/u][/b][/b][/b][/b]  [i][u]yeah man[/i][/u] ");
+			
+			assertTrue(result.equals("<span class='bbcode-b'><span class='bbcode-code-header'>Code</span><span class='bbcode-code-block'>test</span></span><span class='bbcode-b'>hey<span class='bbcode-b'>yo<span class='bbcode-b'>wassup<span class='bbcode-b'><span class='bbcode-i'><span class='bbcode-u'>bitch!!![/i]</span>[/u]</span></span></span></span></span>  <span class='bbcode-i'><span class='bbcode-u'>yeah man[/i]</span>[/u]</span> "));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void parseTextMattyBoyTestGoodInput(){
+		try {
+			String result = service.parseText("[b][code]test[/code][/b][b]hey[b]yo[b]wassup[b][i][u]bitch!!![/u][/i][/b][/b][/b][/b]  [i][u]yeah man[/u][/i] o");
+			
+			assertTrue(result.equals("<span class='bbcode-b'><span class='bbcode-code-header'>Code</span><span class='bbcode-code-block'>test</span></span><span class='bbcode-b'>hey<span class='bbcode-b'>yo<span class='bbcode-b'>wassup<span class='bbcode-b'><span class='bbcode-i'><span class='bbcode-u'>bitch!!!</span></span></span></span></span></span>  <span class='bbcode-i'><span class='bbcode-u'>yeah man</span></span> o"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 	}
 }
