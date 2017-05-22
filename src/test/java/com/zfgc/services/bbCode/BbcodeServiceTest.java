@@ -117,7 +117,7 @@ public class BbcodeServiceTest {
 	
 	private static void initQuote(){
 		bbCodeQuote = new BbcodeConfig();
-		bbCodeQuote.setAllAttributeNamesAsString("author=,link=,time=");
+		bbCodeQuote.setAllAttributeNamesAsString("author=,link=,time=,=");
 		
 		BbCodeAttributeMode mode0 = new BbCodeAttributeMode();
 		mode0.setOpenTag("<span class='bbcode-quote-header'><a href='{{1}}'>Authored by {{0}} at {{2}}</a></span><span class='bbcode-quote-block'>");
@@ -163,6 +163,20 @@ public class BbcodeServiceTest {
 		
 		mode1.setAttributes(mode1Att);
 		bbCodeQuote.getAttributeConfig().put("author=",mode1);
+		
+		BbCodeAttributeMode modeNameless = new BbCodeAttributeMode();
+		modeNameless.setOpenTag("<span class='bbcode-quote-header'>Authored by {{0}}</span><span class='bbcode-quote-block'>");
+		modeNameless.setCloseTag("</span>");
+		
+		List<BbCodeAttribute> modeNamelessAtt = new ArrayList<>();
+		BbCodeAttribute nameless = new BbCodeAttribute();
+		nameless.setAttributeIndex("{{0}}");
+		nameless.setDataType(AttributeDataType.TEXT);
+		nameless.setName("=");
+		modeNamelessAtt.add(nameless);
+		
+		modeNameless.setAttributes(modeNamelessAtt);
+		bbCodeQuote.getAttributeConfig().put("=", modeNameless);
 		
 		service.validBbCodes.put("quote", bbCodeQuote);
 		service.bbCodeCounts.put("quote", 0);
@@ -406,6 +420,20 @@ public class BbcodeServiceTest {
 			String result = service.parseText("[b][code]test[/code][/b][b]hey[b]yo[b]wassup[b][i][u]bitch!!![/u][/i][/b][/b][/b][/b]  [i][u]yeah man[/u][/i] o");
 			
 			assertTrue(result.equals("<span class='bbcode-b'><span class='bbcode-code-header'>Code</span><span class='bbcode-code-block'>test</span></span><span class='bbcode-b'>hey<span class='bbcode-b'>yo<span class='bbcode-b'>wassup<span class='bbcode-b'><span class='bbcode-i'><span class='bbcode-u'>bitch!!!</span></span></span></span></span></span>  <span class='bbcode-i'><span class='bbcode-u'>yeah man</span></span> o"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@Test
+	public void parseTextNamelessAttribute(){
+		try {
+			String result = service.parseText("[quote=MGZero]test[/quote]");
+			
+			assertTrue(result.equals("<span class='bbcode-quote-header'>Authored by MGZero</span><span class='bbcode-quote-block'>test</span>"));
 		} catch (NoSuchFieldException | SecurityException
 				| IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block

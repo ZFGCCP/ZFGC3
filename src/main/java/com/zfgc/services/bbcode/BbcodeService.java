@@ -68,7 +68,7 @@ public class BbcodeService extends AbstractService{
 					
 					bbCodetest += inputChar[i];
 					i++;
-				}while(inputChar[i] >= 'a' && inputChar[i] <= 'z');
+				}while((inputChar[i] >= 'a' && inputChar[i] <= 'z') && (inputChar[i] != ' ' && inputChar[i] != '='));
 
 				//check if this matches a valid bbcode. If so, find the next ]
 				//edge cases: we hit the end of the string, or we hit another [
@@ -198,14 +198,20 @@ public class BbcodeService extends AbstractService{
 			String attName = allAttributeNames[i];
 			
 			int attPos = 0;
-			if(nextAttPos > -1 && nextAttPos != atts.length() + 1){
-				attPos = nextAttPos;
+			
+			if(attName.equals("=") && attFormat.length() > 0){
+				continue;
 			}
 			else{
-				attPos = atts.indexOf(attName);
+				if(nextAttPos > -1 && nextAttPos != atts.length() + 1){
+					attPos = nextAttPos;
+				}
+				else{
+					attPos = atts.indexOf(attName);
+				}
 			}
 			
-			if(i + 1< allAttributeNames.length){
+			if(i + 1< allAttributeNames.length && !allAttributeNames[i + 1].equals("=")){
 				nextAttPos = atts.indexOf(allAttributeNames[i + 1]);
 			}
 			else{
