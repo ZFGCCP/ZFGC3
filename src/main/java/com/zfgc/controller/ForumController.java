@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.Forum;
 import com.zfgc.model.forum.ForumIndex;
+import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.forum.ForumService;
 
 @RestController
@@ -20,6 +21,9 @@ public class ForumController extends BaseController {
 
 	@Autowired
 	ForumService forumService;
+	
+	@Autowired
+	BbcodeService bbCodeService;
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity getForumIndex(){
@@ -48,4 +52,17 @@ public class ForumController extends BaseController {
 		}
 	}
 	
+	//test for bbcodes
+	@RequestMapping(value="/bbcode", method=RequestMethod.GET,produces="application/json")
+	public ResponseEntity getForum(){
+		try {
+			bbCodeService.parseText("test test test[b]this [b][i]is[/i][/b] a test[/b][bmore test[/b]");
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return (ResponseEntity) ResponseEntity.ok();
+	}
 }
