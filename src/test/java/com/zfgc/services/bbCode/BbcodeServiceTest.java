@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -22,6 +23,8 @@ public class BbcodeServiceTest {
 	static BbcodeConfig bbCodeB = null;
 	static BbcodeConfig bbCodeI = null;
 	static BbcodeConfig bbCodeU = null;
+	static BbcodeConfig bbCodeUrl = null;
+	static BbcodeConfig bbCodeImg = null;
 	
 	private static void initU(){
 		bbCodeU = new BbcodeConfig();
@@ -178,8 +181,53 @@ public class BbcodeServiceTest {
 		modeNameless.setAttributes(modeNamelessAtt);
 		bbCodeQuote.getAttributeConfig().put("=", modeNameless);
 		
+		BbCodeAttributeMode empty = new BbCodeAttributeMode();
+		empty.setOpenTag("<span class='bbcode-quote-header'>Quote</span><span class='bbcode-quote-block'>");
+		empty.setCloseTag("</span>");
+		bbCodeQuote.getAttributeConfig().put("", empty);
+		
 		service.validBbCodes.put("quote", bbCodeQuote);
 		service.bbCodeCounts.put("quote", 0);
+	}
+	
+	private static void initUrl(){
+		bbCodeUrl = new BbcodeConfig();
+		bbCodeUrl.setAllAttributeNamesAsString("=");
+		bbCodeUrl.setCode("url");
+		bbCodeUrl.setProcessContentFlag(false);
+		bbCodeUrl.setEndTag("</a>");
+		
+		BbCodeAttributeMode nameless = new BbCodeAttributeMode();
+		nameless.setOpenTag("<a href={{0}}>");
+		nameless.setCloseTag("</a>");
+		bbCodeUrl.getAttributeConfig().put("url", nameless);
+		
+		BbCodeAttributeMode empty = new BbCodeAttributeMode();
+		empty.setOpenTag("<a href='{{c}}'>");
+		empty.setCloseTag("</span>");
+		empty.setContentIsAttribute(true);
+		bbCodeUrl.getAttributeConfig().put("", empty);
+		
+		service.validBbCodes.put("url", bbCodeUrl);
+		service.bbCodeCounts.put("url", 0);
+	}
+	
+	private static void initImg(){
+		bbCodeImg = new BbcodeConfig();
+		bbCodeImg.setAllAttributeNamesAsString("");
+		bbCodeImg.setCode("img");
+		bbCodeImg.setProcessContentFlag(false);
+		bbCodeImg.setEndTag("</span>");
+		
+		BbCodeAttributeMode none = new BbCodeAttributeMode();
+		none.setOpenTag("<span class='bbcode-img'><img src='{{c}}'/>");
+		none.setCloseTag("</span>");
+		none.setContentIsAttribute(true);
+		none.setOutputContent(false);
+		bbCodeImg.getAttributeConfig().put("", none);
+		
+		service.validBbCodes.put("img", bbCodeImg);
+		service.bbCodeCounts.put("img", 0);
 	}
 	
 	@BeforeClass
@@ -189,6 +237,8 @@ public class BbcodeServiceTest {
 		initB();
 		initI();
 		initU();
+		initUrl();
+		initImg();
 	}
 	
 	@Test
@@ -236,7 +286,7 @@ public class BbcodeServiceTest {
 	@Test
 	public void processAttributesAllValidMode0(){
 		String attributes = "author=MG-Zero link=thread/99 time=1494552503000";
-		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray());
+		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray(),new MutableInt());
 		
 		assertTrue(result.equals("<span class='bbcode-quote-header'><a href='thread/99'>Authored by MG-Zero at 05/12/2017 01:28:23</a></span><span class='bbcode-quote-block'>"));
 	}
@@ -244,7 +294,7 @@ public class BbcodeServiceTest {
 	@Test
 	public void processAttributesAllValidMode1(){
 		String attributes = "author=MG-Zero";
-		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray());
+		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray(),new MutableInt());
 		
 		assertTrue(result.equals("<span class='bbcode-quote-header'>Authored by MG-Zero</span><span class='bbcode-quote-block'>"));
 	}
@@ -252,7 +302,7 @@ public class BbcodeServiceTest {
 	@Test
 	public void processAttributesOneInvalid(){
 		String attributes = "autor=test link=test time=1494552504";
-		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray());
+		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray(),new MutableInt());
 		
 		assertTrue(result.equals(attributes));
 	}
@@ -260,7 +310,7 @@ public class BbcodeServiceTest {
 	@Test
 	public void processAttributeskippedOne(){
 		String attributes = "autor=test time=1494552504";
-		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray());
+		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray(),new MutableInt());
 		
 		assertTrue(result.equals(attributes));
 	}
@@ -268,7 +318,15 @@ public class BbcodeServiceTest {
 	@Test
 	public void processAttributesOutOfOrder(){
 		String attributes = "link=test author=test time=1494552504";
-		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray());
+		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray(),new MutableInt());
+		
+		assertTrue(result.equals(attributes));
+	}
+	
+	@Test
+	public void processAttributesNamelessExtra(){
+		String attributes = "=x link=test author=test time=1494552504";
+		String result = service.processAttributes(bbCodeQuote, attributes.toCharArray(),new MutableInt());
 		
 		assertTrue(result.equals(attributes));
 	}
@@ -315,6 +373,20 @@ public class BbcodeServiceTest {
 			
 
 			assertTrue(result.equals("<span class='bbcode-code-header'>Code</span><span class='bbcode-code-block'>test[code]test[quote]</span>"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void parseTextQuoteNoParam(){
+		try {
+			String result = service.parseText("[quote]test[/quote]");
+			
+
+			assertTrue(result.equals("<span class='bbcode-quote-header'>Quote</span><span class='bbcode-quote-block'>test</span>"));
 		} catch (NoSuchFieldException | SecurityException
 				| IllegalArgumentException | IllegalAccessException e) {
 			// TODO Auto-generated catch block
@@ -439,6 +511,71 @@ public class BbcodeServiceTest {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
+	
+	@Test
+	public void parseTextUrlContent(){
+		try {
+			String result = service.parseText("[url]http://zfgc.com[/url]");
+			
+			assertTrue(result.equals("<a href='http://zfgc.com'>http://zfgc.com</a>"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void parseTextUrlContentEmbedded(){
+		try {
+			String result = service.parseText("[url][b]http://zfgc.com[/b][/url]");
+			
+			assertTrue(result.equals("<a href='[b]http://zfgc.com[/b]'>[b]http://zfgc.com[/b]</a>"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void parseTextUrlContentEmbeddedStray(){
+		try {
+			String result = service.parseText("[url][/b]http://zfgc.com[/url]");
+			
+			assertTrue(result.equals("<a href='[/b]http://zfgc.com'>[/b]http://zfgc.com</a>"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void parseTextImg(){
+		try {
+			String result = service.parseText("[img]http://zfgc.com[/img]");
+			
+			assertTrue(result.equals("<span class='bbcode-img'><img src='http://zfgc.com'/></span>"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	@Test
+	public void parseTextImgStrayEmbedded(){
+		try {
+			String result = service.parseText("[img][/b]http://zfgc.com[/img]");
+			
+			assertTrue(result.equals("<span class='bbcode-img'><img src='[/b]http://zfgc.com'/></span>"));
+		} catch (NoSuchFieldException | SecurityException
+				| IllegalArgumentException | IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
 }

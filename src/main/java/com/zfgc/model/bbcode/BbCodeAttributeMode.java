@@ -1,11 +1,14 @@
 package com.zfgc.model.bbcode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class BbCodeAttributeMode {
-	private List<BbCodeAttribute> attributes;
+	private List<BbCodeAttribute> attributes = new ArrayList<>();
 	private String openTag;
 	private String closeTag;
+	private Boolean contentIsAttribute = false;
+	private Boolean outputContent = true;
 	
 	public List<BbCodeAttribute> getAttributes() {
 		return attributes;
@@ -24,6 +27,18 @@ public class BbCodeAttributeMode {
 	}
 	public void setCloseTag(String closeTag) {
 		this.closeTag = closeTag;
+	}
+	public Boolean getContentIsAttribute() {
+		return contentIsAttribute;
+	}
+	public void setContentIsAttribute(Boolean contentIsAttribute) {
+		this.contentIsAttribute = contentIsAttribute;
+	}
+	public Boolean getOutputContent() {
+		return outputContent;
+	}
+	public void setOutputContent(Boolean outputContent) {
+		this.outputContent = outputContent;
 	}
 	
 }

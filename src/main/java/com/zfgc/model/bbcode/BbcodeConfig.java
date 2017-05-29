@@ -1,5 +1,6 @@
 package com.zfgc.model.bbcode;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
@@ -11,7 +12,7 @@ public class BbcodeConfig{
 	private Boolean processContentFlag = true;
 	private String allAttributeNamesAsString;
 
-	private Map<String,BbCodeAttributeMode> attributeConfig;
+	private Map<String,BbCodeAttributeMode> attributeConfig = new HashMap<>();
 	
 	public String getCode() {
 		return code;

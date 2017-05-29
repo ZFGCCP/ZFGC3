@@ -10,6 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.mutable.MutableInt;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.model.bbcode.BbCodeAttribute;
@@ -24,13 +25,17 @@ public class BbcodeService extends AbstractService{
 
 	public Map<String,BbcodeConfig> validBbCodes = new HashMap<>();
 	public Map<String,Integer> bbCodeCounts= new HashMap<>();
+	private Boolean outputContent = true;
 	
 	public String parseText(String input) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		
 		final char[] inputChar = ZfgcStringUtils.getUnderlyingStringArray(input);
 		final int length = input.length();
+		final MutableInt NEG = new MutableInt(-1);
+		final MutableInt ZERO = new MutableInt(0);
 		StringBuilder output = new StringBuilder();
 		StringBuilder currentBuffer = new StringBuilder();
+		StringBuilder sideBuffer = new StringBuilder();
 		String currentState = null;
 		String currentCode = null;
 		int lastKnownFreshPosition = 0;
@@ -40,6 +45,8 @@ public class BbcodeService extends AbstractService{
 		int attributeBeginPos = -1;
 		Stack<String> states = new Stack<>();
 		Stack<String> codes = new Stack<>();
+		MutableInt contentAttPos = new MutableInt(-1);
+		
 		
 		for(i = 0; i < length; i++){
 			boolean isClosingBrace = false;
@@ -88,7 +95,7 @@ public class BbcodeService extends AbstractService{
 					if(foundBbCode){
 						if(isClosingBrace){
 							
-							if(states.size() == 0 || !currentCode.equals(bbCodetest) ){//we've got a stray closing tag
+							if(states.size() == 0 || (!currentCode.equals(bbCodetest) && validBbCodes.get(currentCode).getProcessContentFlag()) ){//we've got a stray closing tag
 								output.append(inputChar,lastKnownFreshPosition, i - lastKnownFreshPosition + 1);
 								lastKnownFreshPosition = i + 1;
 								
@@ -109,13 +116,24 @@ public class BbcodeService extends AbstractService{
 									}
 								}
 							}
-							else{//this is a matched closing tag
+							else if(currentCode.equals(bbCodetest)){//this is a matched closing tag
 								//revert to previous state
 								
 								if(validBbCodes.get(currentCode).getProcessContentFlag() || (currentCode + "0").equals(states.peek())){
-									output.append(inputChar,lastKnownFreshPosition,closeBracePos - lastKnownFreshPosition);
+									
+									if(contentAttPos.compareTo(NEG) > 0){
+										sideBuffer.append(inputChar,lastKnownFreshPosition,closeBracePos - lastKnownFreshPosition);
+										output.replace(contentAttPos.getValue(), contentAttPos.getValue() + 5, sideBuffer.toString());
+										contentAttPos.setValue(-1);
+										sideBuffer.delete(0, sideBuffer.length());
+									}
+
+									if(outputContent){
+										output.append(inputChar,lastKnownFreshPosition,closeBracePos - lastKnownFreshPosition);
+									}
 									output.append(validBbCodes.get(bbCodetest).getEndTag());
 									lastKnownFreshPosition = i + 1;
+									outputContent = true;
 								}
 								
 								bbCodeCounts.replace(bbCodetest, bbCodeCounts.get(bbCodetest) - 1);
@@ -138,7 +156,11 @@ public class BbcodeService extends AbstractService{
 								for(int j = 0; j < i - attributeBeginPos; j++){
 									attributes[j] = inputChar[attributeBeginPos + j];
 								}
-								String parsedTag = processAttributes(validBbCodes.get(bbCodetest),attributes);
+								
+								String parsedTag = processAttributes(validBbCodes.get(bbCodetest),attributes,contentAttPos);
+								if(contentAttPos.compareTo(ZERO) >= 0){
+									contentAttPos.add(output.length());
+								}
 								//state change
 								//record whatever we found up to this point
 								//replace the bbcode with its html opening
@@ -186,7 +208,7 @@ public class BbcodeService extends AbstractService{
 		return output.toString();
 	}
 	
-	public String processAttributes(BbcodeConfig bbCode, char[] attributes){
+	public String processAttributes(BbcodeConfig bbCode, char[] attributes, MutableInt contentAttPos){
 		String[] allAttributeNames = bbCode.getAllAttributeNamesAsString().split(",");
 		Map<String,String> attributeValues = new TreeMap<>();
 		StringBuilder atts = new StringBuilder();
@@ -248,6 +270,14 @@ public class BbcodeService extends AbstractService{
 			String value = attribute.transformValue(attributeValues.get(attName));
 			output = StringUtils.replace(output, attribute.getAttributeIndex(), value);
 		
+		}
+		
+		if(attMode.getContentIsAttribute()){
+			contentAttPos.setValue(output.indexOf("{{c}}"));
+			
+			if(!attMode.getOutputContent()){
+				outputContent = false;
+			}
 		}
 		
 		return output.toString();
