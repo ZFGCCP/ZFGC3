@@ -127,7 +127,7 @@
     
     <!-- views -->
     
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="HIDE_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_GENDER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_AGE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
@@ -159,13 +159,26 @@
     	<columnOverride column="SAVE_TO_SENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <!--<table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
     <table schema="zfgc3" tableName="THREAD_SUBSCRIPTION_VIEW" domainObjectName="ThreadSubscriptionViewDbObj">
     
     </table>-->
+    
+    <table schema="zfgc3" tableName="BB_CODE_ATTRIBUTE" domainObjectName="bbCodeAttributeDbObj">
+
+    </table>
+    
+    <table schema="zfgc3" tableName="BB_CODE_ATTRIBUTE_MODE" domainObjectName="bbCodeAttributeModeDbObj">
+		<columnOverride column="CONTENT_IS_ATTRIBUTE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+		<columnOverride column="OUTPUT_CONTENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <table schema="zfgc3" tableName="BB_CODE_CONFIG" domainObjectName="bbCodeConfigDbObj">
+		<columnOverride column="PROCESS_CONTENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
     
   </context>
 </generatorConfiguration>
