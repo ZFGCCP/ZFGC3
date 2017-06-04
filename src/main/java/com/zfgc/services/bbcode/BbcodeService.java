@@ -9,10 +9,14 @@ import java.util.TreeMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import javax.annotation.PostConstruct;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
+import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dao.LookupDao;
 import com.zfgc.model.bbcode.BbCodeAttribute;
 import com.zfgc.model.bbcode.BbCodeAttributeMode;
 import com.zfgc.model.bbcode.Bbcode;
@@ -21,11 +25,12 @@ import com.zfgc.services.AbstractService;
 import com.zfgc.util.ZfgcStringUtils;
 
 @Component
-public class BbcodeService extends AbstractService{
+public class BbcodeService{
 
 	public Map<String,BbcodeConfig> validBbCodes = new HashMap<>();
 	public Map<String,Integer> bbCodeCounts= new HashMap<>();
 	private Boolean outputContent = true;
+	Logger LOGGER = Logger.getLogger(BbcodeService.class);
 	
 	public String parseText(String input) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		
@@ -287,5 +292,12 @@ public class BbcodeService extends AbstractService{
 		for(String x : bbCodeCounts.keySet()){
 			bbCodeCounts.put(x, 0);
 		}
+	}
+	
+	@PostConstruct
+	public void loadBbCodeConfig(){
+		LOGGER.info("Loading Bbcode config...");
+		
+		LOGGER.info("Finished loading Bbcode config.");
 	}
 }
