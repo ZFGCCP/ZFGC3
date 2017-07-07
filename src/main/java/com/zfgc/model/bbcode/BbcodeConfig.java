@@ -11,6 +11,7 @@ public class BbcodeConfig{
 	private String endTag;
 	private Boolean processContentFlag = true;
 	private String allAttributeNamesAsString;
+	private Integer bbCodeConfigId;
 
 	private Map<String,BbCodeAttributeMode> attributeConfig = new HashMap<>();
 	
@@ -50,5 +51,11 @@ public class BbcodeConfig{
 	}
 	public void setAllAttributeNamesAsString(String allAttributeNamesAsString) {
 		this.allAttributeNamesAsString = allAttributeNamesAsString;
+	}
+	public Integer getBbCodeConfigId() {
+		return bbCodeConfigId;
+	}
+	public void setBbCodeConfigId(Integer bbCodeConfigId) {
+		this.bbCodeConfigId = bbCodeConfigId;
 	}
 }

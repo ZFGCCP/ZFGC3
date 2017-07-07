@@ -14,9 +14,11 @@ import javax.annotation.PostConstruct;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.LookupDao;
+import com.zfgc.dataprovider.BbCodeDataProvider;
 import com.zfgc.model.bbcode.BbCodeAttribute;
 import com.zfgc.model.bbcode.BbCodeAttributeMode;
 import com.zfgc.model.bbcode.Bbcode;
@@ -31,6 +33,9 @@ public class BbcodeService{
 	public Map<String,Integer> bbCodeCounts= new HashMap<>();
 	private Boolean outputContent = true;
 	Logger LOGGER = Logger.getLogger(BbcodeService.class);
+	
+	@Autowired
+	BbCodeDataProvider bbCodeDataProvider;
 	
 	public String parseText(String input) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		
@@ -297,6 +302,8 @@ public class BbcodeService{
 	@PostConstruct
 	public void loadBbCodeConfig(){
 		LOGGER.info("Loading Bbcode config...");
+		
+		validBbCodes = bbCodeDataProvider.getBbCodeConfig();
 		
 		LOGGER.info("Finished loading Bbcode config.");
 	}
