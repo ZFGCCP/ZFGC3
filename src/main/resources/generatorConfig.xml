@@ -167,16 +167,16 @@
     
     </table>-->
     
-    <table schema="zfgc3" tableName="BB_CODE_ATTRIBUTE" domainObjectName="bbCodeAttributeDbObj">
+    <table schema="zfgc3" tableName="BB_CODE_ATTRIBUTE" domainObjectName="BbCodeAttributeDbObj">
 
     </table>
     
-    <table schema="zfgc3" tableName="BB_CODE_ATTRIBUTE_MODE" domainObjectName="bbCodeAttributeModeDbObj">
+    <table schema="zfgc3" tableName="BB_CODE_ATTRIBUTE_MODE" domainObjectName="BbCodeAttributeModeDbObj">
 		<columnOverride column="CONTENT_IS_ATTRIBUTE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
 		<columnOverride column="OUTPUT_CONTENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <table schema="zfgc3" tableName="BB_CODE_CONFIG" domainObjectName="bbCodeConfigDbObj">
+    <table schema="zfgc3" tableName="BB_CODE_CONFIG" domainObjectName="BbCodeConfigDbObj">
 		<columnOverride column="PROCESS_CONTENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     

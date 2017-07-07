@@ -9,6 +9,7 @@ public class BbCodeAttributeMode {
 	private String closeTag;
 	private Boolean contentIsAttribute = false;
 	private Boolean outputContent = true;
+	private Integer bbCodeAttributeModeId;
 	
 	public List<BbCodeAttribute> getAttributes() {
 		return attributes;
@@ -39,6 +40,12 @@ public class BbCodeAttributeMode {
 	}
 	public void setOutputContent(Boolean outputContent) {
 		this.outputContent = outputContent;
+	}
+	public Integer getBbCodeAttributeModeId() {
+		return bbCodeAttributeModeId;
+	}
+	public void setBbCodeAttributeModeId(Integer bbCodeAttributeModeId) {
+		this.bbCodeAttributeModeId = bbCodeAttributeModeId;
 	}
 	
 }
