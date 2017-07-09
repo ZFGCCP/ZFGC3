@@ -11,7 +11,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.lookups.Lookup;
 
 @Component
-public class LookupDao extends AbstractDao{
+public class LookupDao extends AbstractDao<Object,Object>{
 	
 	Logger LOGGER = Logger.getLogger(LookupDao.class);
 	
@@ -41,7 +41,7 @@ public class LookupDao extends AbstractDao{
 	}
 
 	@Override
-	public Boolean validateIntegrity(BaseZfgcModel model) {
+	public List<Object> get(Object ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

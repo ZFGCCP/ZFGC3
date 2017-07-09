@@ -118,7 +118,7 @@ public class AuthenticationDao extends AbstractDao{
 	}
 
 	@Override
-	public Boolean validateIntegrity(BaseZfgcModel model) {
+	public List<Object> get(Object ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

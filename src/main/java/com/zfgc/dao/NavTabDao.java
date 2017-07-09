@@ -6,21 +6,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dbobj.NavTabViewDbObj;
+import com.zfgc.dbobj.NavTabViewDbObjExample;
 import com.zfgc.mappers.NavTabViewDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
 
 @Component
-public class NavTabDao extends AbstractDao {
+public class NavTabDao extends AbstractDao<NavTabViewDbObjExample, NavTabViewDbObj> {
 
 	@Autowired
 	private NavTabViewDbObjMapper navTabViewDbObjMapper;
-	
-	@Override
-	public Boolean validateIntegrity(BaseZfgcModel model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
 	
 	public List<NavTabViewDbObj> getNavigationTabs(Users user) throws Exception{
 		try{
@@ -30,5 +25,11 @@ public class NavTabDao extends AbstractDao {
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
 		}
+	}
+
+	@Override
+	public List<NavTabViewDbObj> get(NavTabViewDbObjExample ex) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

@@ -13,7 +13,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.subscriptions.ThreadSubscription;
 
 @Component
-public class ThreadSubscriptionDao extends AbstractDao{
+public class ThreadSubscriptionDao extends AbstractDao<ThreadSubscriptionViewDbObjExample, ThreadSubscriptionViewDbObj>{
 
 	@Autowired
 	ThreadSubscriptionViewDbObjMapper threadSubscriptionViewDbObjMapper;
@@ -53,7 +53,8 @@ public class ThreadSubscriptionDao extends AbstractDao{
 	}
 	
 	@Override
-	public Boolean validateIntegrity(BaseZfgcModel model) {
+	public List<ThreadSubscriptionViewDbObj> get(
+			ThreadSubscriptionViewDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

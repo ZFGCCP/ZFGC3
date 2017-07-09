@@ -12,7 +12,7 @@ import com.zfgc.mappers.CategoryDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
 
 @Component
-public class CategoryDao extends AbstractDao {
+public class CategoryDao extends AbstractDao<CategoryDbObjExample, CategoryDbObj > {
 	@Autowired
 	CategoryDbObjMapper categoryDbObjMapper;
 
@@ -32,7 +32,7 @@ public class CategoryDao extends AbstractDao {
 	}
 
 	@Override
-	public Boolean validateIntegrity(BaseZfgcModel model) {
+	public List<CategoryDbObj> get(CategoryDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

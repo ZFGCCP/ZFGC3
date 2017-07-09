@@ -3,7 +3,9 @@ package com.zfgc.model.bbcode;
 import java.util.List;
 import java.util.Map;
 
-public class Bbcode {
+import com.zfgc.model.BaseZfgcModel;
+
+public class Bbcode extends BaseZfgcModel {
 	private Integer contentStartPosition;
 	private Integer contentEndPosition;
 	private String bbcode;
@@ -45,6 +47,11 @@ public class Bbcode {
 	}
 	public void setChildren(List<Bbcode> children) {
 		this.children = children;
+	}
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 }

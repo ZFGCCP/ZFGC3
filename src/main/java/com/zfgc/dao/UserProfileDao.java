@@ -19,7 +19,7 @@ import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.UserProfileView;
 
 @Component
-public class UserProfileDao extends AbstractDao<UserProfileView> {
+public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, UserProfileViewDbObj> {
 	@Autowired
 	private UserProfileViewDbObjMapper userProfileViewDbObjMapper;
 	
@@ -32,7 +32,7 @@ public class UserProfileDao extends AbstractDao<UserProfileView> {
 	Logger LOGGER = Logger.getLogger(UserProfileDao.class);
 	
 	public UserProfileViewDbObj getUserProfile(Integer userId) throws Exception{
-		UserProfileViewDbObjExample userProfileViewDbObjExample = new UserProfileViewDbObjExample();
+		UserProfileViewDbObjExample userProfileViewDbObjExample = super.getExample();
 		userProfileViewDbObjExample.createCriteria().andUsersIdEqualTo(userId);
 		List<UserProfileViewDbObj> userProfileViewDbObj = null;
 		try{
@@ -51,12 +51,6 @@ public class UserProfileDao extends AbstractDao<UserProfileView> {
 		return userProfileViewDbObj.get(0);
 	}
 
-	@Override
-	public Boolean validateIntegrity(UserProfileView model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 	public void saveAccountSettings(Users accountSettings) {
 		UsersDbObj dbObj = mapper.map(accountSettings, UsersDbObj.class);
 		usersDbObjMapper.updateByPrimaryKeySelective(dbObj);
@@ -65,5 +59,11 @@ public class UserProfileDao extends AbstractDao<UserProfileView> {
 	public void savePmSettings(Users pmSettings){
 		PersonalMessagingSettingsDbObj dbObj = mapper.map(pmSettings.getPersonalMessagingSettings(), PersonalMessagingSettingsDbObj.class);
 		personalMessagingSettingsDbObjMapper.updateByPrimaryKeySelective(dbObj);
+	}
+
+	@Override
+	public List<UserProfileViewDbObj> get(UserProfileViewDbObjExample ex) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

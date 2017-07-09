@@ -23,7 +23,7 @@ import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
 
 @Component
-public class UsersDao extends AbstractDao<Users> {
+public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj> {
 	@Autowired 
 	UsersDbObjMapper usersDbObjMapper;
 
@@ -33,6 +33,19 @@ public class UsersDao extends AbstractDao<Users> {
 	Logger LOGGER = Logger.getLogger(UsersDao.class);
 	
 	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_TOKEN A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
+	
+	public List<UsersDbObj> getUsersById(List<Integer> userIds) throws Exception{
+		UsersDbObjExample ex = getExample();
+		ex.createCriteria().andUsersIdIn(userIds);
+		
+		List<UsersDbObj> users = get(ex);
+		
+		if(userIds.size() != users.size()){
+			throw new ZfgcNotFoundException("User Ids");
+		}
+		
+		return users;
+	}
 	
 	public UsersDbObj getUserByToken(String authToken) throws Exception{
 		StringBuilder sql = new StringBuilder();
@@ -353,13 +366,7 @@ public class UsersDao extends AbstractDao<Users> {
 			return null;
 		}
 	}
-
-	@Override
-	public Boolean validateIntegrity(Users model) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
+	
 	public Integer getUsersIdByToken(String token) {
 		StringBuilder sql = new StringBuilder();
 		
@@ -430,6 +437,11 @@ public class UsersDao extends AbstractDao<Users> {
 			LOGGER.error("Error getting primary member group for " + token);
 			return null;
 		}
+	}
+
+	@Override
+	public List<UsersDbObj> get(UsersDbObjExample ex) {
+		return usersDbObjMapper.selectByExample(ex);
 	}
 	
 }

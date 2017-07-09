@@ -13,7 +13,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.profile.NotificationSettings;
 
 @Component
-public class NotificationSettingsDao extends AbstractDao<NotificationSettings>{
+public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbObjExample, NotificationSettingsDbObj>{
 
 	@Autowired
 	private NotificationSettingsDbObjMapper notificationSettingsDbObjMapper;
@@ -44,7 +44,7 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettings>{
 	}
 
 	@Override
-	public Boolean validateIntegrity(NotificationSettings model) {
+	public List<NotificationSettingsDbObj> get(NotificationSettingsDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

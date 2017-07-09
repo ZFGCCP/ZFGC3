@@ -165,7 +165,7 @@
     
     <table schema="zfgc3" tableName="THREAD_SUBSCRIPTION_VIEW" domainObjectName="ThreadSubscriptionViewDbObj">
     
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="BB_CODE_ATTRIBUTE" domainObjectName="BbCodeAttributeDbObj">
 
@@ -178,7 +178,7 @@
     
     <table schema="zfgc3" tableName="BB_CODE_CONFIG" domainObjectName="BbCodeConfigDbObj">
 		<columnOverride column="PROCESS_CONTENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>
+    </table>-->
     
   </context>
 </generatorConfiguration>

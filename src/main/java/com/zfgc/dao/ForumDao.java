@@ -17,7 +17,7 @@ import com.zfgc.model.forum.BrMemberGroupForum;
 import com.zfgc.model.users.Users;
 
 @Component
-public class ForumDao extends AbstractDao {
+public class ForumDao extends AbstractDao<ForumDbObjExample, ForumDbObj> {
 	Logger LOGGER = Logger.getLogger(ForumDao.class);
 	
 	@Autowired
@@ -142,7 +142,7 @@ public class ForumDao extends AbstractDao {
 	}
 
 	@Override
-	public Boolean validateIntegrity(BaseZfgcModel model) {
+	public List<ForumDbObj> get(ForumDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

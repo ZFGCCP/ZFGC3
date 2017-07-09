@@ -16,7 +16,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
 
 @Component
-public class ThreadDao extends AbstractDao {
+public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj> {
 	Logger LOGGER = Logger.getLogger(ThreadDao.class);
 	
 	@Autowired
@@ -78,9 +78,9 @@ public class ThreadDao extends AbstractDao {
 		
 		
 	}
-
+	
 	@Override
-	public Boolean validateIntegrity(BaseZfgcModel model) {
+	public List<ThreadDbObj> get(ThreadDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}
