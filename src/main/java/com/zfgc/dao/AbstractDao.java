@@ -3,6 +3,7 @@ package com.zfgc.dao;
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.GenericTypeResolver;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.zfgc.model.BaseZfgcModel;
@@ -13,6 +14,10 @@ public abstract class AbstractDao<T extends BaseZfgcModel>{
 	
 	@Autowired
 	DozerBeanMapper mapper;
+	
+	protected void get(){
+
+	}
 	
 	protected void logDbInsertError(Logger LOGGER, String tableName){
 		LOGGER.error("Error inserting into " + tableName);
