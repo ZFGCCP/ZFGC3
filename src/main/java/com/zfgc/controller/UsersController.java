@@ -151,6 +151,19 @@ class UsersController extends BaseController{
 		return ResponseEntity.status(HttpStatus.OK).body(pmSettings);
 	}
 	
+	@RequestMapping(value="/profile/buddyList", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity saveBuddyListSettings(@RequestBody Users buddyList){
+		try {
+			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(buddyList);
+	}
+	
 	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getProfileNavigationTabs(@RequestParam Integer usersId){

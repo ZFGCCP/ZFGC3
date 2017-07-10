@@ -10,9 +10,10 @@ import com.zfgc.dbobj.CategoryDbObj;
 import com.zfgc.dbobj.CategoryDbObjExample;
 import com.zfgc.mappers.CategoryDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.forum.Category;
 
 @Component
-public class CategoryDao extends AbstractDao {
+public class CategoryDao extends AbstractDao<CategoryDbObjExample, CategoryDbObj, Category> {
 	@Autowired
 	CategoryDbObjMapper categoryDbObjMapper;
 
@@ -32,8 +33,26 @@ public class CategoryDao extends AbstractDao {
 	}
 
 	@Override
-	public Boolean validateIntegrity(BaseZfgcModel model) {
+	public List<CategoryDbObj> get(CategoryDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(Category obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(Category obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(Category obj, CategoryDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 }

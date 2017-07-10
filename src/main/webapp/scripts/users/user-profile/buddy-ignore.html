@@ -1,0 +1,49 @@
+<form>
+	<collapsible-widget widget-title="Buddy List">
+		<div class="scrollable-table">
+			<table class="widget-table">
+				<thead>
+					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.buddyList track by $index">
+						<th colspan="2">
+							<a ng-href="#/userprofile?userId={{user.userBId}}">{{user.userName}} {{user.onlineFlag}}</a>
+							<span>
+								Trash
+								PM
+							</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.buddyList track by $index">
+						<th class="row-label"><label>Last Online:</label></th>
+						<td>{{user.lastOnline}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</collapsible-widget>
+	
+	<collapsible-widget widget-title="Ignore List">
+		<div class="scrollable-table">
+			<table class="widget-table">
+				<thead>
+					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.buddyList track by $index">
+						<th colspan="2">
+							<a ng-href="#/userprofile?userId={{user.userBId}}">{{user.userName}} {{user.onlineFlag}}</a>
+							<span>
+								Trash
+							</span>
+						</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.ignoreList track by $index">
+						<th class="row-label"><label>Last Online:</label></th>
+						<td>{{user.lastOnline}}</td>
+					</tr>
+				</tbody>
+			</table>dy>
+			</table>
+		</div>
+	</collapsible-widget>
+</form>

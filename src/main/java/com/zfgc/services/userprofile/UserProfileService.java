@@ -13,21 +13,23 @@ import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.rules.users.AccountSettingsRuleChecker;
+import com.zfgc.services.AbstractService;
+import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
 
 @Component
-public class UserProfileService {
+public class UserProfileService extends AbstractService{
 	@Autowired
 	UserProfileDataProvider userProfileDataProvider;
-	
-	@Autowired
-	LookupService lookupService;
 	
 	@Autowired
 	NavTabService navTabService;
 	
 	@Autowired
 	AccountSettingsRuleChecker accountSettingsRuleChecker;
+	
+	@Autowired
+	BuddyService buddyService;
 	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
@@ -43,6 +45,10 @@ public class UserProfileService {
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
 
+		//get buddy and ignore list
+		user.getPersonalMessagingSettings().setBuddyList(buddyService.getBuddies(userId));
+		user.getPersonalMessagingSettings().setIgnoreList(buddyService.getIgnores(userId));
+		
 		Integer currentUserId = zfgcUser.getUsersId();
 		user.setTimeOffsetLkup(lookupService.getLkupValue(lookupService.TIMEZONE, user.getTimeOffset()));
 		
@@ -130,6 +136,13 @@ public class UserProfileService {
 		}
 		
 		return notificationSettings;
+	}
+	
+	public Users saveBuddyIgnoreList(Users buddyIgnore, Users zfgcUser) throws Exception{
+		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getPersonalMessagingSettings().getBuddyList());
+		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getPersonalMessagingSettings().getIgnoreList());
+		
+		return buddyIgnore;
 	}
 	
 	public Users savePmSettings(Users pmSettings, Users zfgcUser) throws Exception{

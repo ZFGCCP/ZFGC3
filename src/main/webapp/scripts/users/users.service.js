@@ -34,6 +34,10 @@
 			savePmSettings:{
 				url:'/forum/users/profile/pmSettings',
 				method:'POST'
+			},
+			saveBuddyList:{
+				url:'/forum/users/profile/buddyList',
+				method:'POST'
 			}
 		});
 		UserService.register = function(user){

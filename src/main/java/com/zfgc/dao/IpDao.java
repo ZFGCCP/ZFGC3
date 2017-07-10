@@ -1,6 +1,7 @@
 package com.zfgc.dao;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,12 +11,13 @@ import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dbobj.IpAddressDbObj;
+import com.zfgc.dbobj.IpAddressDbObjExample;
 import com.zfgc.mappers.IpAddressDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.IpAddress;
 
 @Component
-public class IpDao extends AbstractDao<IpAddress> {
+public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, IpAddress> {
 	
 	@Autowired
 	IpAddressDbObjMapper ipAddressDbObjMapper;
@@ -168,9 +170,27 @@ public class IpDao extends AbstractDao<IpAddress> {
 	}
 
 	@Override
-	public Boolean validateIntegrity(IpAddress model) {
+	public List<IpAddressDbObj> get(IpAddressDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(IpAddress obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(IpAddress obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(IpAddress obj, IpAddressDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

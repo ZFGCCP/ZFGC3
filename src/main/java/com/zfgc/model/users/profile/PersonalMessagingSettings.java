@@ -1,5 +1,7 @@
 package com.zfgc.model.users.profile;
 
+import java.util.List;
+
 import com.zfgc.model.BaseZfgcModel;
 
 public class PersonalMessagingSettings extends BaseZfgcModel{
@@ -12,6 +14,9 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
     private Integer notifyFrequencyId;
     private Boolean saveToSentFlag;
 	
+    private List<Buddy> buddyList;
+    private List<Buddy> ignoreList;
+    
 	public Integer getPersonalMessagingSettingsId() {
 		return personalMessagingSettingsId;
 	}
@@ -72,6 +77,22 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public List<Buddy> getIgnoreList() {
+		return ignoreList;
+	}
+
+	public void setIgnoreList(List<Buddy> ignoreList) {
+		this.ignoreList = ignoreList;
+	}
+
+	public List<Buddy> getBuddyList() {
+		return buddyList;
+	}
+
+	public void setBuddyList(List<Buddy> buddyList) {
+		this.buddyList = buddyList;
 	}
 	
 }
