@@ -13,7 +13,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.avatar.Avatar;
 
 @Component
-public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj>{
+public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj, Avatar>{
 
 	@Autowired
 	private AvatarDbObjMapper avatarDbObjMapper;
@@ -48,6 +48,24 @@ public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj>{
 	public List<AvatarDbObj> get(AvatarDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(Avatar obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(Avatar obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(Avatar obj, AvatarDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

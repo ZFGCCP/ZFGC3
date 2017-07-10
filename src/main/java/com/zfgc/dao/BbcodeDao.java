@@ -17,9 +17,10 @@ import com.zfgc.mappers.BbCodeAttributeModeDbObjMapper;
 import com.zfgc.mappers.BbCodeConfigDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.bbcode.Bbcode;
+import com.zfgc.model.bbcode.BbcodeConfig;
 
 @Component
-public class BbcodeDao extends AbstractDao<BbCodeConfigDbObjExample, BbCodeConfigDbObj>{
+public class BbcodeDao extends AbstractDao<BbCodeConfigDbObjExample, BbCodeConfigDbObj, BbcodeConfig>{
 
 	@Autowired
 	BbCodeAttributeDbObjMapper bbCodeAttributeDbObjMapper;
@@ -65,6 +66,24 @@ public class BbcodeDao extends AbstractDao<BbCodeConfigDbObjExample, BbCodeConfi
 	public List<BbCodeConfigDbObj> get(BbCodeConfigDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(BbcodeConfig obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(BbcodeConfig obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

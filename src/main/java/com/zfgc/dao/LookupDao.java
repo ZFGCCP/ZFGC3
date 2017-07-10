@@ -11,7 +11,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.lookups.Lookup;
 
 @Component
-public class LookupDao extends AbstractDao<Object,Object>{
+public class LookupDao extends AbstractDao<Object,Object,Object>{
 	
 	Logger LOGGER = Logger.getLogger(LookupDao.class);
 	
@@ -44,6 +44,24 @@ public class LookupDao extends AbstractDao<Object,Object>{
 	public List<Object> get(Object ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(Object obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(Object obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(Object obj, Object ex) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

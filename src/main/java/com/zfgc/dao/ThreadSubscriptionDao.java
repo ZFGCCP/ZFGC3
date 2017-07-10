@@ -13,7 +13,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.subscriptions.ThreadSubscription;
 
 @Component
-public class ThreadSubscriptionDao extends AbstractDao<ThreadSubscriptionViewDbObjExample, ThreadSubscriptionViewDbObj>{
+public class ThreadSubscriptionDao extends AbstractDao<ThreadSubscriptionViewDbObjExample, ThreadSubscriptionViewDbObj, ThreadSubscription>{
 
 	@Autowired
 	ThreadSubscriptionViewDbObjMapper threadSubscriptionViewDbObjMapper;
@@ -57,6 +57,25 @@ public class ThreadSubscriptionDao extends AbstractDao<ThreadSubscriptionViewDbO
 			ThreadSubscriptionViewDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(ThreadSubscription obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(ThreadSubscription obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(ThreadSubscription obj,
+			ThreadSubscriptionViewDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

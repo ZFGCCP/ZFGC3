@@ -23,7 +23,7 @@ import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
 
 @Component
-public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj> {
+public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> {
 	@Autowired 
 	UsersDbObjMapper usersDbObjMapper;
 
@@ -442,6 +442,24 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj> {
 	@Override
 	public List<UsersDbObj> get(UsersDbObjExample ex) {
 		return usersDbObjMapper.selectByExample(ex);
+	}
+
+	@Override
+	public void hardDelete(Users obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(Users obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(Users obj, UsersDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

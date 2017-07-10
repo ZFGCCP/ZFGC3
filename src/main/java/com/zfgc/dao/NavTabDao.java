@@ -10,9 +10,10 @@ import com.zfgc.dbobj.NavTabViewDbObjExample;
 import com.zfgc.mappers.NavTabViewDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.NavTab;
 
 @Component
-public class NavTabDao extends AbstractDao<NavTabViewDbObjExample, NavTabViewDbObj> {
+public class NavTabDao extends AbstractDao<NavTabViewDbObjExample, NavTabViewDbObj, NavTab> {
 
 	@Autowired
 	private NavTabViewDbObjMapper navTabViewDbObjMapper;
@@ -31,5 +32,23 @@ public class NavTabDao extends AbstractDao<NavTabViewDbObjExample, NavTabViewDbO
 	public List<NavTabViewDbObj> get(NavTabViewDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(NavTab obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(NavTab obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(NavTab obj, NavTabViewDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 }

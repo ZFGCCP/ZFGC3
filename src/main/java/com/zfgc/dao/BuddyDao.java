@@ -13,7 +13,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.profile.Buddy;
 
 @Component
-public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddyIgnoreListDbObj> {
+public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddyIgnoreListDbObj, Buddy> {
 
 	@Autowired
 	BrBuddyIgnoreListDbObjMapper brBuddyIgnoreListDbObjMapper;
@@ -33,10 +33,49 @@ public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddy
 		
 		return result;
 	}
+	
+	public List<Integer> getIgnoreIds(Integer userId){
+		List<Integer> result = new ArrayList<>();
+		List<BrBuddyIgnoreListDbObj> ignores = null;
+		BrBuddyIgnoreListDbObjExample ex = getExample();
+		
+		ex.createCriteria().andUserAIdEqualTo(userId).andIgnoreFlagEqualTo(true);
+		
+		ignores = get(ex);
+		
+		for(BrBuddyIgnoreListDbObj obj : ignores){
+			result.add(obj.getUserBId());
+		}
+		
+		return result;
+	}
 
 	@Override
 	public List<BrBuddyIgnoreListDbObj> get(BrBuddyIgnoreListDbObjExample ex) {
 		return brBuddyIgnoreListDbObjMapper.selectByExample(ex);
+	}
+
+	@Override
+	public void hardDelete(Buddy obj) {
+		BrBuddyIgnoreListDbObj dbObj = mapper.map(obj, BrBuddyIgnoreListDbObj.class);
+		brBuddyIgnoreListDbObjMapper.deleteByPrimaryKey(dbObj);
+	}
+
+	@Override
+	public void updateOrInsert(Buddy obj) {
+		BrBuddyIgnoreListDbObj dbObj = mapper.map(obj, BrBuddyIgnoreListDbObj.class);
+		if(obj.getAdd()){
+			brBuddyIgnoreListDbObjMapper.insert(dbObj);
+		}
+		else{
+			brBuddyIgnoreListDbObjMapper.updateByPrimaryKey(dbObj);
+		}
+	}
+
+	@Override
+	public void updateByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex) {
+		BrBuddyIgnoreListDbObj dbObj = mapper.map(obj, BrBuddyIgnoreListDbObj.class);
+		brBuddyIgnoreListDbObjMapper.updateByExample(dbObj,ex);
 	}
 
 }

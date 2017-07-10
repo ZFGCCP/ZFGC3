@@ -122,4 +122,22 @@ public class AuthenticationDao extends AbstractDao{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public void hardDelete(Object ex) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(Object obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(Object obj, Object ex) {
+		// TODO Auto-generated method stub
+		
+	}
 }

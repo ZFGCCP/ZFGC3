@@ -3,20 +3,19 @@
 		<div class="scrollable-table">
 			<table class="widget-table">
 				<thead>
-					<tr>
-						<th></th>
-						<th></th>
-						<th>Name</th>
-						<th>Status</th>
-						<th>Last Online</th>
+					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.buddyList track by $index">
+						<th colspan="2">
+							<a ng-href="#/userprofile?userId={{user.userBId}}">{{user.userName}} {{user.onlineFlag}}</a>
+							<span>
+								Trash
+								PM
+							</span>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="($index,user) in vm.profile.ignoreList track by $index">
-						<td>PM</td>
-						<td>Trash</td>
-						<td>{{user.userName}}</td>
-						<td>{{user.onlineFlag}}</td>
+					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.buddyList track by $index">
+						<th class="row-label"><label>Last Online:</label></th>
 						<td>{{user.lastOnline}}</td>
 					</tr>
 				</tbody>
@@ -28,21 +27,22 @@
 		<div class="scrollable-table">
 			<table class="widget-table">
 				<thead>
-					<tr>
-						<th></th>
-						<th>Name</th>
-						<th>Status</th>
-						<th>Last Online</th>
+					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.buddyList track by $index">
+						<th colspan="2">
+							<a ng-href="#/userprofile?userId={{user.userBId}}">{{user.userName}} {{user.onlineFlag}}</a>
+							<span>
+								Trash
+							</span>
+						</th>
 					</tr>
 				</thead>
 				<tbody>
-					<tr ng-repeat="($index,user) in vm.profile.ignoreList track by $index">
-						<td>Trash</td>
-						<td>{{user.userName}}</td>
-						<td>{{user.onlineFlag}}</td>
+					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.ignoreList track by $index">
+						<th class="row-label"><label>Last Online:</label></th>
 						<td>{{user.lastOnline}}</td>
 					</tr>
 				</tbody>
+			</table>dy>
 			</table>
 		</div>
 	</collapsible-widget>

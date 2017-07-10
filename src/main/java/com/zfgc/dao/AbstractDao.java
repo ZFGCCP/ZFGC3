@@ -10,7 +10,7 @@ import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
 import com.zfgc.model.BaseZfgcModel;
 
-public abstract class AbstractDao<Example, dbObj>{
+public abstract class AbstractDao<Example, DbObj, Model>{
 	@Autowired
 	protected NamedParameterJdbcTemplate jdbcTemplate;
 	
@@ -29,7 +29,10 @@ public abstract class AbstractDao<Example, dbObj>{
 		}
 	}
 	
-	public abstract List<dbObj> get(Example ex);
+	public abstract List<DbObj> get(Example ex);
+	public abstract void hardDelete(Model obj);
+	public abstract void updateOrInsert(Model obj);
+	public abstract void updateByExample(Model obj, Example ex);
 	
 	protected void logDbInsertError(Logger LOGGER, String tableName){
 		LOGGER.error("Error inserting into " + tableName);

@@ -23,19 +23,51 @@ public class BuddyDataProvider extends AbstractDataProvider{
 	public List<Buddy> getBuddiesByUserId(Integer usersId) throws Exception{
 		List<Buddy> results = new ArrayList<>();
 		List<Integer> buddyIds = buddyDao.getBuddyIds(usersId);
-		List<UsersDbObj> users = usersDao.getUsersById(buddyIds);
 		
-		for(UsersDbObj dbObj : users){
-			Buddy buddy = new Buddy();
-			buddy.setUserId(dbObj.getUsersId());
-			buddy.setLastOnlineDt(dbObj.getLastLogin());
-			buddy.setOnlineFlag(true);
-			buddy.setUserName(dbObj.getDisplayName());
+		if(buddyIds.size() > 0){
+			List<UsersDbObj> users = usersDao.getUsersById(buddyIds);
 			
-			results.add(buddy);
+			for(UsersDbObj dbObj : users){
+				Buddy buddy = mapper.map(dbObj, Buddy.class);
+				buddy.setUserBId(dbObj.getUsersId());
+				buddy.setUserAId(usersId);
+				buddy.setOnlineFlag(true);
+				buddy.setUserName(dbObj.getDisplayName());
+				
+				results.add(buddy);
+			}
 		}
 		
 		return results;
+	}
+	
+	public List<Buddy> getIgnoresByUserId(Integer usersId) throws Exception{
+		List<Buddy> results = new ArrayList<>();
+		List<Integer> buddyIds = buddyDao.getIgnoreIds(usersId);
+		
+		if(buddyIds.size() > 0){
+			List<UsersDbObj> users = usersDao.getUsersById(buddyIds);
+			
+			for(UsersDbObj dbObj : users){
+				Buddy buddy = mapper.map(dbObj, Buddy.class);
+				buddy.setUserBId(dbObj.getUsersId());
+				buddy.setUserAId(usersId);
+				buddy.setOnlineFlag(true);
+				buddy.setUserName(dbObj.getDisplayName());
+				
+				results.add(buddy);
+			}
+		}
+		
+		return results;
+	}
+	
+	public void deleteBuddy(Buddy buddy){
+		buddyDao.hardDelete(buddy);
+	}
+	
+	public void insertOrUpdateBuddy(Buddy buddy){
+		buddyDao.updateOrInsert(buddy);
 	}
 	
 }

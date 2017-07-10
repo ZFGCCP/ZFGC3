@@ -9,16 +9,13 @@ import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class Buddy extends BaseZfgcModel {
 
-	private Integer userId;
+	private Integer userBId;
+	private Integer userAId;
 	private String userName;
-	private Date lastOnlineDt;
-	public Integer getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Integer userId) {
-		this.userId = userId;
-	}
+	private Date lastLogin;
+	private Boolean buddyFlag;
+	private Boolean ignoreFlag;
+	private Boolean add = false;
 
 	public String getUserName() {
 		return userName;
@@ -43,34 +40,74 @@ public class Buddy extends BaseZfgcModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	public Date getLastOnlineDt() {
-		return lastOnlineDt;
-	}
-
-	public void setLastOnlineDt(Date lastOnlineDt) {
-		this.lastOnlineDt = lastOnlineDt;
-	}
 	
 	public String getLastOnlineDtAsString(){
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
 		
-		if(lastOnlineDt == null){
+		if(lastLogin == null){
 			return "";
 		}
 		
-		return sdf.format(lastOnlineDt);
+		return sdf.format(lastLogin);
 	}
 	
 	public void setLastOnlineDtAsString(String lastOnlineDtAsString){
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
 		
 		try {
-			lastOnlineDt = sdf.parse(lastOnlineDtAsString);
+			lastLogin = sdf.parse(lastOnlineDtAsString);
 		} catch (ParseException e) {
-			lastOnlineDt = null;
+			lastLogin = null;
 		}
 		
+	}
+
+	public Boolean getAdd() {
+		return add;
+	}
+
+	public void setAdd(Boolean add) {
+		this.add = add;
+	}
+
+	public Integer getUserAId() {
+		return userAId;
+	}
+
+	public void setUserAId(Integer userAId) {
+		this.userAId = userAId;
+	}
+
+	public Integer getUserBId() {
+		return userBId;
+	}
+
+	public void setUserBId(Integer userBId) {
+		this.userBId = userBId;
+	}
+
+	public Boolean getIgnoreFlag() {
+		return ignoreFlag;
+	}
+
+	public void setIgnoreFlag(Boolean ignoreFlag) {
+		this.ignoreFlag = ignoreFlag;
+	}
+
+	public Boolean getBuddyFlag() {
+		return buddyFlag;
+	}
+
+	public void setBuddyFlag(Boolean buddyFlag) {
+		this.buddyFlag = buddyFlag;
+	}
+
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 
 }

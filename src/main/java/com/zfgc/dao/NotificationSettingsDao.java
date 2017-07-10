@@ -13,7 +13,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.profile.NotificationSettings;
 
 @Component
-public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbObjExample, NotificationSettingsDbObj>{
+public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbObjExample, NotificationSettingsDbObj, NotificationSettings>{
 
 	@Autowired
 	private NotificationSettingsDbObjMapper notificationSettingsDbObjMapper;
@@ -47,6 +47,25 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbO
 	public List<NotificationSettingsDbObj> get(NotificationSettingsDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(NotificationSettings obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(NotificationSettings obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(NotificationSettings obj,
+			NotificationSettingsDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

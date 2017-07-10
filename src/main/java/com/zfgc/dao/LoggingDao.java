@@ -15,7 +15,7 @@ import com.zfgc.model.logging.ActivityLog;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
-public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLogDbObj> {
+public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLogDbObj, ActivityLog> {
 	@Autowired
 	ActivityLogDbObjMapper activityLogDbObjMapper;
 	
@@ -47,6 +47,24 @@ public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLog
 	public List<ActivityLogDbObj> get(ActivityLogDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(ActivityLog obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(ActivityLog obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(ActivityLog obj, ActivityLogDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

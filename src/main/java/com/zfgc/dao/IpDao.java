@@ -17,7 +17,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.IpAddress;
 
 @Component
-public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj> {
+public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, IpAddress> {
 	
 	@Autowired
 	IpAddressDbObjMapper ipAddressDbObjMapper;
@@ -173,6 +173,24 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj> {
 	public List<IpAddressDbObj> get(IpAddressDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(IpAddress obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(IpAddress obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(IpAddress obj, IpAddressDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

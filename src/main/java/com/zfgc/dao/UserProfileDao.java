@@ -19,7 +19,7 @@ import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.UserProfileView;
 
 @Component
-public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, UserProfileViewDbObj> {
+public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, UserProfileViewDbObj, UserProfileView> {
 	@Autowired
 	private UserProfileViewDbObjMapper userProfileViewDbObjMapper;
 	
@@ -65,5 +65,24 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 	public List<UserProfileViewDbObj> get(UserProfileViewDbObjExample ex) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void hardDelete(UserProfileView obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(UserProfileView obj) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateByExample(UserProfileView obj,
+			UserProfileViewDbObjExample ex) {
+		// TODO Auto-generated method stub
+		
 	}
 }
