@@ -5,9 +5,7 @@
   <properties resource="application.properties"/>
   <classPathEntry location="${mbg.jdbc.driver-location}"/>
   <context id="zfgc3_context">
-  
-    <!-- This kinda worries me a bit tbh, security issue?! Is there a way we can hide this information?-->
-    <!-- TODO: Shove this stuff into a jndi and change db password -->
+
     <jdbcConnection connectionURL="${mbg.jdbc.url}"
     				driverClass="com.mysql.jdbc.Driver"
     				password="${mbg.jdbc.password}"
@@ -120,9 +118,12 @@
     	<generatedKey column="PERSONAL_MESSAGING_SETTINGS_ID" sqlStatement="SELECT COALSESCE(MAX(PERSONAL_MESSAGING_SETTINGS_ID) + 1,0) FROM PERSONAL_MESSAGING_SETTINGS"/>
     	<columnOverride column="RECENT_AT_TOP_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="SAVE_TO_SENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="BR_BUDDY_IGNORE_LIST" domainObjectName="BrBuddyIgnoreListDbObj">
+    </table>-->
+    
+    <table schema="zfgc3" tableName="HTML_ENTITY" domainObjectName="HtmlEntityDbObj">
     </table>
     
     <!-- views -->

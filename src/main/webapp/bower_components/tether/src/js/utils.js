@@ -3,73 +3,33 @@ if (typeof TetherBase === 'undefined') {
   TetherBase = {modules: []};
 }
 
-let zeroElement = null;
-
-// Same as native getBoundingClientRect, except it takes into account parent <frame> offsets
-// if the element lies within a nested document (<frame> or <iframe>-like).
-function getActualBoundingClientRect(node) {
-  let boundingRect = node.getBoundingClientRect();
-
-  // The original object returned by getBoundingClientRect is immutable, so we clone it
-  // We can't use extend because the properties are not considered part of the object by hasOwnProperty in IE9
-  let rect = {};
-  for (var k in boundingRect) {
-    rect[k] = boundingRect[k];
-  }
-
-  if (node.ownerDocument !== document) {
-    let frameElement = node.ownerDocument.defaultView.frameElement;
-    if (frameElement) {
-      let frameRect = getActualBoundingClientRect(frameElement);
-      rect.top += frameRect.top;
-      rect.bottom += frameRect.top;
-      rect.left += frameRect.left;
-      rect.right += frameRect.left;
-    }
-  }
-
-  return rect;
-}
-
-function getScrollParents(el) {
-  // In firefox if the el is inside an iframe with display: none; window.getComputedStyle() will return null;
-  // https://bugzilla.mozilla.org/show_bug.cgi?id=548397
-  const computedStyle = getComputedStyle(el) || {};
-  const position = computedStyle.position;
-  let parents = [];
+function getScrollParent(el) {
+  const {position} = getComputedStyle(el);
 
   if (position === 'fixed') {
-    return [el];
+    return el;
   }
 
   let parent = el;
-  while ((parent = parent.parentNode) && parent && parent.nodeType === 1) {
+  while (parent = parent.parentNode) {
     let style;
     try {
       style = getComputedStyle(parent);
     } catch (err) {}
 
     if (typeof style === 'undefined' || style === null) {
-      parents.push(parent);
-      return parents;
+      return parent;
     }
 
     const {overflow, overflowX, overflowY} = style;
     if (/(auto|scroll)/.test(overflow + overflowY + overflowX)) {
       if (position !== 'absolute' || ['relative', 'absolute', 'fixed'].indexOf(style.position) >= 0) {
-        parents.push(parent)
+        return parent;
       }
     }
   }
 
-  parents.push(el.ownerDocument.body);
-
-  // If the node is within a frame, account for the parent window scroll
-  if (el.ownerDocument !== document) {
-    parents.push(el.ownerDocument.defaultView);
-  }
-
-  return parents;
+  return document.body;
 }
 
 const uniqueId = (() => {
@@ -78,14 +38,14 @@ const uniqueId = (() => {
 })();
 
 const zeroPosCache = {};
-const getOrigin = () => {
+const getOrigin = (doc) => {
   // getBoundingClientRect is unfortunately too accurate.  It introduces a pixel or two of
   // jitter as the user scrolls that messes with our ability to detect if two positions
   // are equivilant or not.  We place an element at the top left of the page that will
   // get the same jitter, so we can cancel the two out.
-  let node = zeroElement;
-  if (!node || !document.body.contains(node)) {
-    node = document.createElement('div');
+  let node = doc._tetherZeroElement;
+  if (typeof node === 'undefined') {
+    node = doc.createElement('div');
     node.setAttribute('data-tether-id', uniqueId());
     extend(node.style, {
       top: 0,
@@ -93,14 +53,20 @@ const getOrigin = () => {
       position: 'absolute'
     });
 
-    document.body.appendChild(node);
+    doc.body.appendChild(node);
 
-    zeroElement = node;
+    doc._tetherZeroElement = node;
   }
 
   const id = node.getAttribute('data-tether-id');
   if (typeof zeroPosCache[id] === 'undefined') {
-    zeroPosCache[id] = getActualBoundingClientRect(node);
+    zeroPosCache[id] = {};
+
+    const rect = node.getBoundingClientRect();
+    for (let k in rect) {
+      // Can't use extend, as on IE9, elements don't resolve to be hasOwnProperty
+      zeroPosCache[id][k] = rect[k];
+    }
 
     // Clear the cache when this position call is done
     defer(() => {
@@ -109,13 +75,6 @@ const getOrigin = () => {
   }
 
   return zeroPosCache[id];
-};
-
-function removeUtilElements() {
-  if (zeroElement) {
-    document.body.removeChild(zeroElement);
-  }
-  zeroElement = null;
 };
 
 function getBounds(el) {
@@ -129,9 +88,15 @@ function getBounds(el) {
 
   const docEl = doc.documentElement;
 
-  const box = getActualBoundingClientRect(el);
+  const box = {};
+  // The original object returned by getBoundingClientRect is immutable, so we clone it
+  // We can't use extend because the properties are not considered part of the object by hasOwnProperty in IE9
+  const rect = el.getBoundingClientRect();
+  for (let k in rect) {
+    box[k] = rect[k];
+  }
 
-  const origin = getOrigin();
+  const origin = getOrigin(doc);
 
   box.top -= origin.top;
   box.left -= origin.left;
@@ -155,11 +120,7 @@ function getOffsetParent(el) {
   return el.offsetParent || document.documentElement;
 }
 
-let _scrollBarSize = null;
 function getScrollBarSize() {
-  if (_scrollBarSize) {
-    return _scrollBarSize;
-  }
   const inner = document.createElement('div');
   inner.style.width = '100%';
   inner.style.height = '200px';
@@ -192,8 +153,7 @@ function getScrollBarSize() {
 
   const width = widthContained - widthScroll;
 
-  _scrollBarSize = {width, height: width};
-  return _scrollBarSize;
+  return {width, height: width};
 }
 
 function extend(out={}) {
@@ -251,9 +211,7 @@ function hasClass(el, name) {
 }
 
 function getClassName(el) {
-  // Can't use just SVGAnimatedString here since nodes within a Frame in IE have
-  // completely separately SVGAnimatedString base classes
-  if (el.className instanceof el.ownerDocument.defaultView.SVGAnimatedString) {
+  if (el.className instanceof SVGAnimatedString) {
     return el.className.baseVal;
   }
   return el.className;
@@ -309,8 +267,8 @@ class Evented {
   }
 
   off(event, handler) {
-    if (typeof this.bindings === 'undefined' ||
-        typeof this.bindings[event] === 'undefined') {
+    if (typeof this.bindings !== 'undefined' &&
+        typeof this.bindings[event] !== 'undefined') {
       return;
     }
 
@@ -352,8 +310,7 @@ class Evented {
 }
 
 TetherBase.Utils = {
-  getActualBoundingClientRect,
-  getScrollParents,
+  getScrollParent,
   getBounds,
   getOffsetParent,
   extend,
@@ -365,6 +322,5 @@ TetherBase.Utils = {
   flush,
   uniqueId,
   Evented,
-  getScrollBarSize,
-  removeUtilElements
+  getScrollBarSize
 };

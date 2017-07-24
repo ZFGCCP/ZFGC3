@@ -5,7 +5,7 @@ if (typeof TetherBase === 'undefined') {
 }
 
 const {
-  getScrollParents,
+  getScrollParent,
   getBounds,
   getOffsetParent,
   extend,
@@ -14,8 +14,7 @@ const {
   updateClasses,
   defer,
   flush,
-  getScrollBarSize,
-  removeUtilElements
+  getScrollBarSize
 } = TetherBase.Utils;
 
 function within(a, b, diff=1) {
@@ -28,7 +27,7 @@ const transformKey = (() => {
   }
   const el = document.createElement('div');
 
-  const transforms = ['transform', 'WebkitTransform', 'OTransform', 'MozTransform', 'msTransform'];
+  const transforms = ['transform', 'webkitTransform', 'OTransform', 'MozTransform', 'msTransform'];
   for (let i = 0; i < transforms.length; ++i) {
     const key = transforms[i];
     if (el.style[key] !== undefined) {
@@ -73,7 +72,7 @@ function now() {
       return;
     }
 
-    if (pendingTimeout != null) {
+    if (typeof pendingTimeout !== 'undefined') {
       clearTimeout(pendingTimeout);
       pendingTimeout = null;
     }
@@ -83,7 +82,7 @@ function now() {
     lastDuration = now() - lastCall;
   };
 
-  if(typeof window !== 'undefined' && typeof window.addEventListener !== 'undefined') {
+  if(typeof window !== 'undefined') {
     ['resize', 'scroll', 'touchmove'].forEach(event => {
       window.addEventListener(event, tick);
     });
@@ -175,10 +174,9 @@ const parseOffset = (value) => {
 };
 const parseAttachment = parseOffset;
 
-class TetherClass extends Evented {
+class TetherClass {
 
   constructor(options) {
-    super();
     this.position = this.position.bind(this);
 
     tethers.push(this);
@@ -256,14 +254,14 @@ class TetherClass extends Evented {
     this.offset = parseOffset(this.options.offset);
     this.targetOffset = parseOffset(this.options.targetOffset);
 
-    if (typeof this.scrollParents !== 'undefined') {
+    if (typeof this.scrollParent !== 'undefined') {
       this.disable();
     }
 
     if (this.targetModifier === 'scroll-handle') {
-      this.scrollParents = [this.target];
+      this.scrollParent = this.target;
     } else {
-      this.scrollParents = getScrollParents(this.target);
+      this.scrollParent = getScrollParent(this.target);
     }
 
     if(!(this.options.enabled === false)) {
@@ -390,11 +388,9 @@ class TetherClass extends Evented {
     addClass(this.element, this.getClass('enabled'));
     this.enabled = true;
 
-    this.scrollParents.forEach((parent) => {
-      if (parent !== this.target.ownerDocument) {
-        parent.addEventListener('scroll', this.position);
-      }
-    })
+    if (this.scrollParent !== document) {
+      this.scrollParent.addEventListener('scroll', this.position);
+    }
 
     if (pos) {
       this.position();
@@ -406,10 +402,8 @@ class TetherClass extends Evented {
     removeClass(this.element, this.getClass('enabled'));
     this.enabled = false;
 
-    if (typeof this.scrollParents !== 'undefined') {
-      this.scrollParents.forEach((parent) => {
-        parent.removeEventListener('scroll', this.position);
-      })
+    if (typeof this.scrollParent !== 'undefined') {
+      this.scrollParent.removeEventListener('scroll', this.position);
     }
   }
 
@@ -419,13 +413,9 @@ class TetherClass extends Evented {
     tethers.forEach((tether, i) => {
       if (tether === this) {
         tethers.splice(i, 1);
+        return;
       }
     });
-
-    // Remove any elements we were using for convenience from the DOM
-    if (tethers.length === 0) {
-      removeUtilElements();
-    }
   }
 
   updateAttachClasses(elementAttach, targetAttach) {
@@ -572,25 +562,22 @@ class TetherClass extends Evented {
       }
     };
 
-    var doc = this.target.ownerDocument;
-    var win = doc.defaultView;
-
     let scrollbarSize;
-    if (win.innerHeight > doc.documentElement.clientHeight) {
+    if (document.body.scrollWidth > window.innerWidth) {
       scrollbarSize = this.cache('scrollbar-size', getScrollBarSize);
       next.viewport.bottom -= scrollbarSize.height;
     }
 
-    if (win.innerWidth > doc.documentElement.clientWidth) {
+    if (document.body.scrollHeight > window.innerHeight) {
       scrollbarSize = this.cache('scrollbar-size', getScrollBarSize);
       next.viewport.right -= scrollbarSize.width;
     }
 
-    if (['', 'static'].indexOf(doc.body.style.position) === -1 ||
-        ['', 'static'].indexOf(doc.body.parentElement.style.position) === -1) {
+    if (['', 'static'].indexOf(document.body.style.position) === -1 ||
+        ['', 'static'].indexOf(document.body.parentElement.style.position) === -1) {
       // Absolute positioning in the body will be relative to the page, not the 'initial containing block'
-      next.page.bottom = doc.body.scrollHeight - top - height;
-      next.page.right = doc.body.scrollWidth - left - width;
+      next.page.bottom = document.body.scrollHeight - top - height;
+      next.page.right = document.body.scrollWidth - left - width;
     }
 
     if (typeof this.options.optimizations !== 'undefined' &&
@@ -606,8 +593,8 @@ class TetherClass extends Evented {
         offsetBorder[side.toLowerCase()] = parseFloat(offsetParentStyle[`border${ side }Width`]);
       });
 
-      offsetPosition.right = doc.body.scrollWidth - offsetPosition.left - offsetParentSize.width + offsetBorder.right;
-      offsetPosition.bottom = doc.body.scrollHeight - offsetPosition.top - offsetParentSize.height + offsetBorder.bottom;
+      offsetPosition.right = document.body.scrollWidth - offsetPosition.left - offsetParentSize.width + offsetBorder.right;
+      offsetPosition.bottom = document.body.scrollHeight - offsetPosition.top - offsetParentSize.height + offsetBorder.bottom;
 
       if (next.page.top >= (offsetPosition.top + offsetBorder.top) && next.page.bottom >= offsetPosition.bottom) {
         if (next.page.left >= (offsetPosition.left + offsetBorder.left) && next.page.right >= offsetPosition.right) {
@@ -697,17 +684,7 @@ class TetherClass extends Evented {
           xPos = -_pos.right;
         }
 
-        if (window.matchMedia) {
-          // HubSpot/tether#207
-          const retina = window.matchMedia('only screen and (min-resolution: 1.3dppx)').matches ||
-                         window.matchMedia('only screen and (-webkit-min-device-pixel-ratio: 1.3)').matches;
-          if (!retina) {
-            xPos = Math.round(xPos);
-            yPos = Math.round(yPos);
-          }
-        }
-
-        css[transformKey] = `translateX(${ xPos }px) translateY(${ yPos }px)`;
+        css[transformKey] = `translateX(${ Math.round(xPos) }px) translateY(${ Math.round(yPos) }px)`;
 
         if (transformKey !== 'msTransform') {
           // The Z transform will keep this in the GPU (faster, and prevents artifacts),
@@ -759,24 +736,20 @@ class TetherClass extends Evented {
     }
 
     if (!moved) {
-      if (this.options.bodyElement) {
-        this.options.bodyElement.appendChild(this.element);
-      } else {
-        let offsetParentIsBody = true;
-        let currentNode = this.element.parentNode;
-        while (currentNode && currentNode.nodeType === 1 && currentNode.tagName !== 'BODY') {
-          if (getComputedStyle(currentNode).position !== 'static') {
-            offsetParentIsBody = false;
-            break;
-          }
-
-          currentNode = currentNode.parentNode;
+      let offsetParentIsBody = true;
+      let currentNode = this.element.parentNode;
+      while (currentNode && currentNode.tagName !== 'BODY') {
+        if (getComputedStyle(currentNode).position !== 'static') {
+          offsetParentIsBody = false;
+          break;
         }
 
-        if (!offsetParentIsBody) {
-          this.element.parentNode.removeChild(this.element);
-          this.element.ownerDocument.body.appendChild(this.element);
-        }
+        currentNode = currentNode.parentNode;
+      }
+
+      if (!offsetParentIsBody) {
+        this.element.parentNode.removeChild(this.element);
+        document.body.appendChild(this.element);
       }
     }
 
@@ -787,6 +760,11 @@ class TetherClass extends Evented {
       let val = css[key];
       let elVal = this.element.style[key];
 
+      if (elVal !== '' && val !== '' && ['top', 'left', 'bottom', 'right'].indexOf(key) >= 0) {
+        elVal = parseFloat(elVal);
+        val = parseFloat(val);
+      }
+
       if (elVal !== val) {
         write = true;
         writeCSS[key] = val;
@@ -796,7 +774,6 @@ class TetherClass extends Evented {
     if (write) {
       defer(() => {
         extend(this.element.style, writeCSS);
-        this.trigger('repositioned');
       });
     }
   }

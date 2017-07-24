@@ -205,7 +205,7 @@ public class BbcodeServiceTest {
 		BbCodeAttributeMode empty = new BbCodeAttributeMode();
 		empty.setOpenTag("<a href='{{c}}'>");
 		empty.setCloseTag("</span>");
-		empty.setContentIsAttribute(true);
+		empty.setContentIsAttributeFlag(true);
 		bbCodeUrl.getAttributeConfig().put("", empty);
 		
 		service.validBbCodes.put("url", bbCodeUrl);
@@ -222,8 +222,8 @@ public class BbcodeServiceTest {
 		BbCodeAttributeMode none = new BbCodeAttributeMode();
 		none.setOpenTag("<span class='bbcode-img'><img src='{{c}}'/>");
 		none.setCloseTag("</span>");
-		none.setContentIsAttribute(true);
-		none.setOutputContent(false);
+		none.setContentIsAttributeFlag(true);
+		none.setOutputContentFlag(false);
 		bbCodeImg.getAttributeConfig().put("", none);
 		
 		service.validBbCodes.put("img", bbCodeImg);
