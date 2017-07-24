@@ -7,8 +7,8 @@ public class BbCodeAttributeMode {
 	private List<BbCodeAttribute> attributes = new ArrayList<>();
 	private String openTag;
 	private String closeTag;
-	private Boolean contentIsAttribute = false;
-	private Boolean outputContent = true;
+	private Boolean contentIsAttributeFlag = false;
+	private Boolean outputContentFlag = true;
 	private Integer bbCodeAttributeModeId;
 	
 	public List<BbCodeAttribute> getAttributes() {
@@ -29,23 +29,23 @@ public class BbCodeAttributeMode {
 	public void setCloseTag(String closeTag) {
 		this.closeTag = closeTag;
 	}
-	public Boolean getContentIsAttribute() {
-		return contentIsAttribute;
-	}
-	public void setContentIsAttribute(Boolean contentIsAttribute) {
-		this.contentIsAttribute = contentIsAttribute;
-	}
-	public Boolean getOutputContent() {
-		return outputContent;
-	}
-	public void setOutputContent(Boolean outputContent) {
-		this.outputContent = outputContent;
-	}
 	public Integer getBbCodeAttributeModeId() {
 		return bbCodeAttributeModeId;
 	}
 	public void setBbCodeAttributeModeId(Integer bbCodeAttributeModeId) {
 		this.bbCodeAttributeModeId = bbCodeAttributeModeId;
+	}
+	public Boolean getOutputContentFlag() {
+		return outputContentFlag;
+	}
+	public void setOutputContentFlag(Boolean outputContentFlag) {
+		this.outputContentFlag = outputContentFlag;
+	}
+	public Boolean getContentIsAttributeFlag() {
+		return contentIsAttributeFlag;
+	}
+	public void setContentIsAttributeFlag(Boolean contentIsAttributeFlag) {
+		this.contentIsAttributeFlag = contentIsAttributeFlag;
 	}
 	
 }

@@ -14,8 +14,10 @@ import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.rules.users.AccountSettingsRuleChecker;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
+import com.zfgc.services.sanitization.SanitizationService;
 
 @Component
 public class UserProfileService extends AbstractService{
@@ -30,6 +32,12 @@ public class UserProfileService extends AbstractService{
 	
 	@Autowired
 	BuddyService buddyService;
+	
+	@Autowired
+	SanitizationService sanitizationService;
+	
+	@Autowired
+	BbcodeService bbCodeService;
 	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
@@ -102,6 +110,11 @@ public class UserProfileService extends AbstractService{
 			}
 		}
 		
+		if(user.getSignature() != null){
+			user.setSignaturePreview(bbCodeService.parseText(user.getSignature()));
+			user.setSignature(sanitizationService.reverseSanitizeMessage(user.getSignature()));
+		}
+		
 		return user;
 		
 	}
@@ -162,6 +175,7 @@ public class UserProfileService extends AbstractService{
 	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
 		try{
 			Users savedProfile = userProfileDataProvider.getUserProfile(forumProfile.getUsersId());
+			forumProfile.setSignature(sanitizationService.sanitizeMessage(forumProfile.getSignature()));
 			
 			if(!forumProfile.getErrors().hasErrors()){
 				userProfileDataProvider.saveForumProfile(forumProfile);

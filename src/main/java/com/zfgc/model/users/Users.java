@@ -65,6 +65,8 @@ public class Users extends BaseZfgcModel {
 	
 	private EmailAddress emailAddress;
 	private Boolean hideEmailFlag;
+	private String signature;
+	private String signaturePreview;
 	
 	private UserContactInfo contactInfo = new UserContactInfo();
 	private UserSecurityInfo securityInfo = new UserSecurityInfo();
@@ -369,5 +371,17 @@ public class Users extends BaseZfgcModel {
 	}
 	public void setPersonalMessagingSettings(PersonalMessagingSettings personalMessagingSettings) {
 		this.personalMessagingSettings = personalMessagingSettings;
+	}
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+	public String getSignaturePreview() {
+		return signaturePreview;
+	}
+	public void setSignaturePreview(String signaturePreview) {
+		this.signaturePreview = signaturePreview;
 	}
 }

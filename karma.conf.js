@@ -33,6 +33,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/angular-animate/angular-animate.js",
 	    
+	"./src/main/webapp/bower_components/angular-sanitize/angular-sanitize.js",
+	    
 	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
@@ -55,13 +57,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
-	"./src/main/webapp/scripts/modal/modal.service.js",
-	    
-	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.service.js",
+	    
+	"./src/main/webapp/scripts/modal/modal.service.js",
+	    
+	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
@@ -102,6 +104,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/buddy-ignore.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/modify-profile.html",
 	    

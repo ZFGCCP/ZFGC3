@@ -282,10 +282,10 @@ public class BbcodeService{
 		
 		}
 		
-		if(attMode.getContentIsAttribute()){
+		if(attMode.getContentIsAttributeFlag()){
 			contentAttPos.setValue(output.indexOf("{{c}}"));
 			
-			if(!attMode.getOutputContent()){
+			if(!attMode.getOutputContentFlag()){
 				outputContent = false;
 			}
 		}
@@ -304,6 +304,10 @@ public class BbcodeService{
 		LOGGER.info("Loading Bbcode config...");
 		
 		validBbCodes = bbCodeDataProvider.getBbCodeConfig();
+		
+		for(String code : validBbCodes.keySet()){
+			bbCodeCounts.put(code, 0);
+		}
 		
 		LOGGER.info("Finished loading Bbcode config.");
 	}
