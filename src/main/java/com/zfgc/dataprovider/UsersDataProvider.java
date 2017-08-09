@@ -1,5 +1,6 @@
 package com.zfgc.dataprovider;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dbobj.UsersDbObj;
+import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
@@ -171,5 +173,20 @@ public class UsersDataProvider extends AbstractDataProvider {
 
 	public Integer getPrimaryMemberGroupIdByToken(String token) {
 		return usersDao.getPrimaryMemberGroupIdByToken(token);
+	}
+	
+	public List<Users> simpleUserSearch(String displayNameQuery){
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andDisplayNameLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true);
+		ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%"));
+		
+		List<UsersDbObj> db = usersDao.get(ex);
+		List<Users> result = new ArrayList<>();
+		
+		for(UsersDbObj user : db){
+			result.add(mapper.map(user, Users.class));
+		}
+		
+		return result;
 	}
 }
