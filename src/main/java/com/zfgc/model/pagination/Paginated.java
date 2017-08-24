@@ -28,5 +28,11 @@ public abstract class Paginated extends BaseZfgcModel{
 	public void setTotalItems(Integer totalItems) {
 		this.totalItems = totalItems;
 	}
+
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

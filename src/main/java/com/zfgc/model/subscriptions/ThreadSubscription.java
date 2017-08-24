@@ -74,5 +74,11 @@ public class ThreadSubscription extends BaseZfgcModel{
 	public void setSubscriberId(String subscriberId) {
 		this.subscriberId = subscriberId;
 	}
+
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

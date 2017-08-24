@@ -154,5 +154,11 @@ public class NotificationSettings extends BaseZfgcModel{
 	public void setPostedInFlag(Boolean postedInFlag) {
 		this.postedInFlag = postedInFlag;
 	}
+
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

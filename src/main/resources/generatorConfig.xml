@@ -121,9 +121,23 @@
     </table>
     
     <table schema="zfgc3" tableName="BR_BUDDY_IGNORE_LIST" domainObjectName="BrBuddyIgnoreListDbObj">
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="HTML_ENTITY" domainObjectName="HtmlEntityDbObj">
+    </table>-->
+    
+     <table schema="Zfgc3" tableName="PM_KEY" domainObjectName="PmKeyDbObj">
+    	<generatedKey column="PM_KEY_ID" sqlStatement="SELECT COALESCE(MAX(PM_KEY_ID) + 1,0) FROM PM_KEY"/>
+    </table>
+    
+    <table schema="Zfgc3" tableName="PM_BACKUP_CODE" domainObjectName="PmBackupCodeDbObj">
+    	<generatedKey column="PM_BACKUP_CODE_ID" sqlStatement="SELECT COALESCE(MAX(PM_BACKUP_CODE_ID) + 1,0) FROM PM_BACKUP_CODE"/>
+    </table>
+    
+    <table schema="Zfgc3" tableName="PERSONAL_MESSAGE" domainObjectName="PersonalMessageDbObj">
+    	<generatedKey column="PERSONAL_MESSAGE_ID" sqlStatement="SELECT COALESCE(MAX(PERSONAL_MESSAGE_ID) + 1,0) FROM PERSONAL_MESSAGE"/>
+    	<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="SEND_COPY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
     <!-- views -->

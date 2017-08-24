@@ -23,4 +23,10 @@ public class ForumIndex extends BaseZfgcModel{
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

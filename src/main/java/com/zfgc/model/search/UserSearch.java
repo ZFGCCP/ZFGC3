@@ -39,4 +39,10 @@ public class UserSearch extends BaseZfgcModel {
 		return null;
 	}
 
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

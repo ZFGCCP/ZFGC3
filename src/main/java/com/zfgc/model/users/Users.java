@@ -384,4 +384,9 @@ public class Users extends BaseZfgcModel {
 	public void setSignaturePreview(String signaturePreview) {
 		this.signaturePreview = signaturePreview;
 	}
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
