@@ -298,4 +298,9 @@ public class ProfileSummary extends BaseZfgcModel {
 	public void setYim(String yim) {
 		this.yim = yim;
 	}
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

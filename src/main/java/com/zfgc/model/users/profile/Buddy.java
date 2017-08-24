@@ -110,4 +110,10 @@ public class Buddy extends BaseZfgcModel {
 		this.lastLogin = lastLogin;
 	}
 
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

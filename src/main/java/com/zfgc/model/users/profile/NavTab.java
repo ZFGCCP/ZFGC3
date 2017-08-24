@@ -80,4 +80,11 @@ public class NavTab extends BaseZfgcModel {
 		this.navSectionId = navSectionId;
 	}
 
+
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

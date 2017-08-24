@@ -14,6 +14,7 @@ public abstract class BaseZfgcModel implements Comparable{
 	}
 	
 	public abstract String getHMAC() throws Exception;
+	public BaseZfgcModel copy(BaseZfgcModel other){return this;};
 	
 	@Override
 	public int compareTo(Object other){return 0;}

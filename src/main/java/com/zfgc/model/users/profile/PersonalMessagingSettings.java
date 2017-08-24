@@ -94,5 +94,11 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
 	public void setBuddyList(List<Buddy> buddyList) {
 		this.buddyList = buddyList;
 	}
+
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

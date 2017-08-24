@@ -47,5 +47,11 @@ public class Avatar extends BaseZfgcModel {
 	public void setAvatarTypeId(Integer avatarTypeId) {
 		this.avatarTypeId = avatarTypeId;
 	}
+
+	@Override
+	public BaseZfgcModel copy(BaseZfgcModel other) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }
