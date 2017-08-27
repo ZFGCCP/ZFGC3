@@ -12,14 +12,14 @@ import com.zfgc.mappers.PersonalMessageDbObjMapper;
 import com.zfgc.model.pm.PersonalMessage;
 
 @Component
-public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample, PersonalMessageDbObj, PersonalMessage>{
+public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample, PersonalMessageDbObjWithBLOBs, PersonalMessage>{
 
 	@Autowired
 	PersonalMessageDbObjMapper personalMessageDbObjMapper;
 	
 	@Override
-	public List<PersonalMessageDbObj> get(PersonalMessageDbObjExample ex) {
-		return personalMessageDbObjMapper.selectByExample(ex);
+	public List<PersonalMessageDbObjWithBLOBs> get(PersonalMessageDbObjExample ex) {
+		return personalMessageDbObjMapper.selectByExampleWithBLOBs(ex);
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 	@Override
 	public void updateByExample(PersonalMessage obj,
 			PersonalMessageDbObjExample ex) {
-		PersonalMessageDbObj dbObj = mapper.map(obj, PersonalMessageDbObj.class);
+		PersonalMessageDbObjWithBLOBs dbObj = mapper.map(obj, PersonalMessageDbObjWithBLOBs.class);
 		
 		personalMessageDbObjMapper.updateByExample(dbObj, ex);
 		

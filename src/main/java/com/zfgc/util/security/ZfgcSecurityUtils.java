@@ -64,9 +64,9 @@ public class ZfgcSecurityUtils {
 	
 	public static String decryptRsa(String cipherText, Key key){
         try {
-        	Cipher cipher = Cipher.getInstance("RSA");  
+        	Cipher cipher = Cipher.getInstance("RSA/ECB/NoPadding");  
             cipher.init(Cipher.DECRYPT_MODE, key);
-			return new String(cipher.doFinal(cipherText.getBytes("UTF-8")));
+			return new String(cipher.doFinal(Base64.decodeBase64(cipherText.getBytes("UTF-8"))));
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -132,6 +132,18 @@ public class ZfgcSecurityUtils {
 			KeyFactory fact = KeyFactory.getInstance("RSA");
 			
 			return fact.generatePublic(new X509EncodedKeySpec(keyByte));
+		} catch (UnsupportedEncodingException e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static Key stringToRsaPrivKey(String key) throws InvalidKeySpecException, NoSuchAlgorithmException{
+		try {
+			byte [] keyByte = Base64.decodeBase64(key.getBytes("UTF-8"));
+			KeyFactory fact = KeyFactory.getInstance("RSA");
+			
+			return fact.generatePrivate(new PKCS8EncodedKeySpec(keyByte));
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 			return null;

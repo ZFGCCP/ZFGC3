@@ -88,6 +88,7 @@ public class PersonalMessage extends BaseZfgcModel {
 		copyTo.setSubject(((PersonalMessage)other).getSubject());
 		copyTo.setSenderId(((PersonalMessage)other).getSenderId());
 		copyTo.setReceiverId(((PersonalMessage)other).getReceiverId());
+		copyTo.setSendCopyFlag(((PersonalMessage)other).getSendCopyFlag());
 		
 		return copyTo;
 	}

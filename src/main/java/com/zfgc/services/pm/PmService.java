@@ -12,8 +12,10 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmKey;
+import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.sanitization.SanitizationService;
 import com.zfgc.util.security.RsaKeyPair;
@@ -30,6 +32,37 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	SanitizationService sanitizationService;
+	
+	//todo: add user instead of receiverId
+	public PersonalMessage openMessage(Integer pmId, Integer receiverId, TwoFactorKey aesKey) throws ZfgcNotFoundException{
+		try {
+			PersonalMessage pm = pmDataProvider.getInboxMessage(pmId);
+			PersonalMessage pmCopy = (PersonalMessage)pm.copy(pm);
+			pmCopy.setReadFlag(true);
+			
+			PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
+			String decryptedRsa = ZfgcSecurityUtils.decryptAes(receiverKeys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
+			Key receiverKey = null;
+			
+			try {
+				receiverKey = ZfgcSecurityUtils.stringToRsaPrivKey(decryptedRsa);
+			} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+			pm.setMessage(ZfgcSecurityUtils.decryptRsa(pm.getMessage(), receiverKey).trim());
+			pm.setSubject(ZfgcSecurityUtils.decryptRsa(pm.getSubject(), receiverKey).trim());
+			
+			pmDataProvider.saveMessage(pmCopy);
+			
+			return pm;
+			
+		} catch (ZfgcNotFoundException e) {
+			e.printStackTrace();
+			throw e;
+		}
+	}
 	
 	//todo: make this take a user instead of a senderId
 	public PersonalMessage sendMessage(Integer senderId, Integer receiverId, PersonalMessage message){
