@@ -124,7 +124,7 @@
     </table>
     
     <table schema="zfgc3" tableName="HTML_ENTITY" domainObjectName="HtmlEntityDbObj">
-    </table>-->
+    </table>
     
      <table schema="Zfgc3" tableName="PM_KEY" domainObjectName="PmKeyDbObj">
     	<generatedKey column="PM_KEY_ID" sqlStatement="SELECT COALESCE(MAX(PM_KEY_ID) + 1,0) FROM PM_KEY"/>
@@ -138,7 +138,7 @@
     	<generatedKey column="PERSONAL_MESSAGE_ID" sqlStatement="SELECT COALESCE(MAX(PERSONAL_MESSAGE_ID) + 1,0) FROM PERSONAL_MESSAGE"/>
     	<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="SEND_COPY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>
+    </table>-->
     
     <!-- views -->
     
@@ -194,6 +194,14 @@
     <table schema="zfgc3" tableName="BB_CODE_CONFIG" domainObjectName="BbCodeConfigDbObj">
 		<columnOverride column="PROCESS_CONTENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>-->
+    
+    <table schema="zfgc3" tableName="INBOX_VIEW" domainObjectName="inboxViewDbObj">
+		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <table schema="zfgc3" tableName="OUTBOX_VIEW" domainObjectName="outboxViewDbObj">
+		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
     
   </context>
 </generatorConfiguration>
