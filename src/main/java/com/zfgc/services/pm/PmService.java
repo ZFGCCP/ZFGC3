@@ -15,6 +15,7 @@ import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.sanitization.SanitizationService;
 import com.zfgc.util.security.RsaKeyPair;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 
@@ -26,6 +27,9 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	PersonalMessageDataProvider pmDataProvider;
+	
+	@Autowired
+	SanitizationService sanitizationService;
 	
 	//todo: make this take a user instead of a senderId
 	public PersonalMessage sendMessage(Integer senderId, Integer receiverId, PersonalMessage message){
@@ -42,6 +46,8 @@ public class PmService extends AbstractService {
 			e.printStackTrace();
 		}
 		
+		message.setMessage(sanitizationService.sanitizeMessage(message.getMessage()));
+		message.setSubject(sanitizationService.sanitizeMessage(message.getSubject()));
 		
 		PersonalMessage senderSave = (PersonalMessage)message.copy(message);
 		PersonalMessage receiverSave = (PersonalMessage)message.copy(message);
