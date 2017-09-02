@@ -17,6 +17,7 @@ import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.sanitization.SanitizationService;
 import com.zfgc.util.security.RsaKeyPair;
 import com.zfgc.util.security.ZfgcSecurityUtils;
@@ -32,6 +33,9 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	SanitizationService sanitizationService;
+	
+	@Autowired
+	BbcodeService bbCodeService;
 	
 	//todo: add user instead of receiverId
 	public PersonalMessage openMessage(Integer pmId, Integer receiverId, TwoFactorKey aesKey) throws ZfgcNotFoundException{
@@ -52,6 +56,14 @@ public class PmService extends AbstractService {
 			}
 			
 			pm.setMessage(ZfgcSecurityUtils.decryptRsa(pm.getMessage(), receiverKey).trim());
+			try {
+				pm.setMessage(bbCodeService.parseText(pm.getMessage()));
+			} catch (NoSuchFieldException | SecurityException
+					| IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+				return null;
+			}
+			
 			pm.setSubject(ZfgcSecurityUtils.decryptRsa(pm.getSubject(), receiverKey).trim());
 			
 			pmDataProvider.saveMessage(pmCopy);
