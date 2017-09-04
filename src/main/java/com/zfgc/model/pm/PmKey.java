@@ -8,6 +8,7 @@ public class PmKey extends BaseZfgcModel {
 	private Integer usersId;
 	private String pmPubKeyRsa;
 	private String pmPrivKeyRsaEncrypted;
+	private String parityWord;
 	
 	public Integer getPmKeyId() {
 		return pmKeyId;
@@ -51,6 +52,14 @@ public class PmKey extends BaseZfgcModel {
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getParityWord() {
+		return parityWord;
+	}
+
+	public void setParityWord(String parityWord) {
+		this.parityWord = parityWord;
 	}
 
 }
