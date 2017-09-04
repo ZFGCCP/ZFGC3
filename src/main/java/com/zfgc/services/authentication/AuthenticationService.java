@@ -9,8 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dataprovider.AuthenticationDataProvider;
+import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
+import com.zfgc.model.pm.PmKey;
+import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
@@ -18,6 +22,7 @@ import com.zfgc.model.users.UserHashInfo;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.lookups.LookupService;
+import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 import java.security.MessageDigest;
@@ -32,6 +37,7 @@ public class AuthenticationService  extends AbstractService {
 	
 	private final static String HASH_ALGORITHM = "SHA-256";
 	private final int SALT_LENGTH = 128;
+	public final String PM_PARITY_WORD = "ZFGC3";
 	private Logger LOGGER = Logger.getLogger(AuthenticationService.class);
 	
 	@Autowired
@@ -42,6 +48,9 @@ public class AuthenticationService  extends AbstractService {
 	
 	@Autowired
 	private UsersDataProvider usersDataProvider;
+	
+	@Autowired
+	private PmKeyDataProvider pmKeyDataProvider;
 	
 	public String createPasswordHash(String password, String salt) throws Exception{
 		String hashThis = password + salt;
@@ -206,5 +215,17 @@ public class AuthenticationService  extends AbstractService {
 	
 	public Boolean doesEmailExist(EmailAddress emailAddress) throws Exception{
 		return authenticationDataProvider.doesEmailExist(emailAddress);
+	}
+	
+	public Boolean isValidAesKey(TwoFactorKey aes) throws ZfgcInvalidAesKeyException{
+		PmKey pmKey = pmKeyDataProvider.getPmKeyByUsersId(aes.getUsersId());
+		
+		String decrypted = ZfgcSecurityUtils.decryptAes(pmKey.getParityWord(), aes.getKey());
+		
+		if(decrypted == null){
+			throw new ZfgcInvalidAesKeyException(pmKey.getParityWord());
+		}
+		
+		return decrypted.equals(PM_PARITY_WORD);
 	}
 }

@@ -13,10 +13,12 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.sanitization.SanitizationService;
 import com.zfgc.util.security.RsaKeyPair;
@@ -37,14 +39,21 @@ public class PmService extends AbstractService {
 	@Autowired
 	BbcodeService bbCodeService;
 	
+	@Autowired
+	AuthenticationService authenticationService;
+	
 	//todo: add user instead of receiverId
-	public PersonalMessage openMessage(Integer pmId, Integer receiverId, TwoFactorKey aesKey) throws ZfgcNotFoundException{
+	public PersonalMessage openMessage(Integer pmId, Integer receiverId, TwoFactorKey aesKey) throws ZfgcNotFoundException, ZfgcInvalidAesKeyException{
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
 		try {
 			PersonalMessage pm = pmDataProvider.getInboxMessage(pmId);
 			PersonalMessage pmCopy = (PersonalMessage)pm.copy(pm);
 			pmCopy.setReadFlag(true);
 			
-			PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
 			String decryptedRsa = ZfgcSecurityUtils.decryptAes(receiverKeys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
 			Key receiverKey = null;
 			
@@ -129,6 +138,7 @@ public class PmService extends AbstractService {
 		pmKey.setPmPrivKeyRsaEncrypted(privateKeyEnc);
 		pmKey.setPmPubKeyRsa(ZfgcSecurityUtils.RsaKeyToString(keyPair.getPublicKey()));
 		pmKey.setUsersId(usersId);
+		pmKey.setParityWord(ZfgcSecurityUtils.encryptAes(authenticationService.PM_PARITY_WORD, aesKey));
 		
 		pmKeyDataProvider.createPmKeyPair(pmKey);
 	}
