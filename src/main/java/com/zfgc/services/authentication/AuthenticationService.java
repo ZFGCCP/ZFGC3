@@ -81,7 +81,7 @@ public class AuthenticationService  extends AbstractService {
 			MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
 			digest.update(digestStr.getBytes());
 			byte[] hash = digest.digest();
-			
+			String str = new String(hash);
 			return Base64.encodeBase64URLSafeString(hash);
 		}
 		catch(NoSuchAlgorithmException ex){

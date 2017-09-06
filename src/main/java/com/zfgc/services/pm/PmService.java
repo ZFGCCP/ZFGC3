@@ -15,8 +15,10 @@ import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.PersonalMessage;
+import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.TwoFactorKey;
+import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.bbcode.BbcodeService;
@@ -41,6 +43,54 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	AuthenticationService authenticationService;
+	
+	private PmBox decryptPmBox(PmBox pmBox, PmKey keys, TwoFactorKey aesKey){
+		String decryptedRsa = ZfgcSecurityUtils.decryptAes(keys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
+		Key senderKey = null;
+		
+		try {
+			senderKey = ZfgcSecurityUtils.stringToRsaPrivKey(decryptedRsa);
+		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		for(PersonalMessage pm : pmBox.getMessageList()){
+			pm.setSubject(ZfgcSecurityUtils.decryptRsa(pm.getSubject(), senderKey).trim());
+			pm.setMessage(ZfgcSecurityUtils.decryptRsa(pm.getMessage(), senderKey).trim());
+		}
+		return pmBox;
+	}
+	
+	public PmBox getOutbox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
+		}
+		
+		try {
+			PmBox outbox = pmDataProvider.getOutbox(zfgcUser);
+			return decryptPmBox(outbox, senderKeys, aesKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public PmBox getInbox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
+		}
+		
+		try {
+			PmBox inbox = pmDataProvider.getInbox(zfgcUser);
+			return decryptPmBox(inbox, senderKeys, aesKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	//todo: add user instead of receiverId
 	public PersonalMessage openMessage(Integer pmId, Integer receiverId, TwoFactorKey aesKey) throws ZfgcNotFoundException, ZfgcInvalidAesKeyException{

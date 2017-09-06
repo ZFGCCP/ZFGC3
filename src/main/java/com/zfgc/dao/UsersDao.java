@@ -230,7 +230,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 			jdbcTemplate.update(sql.toString(), params);
 		
 			sql = new StringBuilder();
-			sql.append("SELECT LOGIN_FAILED_ATTEMPS FROM users WHERE LOGIN_NAME = :loginName");
+			sql.append("SELECT LOGIN_FAILED_ATTEMPTS FROM users WHERE LOGIN_NAME = :loginName");
 		
 			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
 		}
