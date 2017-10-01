@@ -1,5 +1,6 @@
 package com.zfgc.dataprovider;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,23 @@ public class PersonalMessageDataProvider extends AbstractDataProvider {
 		}
 		
 		return mapper.map(dbObj.get(0), PersonalMessage.class);
+	}
+	
+	public List<PersonalMessage> getMessagesByConversation(Integer conversationId) throws ZfgcNotFoundException{
+		PersonalMessageDbObjExample ex = new PersonalMessageDbObjExample();
+		ex.createCriteria().andPmConversationIdEqualTo(conversationId);
+		
+		List<PersonalMessageDbObjWithBLOBs> dbObj = personalMessageDao.get(ex);
+		List<PersonalMessage> obj = new ArrayList<>();
+		
+		if(dbObj.size() == 0){
+			throw new ZfgcNotFoundException("Cannot find PMs for conversation " + conversationId);
+		}
+		
+		for(PersonalMessageDbObjWithBLOBs db : dbObj){
+			obj.add(mapper.map(db,PersonalMessage.class));
+		}
+		
+		return obj;
 	}
 }

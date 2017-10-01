@@ -3,7 +3,9 @@ package com.zfgc.services.pm;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.crypto.spec.SecretKeySpec;
 
@@ -11,11 +13,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dataprovider.PersonalMessageDataProvider;
+import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
+import com.zfgc.model.pm.PmConversation;
+import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
@@ -43,6 +48,9 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	AuthenticationService authenticationService;
+	
+	@Autowired
+	PmConversationDataProvider pmConversationDataProvider;
 	
 	private PmBox decryptPmBox(PmBox pmBox, PmKey keys, TwoFactorKey aesKey){
 		String decryptedRsa = ZfgcSecurityUtils.decryptAes(keys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
@@ -90,6 +98,52 @@ public class PmService extends AbstractService {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	public List<PmConversationView> getConversationBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
+		}
+		
+		try {
+			List<PmConversationView> convoView = pmConversationDataProvider.getBoxViewByUsersId(zfgcUser.getUsersId());
+			return decryptAndPrepareConvoBox(convoView, senderKeys, aesKey);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	private List<PmConversationView> decryptAndPrepareConvoBox(List<PmConversationView> convoView, PmKey key, TwoFactorKey tfa){
+		List<PmConversationView> result = new ArrayList<>();
+		
+		String decryptedRsa = ZfgcSecurityUtils.decryptAes(key.getPmPrivKeyRsaEncrypted(), tfa.getKey());
+		Key senderKey = null;
+		
+		try {
+			senderKey = ZfgcSecurityUtils.stringToRsaPrivKey(decryptedRsa);
+		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+
+		for(PmConversationView view : convoView){
+			view.setMessage(ZfgcSecurityUtils.decryptRsa(view.getMessage(), senderKey).trim());
+			view.setSubject(ZfgcSecurityUtils.decryptRsa(view.getSubject(), senderKey).trim());
+
+			try {
+				view.setMessage(bbCodeService.parseText(view.getMessage()));
+			} catch (NoSuchFieldException | SecurityException
+					| IllegalArgumentException | IllegalAccessException e) {
+				e.printStackTrace();
+				return null;
+			}
+			
+			result.add(view);
+		}
+		
+		return result;
 	}
 	
 	//todo: add user instead of receiverId
@@ -146,16 +200,21 @@ public class PmService extends AbstractService {
 			senderKey = ZfgcSecurityUtils.stringToRsaKey(senderKeys.getPmPubKeyRsa());
 			receiverKey = ZfgcSecurityUtils.stringToRsaKey(receiverKeys.getPmPubKeyRsa());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}
 		
 		message.setMessage(sanitizationService.sanitizeMessage(message.getMessage()));
 		message.setSubject(sanitizationService.sanitizeMessage(message.getSubject()));
 		
+		if(message.getPmConversationId() == null){
+			PmConversation convo = pmConversationDataProvider.createConversation();
+			message.setPmConversationId(convo.getPmConversationId());
+		}
+		
 		PersonalMessage senderSave = (PersonalMessage)message.copy(message);
 		PersonalMessage receiverSave = (PersonalMessage)message.copy(message);
-		
+
 		String senderMsg = ZfgcSecurityUtils.encryptRsa(message.getMessage(), senderKey);
 		String receiverMsg = ZfgcSecurityUtils.encryptRsa(message.getMessage(), receiverKey);
 		String senderSubject = ZfgcSecurityUtils.encryptRsa(message.getSubject(), senderKey);
@@ -192,5 +251,6 @@ public class PmService extends AbstractService {
 		
 		pmKeyDataProvider.createPmKeyPair(pmKey);
 	}
+	
 	
 }
