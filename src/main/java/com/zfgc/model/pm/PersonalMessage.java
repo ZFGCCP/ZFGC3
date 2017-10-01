@@ -14,6 +14,7 @@ public class PersonalMessage extends BaseZfgcModel {
     private String message;
     private Boolean readFlag = false;
     private Boolean sendCopyFlag = false;
+    private Integer pmConversationId;
 	
 	public Integer getPersonalMessageId() {
 		return personalMessageId;
@@ -89,6 +90,7 @@ public class PersonalMessage extends BaseZfgcModel {
 		copyTo.setSenderId(((PersonalMessage)other).getSenderId());
 		copyTo.setReceiverId(((PersonalMessage)other).getReceiverId());
 		copyTo.setSendCopyFlag(((PersonalMessage)other).getSendCopyFlag());
+		copyTo.setPmConversationId(((PersonalMessage)other).getPmConversationId());
 		
 		return copyTo;
 	}
@@ -99,6 +101,14 @@ public class PersonalMessage extends BaseZfgcModel {
 
 	public void setSendCopyFlag(Boolean sendCopyFlag) {
 		this.sendCopyFlag = sendCopyFlag;
+	}
+
+	public Integer getPmConversationId() {
+		return pmConversationId;
+	}
+
+	public void setPmConversationId(Integer pmConversationId) {
+		this.pmConversationId = pmConversationId;
 	}
 
 }

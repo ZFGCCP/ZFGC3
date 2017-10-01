@@ -1,5 +1,7 @@
 package com.zfgc.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,6 +18,7 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
+import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmGenerator;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.services.authentication.AuthenticationService;
@@ -106,6 +109,22 @@ public class PmController extends BaseController {
 		} catch (ZfgcInvalidAesKeyException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		}
+	}
+	
+	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity viewConvoBox(@RequestBody TwoFactorKey aesKey){
+		try{
+			List<PmConversationView> convos = pmService.getConversationBox(aesKey, zfgcUser);
+			
+			if(convos == null){
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			}
+			
+			return ResponseEntity.ok(convos);
+		}
+	    catch (ZfgcInvalidAesKeyException e) {
+	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	    }
 	}
 	
 }

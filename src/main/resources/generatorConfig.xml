@@ -140,6 +140,10 @@
     	<columnOverride column="SEND_COPY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>-->
     
+    <table schema="Zfgc3" tableName="PM_CONVERSATION" domainObjectName="PmConversationDbObj">
+    	<generatedKey column="PM_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(PM_CONVERSATION_ID) + 1,0) FROM PM_CONVERSATION"/>
+    </table>
+    
     <!-- views -->
     
     <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
@@ -193,7 +197,7 @@
     
     <table schema="zfgc3" tableName="BB_CODE_CONFIG" domainObjectName="BbCodeConfigDbObj">
 		<columnOverride column="PROCESS_CONTENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="INBOX_VIEW" domainObjectName="InboxViewDbObj">
 		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
@@ -201,6 +205,9 @@
     
     <table schema="zfgc3" tableName="OUTBOX_VIEW" domainObjectName="OutboxViewDbObj">
 		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>-->
+    
+    <table schema="zfgc3" tableName="PM_CONVERSATION_BOX_VIEW" domainObjectName="PmConversationBoxViewDbObj">
     </table>
     
   </context>
