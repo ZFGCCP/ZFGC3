@@ -9,25 +9,23 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
-import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder;
-import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
+import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
+import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
 
 @Configuration
 @ComponentScan
 @SpringBootApplication
-@EnableAutoConfiguration(exclude = { 
-        org.springframework.boot.autoconfigure.security.SecurityAutoConfiguration.class 
-    })
+@EnableSAMLSSO
 @MapperScan("com.zfgc.mappers")
-public class ForumApplication extends SpringBootServletInitializer {
+public class ForumApplication extends org.springframework.boot.web.support.SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args);
@@ -50,4 +48,47 @@ public class ForumApplication extends SpringBootServletInitializer {
       dozerBean.setMappingFiles(mappingFiles);
       return dozerBean;
     }
+    
+    @Configuration
+    public class SecurityConfig extends WebSecurityConfigurerAdapter {
+
+        @Override
+        protected void configure(HttpSecurity security) throws Exception
+        {
+         security.httpBasic().disable();
+         security.authorizeRequests().antMatchers("/").permitAll();
+        }
+    }
+    
+    @Configuration
+    public static class MyServiceProviderConfig extends ServiceProviderConfigurerAdapter {
+
+        @Override
+        public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
+
+            serviceProvider
+                .metadataGenerator()
+                .entityId("zfgc-sp")
+            .and()
+                .sso()
+                .defaultSuccessURL("/home")
+                .idpSelectionPageURL("/idpselection")
+            .and()
+                .logout()
+                .defaultTargetURL("/")
+            .and()
+                .metadataManager()
+                .refreshCheckInterval(0)
+                .metadataTrustCheck(false)
+            .and()
+                .extendedMetadata()
+                .idpDiscoveryEnabled(true)
+            .and()
+                .keyManager();
+                //.privateKeyDERLocation("classpath:/localhost.key.der")
+                //.publicKeyPEMLocation("classpath:/localhost.cert");
+
+        }
+}
+    
 }
