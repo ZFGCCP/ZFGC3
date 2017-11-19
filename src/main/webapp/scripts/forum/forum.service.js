@@ -4,10 +4,10 @@
 	function ForumService($resource){
 		var ForumService = {};
 		
-		ForumService.resource = $resource('/forum/forum/index', {},
+		ForumService.resource = $resource('/forum/index', {},
 		{
 			ForumIndex:{
-			         url: '/forum/forum/index',
+			         url: '/forum/index',
 			         method: 'GET'
 			}
 		});

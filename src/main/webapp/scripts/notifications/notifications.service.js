@@ -4,7 +4,7 @@
 	function NotificationsService($resource){
 		var notificationsService = {};
 		
-		notificationsService.resource = $resource('/forum/subscriptions/',
+		notificationsService.resource = $resource('/subscriptions/',
 		{
 		 'userId' : '@userId',
 		 'pageNo' : '@pageNo',
@@ -12,7 +12,7 @@
 		},
 		{
 			getThreadSubs :{
-				url:'/forum/subscriptions/threads/:userId',
+				url:'/subscriptions/threads/:userId',
 				method:'GET'
 			}
 		});

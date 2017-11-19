@@ -4,39 +4,39 @@
 	function UserService($resource, $window, NotificationsService){
 		var UserService = {};
 		
-		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
+		UserService.resource = $resource('/users/newuser', {'userId' : '@userId'},
 		{
 			newUser:{
-			         url: '/forum/users/newuser',
+			         url: '/users/newuser',
 			         method: 'POST'
 			},
 			userProfile:{
-			         url: '/forum/users/profile/:userId',
+			         url: '/users/profile/:userId',
 			         method: 'GET'
 			},
 			profileNavigation:{
-				url: '/forum/users/navigation',
+				url: '/users/navigation',
 				method: 'GET',
 				isArray: true
 			},
 			saveAccountSettings:{
-				url: '/forum/users/profile/account',
+				url: '/users/profile/account',
 				method: 'POST'
 			},
 			saveForumProfile:{
-				url: '/forum/users/profile',
+				url: '/users/profile',
 				method: 'POST'
 			},
 			saveNotificationSettings:{
-				url:'/forum/users/profile/notifications',
+				url:'/users/profile/notifications',
 				method:'POST'
 			},
 			savePmSettings:{
-				url:'/forum/users/profile/pmSettings',
+				url:'/users/profile/pmSettings',
 				method:'POST'
 			},
 			saveBuddyList:{
-				url:'/forum/users/profile/buddyList',
+				url:'/users/profile/buddyList',
 				method:'POST'
 			}
 		});

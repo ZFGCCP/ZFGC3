@@ -5,18 +5,19 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
+import org.opensaml.saml2.metadata.provider.MetadataFilter;
 import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
+import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBean;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
 
@@ -25,7 +26,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProv
 @SpringBootApplication
 @EnableSAMLSSO
 @MapperScan("com.zfgc.mappers")
-public class ForumApplication extends org.springframework.boot.web.support.SpringBootServletInitializer {
+public class ForumApplication extends SpringBootServletInitializer {
 
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args);
@@ -49,14 +50,25 @@ public class ForumApplication extends org.springframework.boot.web.support.Sprin
       return dozerBean;
     }
     
+    @Bean
+    SAMLConfigurerBean saml() {
+        return new SAMLConfigurerBean();
+    }
+    
     @Configuration
     public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
-        protected void configure(HttpSecurity security) throws Exception
+        protected void configure(HttpSecurity http) throws Exception
         {
-         security.httpBasic().disable();
-         security.authorizeRequests().antMatchers("/").permitAll();
+        	http
+        		.httpBasic().and()
+        		.csrf()
+        		.disable()
+            .authorizeRequests()
+            .requestMatchers(saml().endpointsMatcher())
+            .permitAll();
+        		
         }
     }
     
@@ -69,10 +81,16 @@ public class ForumApplication extends org.springframework.boot.web.support.Sprin
             serviceProvider
                 .metadataGenerator()
                 .entityId("zfgc-sp")
+                .entityBaseURL("http://localhost:8080")
+                .requestSigned(false)
+                .metadataURL("/saml/metadata")
             .and()
                 .sso()
                 .defaultSuccessURL("/home")
+                .defaultFailureURL("/failTest")
                 .idpSelectionPageURL("/idpselection")
+                //.ssoProcessingURL("/forum/SSO")
+                
             .and()
                 .logout()
                 .defaultTargetURL("/")
@@ -80,15 +98,27 @@ public class ForumApplication extends org.springframework.boot.web.support.Sprin
                 .metadataManager()
                 .refreshCheckInterval(0)
                 .metadataTrustCheck(false)
+                //.localMetadataLocation("classpath:/sp-metadata.xml")
             .and()
                 .extendedMetadata()
-                .idpDiscoveryEnabled(true)
+               
+                //.signingKey("test")
+                //.encryptionKey("test")
+                //.idpDiscoveryEnabled(true)
+                
             .and()
-                .keyManager();
+                .keyManager()
                 //.privateKeyDERLocation("classpath:/localhost.key.der")
                 //.publicKeyPEMLocation("classpath:/localhost.cert");
+            .and()
+	            .samlContextProviderLb()
+	            .scheme("http")
+	            .contextPath("/")
+	            .serverName("localhost")
+	            .serverPort(8080)
+	            .includeServerPortInRequestURL(true);
 
         }
-}
+    }
     
 }
