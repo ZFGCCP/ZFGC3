@@ -6,9 +6,11 @@ import java.util.List;
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.opensaml.saml2.metadata.provider.MetadataFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -20,14 +22,16 @@ import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLS
 import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBean;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
+import com.zfgc.config.ZfgcSamlConfig;
 
 @Configuration
 @ComponentScan
 @SpringBootApplication
 @EnableSAMLSSO
 @MapperScan("com.zfgc.mappers")
+@EnableConfigurationProperties(ZfgcSamlConfig.class)
 public class ForumApplication extends SpringBootServletInitializer {
-
+	
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args);
     }
@@ -65,9 +69,11 @@ public class ForumApplication extends SpringBootServletInitializer {
         		.httpBasic().and()
         		.csrf()
         		.disable()
-            .authorizeRequests()
-            .requestMatchers(saml().endpointsMatcher())
-            .permitAll();
+        		.authorizeRequests().anyRequest().permitAll();
+        		//.authenticated().anyRequest().permitAll();
+            //.authorizeRequests()
+            //.requestMatchers(saml().endpointsMatcher())
+            //.permitAll();
         		
         }
     }
@@ -75,20 +81,25 @@ public class ForumApplication extends SpringBootServletInitializer {
     @Configuration
     public static class MyServiceProviderConfig extends ServiceProviderConfigurerAdapter {
 
+    	@Autowired
+    	public ZfgcSamlConfig zfgcSamlConfig;
+    	
         @Override
         public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
 
             serviceProvider
                 .metadataGenerator()
-                .entityId("zfgc-sp")
-                .entityBaseURL("http://localhost:8080")
+                .entityId(zfgcSamlConfig.getEntityId())
+                .entityBaseURL(zfgcSamlConfig.getEntityBaseUrl())
                 .requestSigned(false)
-                .metadataURL("/saml/metadata")
+                .metadataURL(zfgcSamlConfig.getMetadataUrl())
+                
             .and()
                 .sso()
-                .defaultSuccessURL("/home")
-                .defaultFailureURL("/failTest")
-                .idpSelectionPageURL("/idpselection")
+                .defaultSuccessURL(zfgcSamlConfig.getDefaultSuccessUrl())
+                .defaultFailureURL(zfgcSamlConfig.getDefaultFailureUrl())
+                .idpSelectionPageURL(zfgcSamlConfig.getIdpSelectionPageUrl())
+                
                 //.ssoProcessingURL("/forum/SSO")
                 
             .and()
@@ -98,6 +109,7 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .metadataManager()
                 .refreshCheckInterval(0)
                 .metadataTrustCheck(false)
+                
                 //.localMetadataLocation("classpath:/sp-metadata.xml")
             .and()
                 .extendedMetadata()
@@ -112,10 +124,10 @@ public class ForumApplication extends SpringBootServletInitializer {
                 //.publicKeyPEMLocation("classpath:/localhost.cert");
             .and()
 	            .samlContextProviderLb()
-	            .scheme("http")
-	            .contextPath("/")
-	            .serverName("localhost")
-	            .serverPort(8080)
+	            .scheme(zfgcSamlConfig.getScheme())
+	            .contextPath(zfgcSamlConfig.getContextPath())
+	            .serverName(zfgcSamlConfig.getServerName())
+	            .serverPort(zfgcSamlConfig.getServerPort())
 	            .includeServerPortInRequestURL(true);
 
         }

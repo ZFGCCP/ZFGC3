@@ -1,7 +1,7 @@
 angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'datePicker','ui.bootstrap','ngAnimate','ngSanitize','zfgc.modules'
         ])
-	.config(['$resourceProvider','$urlRouterProvider','$httpProvider',
-	         function($resourceProvider,$urlRouterProvider,$httpProvider) {
+	.config(['$resourceProvider','$urlRouterProvider','$httpProvider','$locationProvider',
+	         function($resourceProvider,$urlRouterProvider,$httpProvider,$locationProvider) {
 		//Don't strip trailing slashes from calculated URLs
 		$resourceProvider.defaults.stripTrailingSlashes = false;
 		//Set default route

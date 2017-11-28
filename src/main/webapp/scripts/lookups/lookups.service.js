@@ -4,7 +4,7 @@
 	function LookupsService($resource){
 		var LookupsService = {};
 		
-		LookupsService.resource = $resource('/lookups/:lkupName', {lkupName:'@lkupName'},
+		LookupsService.resource = $resource('/forum/lookups/:lkupName', {lkupName:'@lkupName'},
 		{
 			getLkup : {
 				url : '/lookups/:lkupName',
