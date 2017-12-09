@@ -7,7 +7,8 @@ angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'd
 		//Set default route
 		$urlRouterProvider.otherwise('/notFound');
 		
-		
+		//this is required for SAML to redirect properly
+		$locationProvider.html5Mode(true);
 		//interceptor
 		$httpProvider.interceptors.push('InterceptorService');
 		

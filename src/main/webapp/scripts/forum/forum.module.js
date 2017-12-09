@@ -3,7 +3,7 @@ angular.module('zfgc.forum',['zfgc.config'])
 		var basePath = config.scriptsPath+'forum';
 		$stateProvider
 		.state('forum', {
-			url: '/forum/index',
+			url: '/bbs/index',
 			templateUrl: basePath + '/forum.html'
 		});
 }]);

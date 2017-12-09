@@ -15,7 +15,9 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
@@ -60,16 +62,26 @@ public class ForumApplication extends SpringBootServletInitializer {
     }
     
     @Configuration
+    @Order(102)
+    public class testConfig extends WebSecurityConfigurerAdapter{
+    	@Override
+    	public void configure(WebSecurity web) throws Exception {
+    	    web.ignoring().antMatchers("/#/forum/index");
+    	}
+    }
+    
+    @Order(101)
+    @Configuration
     public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception
         {
-        	http
+        	/*http
         		.httpBasic().and()
         		.csrf()
         		.disable()
-        		.authorizeRequests().anyRequest().permitAll();
+        		.authorizeRequests().antMatchers().permitAll();*/
         		//.authenticated().anyRequest().permitAll();
             //.authorizeRequests()
             //.requestMatchers(saml().endpointsMatcher())
