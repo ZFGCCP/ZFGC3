@@ -12,3 +12,8 @@ Gulp is used to compile sass and inject CSS/JS files into the index.html.
 
 To run tests, use:  
 `gulp test`
+
+## Navigating the app
+Use the following URLs to begin navigating:
+`http://localhost:8080/forum/bbs/index - forum index`
+`http://localhost:8080/forum/userprofile?userId=81 - access account with ID 81 (MG-Zero)`

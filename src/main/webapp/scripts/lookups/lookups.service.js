@@ -7,11 +7,11 @@
 		LookupsService.resource = $resource('/forum/lookups/:lkupName', {lkupName:'@lkupName'},
 		{
 			getLkup : {
-				url : '/forum/lookups/:lkupName',
+				url : '/lookups/:lkupName',
 				method: 'GET'
 			},
 			getLkupList : {
-				url : '/forum/lookups/list',
+				url : '/lookups/list',
 				method: 'POST'
 			}
 		});

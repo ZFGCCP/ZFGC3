@@ -8,7 +8,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
+import com.github.ulisesbocchio.spring.boot.security.saml.annotation.SAMLUser;
+import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.Forum;
 import com.zfgc.model.forum.ForumIndex;
@@ -24,6 +27,11 @@ public class ForumController extends BaseController {
 	
 	@Autowired
 	BbcodeService bbCodeService;
+	
+	/*@RequestMapping(value="/zfgc-sp/saml/saml/SSO", method=RequestMethod.GET,produces="application/json")
+	public ResponseEntity home(@SAMLUser SAMLUserDetails user){
+		return null;
+	}*/
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity getForumIndex(){
