@@ -61,34 +61,32 @@ public class ForumApplication extends SpringBootServletInitializer {
         return new SAMLConfigurerBean();
     }
     
-    @Configuration
-    @Order(102)
+    /*@Configuration
+    //@Order(102)
     public class testConfig extends WebSecurityConfigurerAdapter{
     	@Override
     	public void configure(WebSecurity web) throws Exception {
-    	    web.ignoring().antMatchers("/#/forum/index");
+    		web.ignoring().antMatchers("/bower_components/**","/scripts/**");
     	}
     }
     
-    @Order(101)
-    @Configuration
+    //@Order(101)
+   @Configuration
     public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception
         {
-        	/*http
-        		.httpBasic().and()
-        		.csrf()
-        		.disable()
-        		.authorizeRequests().antMatchers().permitAll();*/
+        	http
+        		.antMatcher("/**").anonymous();
+        		
         		//.authenticated().anyRequest().permitAll();
             //.authorizeRequests()
             //.requestMatchers(saml().endpointsMatcher())
             //.permitAll();
         		
         }
-    }
+    }*/
     
     @Configuration
     public static class MyServiceProviderConfig extends ServiceProviderConfigurerAdapter {
