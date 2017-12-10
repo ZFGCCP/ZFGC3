@@ -997,4 +997,11 @@
       CUSTOM_TITLE = #{customTitle,jdbcType=VARCHAR}
     where USERS_ID = #{usersId,jdbcType=INTEGER}
   </update>
+  
+  <!-- custom -->
+  <update id="createSha2HashForUser" parameterType="com.zfgc.dbobj.UsersDbObj">
+  	UPDATE users
+  	SET PASSWORD = SHA2(CONCAT(#{passSalt,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}),256)
+  	WHERE USERS_ID = #{usersId,jdbcType=INTEGER};
+  </update>
 </mapper>

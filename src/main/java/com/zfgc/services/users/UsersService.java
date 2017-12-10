@@ -65,7 +65,7 @@ public class UsersService extends AbstractService {
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
 			
 			try{
-				user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
+				//user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
 			}
 			catch(Exception ex){
 				ex.printStackTrace();

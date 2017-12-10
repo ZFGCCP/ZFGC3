@@ -82,6 +82,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
 		try{
 			usersDbObjMapper.insertSelective(usersDbObj);
+			usersDbObjMapper.createSha2HashForUser(usersDbObj);
 		}
 		catch(Exception ex){
 			LOGGER.error("Error creating user " + usersDbObj.getLoginName());
