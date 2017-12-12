@@ -3,18 +3,22 @@ package com.zfgc.model.users;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
@@ -24,19 +28,7 @@ import com.zfgc.model.users.profile.PersonalMessagingSettings;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
-public class Users extends BaseZfgcModel {
-	@Autowired
-	@JsonIgnore
-	private HttpServletRequest request;
-	
-	@Autowired
-	@JsonIgnore
-	private UsersDataProvider usersDataProvider;
-	
-	@Autowired
-	@JsonIgnore
-	private IpDataProvider ipDataProvider;
-	
+public class Users extends BaseZfgcModel implements UserDetails {
 	private String password;
 	private Integer ttlLogin;
 	
@@ -53,7 +45,7 @@ public class Users extends BaseZfgcModel {
 	private Integer timeOffset;
 	private String location;
 	private Boolean agreeToTermsFlag = false;
-	private List<Integer> memberGroups = new ArrayList<>();
+	private Map<Integer,String> memberGroups = new HashMap<>();
 	private Integer primaryMemberGroupId = 0;
 	private String personalText;
 	private String customTitle;
@@ -75,6 +67,7 @@ public class Users extends BaseZfgcModel {
 	private Avatar avatar;
 	
 	private String authToken;
+	private Boolean fromDb = true;
 	
 	@JsonIgnore
 	private String timeOffsetLkup;
@@ -90,10 +83,6 @@ public class Users extends BaseZfgcModel {
 		this.password = password;
 	}
 	public Integer getUsersId() {
-		if(usersId == null){
-			return usersDataProvider.getUsersIdByToken(request.getHeader("authorization"));
-		}
-		
 		return usersId;
 	}
 	public void setUsersId(Integer usersId) {
@@ -106,9 +95,6 @@ public class Users extends BaseZfgcModel {
 		this.displayName = displayName;
 	}
 	public String getLoginName() {
-		if(request != null && request.getHeader("authorization") != null && (loginName == null || loginName.equals(""))){
-			return usersDataProvider.getLoginNameByToken(request.getHeader("authorization"));
-		}
 		return loginName;
 	}
 	public void setLoginName(String loginName) {
@@ -128,19 +114,12 @@ public class Users extends BaseZfgcModel {
 		this.dateRegistered = dateRegistered;
 	}
 	public Boolean getActiveFlag() {
-		if(request != null && request.getHeader("authorization") != null && activeFlag == null){
-			return usersDataProvider.getActiveFlagByToken(request.getHeader("authorization"));
-		}
-		
 		return activeFlag;
 	}
 	public void setActiveFlag(Boolean isActiveFlag) {
 		this.activeFlag = isActiveFlag;
 	}
 	public IpAddress getPrimaryIpAddress() {
-		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
-			return ipDataProvider.getPrimaryIpByToken(request.getHeader("authorization"));
-		}
 		return primaryIpAddress;
 	}
 	public void setPrimaryIpAddress(IpAddress primaryIpAddress) {
@@ -281,21 +260,18 @@ public class Users extends BaseZfgcModel {
 	public void setTimeOffsetLkup(String timeOffsetLkup) {
 		this.timeOffsetLkup = timeOffsetLkup;
 	}
-	public List<Integer> getMemberGroups() {
-		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
-			return usersDataProvider.getMemberGroupsByToken(request.getHeader("authorization"));
-		}
-		
-		return memberGroups;
+	
+	public List<String> getMemberGroupNames(){
+		return new ArrayList<String>(memberGroups.values());
 	}
-	public void setMemberGroups(List<Integer> memberGroups) {
+	
+	public List<Integer> getMemberGroups() {
+		return new ArrayList<Integer>(memberGroups.keySet());
+	}
+	public void setMemberGroups(Map<Integer,String> memberGroups) {
 		this.memberGroups = memberGroups;
 	}
 	public Integer getPrimaryMemberGroupId() {
-		if(request != null && request.getHeader("authorization") != null && primaryIpAddress == null){
-			return usersDataProvider.getPrimaryMemberGroupByToken(request.getHeader("authorization"));
-		}
-		
 		return primaryMemberGroupId;
 	}
 	public void setPrimaryMemberGroupId(Integer primaryMemberGroupId) {
@@ -388,5 +364,47 @@ public class Users extends BaseZfgcModel {
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+		List<String> roles = this.getMemberGroupNames();
+		
+		for(String role : roles){
+			authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
+		}
+		return authorities;
+		//return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
+	}
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	public Boolean getFromDb() {
+		return fromDb;
+	}
+	public void setFromDb(Boolean fromDb) {
+		this.fromDb = fromDb;
 	}
 }

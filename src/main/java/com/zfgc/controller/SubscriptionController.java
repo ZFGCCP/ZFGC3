@@ -30,7 +30,7 @@ public class SubscriptionController extends BaseController{
 		ThreadSubscriptionWrapper subs = null;
 		
 		try{
-			subs = subscriptionService.getThreadSubscriptions(userId, pageNo, itemsPerPage, zfgcUser);
+			subs = subscriptionService.getThreadSubscriptions(userId, pageNo, itemsPerPage, zfgcUser());
 		}
 		catch(ZfgcNotFoundException ex){
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new String[]{"The requested resource could not be found"});

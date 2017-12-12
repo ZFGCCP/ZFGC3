@@ -1,8 +1,13 @@
 package com.zfgc.controller;
 
+import java.security.Principal;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +20,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.Forum;
 import com.zfgc.model.forum.ForumIndex;
+import com.zfgc.model.users.Users;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.forum.ForumService;
 
@@ -35,8 +41,7 @@ public class ForumController extends BaseController {
 	
 	@RequestMapping(value="/index", method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity getForumIndex(){
-		ForumIndex forumIndex = forumService.getForumIndex(zfgcUser);
-		
+		ForumIndex forumIndex = forumService.getForumIndex(zfgcUser());
 		if(forumIndex == null){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
@@ -48,7 +53,7 @@ public class ForumController extends BaseController {
 			                       @RequestParam("itemsPerPage") Integer itemsPerPage, 
 			                       @RequestParam("pageNo") Integer pageNo){
 		try {
-			Forum forum = forumService.getForum(forumId, itemsPerPage, pageNo,zfgcUser);
+			Forum forum = forumService.getForum(forumId, itemsPerPage, pageNo,zfgcUser());
 			
 			if(forum == null){
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});

@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
-import org.opensaml.saml2.metadata.provider.MetadataFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -15,16 +14,13 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.annotation.Order;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
 import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBean;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
 import com.zfgc.config.ZfgcSamlConfig;
+import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 
 @Configuration
 @ComponentScan
@@ -87,7 +83,7 @@ public class ForumApplication extends SpringBootServletInitializer {
         		
         }
     }*/
-    
+
     @Configuration
     public static class MyServiceProviderConfig extends ServiceProviderConfigurerAdapter {
 
@@ -98,6 +94,9 @@ public class ForumApplication extends SpringBootServletInitializer {
         public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
 
             serviceProvider
+            .authenticationProvider()
+            	.userDetailsService(new SamlUsersDetailsServiceImpl())
+            .and()
                 .metadataGenerator()
                 .entityId(zfgcSamlConfig.getEntityId())
                 .entityBaseURL(zfgcSamlConfig.getEntityBaseUrl())
