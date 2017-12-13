@@ -74,4 +74,8 @@ public interface UsersDbObjMapper {
 	 * @mbggenerated  Sat Feb 11 19:15:26 EST 2017
 	 */
 	int updateByPrimaryKey(UsersDbObj record);
+	
+	//custom
+	void createSha2HashForUser(UsersDbObj record);
+	List<String> getRoleNames(Integer usersId);
 }

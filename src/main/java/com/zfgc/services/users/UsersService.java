@@ -1,6 +1,8 @@
 package com.zfgc.services.users;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,7 +67,7 @@ public class UsersService extends AbstractService {
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
 			
 			try{
-				user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
+				//user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
 			}
 			catch(Exception ex){
 				ex.printStackTrace();
@@ -216,5 +218,19 @@ public class UsersService extends AbstractService {
 
 	private void linkUserToIp(Users user, IpAddress ipAddress, Boolean isPrimary) throws Exception{
 		usersDataProvider.linkUserToIp(user,ipAddress, isPrimary);
+	}
+	
+	public Users getLoggedInUser(Users user){
+		if(user.getUsersId() == null){
+			Users guest = new Users();
+			user.setDisplayName("Guest");
+			Map<Integer, String> role = new HashMap<>();
+			
+			role.put(0,"Guest");
+			
+			return guest;
+		}
+		
+		return user;
 	}
 }

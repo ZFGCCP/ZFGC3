@@ -159,6 +159,10 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return usersDao.getActiveFlagByToken(token);
 	}
 	
+	public List<String> getMemberGroupNames(Integer usersId){
+		return usersDao.getMemberGroups(usersId);
+	}
+	
 	public List<Integer> getMemberGroupsByToken(String token){
 		return usersDao.getMemberGroupsByToken(token);
 	}

@@ -34,7 +34,16 @@ class UsersController extends BaseController{
 	@Autowired
 	UserProfileService userProfileService;
 
-	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	@ResponseBody
+	@RequestMapping(value="/loggedInUser", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getCurrentlyLoggedInUser(){
+		Users user = usersService.getLoggedInUser(zfgcUser());
+		
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+	}
+	
+	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	
+	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
 		user = usersService.createNewUser(user, request);
@@ -87,7 +96,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){
 		try {
-			Users user = userProfileService.getProfile(userId, zfgcUser);
+			Users user = userProfileService.getProfile(userId, zfgcUser());
 			
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} 
@@ -103,7 +112,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity saveAccountSettings(@RequestBody Users accountSettings){
 		try {
-			userProfileService.saveAccountSettings(accountSettings,zfgcUser);
+			userProfileService.saveAccountSettings(accountSettings,zfgcUser());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -116,7 +125,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity saveForumProfile(@RequestBody Users forumProfile){
 		try {
-			userProfileService.saveForumProfile(forumProfile,zfgcUser);
+			userProfileService.saveForumProfile(forumProfile,zfgcUser());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -129,7 +138,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity saveNotificationSettings(@RequestBody Users notificationSettings){
 		try {
-			userProfileService.saveNotificationSettings(notificationSettings,zfgcUser);
+			userProfileService.saveNotificationSettings(notificationSettings,zfgcUser());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -142,7 +151,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity savePmSettings(@RequestBody Users pmSettings){
 		try {
-			userProfileService.savePmSettings(pmSettings,zfgcUser);
+			userProfileService.savePmSettings(pmSettings,zfgcUser());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -155,7 +164,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity saveBuddyListSettings(@RequestBody Users buddyList){
 		try {
-			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser);
+			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -167,7 +176,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getProfileNavigationTabs(@RequestParam Integer usersId){
-		List<NavTab> navTabs = userProfileService.getProfileNavTabs(zfgcUser, usersId);
+		List<NavTab> navTabs = userProfileService.getProfileNavTabs(zfgcUser(), usersId);
 		
 		if(navTabs == null){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");

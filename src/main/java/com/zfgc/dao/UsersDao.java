@@ -82,6 +82,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
 		try{
 			usersDbObjMapper.insertSelective(usersDbObj);
+			usersDbObjMapper.createSha2HashForUser(usersDbObj);
 		}
 		catch(Exception ex){
 			LOGGER.error("Error creating user " + usersDbObj.getLoginName());
@@ -401,6 +402,11 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 			LOGGER.error("Error getting primary member group Id for " + token);
 			return null;
 		}
+	}
+	
+	public List<String> getMemberGroups(Integer usersId){
+		List<String> groups = usersDbObjMapper.getRoleNames(usersId);
+		return groups;
 	}
 	
 	public List<Integer> getMemberGroupsByToken(String token){

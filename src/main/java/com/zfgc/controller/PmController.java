@@ -84,7 +84,7 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/outbox", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity viewOutbox(@RequestBody TwoFactorKey aesKey){
 		try {
-			PmBox outbox = pmService.getOutbox(aesKey, zfgcUser);
+			PmBox outbox = pmService.getOutbox(aesKey, zfgcUser());
 			
 			if(outbox == null){
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -99,7 +99,7 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/inbox", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity viewInbox(@RequestBody TwoFactorKey aesKey){
 		try {
-			PmBox inbox = pmService.getInbox(aesKey, zfgcUser);
+			PmBox inbox = pmService.getInbox(aesKey, zfgcUser());
 			
 			if(inbox == null){
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -114,7 +114,7 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity viewConvoBox(@RequestBody TwoFactorKey aesKey){
 		try{
-			List<PmConversationView> convos = pmService.getConversationBox(aesKey, zfgcUser);
+			List<PmConversationView> convos = pmService.getConversationBox(aesKey, zfgcUser());
 			
 			if(convos == null){
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
