@@ -34,7 +34,16 @@ class UsersController extends BaseController{
 	@Autowired
 	UserProfileService userProfileService;
 
-	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	@ResponseBody
+	@RequestMapping(value="/loggedInUser", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getCurrentlyLoggedInUser(){
+		Users user = usersService.getLoggedInUser(zfgcUser());
+		
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+	}
+	
+	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	
+	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
 		user = usersService.createNewUser(user, request);

@@ -39,7 +39,7 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 		String loginName = credential.getAttributeAsString("LOGIN_NAME");
 		String[] groupIds = credential.getAttributeAsStringArray("GROUP_IDS");
 		String[] groupNames = credential.getAttributeAsStringArray("GROUPS");
-		String activeFlag = credential.getAttributeAsString("ACTIVE_FLAG");
+		//String activeFlag = credential.getAttributeAsString("ACTIVE_FLAG");
 		String primaryIpAddress =  credential.getAttributeAsString("PRIMARY_IP_ADDRESS");
 		String primaryMemberGroupId =  credential.getAttributeAsString("PRIMARY_MEMBER_GROUP_ID");
 
@@ -51,7 +51,7 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         user.setDisplayName(displayName);
         user.setLoginName(displayName);
         user.setFromDb(false);
-        user.setActiveFlag(activeFlag != null && activeFlag.equals("1") ? true : false);
+        //user.setActiveFlag(activeFlag != null && activeFlag.equals("1") ? true : false);
         user.setPrimaryIpAddress(ip);
         user.setPrimaryMemberGroupId(Integer.parseInt(primaryMemberGroupId));
         

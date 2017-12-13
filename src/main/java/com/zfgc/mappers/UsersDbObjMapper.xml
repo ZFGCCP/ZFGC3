@@ -1004,4 +1004,11 @@
   	SET PASSWORD = SHA2(CONCAT(#{passSalt,jdbcType=VARCHAR},#{password,jdbcType=VARCHAR}),256)
   	WHERE USERS_ID = #{usersId,jdbcType=INTEGER};
   </update>
+  
+  <select id="getRoleNames" parameterType="java.lang.Integer">
+  	SELECT G.GROUP_NAME
+  	FROM LKUP_MEMBER_GROUP G
+  	INNER JOIN BR_MEMBER_GROUP_USER U ON U.MEMBER_GROUP_ID = G.MEMBER_GROUP_ID
+  	WHERE U.USERS_ID = #{usersId,jdbcType=INTEGER}
+  </select>
 </mapper>

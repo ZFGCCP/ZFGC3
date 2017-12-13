@@ -14,6 +14,10 @@
 			         url: '/forum/users/profile/:userId',
 			         method: 'GET'
 			},
+			loggedInUser:{
+				url: '/forum/users/loggedInUser',
+				method: 'GET'
+			},
 			profileNavigation:{
 				url: '/forum/users/navigation',
 				method: 'GET',

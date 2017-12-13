@@ -404,6 +404,11 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		}
 	}
 	
+	public List<String> getMemberGroups(Integer usersId){
+		List<String> groups = usersDbObjMapper.getRoleNames(usersId);
+		return groups;
+	}
+	
 	public List<Integer> getMemberGroupsByToken(String token){
 		StringBuilder sql = new StringBuilder();
 		
