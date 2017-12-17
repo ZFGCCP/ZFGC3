@@ -45,6 +45,7 @@ public class NavTabDataProvider extends AbstractDataProvider {
 		
 		navTab.setNavTabId(navTabDbObj.getNavTabId());
 		navTab.setTitle(navTabDbObj.getTitle());
+		navTab.setAllowSelfFlag(navTabDbObj.getAllowSelfFlag());
 		
 		return navTab;
 	}
