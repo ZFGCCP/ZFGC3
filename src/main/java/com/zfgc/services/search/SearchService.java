@@ -16,8 +16,8 @@ public class SearchService extends AbstractService{
 	@Autowired
 	UsersDataProvider usersDataProvider;
 	
-	public List<UserSearch> simpleUserSearch(String queryString){
-		List<Users> result = usersDataProvider.simpleUserSearch(queryString);
+	public List<UserSearch> simpleUserSearch(String queryString, Integer start, Integer length){
+		List<Users> result = usersDataProvider.simpleUserSearch(queryString, start, length);
 		List<UserSearch> searchResult = new ArrayList<>();
 		
 		for(Users user : result){

@@ -1,6 +1,8 @@
 package com.zfgc.model.pm;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.zfgc.model.BaseZfgcModel;
 
@@ -15,6 +17,8 @@ public class PersonalMessage extends BaseZfgcModel {
     private Boolean readFlag = false;
     private Boolean sendCopyFlag = false;
     private Integer pmConversationId;
+    
+    private List<Integer> receivers = new ArrayList<>();
 	
 	public Integer getPersonalMessageId() {
 		return personalMessageId;
@@ -109,6 +113,14 @@ public class PersonalMessage extends BaseZfgcModel {
 
 	public void setPmConversationId(Integer pmConversationId) {
 		this.pmConversationId = pmConversationId;
+	}
+
+	public List<Integer> getReceivers() {
+		return receivers;
+	}
+
+	public void setReceivers(List<Integer> receivers) {
+		this.receivers = receivers;
 	}
 
 }

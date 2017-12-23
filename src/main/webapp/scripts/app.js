@@ -1,4 +1,4 @@
-angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'datePicker','ui.bootstrap','ngAnimate','ngSanitize','zfgc.modules'
+angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'datePicker','ui.bootstrap','ngAnimate','ngSanitize','infinite-scroll','zfgc.modules'
         ])
 	.config(['$resourceProvider','$urlRouterProvider','$httpProvider','$locationProvider',
 	         function($resourceProvider,$urlRouterProvider,$httpProvider,$locationProvider) {

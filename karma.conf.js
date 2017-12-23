@@ -35,6 +35,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/angular-sanitize/angular-sanitize.js",
 	    
+	"./src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js",
+	    
 	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
@@ -56,6 +58,10 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
+	    
+	"./src/main/webapp/scripts/pm/pm.module.js",
+	    
+	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
@@ -88,6 +94,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
 	"./src/main/webapp/scripts/forum/forum.html",
+	    
+	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    

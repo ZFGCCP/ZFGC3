@@ -23,8 +23,8 @@ public class SearchController extends BaseController{
 	
 	@RequestMapping(value="/simpleUserSearch", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public ResponseEntity doSimpleUserSearch(@RequestParam("query") String queryString){
-		List<UserSearch> results = searchService.simpleUserSearch(queryString);
+	public ResponseEntity doSimpleUserSearch(@RequestParam("query") String queryString, @RequestParam("start") Integer start, @RequestParam("length") Integer length){
+		List<UserSearch> results = searchService.simpleUserSearch(queryString, start, length);
 		
 		if(results == null){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});

@@ -179,15 +179,16 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return usersDao.getPrimaryMemberGroupIdByToken(token);
 	}
 	
-	public List<Users> simpleUserSearch(String displayNameQuery){
+	public List<Users> simpleUserSearch(String displayNameQuery, Integer start, Integer length){
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andDisplayNameLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true);
-		ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%"));
+		ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true));
 		
 		List<UsersDbObj> db = usersDao.get(ex);
 		List<Users> result = new ArrayList<>();
 		
-		for(UsersDbObj user : db){
+		for(int i = start; i < start + length; i++){
+			UsersDbObj user = db.get(i);
 			result.add(mapper.map(user, Users.class));
 		}
 		
