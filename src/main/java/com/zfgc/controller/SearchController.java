@@ -21,7 +21,7 @@ public class SearchController extends BaseController{
 	@Autowired
 	SearchService searchService;
 	
-	@RequestMapping(value="/simpleUserSearch", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/simpleUserSearch", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public ResponseEntity doSimpleUserSearch(@RequestParam("query") String queryString, @RequestParam("start") Integer start, @RequestParam("length") Integer length){
 		List<UserSearch> results = searchService.simpleUserSearch(queryString, start, length);
