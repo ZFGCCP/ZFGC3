@@ -18,5 +18,6 @@ angular.module('zfgc.modules', [
     'zfgc.users',
     'zfgc.forum',
     'zfgc.error',
-    'zfgc.notifications'
+    'zfgc.notifications',
+    'zfgc.pm'
 ]);

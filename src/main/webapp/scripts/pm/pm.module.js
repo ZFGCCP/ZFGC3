@@ -1,9 +1,9 @@
 angular.module('zfgc.pm',['zfgc.config'])
 	.config(['$stateProvider','zfgc.config', function($stateProvider, config){
-		var basePath = config.scriptsPath+'users';
+		var basePath = config.scriptsPath+'pm';
 		$stateProvider
 			.state('sendPm', {
 				url: '/sendPm',
-				templateUrl: basePath + '/newPm.html'
+				templateUrl: basePath + '/sendPm.html'
 			});
 }]);
