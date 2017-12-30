@@ -36,6 +36,7 @@ public class SearchService extends AbstractService{
 		searchResult.setUsersId(user.getUsersId());
 		searchResult.setDisplayName(user.getDisplayName());
 		searchResult.setEmail(user.getEmailAddress());
+		searchResult.setAvatar(user.getAvatar());
 		
 		return searchResult;
 	}

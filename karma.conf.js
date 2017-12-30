@@ -77,11 +77,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
-	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
@@ -107,17 +107,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.html",
-	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
-	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
-	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
@@ -133,7 +129,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
 	    
-	"./src/main/webapp/scripts/users/user-profile/user-summary.html"
+	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html"
 	    
 	],
 

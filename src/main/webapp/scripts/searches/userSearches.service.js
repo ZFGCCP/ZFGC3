@@ -18,9 +18,7 @@
 				'length' : length
 			});
 			
-			results.$promise.then(function(data){
-				return data;
-			});
+			return results;
 		};
 		
 		return searchService;

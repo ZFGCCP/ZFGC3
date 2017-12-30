@@ -3,37 +3,49 @@
 		<div class="section-header">
 			<div class="section-title">Send Personal Message</div>
 		</div>
-	</div>
 	
-	<div class="section-body">
-		<div class="row">
-			<div class="col-xs-12">
-				
-			</div>
-		</div>
 	
-		<div class="row">
-			<div class="col-md-4 col-xs-12">
+		<div class="section-body">
+			<div class="row">
 				<div class="col-xs-12">
-					<form>
-						<label>Search for members</label>
-						<input type="text"
-							   class="form-control small-input"
-							   ng-model="vm.searchTerm"/>
-					</form>
+					
 				</div>
-				<div class="col-xs-12">
-					<div infinite-scroll="vm.searchForUsers(vm.searchTerm,vm.currentIndex,10)" infinite-scroll-distance='1' infinite-scroll-parent="true" style="height:100px;">
-						<div ng-repeat="user in vm.users" style="height:100px">
-							
+			</div>
+		
+			<form>
+				<div class="row">
+					<div class="col-md-4 col-xs-12">
+						<div class="col-xs-12">
+	
+								<label>Search for members</label>
+								<input type="text"
+									   ng-model="vm.searchTerm"
+									   class="form-control small-input"
+									   ng-change="vm.searchForUsers(vm.searchTerm,vm.currentIndex,10)"
+									   />
+						</div>
+						<div class="col-xs-12">
+							<div infinite-scroll="vm.searchForUsers(vm.searchTerm,vm.currentIndex,10)" 
+								 infinite-scroll-distance='1' 
+								 infinite-scroll-parent="true" 
+								 class="inf-scroll-wrapper">
+								<div ng-repeat="user in vm.users" class="inf-scroll-result">
+									<div class="user-search-wrapper">
+										<img ng-src="{{vm.getAvatarUrl(user)}}"/>
+										{{user.displayName}}
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					
+					<div class="col-md-8 col-xs-12">
+						<div class="message-text-area">
+							<textarea class="form-control" rows="10"/>
 						</div>
 					</div>
 				</div>
-			</div>
-			
-			<div class="col-md-8 col-xs-12">
-			
-			</div>
+			</form>
 		</div>
 	</div>
 </div>
