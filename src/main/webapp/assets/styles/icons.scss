@@ -1,0 +1,28 @@
+.user-name-text-icon {
+	padding: 5px;
+	background-color: #66889e;
+	width: 100px;
+	border: 1px solid;
+	border-radius: 5px;
+	cursor:pointer;
+	margin:10px;
+	display:inline-block;
+	
+	&:hover{
+		background-color:#a1bfd2
+	}
+	
+	span{
+		font-weight: bold;
+		color: #c2e2f7;
+		
+		&:hover{
+			color:#FFF;
+		}
+	}
+	
+}
+
+.send-pm-icon{
+	font-size:20px;
+}
