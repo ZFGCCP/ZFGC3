@@ -1,22 +1,31 @@
 (function(){
 	
-	function PmSendCtrl($scope, UserSearchService,UserService){
+	function PmSendCtrl($scope, $timeout, UserSearchService,UserService,PmService,LookupsService){
 		var vm =  this;
 		
+		vm.personalMessage = {"message":""};
 		vm.currentIndex = 0;
 		vm.length = 10;
+		vm.currentCursorPos = 0;
+		
+		vm.textArea = angular.element("textarea");
+		
+		vm.lookups = LookupsService.getLookupsList("BBCODE");
+		
+		vm.getLastCursorPos = function(){
+			PmService.getLastCursorPos(vm);
+		};
+		
+		vm.insertShortcut = function(shortcut){
+			PmService.insertShortcut(vm,shortcut);
+		};
 		
 		vm.searchForUsers = function(query, start, length){
-			if(!query || query === null || query === '' || length === 0 || query.length < 3){
-				vm.clearUserList();
-				return;
-			}
-			
-			var results = UserSearchService.performSearch(query, start, length);
-			
-			results.$promise.then(function(data){
-				vm.populateUserList(data);
-			});
+			PmService.searchForUsers(vm,query,start,length);
+		};
+		
+		vm.getConstants = function(){
+			return PmService.pmConstants;
 		};
 		
 		vm.init = function(){
@@ -28,14 +37,7 @@
 		};
 		
 		vm.populateUserList = function(results){
-			if(!vm.users || vm.users === null){
-				vm.clearUserList();
-			}
-			
-			if(results.length > 0){
-				Array.prototype.push.apply(vm.users,results);
-				vm.currentIndex = results.length >= 10 ? vm.users.length + 10 : vm.users.length;
-			}
+			PmService.populateUserList(vm,results);
 		};
 		
 		vm.clearUserList = function(){
@@ -49,6 +51,6 @@
 	}
 	
 	angular.module('zfgc.pm')
-		   .controller('PmSendCtrl',['$scope','UserSearchService','UserService',PmSendCtrl]);
+		   .controller('PmSendCtrl',['$scope','$timeout','UserSearchService','UserService','PmService','LookupsService',PmSendCtrl]);
 	
 })();

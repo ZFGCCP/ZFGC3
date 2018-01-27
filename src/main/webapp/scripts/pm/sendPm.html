@@ -1,7 +1,9 @@
 <div ng-controller="PmSendCtrl as vm">
 	<div class="section-container">
 		<div class="section-header">
-			<div class="section-title">Send Personal Message</div>
+			<div class="section-title-wrapper">
+				<div class="section-title">Send Personal Message</div>
+			</div>
 		</div>
 	
 	
@@ -40,8 +42,42 @@
 					</div>
 					
 					<div class="col-md-8 col-xs-12">
+						<span class="user-name-text-icon col-xs-6 col-sm-4 col-md-2">
+							<span>X</span> Test User
+						</span>
+					</div>
+					<div class="col-md-8 col-xs-12">
+						<label>Subject</label>
+						<input type="text" class="form-control small-input"/>
+					</div>
+					<div class="col-md-8 col-xs-12">
 						<div class="message-text-area">
-							<textarea class="form-control" rows="10"/>
+							<div class="col-xs-12">
+								<button class="btn btn-editor" title="Bold" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.bold)">B</button>
+								<button class="btn btn-editor" title="Italic" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.italic)">I</button>
+								<button class="btn btn-editor" title="Underline" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.underline)">U</button>
+								<button class="btn btn-editor" title="Strikethrough" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.strikethrough)">S</button>
+								<span></span>
+								<button class="btn btn-editor" title="Left Justify"><span class="fa fa-align-left"></span></button>
+								<button class="btn btn-editor" title="Center"><span class="fa fa-align-center"></span></button>
+								<button class="btn btn-editor" title="Right Justify"><span class="fa fa-align-right"></span></button>
+								<span></span>
+								<button class="btn btn-editor" title="Ordered List"><span class="fa fa-list-ol"></span></button>
+								<button class="btn btn-editor" title="Unordered List"><span class="fa fa-list-ul"></span></button>
+							</div>
+							<div class="col-xs-12">
+								<button class="btn btn-editor" title="Youtube Link"><span class="fa fa-youtube"></span></button>
+								<button class="btn btn-editor" title="Email"><span class="fa fa-envelope-o"></span></button>
+								<button class="btn btn-editor" title="Image"><span class="fa fa-file-picture-o"></span></button>
+								<button class="btn btn-editor" title="Spoiler"><span class="fa fa-exclamation-triangle"></span></button>
+								<button class="btn btn-editor" title="Hyperlink"><span class="fa fa-external-link"></span></button>
+								<button class="btn btn-editor" title="FTP Link"><span class="fa fa-file-o"></span></button>
+							</div>
+							<textarea ng-model="vm.personalMessage.message" 
+									  class="form-control" 
+									  rows="10"
+									  ng-focus="vm.getLastCursorPos()"
+									  ng-change="vm.getLastCursorPos()"/>
 						</div>
 					</div>
 				</div>
