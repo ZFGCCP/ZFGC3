@@ -42,8 +42,12 @@
 }
 
 form{
-	.btn-save{
-		background-color:$midnight-save-btn;
+	.btn{
+		background-color:$midnight-std-btn;
+		
+		.btn-save{
+			background-color:$midnight-save-btn !important;
+		}
 	}
 }
 
@@ -69,6 +73,10 @@ table{
 			background-color:$midnight-row-hover;
 		}
 	}
+}
+
+.inf-scroll-result:hover{
+		background-color:$midnight-row-hover;
 }
 
 ul.pagination{

@@ -34,9 +34,17 @@ public class PmController extends BaseController {
 	@Autowired
 	AuthenticationService authenticationService;
 	
+	
+	
 	@RequestMapping(value="/send", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity sendPm(@RequestBody PersonalMessage message){
-		PersonalMessage savedMessage = pmService.sendMessage(message.getSenderId(), message.getReceiverId(), message);
+		
+		try{
+			pmService.sendMessageInConversation(zfgcUser(), message.getReceivers(), message);
+		}
+		catch(ZfgcNotFoundException ex){
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
 		
 		return ResponseEntity.ok().build();
 	}

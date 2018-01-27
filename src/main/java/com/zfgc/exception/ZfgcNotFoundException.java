@@ -4,7 +4,9 @@ public class ZfgcNotFoundException extends Exception {
 	private static final long serialVersionUID = 1L;
 	private String resourceName;
 	
-	private ZfgcNotFoundException(){}
+	public ZfgcNotFoundException(){
+		this.resourceName = "The request resource";
+	}
 	public ZfgcNotFoundException(String resourceName){
 		this.resourceName = resourceName;
 	}

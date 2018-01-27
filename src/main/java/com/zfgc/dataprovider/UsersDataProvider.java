@@ -34,6 +34,9 @@ public class UsersDataProvider extends AbstractDataProvider {
 	@Autowired 
 	private AuthenticationDataProvider authenticationDataProvider;
 	
+	@Autowired
+	private AvatarDataProvider avatarDataProvider;
+	
 	Logger LOGGER = Logger.getLogger(UsersDataProvider.class);
 	
 	public Users getUserByToken(String token) throws Exception{
@@ -179,16 +182,27 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return usersDao.getPrimaryMemberGroupIdByToken(token);
 	}
 	
-	public List<Users> simpleUserSearch(String displayNameQuery){
+	public List<Users> simpleUserSearch(String displayNameQuery, Integer start, Integer length){
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andDisplayNameLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true);
-		ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%"));
+		ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true));
 		
 		List<UsersDbObj> db = usersDao.get(ex);
 		List<Users> result = new ArrayList<>();
 		
-		for(UsersDbObj user : db){
-			result.add(mapper.map(user, Users.class));
+		
+		if(start < db.size()){
+			for(int i = start; i < start + length && i < db.size(); i++){
+				UsersDbObj dbUser = db.get(i);	
+				
+				Users user = mapper.map(dbUser, Users.class);
+				try {
+					user.setAvatar(avatarDataProvider.getAvatar(dbUser.getAvatarId()));
+				} catch (ZfgcNotFoundException e) {
+					user.setAvatar(null);
+				}
+				result.add(user);
+			}
 		}
 		
 		return result;

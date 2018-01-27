@@ -18,15 +18,41 @@ form{
   		}
 	}
 	
-	.btn{
-		margin-bottom:10px;
-	}
-	
 	.xl-button-wrapper{
 	    width: 90%;
 	    padding-left: 10px;
 	    padding-right: 10px;
 	    margin: 0 auto;
 	    margin-bottom:10px;
+	}
+	
+	.message-text-area{
+		padding:10px;
+		
+		textarea{
+			resize:none;
+		}
+	}
+	
+	.inf-scroll-wrapper{
+		height:100px;
+		overflow-y:overlay;
+		
+		.inf-scroll-result{
+			height:100px;
+		}
+	}
+	
+	.inf-scroll-wrapper::-webkit-scrollbar-track{
+		border-radius:10px;
+	}
+	
+	.user-search-wrapper{
+		padding:10px;
+		
+		img{
+			border-radius:50%;
+			width:40px;
+		}
 	}
 }

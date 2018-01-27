@@ -1,6 +1,7 @@
 package com.zfgc.model.search;
 
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.users.EmailAddress;
 
 public class UserSearch extends BaseZfgcModel {
@@ -8,6 +9,7 @@ public class UserSearch extends BaseZfgcModel {
 	private Integer usersId;
 	private EmailAddress email = new EmailAddress();
 	private String displayName;
+	private Avatar avatar;
 	
 	public Integer getUsersId() {
 		return usersId;
@@ -43,6 +45,14 @@ public class UserSearch extends BaseZfgcModel {
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Avatar getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(Avatar avatar) {
+		this.avatar = avatar;
 	}
 
 }

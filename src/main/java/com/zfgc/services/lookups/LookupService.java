@@ -22,6 +22,7 @@ public class LookupService{
 	Logger LOGGER = Logger.getLogger(LookupDao.class);
 	private Map<String,List<Lookup>> lookups = new HashMap<>();
 	
+	public static final String BBCODE = "BBCODE";
 	public static final String TIMEZONE = "TIMEZONE";
 	public static final String MEMBER_GROUP = "MEMBER_GROUP";
 	public static final String LANGUAGE = "LANGUAGE";
@@ -31,6 +32,7 @@ public class LookupService{
 	public static final String AVATAR_GALLERY = "AVATAR_GALLERY";
 	public static final String AVATAR_TYPE = "AVATAR_TYPE";
 	public static final String GENDER = "GENDER";
+	
 	
 	@PostConstruct
 	public void loadLookups(){
@@ -46,6 +48,7 @@ public class LookupService{
 			lookups.put(AVATAR_GALLERY, lookupDao.getLookup(AVATAR_GALLERY));
 			lookups.put(AVATAR_TYPE, lookupDao.getLookup(AVATAR_TYPE));
 			lookups.put(GENDER, lookupDao.getLookup(GENDER));
+			lookups.put(BBCODE, lookupDao.getLookup(BBCODE));
 			LOGGER.info("Finished loading lookups.");
 		} catch (Exception e) {
 			LOGGER.error("Failed to load lookups due to exception.");

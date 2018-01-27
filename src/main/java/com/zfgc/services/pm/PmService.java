@@ -189,9 +189,18 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	//todo: make this take a user instead of a senderId
-	public PersonalMessage sendMessage(Integer senderId, Integer receiverId, PersonalMessage message){
-		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(senderId);
+	public void sendMessageInConversation(Users user, List<Integer> receivers, PersonalMessage message) throws ZfgcNotFoundException{
+		if(user.getUsersId() == null){
+			throw new ZfgcNotFoundException();
+		}
+		
+		for(Integer receiver : receivers){
+			sendMessage(user, receiver, message);
+		}
+	}
+	
+	public PersonalMessage sendMessage(Users user, Integer receiverId, PersonalMessage message){
+		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
 		
 		Key senderKey = null;
