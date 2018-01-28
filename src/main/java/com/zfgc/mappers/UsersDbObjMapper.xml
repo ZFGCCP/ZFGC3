@@ -1011,4 +1011,10 @@
   	INNER JOIN BR_MEMBER_GROUP_USER U ON U.MEMBER_GROUP_ID = G.MEMBER_GROUP_ID
   	WHERE U.USERS_ID = #{usersId,jdbcType=INTEGER}
   </select>
+  
+  <select id="getDisplayName" parameterType="java.lang.Integer">
+  	SELECT U.DISPLAY_NAME
+  	FROM USERS U
+  	WHERE U.USERS_ID = #{usersId,jdbcType=INTEGER}
+  </select>
 </mapper>

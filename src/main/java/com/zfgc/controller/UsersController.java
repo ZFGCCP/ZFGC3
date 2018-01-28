@@ -34,6 +34,14 @@ class UsersController extends BaseController{
 	@Autowired
 	UserProfileService userProfileService;
 
+	@RequestMapping(value="/displayName/{usersId}", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getUserDisplayName(@PathVariable("usersId") Integer usersId){
+		Users user = usersService.getDisplayName(usersId);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(user);
+	}
+	
 	@RequestMapping(value="/loggedInUser", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getCurrentlyLoggedInUser(){

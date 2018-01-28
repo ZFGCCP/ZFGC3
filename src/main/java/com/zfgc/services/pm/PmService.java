@@ -28,6 +28,7 @@ import com.zfgc.services.AbstractService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.sanitization.SanitizationService;
+import com.zfgc.services.users.UsersService;
 import com.zfgc.util.security.RsaKeyPair;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 
@@ -260,6 +261,4 @@ public class PmService extends AbstractService {
 		
 		pmKeyDataProvider.createPmKeyPair(pmKey);
 	}
-	
-	
 }

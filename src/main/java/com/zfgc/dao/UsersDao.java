@@ -445,6 +445,10 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		}
 	}
 
+	public String getDisplayName(Integer usersId){
+		return usersDbObjMapper.getDisplayName(usersId);
+	}
+	
 	@Override
 	public List<UsersDbObj> get(UsersDbObjExample ex) {
 		return usersDbObjMapper.selectByExample(ex);

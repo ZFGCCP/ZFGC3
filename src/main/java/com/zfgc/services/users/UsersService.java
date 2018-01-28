@@ -233,4 +233,11 @@ public class UsersService extends AbstractService {
 		
 		return user;
 	}
+	
+	public Users getDisplayName(Integer usersId){
+		Users user = new Users();
+		user.setUsersId(usersId);
+		user.setDisplayName(usersDataProvider.getDisplayName(usersId));
+		return user;
+	}
 }
