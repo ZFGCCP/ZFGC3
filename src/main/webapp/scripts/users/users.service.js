@@ -42,6 +42,10 @@
 			saveBuddyList:{
 				url:'/forum/users/profile/buddyList',
 				method:'POST'
+			},
+			getUserDisplayName : {
+				url : '/forum/users/displayName/:userId',
+				method : 'GET'
 			}
 		});
 		UserService.register = function(user){

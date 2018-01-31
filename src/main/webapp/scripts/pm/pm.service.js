@@ -1,15 +1,7 @@
 (function(){
 	
-	function PmService($timeout,$resource,UserSearchService){
+	function PmService($timeout,$resource,UserSearchService, UserService){
 		var pmService = {};
-		
-		pmService.resource = $resource("forum/pm",{usersId : '@usersId'},
-		{
-			getUserDisplayName : {
-				url : '/forum/users/displayName/:usersId',
-				method : 'GET'
-			}
-		});
 		
 		pmService.pmConstants = {
 			bbCodes : {
@@ -64,8 +56,8 @@
 			});
 		};
 		
-		pmService.getUserDisplayName = function(vm,usersId){
-			return pmService.resource.getUserDisplayName({'usersId' : usersId});
+		pmService.getUserDisplayName = function(usersId){
+			return UserService.resource.getUserDisplayName({'userId' : usersId});
 		};
 		
 		pmService.appendToSenderList = function(vm,user){
@@ -73,13 +65,13 @@
 				vm.sendersList = [];
 			}
 			
-			vm.sendersList.push(user);
+			vm.sendersList.push({'userId' : user.usersId, 'displayName' : user.displayName});
 		};
 		
 		return pmService;
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','UserSearchService',PmService]);
+		   .service('PmService',['$timeout','$resource','UserSearchService','UserService',PmService]);
 	
 })();

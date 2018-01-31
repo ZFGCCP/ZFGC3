@@ -42,8 +42,8 @@
 					</div>
 					
 					<div class="col-md-8 col-xs-12">
-						<span class="user-name-text-icon col-xs-6 col-sm-4 col-md-2">
-							<span>X</span> Test User
+						<span ng-repeat="user in vm.sendersList" class="user-name-text-icon col-xs-6 col-sm-4 col-md-2">
+							<span>X</span> <span>{{user.displayName}}</span>
 						</span>
 					</div>
 					<div class="col-md-8 col-xs-12">
