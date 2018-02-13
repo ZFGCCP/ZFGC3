@@ -36,6 +36,16 @@
 			PmService.populateUserList(vm,results);
 		};
 		
+		vm.addUserToList = function(usersId){
+			if(usersId !== null && PmService.checkIfUserInList(vm,usersId) === false){
+				vm.getUserDisplayName(usersId);
+			}
+		};
+		
+		vm.removeUserFromList = function(index){
+			PmService.removeUserFromList(vm,index);
+		};
+		
 		vm.clearUserList = function(){
 			vm.users = [];
 			vm.currentIndex = 0;
@@ -55,6 +65,7 @@
 		
 		vm.init = function(){
 			if($location.search().senderId){
+				vm.pm = PmService.getTemplate();
 				vm.getUserDisplayName($location.search().senderId);
 			}
 		};

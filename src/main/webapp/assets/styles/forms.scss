@@ -34,8 +34,12 @@ form{
 		}
 	}
 	
-	.inf-scroll-wrapper{
+	.inf-scroll-object{
 		height:100px;
+	}
+	
+	.inf-scroll-wrapper{
+		height:400px;
 		overflow-y:overlay;
 		
 		.inf-scroll-result{
@@ -43,8 +47,8 @@ form{
 		}
 	}
 	
-	.inf-scroll-wrapper::-webkit-scrollbar-track{
-		border-radius:10px;
+	.inf-scroll-wrapper::-webkit-scrollbar{
+
 	}
 	
 	.user-search-wrapper{

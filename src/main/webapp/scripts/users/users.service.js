@@ -113,16 +113,21 @@
 		};
 		
 		UserService.getAvatarUrl = function(avatar){
-			switch(avatar.avatarTypeId){
-				case 2:
-				case 4:
-					return "http://localhost:8080/forum/contentstream/avatar/" + avatar.avatarId;
-					break;
-					
-				case 3:
-					return avatar.fileName;
-					break;
+			if(avatar && avatar !== null && avatar.avatarTypeId && avatar.avatarTypeId !== null){
+			
+				switch(avatar.avatarTypeId){
+					case 2:
+					case 4:
+						return "http://localhost:8080/forum/contentstream/avatar/" + avatar.avatarId;
+						break;
+						
+					case 3:
+						return avatar.fileName;
+						break;
+				}
 			}
+			
+			return null;
 		};
 		
 		return UserService;

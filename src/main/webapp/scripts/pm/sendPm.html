@@ -32,9 +32,11 @@
 								 infinite-scroll-parent="true" 
 								 class="inf-scroll-wrapper">
 								<div ng-repeat="user in vm.users" class="inf-scroll-result">
-									<div class="user-search-wrapper">
-										<img ng-src="{{vm.getAvatarUrl(user)}}"/>
-										{{user.displayName}}
+									<div class="inf-scroll-object" ng-click="vm.addUserToList(user.usersId)">
+										<div class="user-search-wrapper">
+											<img ng-src="{{vm.getAvatarUrl(user)}}"/>
+											{{user.displayName}}
+										</div>
 									</div>
 								</div>
 							</div>
@@ -42,8 +44,8 @@
 					</div>
 					
 					<div class="col-md-8 col-xs-12">
-						<span ng-repeat="user in vm.sendersList" class="user-name-text-icon col-xs-6 col-sm-4 col-md-2">
-							<span>X</span> <span>{{user.displayName}}</span>
+						<span ng-repeat="($index, user) in vm.sendersList track by $index" class="user-name-text-icon col-xs-6 col-sm-4 col-md-2">
+							<span ng-click="vm.removeUserFromList($index)">X</span> <span>{{user.displayName}}</span>
 						</span>
 					</div>
 					<div class="col-md-8 col-xs-12">

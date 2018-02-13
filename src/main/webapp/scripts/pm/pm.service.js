@@ -3,6 +3,13 @@
 	function PmService($timeout,$resource,UserSearchService, UserService){
 		var pmService = {};
 		
+		pmService.resource = $resource('/forum/pm/template',{},{
+			template : {
+				url : '/forum/pm/template',
+				method : 'GET'
+			}
+		});
+		
 		pmService.pmConstants = {
 			bbCodes : {
 				bold : 1,
@@ -66,6 +73,32 @@
 			}
 			
 			vm.sendersList.push({'userId' : user.usersId, 'displayName' : user.displayName});
+		};
+		
+		pmService.getTemplate = function(){
+			return pmService.resource.template();
+		};
+		
+		pmService.checkIfUserInList = function(vm,usersId){
+			if(!vm || vm === null || !usersId || usersId === null){
+				return null;
+			}
+			
+			for(var i = 0; i < vm.sendersList.length; i++){
+				if(vm.sendersList[i].userId === usersId){
+					return true;
+				}
+			}
+			
+			return false;
+		};
+		
+		pmService.removeUserFromList = function(vm,index){
+			if(!vm || vm === null){
+				return null;
+			}
+			
+			vm.sendersList.splice(index,1);
 		};
 		
 		return pmService;

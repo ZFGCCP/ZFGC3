@@ -261,4 +261,8 @@ public class PmService extends AbstractService {
 		
 		pmKeyDataProvider.createPmKeyPair(pmKey);
 	}
+	
+	public PersonalMessage getPmTemplate(){
+		return new PersonalMessage();
+	}
 }
