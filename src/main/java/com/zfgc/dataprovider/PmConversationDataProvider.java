@@ -24,9 +24,10 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	@Autowired
 	PmConversationBoxViewDao pmConversationBoxViewDao;
 	
-	public PmConversation createConversation(){
+	public PmConversation createConversation(Integer initiator){
 		PmConversation obj = new PmConversation();
 		obj.setStartDt(ZfgcTimeUtils.getToday());
+		obj.setInitiatorId(initiator);
 		
 		pmConversationDao.updateOrInsert(obj);
 		

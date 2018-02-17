@@ -7,6 +7,10 @@
 			template : {
 				url : '/forum/pm/template',
 				method : 'GET'
+			},
+			send : {
+				url : '/forum/pm/send',
+				method : 'POST'
 			}
 		});
 		
@@ -68,11 +72,11 @@
 		};
 		
 		pmService.appendToSenderList = function(vm,user){
-			if(!vm.sendersList || vm.sendersList === null){
-				vm.sendersList = [];
+			if(!vm.personalMessage.receivers || vm.personalMessage.receivers === null){
+				vm.personalMessage.receivers = [];
 			}
 			
-			vm.sendersList.push({'userId' : user.usersId, 'displayName' : user.displayName});
+			vm.personalMessage.receivers.push({'usersId' : user.usersId, 'displayName' : user.displayName});
 		};
 		
 		pmService.getTemplate = function(){
@@ -85,7 +89,7 @@
 			}
 			
 			for(var i = 0; i < vm.sendersList.length; i++){
-				if(vm.sendersList[i].userId === usersId){
+				if(vm.personalMessage.receivers[i].userId === usersId){
 					return true;
 				}
 			}
@@ -98,7 +102,15 @@
 				return null;
 			}
 			
-			vm.sendersList.splice(index,1);
+			vm.personalMessage.receivers.splice(index,1);
+		};
+		
+		pmService.sendPm = function(vm){
+			var result = pmService.resource.send(vm.personalMessage);
+			
+			result.$promise.then(function(data){
+				//go to conversation
+			});
 		};
 		
 		return pmService;

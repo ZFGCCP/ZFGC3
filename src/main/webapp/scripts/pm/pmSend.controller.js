@@ -65,9 +65,17 @@
 		
 		vm.init = function(){
 			if($location.search().senderId){
-				vm.pm = PmService.getTemplate();
-				vm.getUserDisplayName($location.search().senderId);
+				vm.personalMessage = PmService.getTemplate();
+				
+				vm.personalMessage.$promise.then(function(data){
+					vm.getUserDisplayName($location.search().senderId);
+				});
+				
 			}
+		};
+		
+		vm.sendPm = function(){
+			PmService.sendPm(vm);
 		};
 		
 		vm.init();

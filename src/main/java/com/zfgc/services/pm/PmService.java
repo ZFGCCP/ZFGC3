@@ -11,6 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
@@ -190,16 +191,17 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public void sendMessageInConversation(Users user, List<Integer> receivers, PersonalMessage message) throws ZfgcNotFoundException{
+	public void sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException{
 		if(user.getUsersId() == null){
 			throw new ZfgcNotFoundException();
 		}
 		
-		for(Integer receiver : receivers){
-			sendMessage(user, receiver, message);
+		for(Users receiver : receivers){
+			sendMessage(user, receiver.getUsersId(), message);
 		}
 	}
 	
+	@Transactional
 	public PersonalMessage sendMessage(Users user, Integer receiverId, PersonalMessage message){
 		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
@@ -218,7 +220,7 @@ public class PmService extends AbstractService {
 		message.setSubject(sanitizationService.sanitizeMessage(message.getSubject()));
 		
 		if(message.getPmConversationId() == null){
-			PmConversation convo = pmConversationDataProvider.createConversation();
+			PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId());
 			message.setPmConversationId(convo.getPmConversationId());
 		}
 		

@@ -10,6 +10,7 @@ public class PmConversation extends BaseZfgcModel {
 	private Integer pmConversationId;
 	private Date startDt;
 	private List<PersonalMessage> messages;
+	private Integer initiatorId;
 	
 	public Integer getPmConversationId() {
 		return pmConversationId;
@@ -39,6 +40,14 @@ public class PmConversation extends BaseZfgcModel {
 
 	public void setMessages(List<PersonalMessage> messages) {
 		this.messages = messages;
+	}
+
+	public Integer getInitiatorId() {
+		return initiatorId;
+	}
+
+	public void setInitiatorId(Integer initiatorId) {
+		this.initiatorId = initiatorId;
 	}
 	
 }
