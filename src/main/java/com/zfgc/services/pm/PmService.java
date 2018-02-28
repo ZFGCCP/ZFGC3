@@ -191,6 +191,7 @@ public class PmService extends AbstractService {
 		}
 	}
 	
+	@Transactional
 	public void sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException{
 		if(user.getUsersId() == null){
 			throw new ZfgcNotFoundException();
@@ -218,6 +219,8 @@ public class PmService extends AbstractService {
 		
 		message.setMessage(sanitizationService.sanitizeMessage(message.getMessage()));
 		message.setSubject(sanitizationService.sanitizeMessage(message.getSubject()));
+		message.setSenderId(user.getUsersId());
+		message.setReceiverId(receiverId);
 		
 		if(message.getPmConversationId() == null){
 			PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId());
