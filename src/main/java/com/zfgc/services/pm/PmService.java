@@ -11,6 +11,7 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
@@ -28,6 +29,7 @@ import com.zfgc.services.AbstractService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.sanitization.SanitizationService;
+import com.zfgc.services.users.UsersService;
 import com.zfgc.util.security.RsaKeyPair;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 
@@ -189,16 +191,18 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public void sendMessageInConversation(Users user, List<Integer> receivers, PersonalMessage message) throws ZfgcNotFoundException{
+	@Transactional
+	public void sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException{
 		if(user.getUsersId() == null){
 			throw new ZfgcNotFoundException();
 		}
 		
-		for(Integer receiver : receivers){
-			sendMessage(user, receiver, message);
+		for(Users receiver : receivers){
+			sendMessage(user, receiver.getUsersId(), message);
 		}
 	}
 	
+	@Transactional
 	public PersonalMessage sendMessage(Users user, Integer receiverId, PersonalMessage message){
 		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
@@ -215,9 +219,11 @@ public class PmService extends AbstractService {
 		
 		message.setMessage(sanitizationService.sanitizeMessage(message.getMessage()));
 		message.setSubject(sanitizationService.sanitizeMessage(message.getSubject()));
+		message.setSenderId(user.getUsersId());
+		message.setReceiverId(receiverId);
 		
 		if(message.getPmConversationId() == null){
-			PmConversation convo = pmConversationDataProvider.createConversation();
+			PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId());
 			message.setPmConversationId(convo.getPmConversationId());
 		}
 		
@@ -261,5 +267,7 @@ public class PmService extends AbstractService {
 		pmKeyDataProvider.createPmKeyPair(pmKey);
 	}
 	
-	
+	public PersonalMessage getPmTemplate(){
+		return new PersonalMessage();
+	}
 }

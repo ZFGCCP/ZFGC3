@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
@@ -35,6 +36,11 @@ public class PmController extends BaseController {
 	AuthenticationService authenticationService;
 	
 	
+	@RequestMapping(value="/template", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getPmTemplate(){
+		return ResponseEntity.status(HttpStatus.OK).body(pmService.getPmTemplate());
+	}
 	
 	@RequestMapping(value="/send", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity sendPm(@RequestBody PersonalMessage message){

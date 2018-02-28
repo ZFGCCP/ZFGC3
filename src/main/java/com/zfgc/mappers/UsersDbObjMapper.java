@@ -78,4 +78,5 @@ public interface UsersDbObjMapper {
 	//custom
 	void createSha2HashForUser(UsersDbObj record);
 	List<String> getRoleNames(Integer usersId);
+	String getDisplayName(Integer usersId);
 }

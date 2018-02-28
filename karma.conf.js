@@ -57,11 +57,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
+	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
-	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    

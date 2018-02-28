@@ -207,4 +207,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 		
 		return result;
 	}
+	
+	public String getDisplayName(Integer usersId){
+		return usersDao.getDisplayName(usersId);
+	}
 }

@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.users.Users;
 
 public class PersonalMessage extends BaseZfgcModel {
 
@@ -18,7 +19,7 @@ public class PersonalMessage extends BaseZfgcModel {
     private Boolean sendCopyFlag = false;
     private Integer pmConversationId;
     
-    private List<Integer> receivers = new ArrayList<>();
+    private List<Users> receivers = new ArrayList<>();
 	
 	public Integer getPersonalMessageId() {
 		return personalMessageId;
@@ -115,11 +116,11 @@ public class PersonalMessage extends BaseZfgcModel {
 		this.pmConversationId = pmConversationId;
 	}
 
-	public List<Integer> getReceivers() {
+	public List<Users> getReceivers() {
 		return receivers;
 	}
 
-	public void setReceivers(List<Integer> receivers) {
+	public void setReceivers(List<Users> receivers) {
 		this.receivers = receivers;
 	}
 

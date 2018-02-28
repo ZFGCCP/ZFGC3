@@ -1,0 +1,12 @@
+CREATE TABLE IF NOT EXISTS `LKUP_BBCODE` (
+  `LKUP_BBCODE_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `BB_CODE` varchar(10) NOT NULL,
+  `BB_VALUE` varchar(50) NOT NULL,
+  PRIMARY KEY (`LKUP_BBCODE_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+INSERT INTO `LKUP_BBCODE` (`LKUP_BBCODE_ID`, `BB_CODE`, `BB_VALUE`) VALUES
+	(1, 'B', '[b][/b]'),
+	(2, 'I', '[i][/i]'),
+	(3, 'U', '[u][/u]'),
+	(4, 'S', '[s][/s]');

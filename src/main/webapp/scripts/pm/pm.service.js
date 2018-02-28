@@ -1,7 +1,18 @@
 (function(){
 	
-	function PmService($timeout,UserSearchService){
+	function PmService($timeout,$resource,UserSearchService, UserService){
 		var pmService = {};
+		
+		pmService.resource = $resource('/forum/pm/template',{},{
+			template : {
+				url : '/forum/pm/template',
+				method : 'GET'
+			},
+			send : {
+				url : '/forum/pm/send',
+				method : 'POST'
+			}
+		});
 		
 		pmService.pmConstants = {
 			bbCodes : {
@@ -12,7 +23,7 @@
 			}	
 		};
 		
-		pmService.populateUserList = function(results){
+		pmService.populateUserList = function(vm,results){
 			if(!vm.users || vm.users === null){
 				vm.clearUserList();
 			}
@@ -56,10 +67,56 @@
 			});
 		};
 		
+		pmService.getUserDisplayName = function(usersId){
+			return UserService.resource.getUserDisplayName({'userId' : usersId});
+		};
+		
+		pmService.appendToSenderList = function(vm,user){
+			if(!vm.personalMessage.receivers || vm.personalMessage.receivers === null){
+				vm.personalMessage.receivers = [];
+			}
+			
+			vm.personalMessage.receivers.push({'usersId' : user.usersId, 'displayName' : user.displayName});
+		};
+		
+		pmService.getTemplate = function(){
+			return pmService.resource.template();
+		};
+		
+		pmService.checkIfUserInList = function(vm,usersId){
+			if(!vm || vm === null || !usersId || usersId === null){
+				return null;
+			}
+			
+			for(var i = 0; i < vm.sendersList.length; i++){
+				if(vm.personalMessage.receivers[i].userId === usersId){
+					return true;
+				}
+			}
+			
+			return false;
+		};
+		
+		pmService.removeUserFromList = function(vm,index){
+			if(!vm || vm === null){
+				return null;
+			}
+			
+			vm.personalMessage.receivers.splice(index,1);
+		};
+		
+		pmService.sendPm = function(vm){
+			var result = pmService.resource.send(vm.personalMessage);
+			
+			result.$promise.then(function(data){
+				//go to conversation
+			});
+		};
+		
 		return pmService;
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','UserSearchService',PmService]);
+		   .service('PmService',['$timeout','$resource','UserSearchService','UserService',PmService]);
 	
 })();

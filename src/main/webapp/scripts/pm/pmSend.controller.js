@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmSendCtrl($scope, $timeout, UserSearchService,UserService,PmService,LookupsService){
+	function PmSendCtrl($scope, $timeout,$location, UserSearchService,UserService,PmService,LookupsService){
 		var vm =  this;
 		
 		vm.personalMessage = {"message":""};
@@ -28,16 +28,22 @@
 			return PmService.pmConstants;
 		};
 		
-		vm.init = function(){
-			
-		};
-		
 		vm.send = function(){
 			
 		};
 		
 		vm.populateUserList = function(results){
 			PmService.populateUserList(vm,results);
+		};
+		
+		vm.addUserToList = function(usersId){
+			if(usersId !== null && PmService.checkIfUserInList(vm,usersId) === false){
+				vm.getUserDisplayName(usersId);
+			}
+		};
+		
+		vm.removeUserFromList = function(index){
+			PmService.removeUserFromList(vm,index);
 		};
 		
 		vm.clearUserList = function(){
@@ -48,9 +54,34 @@
 		vm.getAvatarUrl = function(user){
 			return UserService.getAvatarUrl(user.avatar);
 		};
+		
+		vm.getUserDisplayName = function(usersId){
+			var user = PmService.getUserDisplayName(usersId);
+			
+			user.$promise.then(function(data){
+				PmService.appendToSenderList(vm,data);
+			});
+		}
+		
+		vm.init = function(){
+			if($location.search().senderId){
+				vm.personalMessage = PmService.getTemplate();
+				
+				vm.personalMessage.$promise.then(function(data){
+					vm.getUserDisplayName($location.search().senderId);
+				});
+				
+			}
+		};
+		
+		vm.sendPm = function(){
+			PmService.sendPm(vm);
+		};
+		
+		vm.init();
 	}
 	
 	angular.module('zfgc.pm')
-		   .controller('PmSendCtrl',['$scope','$timeout','UserSearchService','UserService','PmService','LookupsService',PmSendCtrl]);
+		   .controller('PmSendCtrl',['$scope','$timeout','$location','UserSearchService','UserService','PmService','LookupsService',PmSendCtrl]);
 	
 })();
