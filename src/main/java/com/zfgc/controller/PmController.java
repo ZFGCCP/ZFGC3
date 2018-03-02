@@ -20,6 +20,7 @@ import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversationView;
+import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmGenerator;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.services.authentication.AuthenticationService;
@@ -128,7 +129,7 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity viewConvoBox(@RequestBody TwoFactorKey aesKey){
 		try{
-			List<PmConversationView> convos = pmService.getConversationBox(aesKey, zfgcUser());
+			PmConvoBox convos = pmService.getConversationBox(aesKey, zfgcUser());
 			
 			if(convos == null){
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -140,5 +141,4 @@ public class PmController extends BaseController {
 	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    }
 	}
-	
 }

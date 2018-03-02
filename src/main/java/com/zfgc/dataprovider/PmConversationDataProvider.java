@@ -13,6 +13,7 @@ import com.zfgc.dbobj.PmConversationBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjWithBLOBs;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
+import com.zfgc.model.users.Users;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
@@ -34,7 +35,8 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return obj;
 	}
 	
-	public List<PmConversationView> getBoxViewByUsersId(Integer usersId) throws Exception{
+	public List<PmConversationView> getBoxViewByUsersId(Users user) throws Exception{
+		Integer usersId = user.getUsersId();
 		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
 		ex.createCriteria().andUsersIdEqualTo(usersId);
 		
@@ -51,7 +53,5 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		} 
-		
-		
 	}
 }

@@ -22,6 +22,7 @@ import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
+import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
@@ -102,15 +103,18 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public List<PmConversationView> getConversationBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+	public PmConvoBox getConversationBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+		aesKey.setUsersId(zfgcUser.getUsersId());
 		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
 			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
 		}
 		
 		try {
-			List<PmConversationView> convoView = pmConversationDataProvider.getBoxViewByUsersId(zfgcUser.getUsersId());
-			return decryptAndPrepareConvoBox(convoView, senderKeys, aesKey);
+			List<PmConversationView> convoView = pmConversationDataProvider.getBoxViewByUsersId(zfgcUser);
+			PmConvoBox convoBox = new  PmConvoBox();
+			convoBox.setConversations(decryptAndPrepareConvoBox(convoView, senderKeys, aesKey));
+			return convoBox;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
@@ -269,5 +273,19 @@ public class PmService extends AbstractService {
 	
 	public PersonalMessage getPmTemplate(){
 		return new PersonalMessage();
+	}
+	
+	public PmConvoBox getConvoBox(Users user){
+		try {
+			List<PmConversationView> convos = pmConversationDataProvider.getBoxViewByUsersId(user);
+			
+			PmConvoBox convoBox = new PmConvoBox();
+			convoBox.setConversations(convos);
+			
+			return convoBox;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
 	}
 }

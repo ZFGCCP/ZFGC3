@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmService($timeout,$resource,UserSearchService, UserService){
+	function PmService($timeout,$resource,UserSearchService, ConvoBoxService, UserService){
 		var pmService = {};
 		
 		pmService.resource = $resource('/forum/pm/template',{},{
@@ -113,10 +113,16 @@
 			});
 		};
 		
+		pmService.getConvoBox = function(){
+			return ConvoBoxService.getConvoBox();
+		};
+		
+		pmService.getConvoBox();
+		
 		return pmService;
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','UserSearchService','UserService',PmService]);
+		   .service('PmService',['$timeout','$resource','UserSearchService','ConvoBoxService','UserService',PmService]);
 	
 })();

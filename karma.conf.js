@@ -37,11 +37,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js",
 	    
+	"./src/main/webapp/bower_components/angular-local-storage/dist/angular-local-storage.js",
+	    
 	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	    
+	"./src/main/webapp/scripts/pm/pm.module.js",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.service.js",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
@@ -57,13 +65,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
-	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
 	    
-	"./src/main/webapp/scripts/pm/pm.module.js",
+	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
@@ -116,6 +122,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
