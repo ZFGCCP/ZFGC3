@@ -77,8 +77,22 @@ table{
 
 .responsive-table{
 	.responsive-table-body{
+		.responsive-table-row:nth-child(odd){
+			background-color:$midnight-zebra-odd;
+		}
+		
+		.responsive-table-row:nth-child(even){
+			background-color:$midnight-zebra-even;
+		}
+	
 		.responsive-table-row:hover{
 			background-color:$midnight-row-hover;
+		}
+		
+		.responsive-table-row{
+			.responsive-table-cell{
+				border-right-color:$midnight-inner-border;
+			}
 		}
 	}
 }

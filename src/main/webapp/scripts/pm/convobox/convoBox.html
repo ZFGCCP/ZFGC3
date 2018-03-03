@@ -16,17 +16,17 @@
 					<form name="convoBoxForm">
 						<div class="responsive-table">
 							<div class="responsive-table-header">
-								<span></span>
-								<span>Conversation</span>
-								<span>Last Message By</span>
+								<span class="responsive-table-cell"></span>
+								<span class="responsive-table-cell">Conversation</span>
+								<span class="responsive-table-cell">Last Message By</span>
 							</div>
 							<div class="responsive-table-body">
 								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
-									<span><input type="checkbox"/></span>
-									<span>
+									<span class="responsive-table-cell"><input type="checkbox"/></span>
+									<span class="responsive-table-cell">
 										<span ng-bind-html="convo.subject"></span>
 									</span>
-									<span></span>
+									<span class="responsive-table-cell"></span>
 								</div>
 							</div>
 						</div>

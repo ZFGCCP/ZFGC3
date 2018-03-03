@@ -74,7 +74,7 @@ table.widget-table{
 	.responsive-table-header{
 		display:table-header-group;
 		
-		span{
+		.responsive-table-cell{
 			display: table-cell;
     		padding: 15px;
 		}
@@ -82,9 +82,15 @@ table.widget-table{
 	
 	.responsive-table-body{
 		.responsive-table-row{
-			span{
+			.responsive-table-cell{
 				display:table-cell;
 				padding: 15px;
+				border-right-style:solid;
+				border-right-width:thin;
+			}
+			
+			.responsive-table-cell:last{
+				border-right:0px;
 			}
 		}
 	}
