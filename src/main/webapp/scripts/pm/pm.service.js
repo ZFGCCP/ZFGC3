@@ -116,9 +116,7 @@
 		pmService.getConvoBox = function(){
 			return ConvoBoxService.getConvoBox();
 		};
-		
-		pmService.getConvoBox();
-		
+
 		return pmService;
 	}
 	
