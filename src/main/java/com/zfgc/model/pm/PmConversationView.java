@@ -1,14 +1,18 @@
 package com.zfgc.model.pm;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class PmConversationView extends BaseZfgcModel{
 	private Integer pmConversationId;
     private Integer usersId;
+    private String receiverName;
     private Integer receiverId;
     private Integer initiatorId;
+    private String initiatorName;
     private Integer personalMessageId;
     private Date sentDt;
     private Date startDt;
@@ -59,6 +63,16 @@ public class PmConversationView extends BaseZfgcModel{
 		return sentDt;
 	}
 
+	public String getSentDtAsString(){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		
+		if(sentDt == null){
+			return "";
+		}
+		
+		return sdf.format(sentDt);
+	}
+	
 	public void setSentDt(Date sentDt) {
 		this.sentDt = sentDt;
 	}
@@ -67,6 +81,17 @@ public class PmConversationView extends BaseZfgcModel{
 		return startDt;
 	}
 
+	public String getStartDtAsString(){
+		
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		
+		if(startDt == null){
+			return "";
+		}
+		
+		return sdf.format(startDt);
+	}
+	
 	public void setStartDt(Date startDt) {
 		this.startDt = startDt;
 	}
@@ -91,6 +116,22 @@ public class PmConversationView extends BaseZfgcModel{
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+	
+	public String getInitiatorName() {
+		return initiatorName;
+	}
+
+	public void setInitiatorName(String initiatorName) {
+		this.initiatorName = initiatorName;
+	}
+
+	public String getReceiverName() {
+		return receiverName;
+	}
+
+	public void setReceiverName(String receiverName) {
+		this.receiverName = receiverName;
 	}
 
 }

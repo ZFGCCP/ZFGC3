@@ -17,6 +17,16 @@
 			return service.resource.convoBox({'key' : localStorageService.get('pmKey')});
 		};
 		
+		service.stripHtml = function (text) {
+		      var result = text ? String(text).replace(/<[^>]+>/gm, '') : '';
+		      
+		      if(result.length > 20){
+		    	  result = result.subString(0,10) + "...";
+		      }
+		      
+		      return result;
+	    };
+		
 		return service;
 	};
 	

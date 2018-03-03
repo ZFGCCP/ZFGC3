@@ -13,20 +13,29 @@
 				</div>
 				
 				<div class="col-xs-12">
-					<form name="convoBoxForm">
-						<div class="responsive-table">
+					<form name="convoBoxForm" class="convo-box-form">
+						<div class="responsive-table convo-box-table">
 							<div class="responsive-table-header">
-								<span class="responsive-table-cell"></span>
-								<span class="responsive-table-cell">Conversation</span>
-								<span class="responsive-table-cell">Last Message By</span>
+								<span class="responsive-col-del responsive-table-cell"></span>
+								<span class="responsive-col-title responsive-table-cell">Conversation</span>
+								<span class="responsive-col-last-updated responsive-table-cell">Started By</span>
 							</div>
 							<div class="responsive-table-body">
 								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
-									<span class="responsive-table-cell"><input type="checkbox"/></span>
-									<span class="responsive-table-cell">
-										<span ng-bind-html="convo.subject"></span>
+									<span class="responsive-col-del responsive-table-cell"><input type="checkbox"/></span>
+									<span class="responsive-col-title responsive-table-cell">
+										<span class="convo-box-subject" ng-bind-html="convo.subject"></span>
+										<span class="convo-box-subject"> - Last Message By: {{convo.receiverName}} On : {{convo.sentDtAsString}}</span>
+										<div class="convo-box-message">{{vm.stripHtml(convo.message)}}</div>
 									</span>
-									<span class="responsive-table-cell"></span>
+									<span class="responsive-col-last-updated responsive-table-cell">
+										<span>
+											{{convo.initiatorName}}
+										</span>
+										<div>
+											{{convo.startDtAsString}}
+										</div>
+									</span>
 								</div>
 							</div>
 						</div>
