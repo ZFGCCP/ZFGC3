@@ -69,3 +69,23 @@ table.widget-table{
 		position:absolute;
 	}
 }
+
+.responsive-table{
+	.responsive-table-header{
+		display:table-header-group;
+		
+		span{
+			display: table-cell;
+    		padding: 15px;
+		}
+	}
+	
+	.responsive-table-body{
+		.responsive-table-row{
+			span{
+				display:table-cell;
+				padding: 15px;
+			}
+		}
+	}
+}

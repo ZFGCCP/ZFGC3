@@ -75,6 +75,14 @@ table{
 	}
 }
 
+.responsive-table{
+	.responsive-table-body{
+		.responsive-table-row:hover{
+			background-color:$midnight-row-hover;
+		}
+	}
+}
+
 .inf-scroll-result:hover{
 		background-color:$midnight-row-hover;
 }

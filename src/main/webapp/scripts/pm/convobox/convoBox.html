@@ -13,11 +13,24 @@
 				</div>
 				
 				<div class="col-xs-12">
-					<div ng-repeat="convo in vm.convoBox.conversations">
-						<div>
-							{{convo.subject}}
+					<form name="convoBoxForm">
+						<div class="responsive-table">
+							<div class="responsive-table-header">
+								<span></span>
+								<span>Conversation</span>
+								<span>Last Message By</span>
+							</div>
+							<div class="responsive-table-body">
+								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
+									<span><input type="checkbox"/></span>
+									<span>
+										<span ng-bind-html="convo.subject"></span>
+									</span>
+									<span></span>
+								</div>
+							</div>
 						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
