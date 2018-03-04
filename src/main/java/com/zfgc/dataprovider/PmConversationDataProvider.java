@@ -11,6 +11,9 @@ import com.zfgc.dao.PmConversationDao;
 import com.zfgc.dbobj.PmConversationBoxViewDbObj;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjWithBLOBs;
+import com.zfgc.dbobj.PmConversationDbObj;
+import com.zfgc.dbobj.PmConversationDbObjExample;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.users.Users;
@@ -24,6 +27,8 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	
 	@Autowired
 	PmConversationBoxViewDao pmConversationBoxViewDao;
+	
+	
 	
 	public PmConversation createConversation(Integer initiator){
 		PmConversation obj = new PmConversation();
@@ -53,5 +58,30 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		} catch (Exception e) {
 			throw new Exception(e.getMessage());
 		} 
+	}
+	
+	public PmConversation getConversation(Integer convoId) throws ZfgcNotFoundException, Exception {
+		PmConversationDbObjExample ex = new PmConversationDbObjExample();
+		ex.createCriteria().andPmConversationIdEqualTo(convoId);
+		List<PmConversationDbObj> conversations = null;
+		PmConversation result = null;
+		
+		try {
+			conversations = pmConversationDao.get(ex);
+			result = null;
+		}
+		catch(Exception e)
+		{
+			throw new Exception(e.getMessage());
+		}
+		
+		if(conversations.size() > 0) {
+			result = mapper.map(conversations.get(0),PmConversation.class);
+			
+			return result;
+		}
+		else {
+			throw new ZfgcNotFoundException("conversation");
+		}
 	}
 }

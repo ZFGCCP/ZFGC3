@@ -141,4 +141,9 @@ public class PmController extends BaseController {
 	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    }
 	}
+	
+	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@RequestParam("conversationId") Integer convoId) {
+		
+	}
 }

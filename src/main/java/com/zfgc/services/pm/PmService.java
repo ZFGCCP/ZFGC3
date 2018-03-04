@@ -288,4 +288,25 @@ public class PmService extends AbstractService {
 			return null;
 		}
 	}
+	
+	public PmConversation getConversation(Integer convoId, Users user) {
+		try {
+			PmConversation convo = pmConversationDataProvider.getConversation(convoId);
+			
+			if(convo == null) {
+				return null;
+			}
+			
+			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId()));
+			
+			if(convo.getMessages().size() == 0) {
+				return null;
+			}
+			
+			return convo;
+		}
+		catch(Exception ex) {
+			return null;
+		}
+	}
 }
