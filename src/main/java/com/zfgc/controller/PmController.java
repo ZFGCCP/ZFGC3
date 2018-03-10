@@ -19,6 +19,7 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
+import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmGenerator;
@@ -144,6 +145,17 @@ public class PmController extends BaseController {
 	
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@RequestParam("conversationId") Integer convoId) {
-		
+		try {
+			PmConversation convo = pmService.getConversation(convoId, aesKey, zfgcUser());
+			
+			if(convo == null) {
+				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+			}
+			
+			return ResponseEntity.ok(convo);
+		}
+		catch (ZfgcInvalidAesKeyException e) {
+	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	    }
 	}
 }

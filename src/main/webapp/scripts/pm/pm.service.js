@@ -1,15 +1,19 @@
 (function(){
 	
-	function PmService($timeout,$resource,UserSearchService, ConvoBoxService, UserService){
+	function PmService($timeout,$resource,UserSearchService, ConvoBoxService, localStorageService, UserService){
 		var pmService = {};
 		
-		pmService.resource = $resource('/forum/pm/template',{},{
+		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
 			template : {
 				url : '/forum/pm/template',
 				method : 'GET'
 			},
 			send : {
 				url : '/forum/pm/send',
+				method : 'POST'
+			},
+			open : {
+				url : '/forum/pm/conversation/:conversationId',
 				method : 'POST'
 			}
 		});
@@ -21,6 +25,12 @@
 				underline : 3,
 				strikethrough : 4
 			}	
+		};
+		
+		pmService.openConvo = function(vm,convoId){
+			var convo = pmService.resource.open({'key' : localStorageService.get('pmKey'), 'conversationId' : convoId});
+			
+			return convo;
 		};
 		
 		pmService.populateUserList = function(vm,results){
@@ -121,6 +131,6 @@
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','UserSearchService','ConvoBoxService','UserService',PmService]);
+		   .service('PmService',['$timeout','$resource','UserSearchService','ConvoBoxService','localStorageService','UserService',PmService]);
 	
 })();

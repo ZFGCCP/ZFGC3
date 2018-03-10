@@ -121,6 +121,26 @@ public class PmService extends AbstractService {
 		}
 	}
 	
+	private PmConversation decryptConversation(PmConversation convo, PmKey key, TwoFactorKey aesKey) {
+		String decryptedRsa = ZfgcSecurityUtils.decryptAes(key.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
+		Key receiverKey = null;
+		
+		try {
+			receiverKey = ZfgcSecurityUtils.stringToRsaPrivKey(decryptedRsa);
+		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		for(PersonalMessage message : convo.getMessages()){
+			message.setSubject(ZfgcSecurityUtils.decryptRsa(message.getSubject(), receiverKey));
+			message.setMessage(ZfgcSecurityUtils.decryptRsa(message.getMessage(), receiverKey));
+		}
+		
+		return convo;
+		
+	}
+	
 	private List<PmConversationView> decryptAndPrepareConvoBox(List<PmConversationView> convoView, PmKey key, TwoFactorKey tfa){
 		List<PmConversationView> result = new ArrayList<>();
 		
@@ -289,7 +309,12 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public PmConversation getConversation(Integer convoId, Users user) {
+	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException {
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
 		try {
 			PmConversation convo = pmConversationDataProvider.getConversation(convoId);
 			
@@ -298,6 +323,7 @@ public class PmService extends AbstractService {
 			}
 			
 			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId()));
+			convo = decryptConversation(convo, receiverKeys, aesKey);
 			
 			if(convo.getMessages().size() == 0) {
 				return null;

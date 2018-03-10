@@ -105,6 +105,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
+	"./src/main/webapp/scripts/idp/idpSelection.html",
+	    
 	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
