@@ -8,9 +8,21 @@
 		
 		<div class="section-body">
 			<div class="row">
-				<div class="col-xs-12">
-				
-				</div>
+				<form name="convo-box-filters">
+					<span class="filter-wrapper">
+						<div class="col-xs-3">
+							<label>Filter By</label>
+							<select class="small-input form-control" ng-model="vm.filters.filterBy" ng-options="filterOption.id as filterOption.value for filterOption in vm.filterOptions">
+							</select>
+						</div>
+						
+						<div class="col-xs-3">
+							<label>Sort By</label>
+							<select class="small-input form-control">
+							</select>
+						</div>
+					</span>
+				</form>
 				
 				<div class="col-xs-12">
 					<form name="convoBoxForm" class="convo-box-form">
