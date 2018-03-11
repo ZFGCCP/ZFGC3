@@ -144,7 +144,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@RequestParam("conversationId") Integer convoId) {
+	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId) {
 		try {
 			PmConversation convo = pmService.getConversation(convoId, aesKey, zfgcUser());
 			

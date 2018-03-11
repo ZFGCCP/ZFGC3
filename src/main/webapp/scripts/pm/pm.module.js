@@ -12,4 +12,8 @@ angular.module('zfgc.pm',['zfgc.config'])
 					url: '/mailBox',
 					templateUrl: basePath + '/convobox/convoBox.html'
 			})
+			.state('convo',{
+				url : '/mailBox/conversation?convoId',
+				templateUrl: basePath +'/conversation/conversation.html'
+			});
 }]);

@@ -51,6 +51,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
 	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
+	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
@@ -69,11 +71,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
 	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
-	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.service.js",
+	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
@@ -91,9 +93,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
-	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
+	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
@@ -105,9 +107,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
-	"./src/main/webapp/scripts/idp/idpSelection.html",
-	    
 	"./src/main/webapp/scripts/forum/forum.html",
+	    
+	"./src/main/webapp/scripts/idp/idpSelection.html",
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
@@ -124,6 +126,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    

@@ -9,8 +9,15 @@
 		<div class="section-body">
 			<div class="row">
 				<div class="col-xs-12">
-					<div class="responsive-table convo-table">
-						<div class="responsive-table-header"
+					<div class="conversation-wrapper" ng-repeat="($index, convo) in vm.conversation.messages">
+						<div class="conversation-content">
+							<div class="conversation-from">
+							
+							</div>
+							<div class="conversation-message">
+								{{convo.message}}
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>

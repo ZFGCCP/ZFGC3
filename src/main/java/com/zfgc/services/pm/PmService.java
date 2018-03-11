@@ -311,6 +311,7 @@ public class PmService extends AbstractService {
 	
 	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException {
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
+		aesKey.setUsersId(user.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
 		}
