@@ -192,4 +192,10 @@ class UsersController extends BaseController{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(navTabs);
 	}
+	
+	@RequestMapping(value="/sidedetails/{userId}", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getUserSideDetails(@PathVariable("userId") Integer userId){
+		
+	}
 }

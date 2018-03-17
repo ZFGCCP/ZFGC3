@@ -76,7 +76,7 @@ public class PersonalMessageDataProvider extends AbstractDataProvider {
 		return mapper.map(dbObj.get(0), PersonalMessage.class);
 	}
 	
-	public List<PersonalMessage> getMessagesByConversation(Integer conversationId) throws ZfgcNotFoundException{
+	public List<PersonalMessage> getMessagesByConversation(Integer conversationId, Users user) throws ZfgcNotFoundException{
 		PersonalMessageDbObjExample ex = new PersonalMessageDbObjExample();
 		ex.createCriteria().andPmConversationIdEqualTo(conversationId);
 		
@@ -88,7 +88,11 @@ public class PersonalMessageDataProvider extends AbstractDataProvider {
 		}
 		
 		for(PersonalMessageDbObjWithBLOBs db : dbObj){
-			obj.add(mapper.map(db,PersonalMessage.class));
+			if((db.getSenderId() == user.getUsersId() && db.getSendCopyFlag()) ||
+			   (db.getReceiverId() == user.getUsersId() && !db.getSendCopyFlag())){
+			
+				obj.add(mapper.map(db,PersonalMessage.class));
+			}
 		}
 		
 		return obj;

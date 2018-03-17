@@ -133,8 +133,24 @@ public class PmService extends AbstractService {
 		}
 		
 		for(PersonalMessage message : convo.getMessages()){
-			message.setSubject(ZfgcSecurityUtils.decryptRsa(message.getSubject(), receiverKey));
-			message.setMessage(ZfgcSecurityUtils.decryptRsa(message.getMessage(), receiverKey));
+			message.setSubject(ZfgcSecurityUtils.decryptRsa(message.getSubject(), receiverKey).trim());
+			message.setMessage(ZfgcSecurityUtils.decryptRsa(message.getMessage(), receiverKey).trim());
+			try {
+				message.setMessage(bbCodeService.parseText(message.getMessage()));
+			} catch (NoSuchFieldException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 		}
 		
 		return convo;
@@ -323,7 +339,7 @@ public class PmService extends AbstractService {
 				return null;
 			}
 			
-			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId()));
+			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), user));
 			convo = decryptConversation(convo, receiverKeys, aesKey);
 			
 			if(convo.getMessages().size() == 0) {

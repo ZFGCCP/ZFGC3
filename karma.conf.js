@@ -71,19 +71,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
 	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
+	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.service.js",
 	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
+	"./src/main/webapp/scripts/notifications/notifications.module.js",
+	    
+	"./src/main/webapp/scripts/notifications/notifications.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/notifications/notifications.module.js",
-	    
-	"./src/main/webapp/scripts/notifications/notifications.service.js",
 	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
@@ -108,8 +108,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
 	"./src/main/webapp/scripts/forum/forum.html",
-	    
-	"./src/main/webapp/scripts/idp/idpSelection.html",
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
