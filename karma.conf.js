@@ -53,6 +53,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
 	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
+	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
@@ -93,9 +95,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
-	"./src/main/webapp/scripts/filters/range.filter.js",
-	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
+	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
@@ -120,6 +122,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
+	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    

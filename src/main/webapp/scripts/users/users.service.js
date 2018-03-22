@@ -46,6 +46,9 @@
 			getUserDisplayName : {
 				url : '/forum/users/displayName/:userId',
 				method : 'GET'
+			},
+			getUserDetailsById : {
+				
 			}
 		});
 		UserService.register = function(user){

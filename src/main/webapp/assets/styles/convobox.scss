@@ -21,3 +21,33 @@
 		padding-top:5px;
 	}
 }
+
+.conversation-wrapper{
+	margin-top:-20px;
+	
+	.conversation{
+		
+		.message-wrapper{
+			.message-content{
+				min-height:200px;
+				
+				.message-subject{
+					height:30px;
+					border-bottom:1px solid;
+				}
+				
+				.message-body{
+					min-height:170px;
+					
+					.message-message{
+						padding-left: 12px;
+					    padding-top: 12px;
+					    overflow-wrap: break-word;
+					    line-height: 1.2;
+					}
+				}
+			}
+		}
+		
+	}
+}

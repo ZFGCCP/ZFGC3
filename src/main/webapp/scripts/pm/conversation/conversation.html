@@ -3,22 +3,35 @@
 		<div class="section-header">
 			<div class="section-title-wrapper">
 				<div class="section-title">Conversation</div>
+				<div class="subsection-title">
+					<div>
+						Subject : <span ng-bind-html="vm.getConvoTitle()"></span>
+					</div>
+				</div>
+			</div>
+			<div class="navigation-wrapper">
+				<div class="navigation-icon" title="Reply">
+					<i class="fa fa-reply-all"><label>Reply</label></i>
+				</div>
+				<div class="navigation-icon" title="Leave Conversation">
+					<i class="fa fa-sign-out"><label>Leave Conversation</label></i>
+				</div>
 			</div>
 		</div>
 		
 		<div class="section-body">
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="conversation-wrapper" ng-repeat="($index, convo) in vm.conversation.messages">
-						<div class="conversation-content">
-							<div class="conversation-subject col-xs-12">
-								<div ng-bind-html="convo.subject"></div>
+			<div class="row conversation-wrapper">
+				<div class="conversation col-xs-12">
+					<div class="message-wrapper" ng-repeat="($index, convo) in vm.conversation.messages">
+						<div class="message-content">
+							<div class="message-subject col-xs-12">
+								<h4 ng-bind-html="convo.subject"></h4>
 							</div>
-							<div class="col-xs-12">
-								<div class="conversation-from col-xs-2">
+							<div class="message-body col-xs-12">
+								<div class="message-from col-xs-2">
 									test
 								</div>
-								<div class="conversation-message col-xs-10">
+								<div class="message-message col-xs-10">
 									<div ng-bind-html="convo.message"></div>
 								</div>
 							</div>

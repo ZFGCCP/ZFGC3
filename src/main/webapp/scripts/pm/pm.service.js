@@ -126,6 +126,12 @@
 		pmService.getConvoBox = function(){
 			return ConvoBoxService.getConvoBox();
 		};
+		
+		pmService.getConvoTitle = function(vm){
+			var lastMessage = vm.conversation.messages.length - 1;
+			
+			return vm.conversation.messages[lastMessage].subject;
+		};
 
 		return pmService;
 	}
