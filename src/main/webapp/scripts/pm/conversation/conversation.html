@@ -5,7 +5,7 @@
 				<div class="section-title">Conversation</div>
 				<div class="subsection-title">
 					<div>
-						Subject : <span ng-bind-html="vm.getConvoTitle()"></span>
+						Subject : <span ng-bind-html="vm.getConvoTitle()"></span><i class="fa fa-pencil edit-text-icon"></i>
 					</div>
 				</div>
 			</div>
@@ -25,7 +25,7 @@
 					<div class="message-wrapper" ng-repeat="($index, convo) in vm.conversation.messages">
 						<div class="message-content">
 							<div class="message-subject col-xs-12">
-								<h4 ng-bind-html="convo.subject"></h4>
+								<h5>On: {{convo.sentDtAsString}}</h5>
 							</div>
 							<div class="message-body col-xs-12">
 								<div class="message-from col-xs-2">
