@@ -117,3 +117,21 @@ ul.pagination{
 .message-body{
 	background-color:$midnight-widget-body-bg-color;
 }
+
+//misc
+.user-online{
+	color : $midnight-user-online;
+}
+
+//anchor element
+a:link{
+	color : $midnight-a-link;
+}
+
+a:visited{
+	color : $midnight-a-visited;
+}
+
+a:hover{
+	color : $midnight-a-hover;
+}

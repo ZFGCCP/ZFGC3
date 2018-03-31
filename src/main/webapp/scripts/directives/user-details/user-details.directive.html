@@ -1,0 +1,14 @@
+<div class="user-details-wrapper">
+	<div class="user-name-wrapper">
+		<span><a ng-href="/forum/userprofile?userId={{user.usersId}}">{{user.displayName}}</a><span class="user-karma"> (<span class="karma-good">+1</span>/<span class="karma-bad">-1</span>)</span></span>
+		<i class="fas fa-user-circle user-online"></i>
+	</div>
+	
+	<div class="avatar-wrapper">
+		<img ng-src="{{getAvatarUrl()}}"/>
+		<div>
+			<i class="far fa-comment"></i>
+			<i class="fas fa-envelope"></i>
+		</div>
+	</div>
+</div>

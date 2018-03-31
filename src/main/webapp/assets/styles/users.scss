@@ -25,3 +25,26 @@
 	margin-right:12px;
 	overflow:auto;
 }
+
+.user-details-wrapper{
+	.user-name-wrapper{
+		font-weight: bold;
+    	font-size: 13px;
+    	padding-bottom: 12px;
+    	padding-top: 12px;
+    	
+    	.user-online{
+			font-weight:normal;
+			font-size: 17px;
+    		position: relative;
+    		top: 3px;
+		}
+    	
+    	.user-karma{
+    		font-size: 10px;
+    		font-weight: normal;
+    	}
+	}
+	
+	
+}

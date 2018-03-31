@@ -8,12 +8,16 @@
 		};
 		
 		directive.link = function($scope,element,attrs){
-			$scope.user = UserService.resource.getUserDetailsById($scope.userId);
+			$scope.user = UserService.resource.userProfile({'userId':$scope.userId});
+			
+			$scope.getAvatarUrl = function(){
+				return UserService.getAvatarUrl($scope.user.avatar);
+			};
 		};
 		
 		return directive;
 	}
 	
-	angular.module('zfgc-users')
-		   .directive('user-details',['UserService',userDetails]);
+	angular.module('zfgc.users')
+		   .directive('userDetails',['UserService',userDetails]);
 })();
