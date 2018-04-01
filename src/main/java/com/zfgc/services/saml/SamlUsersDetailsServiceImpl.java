@@ -54,6 +54,7 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         //user.setActiveFlag(activeFlag != null && activeFlag.equals("1") ? true : false);
         user.setPrimaryIpAddress(ip);
         user.setPrimaryMemberGroupId(Integer.parseInt(primaryMemberGroupId));
+        user.setTimeZone(credential.getAttributeAsString("TIME_ZONE"));
         
         Map<Integer, String> groups = new HashMap<Integer, String>();
         

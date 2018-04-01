@@ -37,11 +37,25 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js",
 	    
+	"./src/main/webapp/bower_components/angular-local-storage/dist/angular-local-storage.js",
+	    
 	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	    
+	"./src/main/webapp/scripts/pm/pm.module.js",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.service.js",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
+	    
+	"./src/main/webapp/scripts/users/users.module.js",
+	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
@@ -49,21 +63,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
-	"./src/main/webapp/scripts/users/users.module.js",
-	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
-	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
 	    
-	"./src/main/webapp/scripts/pm/pm.module.js",
+	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
@@ -77,9 +87,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
-	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
@@ -87,9 +97,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
-	"./src/main/webapp/scripts/filters/range.filter.js",
-	    
 	"./src/main/webapp/scripts/error/error.module.js",
+	    
+	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -113,9 +123,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    

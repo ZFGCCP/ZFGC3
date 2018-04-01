@@ -75,6 +75,28 @@ table{
 	}
 }
 
+.responsive-table{
+	.responsive-table-body{
+		.responsive-table-row:nth-child(odd){
+			background-color:$midnight-zebra-odd;
+		}
+		
+		.responsive-table-row:nth-child(even){
+			background-color:$midnight-zebra-even;
+		}
+	
+		.responsive-table-row:hover{
+			background-color:$midnight-row-hover;
+		}
+		
+		.responsive-table-row{
+			.responsive-table-cell{
+				border-right-color:$midnight-inner-border;
+			}
+		}
+	}
+}
+
 .inf-scroll-result:hover{
 		background-color:$midnight-row-hover;
 }
@@ -86,4 +108,30 @@ ul.pagination{
 			color:$midnight-color;
 		}
 	}
+}
+
+.message-subject{
+	background-color:$midnight-header-bg-color;
+}
+
+.message-body{
+	background-color:$midnight-widget-body-bg-color;
+}
+
+//misc
+.user-online{
+	color : $midnight-user-online;
+}
+
+//anchor element
+a:link{
+	color : $midnight-a-link;
+}
+
+a:visited{
+	color : $midnight-a-visited;
+}
+
+a:hover{
+	color : $midnight-a-hover;
 }

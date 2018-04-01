@@ -1,11 +1,14 @@
 package com.zfgc.model.pm;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
+import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class PersonalMessage extends BaseZfgcModel {
 
@@ -37,6 +40,32 @@ public class PersonalMessage extends BaseZfgcModel {
 		this.sentDt = sentDt;
 	}
 
+	public String getSentDtAsString(){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(getUserTimeZone());
+		
+		if(sentDt == null){
+			return "";
+		}
+		
+		return sdf.format(sentDt);
+	}
+	
+	public void setSentDtAsString(String sentDtAsString){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		
+		if(sentDtAsString == null || sentDtAsString.equals("")){
+			sentDt = null;
+		}
+		else{
+			try {
+				sentDt = sdf.parse(sentDtAsString);
+			} catch (ParseException e) {
+				sentDt = null;
+				e.printStackTrace();
+			}
+		}
+	}
+	
 	public String getSubject() {
 		return subject;
 	}

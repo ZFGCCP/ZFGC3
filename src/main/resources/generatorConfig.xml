@@ -138,11 +138,11 @@
     	<generatedKey column="PERSONAL_MESSAGE_ID" sqlStatement="SELECT COALESCE(MAX(PERSONAL_MESSAGE_ID) + 1,0) FROM PERSONAL_MESSAGE"/>
     	<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="SEND_COPY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>-->
+    </table>
     
     <table schema="Zfgc3" tableName="PM_CONVERSATION" domainObjectName="PmConversationDbObj">
     	<generatedKey column="PM_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(PM_CONVERSATION_ID) + 1,0) FROM PM_CONVERSATION"/>
-    </table>
+    </table>-->
     
     <!-- views -->
     

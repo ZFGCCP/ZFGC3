@@ -22,6 +22,7 @@ import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
+import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
@@ -102,19 +103,58 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public List<PmConversationView> getConversationBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+	public PmConvoBox getConversationBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+		aesKey.setUsersId(zfgcUser.getUsersId());
 		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
 			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
 		}
 		
 		try {
-			List<PmConversationView> convoView = pmConversationDataProvider.getBoxViewByUsersId(zfgcUser.getUsersId());
-			return decryptAndPrepareConvoBox(convoView, senderKeys, aesKey);
+			List<PmConversationView> convoView = pmConversationDataProvider.getBoxViewByUsersId(zfgcUser);
+			PmConvoBox convoBox = new  PmConvoBox();
+			convoBox.setConversations(decryptAndPrepareConvoBox(convoView, senderKeys, aesKey));
+			return convoBox;
 		} catch (Exception e) {
 			e.printStackTrace();
 			return null;
 		}
+	}
+	
+	private PmConversation decryptConversation(PmConversation convo, PmKey key, TwoFactorKey aesKey) {
+		String decryptedRsa = ZfgcSecurityUtils.decryptAes(key.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
+		Key receiverKey = null;
+		
+		try {
+			receiverKey = ZfgcSecurityUtils.stringToRsaPrivKey(decryptedRsa);
+		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		for(PersonalMessage message : convo.getMessages()){
+			message.setSubject(ZfgcSecurityUtils.decryptRsa(message.getSubject(), receiverKey).trim());
+			message.setMessage(ZfgcSecurityUtils.decryptRsa(message.getMessage(), receiverKey).trim());
+			try {
+				message.setMessage(bbCodeService.parseText(message.getMessage()));
+			} catch (NoSuchFieldException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SecurityException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalArgumentException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+		}
+		
+		return convo;
+		
 	}
 	
 	private List<PmConversationView> decryptAndPrepareConvoBox(List<PmConversationView> convoView, PmKey key, TwoFactorKey tfa){
@@ -269,5 +309,47 @@ public class PmService extends AbstractService {
 	
 	public PersonalMessage getPmTemplate(){
 		return new PersonalMessage();
+	}
+	
+	public PmConvoBox getConvoBox(Users user){
+		try {
+			List<PmConversationView> convos = pmConversationDataProvider.getBoxViewByUsersId(user);
+			
+			PmConvoBox convoBox = new PmConvoBox();
+			convoBox.setConversations(convos);
+			
+			return convoBox;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException {
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
+		aesKey.setUsersId(user.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
+		try {
+			PmConversation convo = pmConversationDataProvider.getConversation(convoId);
+			
+			if(convo == null) {
+				return null;
+			}
+			
+			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), user));
+			convo = decryptConversation(convo, receiverKeys, aesKey);
+			
+			if(convo.getMessages().size() == 0) {
+				return null;
+			}
+			
+			return convo;
+		}
+		catch(Exception ex) {
+			return null;
+		}
 	}
 }

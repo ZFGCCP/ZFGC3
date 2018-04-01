@@ -6,4 +6,14 @@ angular.module('zfgc.pm',['zfgc.config'])
 				url: '/sendPm?senderId',
 				templateUrl: basePath + '/sendPm.html'
 			});
+		
+		$stateProvider
+			.state('convoBox',{
+					url: '/mailBox',
+					templateUrl: basePath + '/convobox/convoBox.html'
+			})
+			.state('convo',{
+				url : '/mailBox/conversation?convoId',
+				templateUrl: basePath +'/conversation/conversation.html'
+			});
 }]);

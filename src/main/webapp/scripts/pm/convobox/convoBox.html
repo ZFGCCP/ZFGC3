@@ -1,0 +1,62 @@
+<div ng-controller="ConvoBoxCtrl as vm">
+	<div class="section-container">
+		<div class="section-header">
+			<div class="section-title-wrapper">
+				<div class="section-title">Mail Box</div>
+			</div>
+		</div>
+		
+		<div class="section-body">
+			<div class="row">
+				<form name="convo-box-filters">
+					<span class="filter-wrapper">
+						<div class="col-xs-3">
+							<label>Filter By</label>
+							<select class="small-input form-control" ng-model="vm.filters.filterBy" ng-options="filterOption.id as filterOption.value for filterOption in vm.filterOptions">
+							</select>
+						</div>
+						
+						<div class="col-xs-3">
+							<label>Sort By</label>
+							<select class="small-input form-control">
+							</select>
+						</div>
+					</span>
+				</form>
+				
+				<div class="col-xs-12">
+					<form name="convoBoxForm" class="convo-box-form">
+						<div class="responsive-table convo-box-table">
+							<div class="responsive-table-header">
+								<span class="responsive-col-del responsive-table-cell"></span>
+								<span class="responsive-col-title responsive-table-cell">Conversation</span>
+								<span class="responsive-col-last-updated responsive-table-cell">Started By</span>
+							</div>
+							<div class="responsive-table-body">
+								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
+									<span class="responsive-col-del responsive-table-cell"><input type="checkbox"/></span>
+									<span class="responsive-col-title responsive-table-cell">
+										<a ng-href="mailBox/conversation?conversationId={{convo.pmConversationId}}">
+											<span class="convo-box-subject" ng-bind-html="convo.subject"></span>
+											<span class="convo-box-subject"> - Last Message By: {{convo.receiverName}} On : {{convo.sentDtAsString}}</span>
+										</a>
+										<div class="convo-box-message">{{vm.stripHtml(convo.message)}}</div>
+									</span>
+									<span class="responsive-col-last-updated responsive-table-cell">
+										<span>
+											{{convo.initiatorName}}
+										</span>
+										<div>
+											{{convo.startDtAsString}}
+										</div>
+									</span>
+									</a>
+								</div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

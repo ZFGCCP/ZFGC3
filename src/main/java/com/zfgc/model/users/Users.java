@@ -51,6 +51,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String customTitle;
 	private String websiteTitle;
 	private String websiteUrl;
+	private String timeZone;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -406,5 +407,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setFromDb(Boolean fromDb) {
 		this.fromDb = fromDb;
+	}
+	public String getTimeZone() {
+		return timeZone;
+	}
+	public void setTimeZone(String timeZone) {
+		this.timeZone = timeZone;
 	}
 }
