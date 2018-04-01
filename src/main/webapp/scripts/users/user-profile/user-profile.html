@@ -7,7 +7,7 @@
 		<div class="navigation-wrapper">
 			<span class="navigation nav-medium" uib-dropdown ng-repeat="tab in vm.navTabs">
 				<span class="selected-indicator" ng-show="tab.active"></span>
-				<a href uib-dropdown-toggle>{{tab.title}}</a>
+				<a href uib-dropdown-toggle>{{tab.title}}</a><i class="fas fa-caret-down nav-dropdown-caret"></i>
 				<ul class="dropdown-menu dropdown-menu-right" uib-dropdown-menu">
 					<li class="nav-item" ng-repeat="subTab in tab.subTabs" ng-click="vm.tabClick(tab, subTab)">{{subTab.title}}</li>
 				</ul>
