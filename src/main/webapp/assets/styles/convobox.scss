@@ -25,6 +25,12 @@
 .conversation-wrapper{
 	margin-top:-20px;
 	
+	.message-wrapper:not(:first-child){
+		.message-subject{
+			border-top:1px solid;
+		}
+	}
+	
 	.conversation{
 		
 		.message-wrapper{

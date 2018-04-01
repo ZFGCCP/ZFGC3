@@ -87,9 +87,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
-	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
@@ -97,9 +97,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
-	"./src/main/webapp/scripts/filters/range.filter.js",
-	    
 	"./src/main/webapp/scripts/error/error.module.js",
+	    
+	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
