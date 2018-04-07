@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmService($timeout,$resource,UserSearchService, ConvoBoxService, localStorageService, UserService){
+	function PmService($timeout,$resource,$tate,UserSearchService, ConvoBoxService, localStorageService, UserService){
 		var pmService = {};
 		
 		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
@@ -15,6 +15,10 @@
 			open : {
 				url : '/forum/pm/conversation/:conversationId',
 				method : 'POST'
+			},
+			leave : {
+				url : '/forum/pm/conversation/:conversationId/delete',
+				method : 'POST'
 			}
 		});
 		
@@ -25,6 +29,14 @@
 				underline : 3,
 				strikethrough : 4
 			}	
+		};
+		
+		pmService.leaveConversation = function(vm,convoId){
+			var result = pmService.resource.leave({'key' : localStorageService.get('pmKey'), 'conversationId' : convoId});
+			
+			result.$promise.then(function(data){
+				$state.go('convoBox');
+			});
 		};
 		
 		pmService.openConvo = function(vm,convoId){
@@ -137,6 +149,6 @@
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','UserSearchService','ConvoBoxService','localStorageService','UserService',PmService]);
+		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService',PmService]);
 	
 })();

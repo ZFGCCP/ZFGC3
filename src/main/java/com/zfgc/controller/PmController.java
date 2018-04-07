@@ -159,7 +159,7 @@ public class PmController extends BaseController {
 	    }
 	}
 	
-	@RequestMapping(value="/conversation/delete/{conversationId}",method=RequestMethod.POST, produces="application/json")
+	@RequestMapping(value="/conversation/{conversationId}/delete",method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity deleteConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId){
 		PmConversation convo = new PmConversation();
 		convo.setPmConversationId(convoId);
