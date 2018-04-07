@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmService($timeout,$resource,$tate,UserSearchService, ConvoBoxService, localStorageService, UserService){
+	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService){
 		var pmService = {};
 		
 		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
