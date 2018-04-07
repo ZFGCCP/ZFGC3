@@ -33,6 +33,7 @@ public abstract class AbstractDao<Example, DbObj, Model>{
 	public abstract void hardDelete(Model obj);
 	public abstract void updateOrInsert(Model obj);
 	public abstract void updateByExample(Model obj, Example ex);
+	public abstract Integer deleteByExample(Model obj, Example ex) throws Exception;
 	
 	protected void logDbInsertError(Logger LOGGER, String tableName){
 		LOGGER.error("Error inserting into " + tableName);

@@ -64,5 +64,12 @@ public class LookupDao extends AbstractDao<Object,Object,Object>{
 		
 	}
 
+	@Override
+	public Integer deleteByExample(Object obj, Object ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 }

@@ -43,5 +43,12 @@ public class PmOutBoxDao extends AbstractDao<OutboxViewDbObjExample, OutboxViewD
 		
 	}
 
+	@Override
+	public Integer deleteByExample(PmBox obj, OutboxViewDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 
 }

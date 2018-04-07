@@ -144,6 +144,9 @@
     	<generatedKey column="PM_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(PM_CONVERSATION_ID) + 1,0) FROM PM_CONVERSATION"/>
     </table>-->
     
+    <table schema="Zfgc3" tableName="BR_USER_CONVERSATION" domainObjectName="BrUserConversationDbObj">
+    </table>
+    
     <!-- views -->
     
     <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
@@ -205,10 +208,10 @@
     
     <table schema="zfgc3" tableName="OUTBOX_VIEW" domainObjectName="OutboxViewDbObj">
 		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="PM_CONVERSATION_BOX_VIEW" domainObjectName="PmConversationBoxViewDbObj">
-    </table>
+    </table>-->
     
   </context>
 </generatorConfiguration>

@@ -158,4 +158,22 @@ public class PmController extends BaseController {
 	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    }
 	}
+	
+	@RequestMapping(value="/conversation/delete/{conversationId}",method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity deleteConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId){
+		PmConversation convo = new PmConversation();
+		convo.setPmConversationId(convoId);
+		
+		try {
+			pmService.removeConvoFromInbox(aesKey, convo, zfgcUser());
+		} catch (ZfgcInvalidAesKeyException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} catch (ZfgcNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 }

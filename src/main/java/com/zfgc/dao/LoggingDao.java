@@ -67,6 +67,13 @@ public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLog
 		
 	}
 
+	@Override
+	public Integer deleteByExample(ActivityLog obj, ActivityLogDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 	
 	
 }

@@ -78,4 +78,11 @@ public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddy
 		brBuddyIgnoreListDbObjMapper.updateByExample(dbObj,ex);
 	}
 
+	@Override
+	public Integer deleteByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

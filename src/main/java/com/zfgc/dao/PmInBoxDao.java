@@ -43,4 +43,11 @@ public class PmInBoxDao extends AbstractDao<InboxViewDbObjExample,InboxViewDbObj
 		
 	}
 
+	@Override
+	public Integer deleteByExample(PmBox obj, InboxViewDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

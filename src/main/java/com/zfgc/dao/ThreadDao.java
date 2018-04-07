@@ -102,4 +102,11 @@ public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj, Thre
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer deleteByExample(Thread obj, ThreadDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 }
