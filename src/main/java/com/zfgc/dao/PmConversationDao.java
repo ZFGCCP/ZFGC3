@@ -49,4 +49,12 @@ public class PmConversationDao extends AbstractDao<PmConversationDbObjExample, P
 		
 	}
 
+	@Override
+	public Integer deleteByExample(PmConversation obj,
+			PmConversationDbObjExample ex) {
+				return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

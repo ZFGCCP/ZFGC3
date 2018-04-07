@@ -68,4 +68,11 @@ public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj, Avat
 		
 	}
 
+	@Override
+	public Integer deleteByExample(Avatar obj, AvatarDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

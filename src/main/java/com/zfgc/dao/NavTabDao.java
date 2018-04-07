@@ -51,4 +51,11 @@ public class NavTabDao extends AbstractDao<NavTabViewDbObjExample, NavTabViewDbO
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer deleteByExample(NavTab obj, NavTabViewDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -86,4 +86,11 @@ public class BbcodeDao extends AbstractDao<BbCodeConfigDbObjExample, BbCodeConfi
 		
 	}
 
+	@Override
+	public Integer deleteByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

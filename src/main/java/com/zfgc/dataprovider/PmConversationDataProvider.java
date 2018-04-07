@@ -6,8 +6,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dao.BrUserConversationDao;
 import com.zfgc.dao.PmConversationBoxViewDao;
 import com.zfgc.dao.PmConversationDao;
+import com.zfgc.dbobj.BrUserConversationDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObj;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjWithBLOBs;
@@ -28,7 +30,8 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	@Autowired
 	PmConversationBoxViewDao pmConversationBoxViewDao;
 	
-	
+	@Autowired
+	BrUserConversationDao brUserConversationDao;
 	
 	public PmConversation createConversation(Integer initiator){
 		PmConversation obj = new PmConversation();
@@ -83,5 +86,12 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		else {
 			throw new ZfgcNotFoundException("conversation");
 		}
+	}
+	
+	public void deleteConversationFromBox(PmConversation convo, Users zfgcUser) throws ZfgcNotFoundException, Exception{
+		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId()).andPmConversationIdEqualTo(convo.getPmConversationId());
+		
+		brUserConversationDao.deleteByExample(null, ex);
 	}
 }

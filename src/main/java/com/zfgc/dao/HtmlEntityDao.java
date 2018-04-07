@@ -38,4 +38,11 @@ public class HtmlEntityDao extends AbstractDao<HtmlEntityDbObjExample, HtmlEntit
 		
 	}
 
+	@Override
+	public Integer deleteByExample(Object obj, HtmlEntityDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -193,4 +193,11 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		
 	}
 
+	@Override
+	public Integer deleteByExample(IpAddress obj, IpAddressDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

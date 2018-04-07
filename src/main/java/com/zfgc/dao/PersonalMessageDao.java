@@ -50,4 +50,12 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 		
 	}
 
+	@Override
+	public Integer deleteByExample(PersonalMessage obj,
+			PersonalMessageDbObjExample ex) {
+				return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

@@ -11,6 +11,10 @@
 			return PmService.getConvoTitle(vm);
 		};
 		
+		vm.leaveConvo = function(){
+			PmService.leaveConversation(vm,vm.conversation.pmConversationId);
+		};
+		
 		if($location.search().conversationId && $location.search().conversationId !== null){
 			vm.openConversation($location.search().conversationId);
 		}

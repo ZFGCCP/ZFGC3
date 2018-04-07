@@ -55,4 +55,11 @@ public class CategoryDao extends AbstractDao<CategoryDbObjExample, CategoryDbObj
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer deleteByExample(Category obj, CategoryDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 }

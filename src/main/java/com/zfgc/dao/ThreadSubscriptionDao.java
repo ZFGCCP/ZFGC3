@@ -78,4 +78,12 @@ public class ThreadSubscriptionDao extends AbstractDao<ThreadSubscriptionViewDbO
 		
 	}
 
+	@Override
+	public Integer deleteByExample(ThreadSubscription obj,
+			ThreadSubscriptionViewDbObjExample ex) {
+				return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }

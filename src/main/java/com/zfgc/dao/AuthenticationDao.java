@@ -140,4 +140,11 @@ public class AuthenticationDao extends AbstractDao{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer deleteByExample(Object obj, Object ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
 }

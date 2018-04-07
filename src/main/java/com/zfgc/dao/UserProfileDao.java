@@ -85,4 +85,12 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer deleteByExample(UserProfileView obj,
+			UserProfileViewDbObjExample ex) {
+				return null;
+		// TODO Auto-generated method stub
+		
+	}
 }

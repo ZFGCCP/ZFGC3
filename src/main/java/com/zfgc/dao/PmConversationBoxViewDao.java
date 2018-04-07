@@ -40,5 +40,13 @@ public class PmConversationBoxViewDao extends AbstractDao<PmConversationBoxViewD
 		throw new UnsupportedOperationException();
 		
 	}
+
+	@Override
+	public Integer deleteByExample(PmConversationView obj,
+			PmConversationBoxViewDbObjExample ex) {
+				return null;
+		// TODO Auto-generated method stub
+		
+	}
 	
 }

@@ -352,4 +352,15 @@ public class PmService extends AbstractService {
 			return null;
 		}
 	}
+	
+	public void removeConvoFromInbox(TwoFactorKey aesKey, PmConversation convo, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		aesKey.setUsersId(zfgcUser.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
+		
+		pmConversationDataProvider.deleteConversationFromBox(convo, zfgcUser);
+	}
 }

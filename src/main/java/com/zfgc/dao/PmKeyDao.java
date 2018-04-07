@@ -47,4 +47,11 @@ public class PmKeyDao extends AbstractDao<PmKeyDbObjExample, PmKeyDbObj, PmKey>{
 		
 	}
 
+	@Override
+	public Integer deleteByExample(PmKey obj, PmKeyDbObjExample ex) {
+		return null;
+		// TODO Auto-generated method stub
+		
+	}
+
 }
