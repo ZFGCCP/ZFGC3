@@ -40,6 +40,11 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		
 		pmConversationDao.updateOrInsert(obj);
 		
+		BrUserConversation userToConvoMapping = new BrUserConversation();
+		userToConvoMapping.setUserId(initiator);
+		userToConvoMapping.setConvoId(obj.getPmConversationId());
+		brUserConversationDao.updateOrInsert(userToConvoMapping);
+		
 		return obj;
 	}
 	
