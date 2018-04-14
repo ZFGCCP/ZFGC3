@@ -10,12 +10,14 @@
 		}
 	}
 	
-	.navigation-icon{
+	button.navigation-icon{
 	    display: inline-block;
 	    font-size: 25px;
 	    position: relative;
 	    padding-top: 7px;
 	    padding-right:15px;
+	    background:transparent;
+	    border:none;
 	    
 	    label{
 	    	font-family: verdana;

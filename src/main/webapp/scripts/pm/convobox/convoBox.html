@@ -4,6 +4,20 @@
 			<div class="section-title-wrapper">
 				<div class="section-title">Mail Box</div>
 			</div>
+			<div class="navigation-wrapper">
+				<button ng-click="vm.leaveConvo()" class="navigation-icon" title="Leave Conversation" ng-disabled="!vm.boxesSelected">
+					<i class="fas fa-sign-out-alt"></i><label>Leave</label>
+				</button>
+				<button class="navigation-icon" title="Archive" ng-disabled="!vm.boxesSelected">
+					<i class="fas fa-archive"></i><label>Archive</label>
+				</button>
+				<button class="navigation-icon" title="Prune">
+					<i class="fas fa-comment-slash"></i><label>Prune</label>
+				</button>
+				<button class="navigation-icon" title="New" ng-click="vm.newMessage()">
+					<i class="fas fa-plus-circle"></i><label>New</label>
+				</button>
+			</div>
 		</div>
 		
 		<div class="section-body">
@@ -34,7 +48,7 @@
 							</div>
 							<div class="responsive-table-body">
 								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
-									<span class="responsive-col-del responsive-table-cell"><input type="checkbox"/></span>
+									<span class="responsive-col-del responsive-table-cell"><input type="checkbox" ng-model="convo.isSelected" value="true" ng-change="vm.checkForCheckedBoxes()"/></span>
 									<span class="responsive-col-title responsive-table-cell">
 										<a ng-href="mailBox/conversation?conversationId={{convo.pmConversationId}}">
 											<span class="convo-box-subject" ng-bind-html="convo.subject"></span>

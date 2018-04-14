@@ -1,8 +1,17 @@
+.main-wrapper{
+	width: 70%;
+    margin: 0 auto;
+    display: block;
+    
+    .left-nav-panel{
+    	float:left;
+    }
+}
+
 .section-container{
 	margin-top:20px;
 	margin-left:20px;
 	border:1px solid;
-	width: 95%;
     margin: 0 auto;
 	
 	.section-header{
@@ -174,4 +183,21 @@ ul.paginator{
 			padding-bottom:10px;
 		}
 	}
+}
+
+button:disabled{
+	cursor:not-allowed;
+}
+
+.forum-header{
+	
+	height: 75px;
+    border-left: 1px solid;
+    border-right: 1px solid;
+
+	.user-header-wrapper{
+		padding-top: 50px;
+    	padding-left: 5px;
+	}
+
 }

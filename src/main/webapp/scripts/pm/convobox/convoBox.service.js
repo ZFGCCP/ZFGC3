@@ -1,6 +1,6 @@
 (function(){
 	
-	function ConvoBoxService($resource, localStorageService){
+	function ConvoBoxService($resource, $state, localStorageService){
 		var service = {};
 		
 		service.resource = $resource('/forum/pm/convobox',{},{
@@ -26,11 +26,26 @@
 		      
 		      return result;
 	    };
+	    
+	    service.checkForCheckedBoxes = function(vm){
+	    	for(var i = 0; i < vm.convoBox.conversations.length; i++){
+	    		if(vm.convoBox.conversations[i].isSelected === true){
+	    			vm.boxesSelected = true;
+	    			return;
+	    		}
+	    	}
+	    	
+	    	vm.boxesSelected = false;
+	    };
+	    
+	    service.newMessage = function(){
+	    	$state.go('sendPm');
+	    };
 		
 		return service;
 	};
 	
 	angular.module('zfgc.pm')
-		   .service('ConvoBoxService',['$resource','localStorageService',ConvoBoxService]);
+		   .service('ConvoBoxService',['$resource','$state','localStorageService',ConvoBoxService]);
 	
 })();
