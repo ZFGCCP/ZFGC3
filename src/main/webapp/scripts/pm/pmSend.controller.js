@@ -64,13 +64,11 @@
 		}
 		
 		vm.init = function(){
+			vm.personalMessage = PmService.getTemplate();
 			if($location.search().senderId){
-				vm.personalMessage = PmService.getTemplate();
-				
 				vm.personalMessage.$promise.then(function(data){
 					vm.getUserDisplayName($location.search().senderId);
 				});
-				
 			}
 		};
 		
