@@ -27,6 +27,10 @@
 	}
 	
 	.navigation-wrapper{
+		button.navigation-icon:disabled{
+			color:$midnight-disabled-color;
+		}
+	
 		.navigation{
 			ul{
 				background-color:$midnight-header-bg-color;

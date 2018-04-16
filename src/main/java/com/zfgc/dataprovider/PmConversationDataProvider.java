@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dao.BrPmConversationArchiveDao;
 import com.zfgc.dao.BrUserConversationDao;
 import com.zfgc.dao.PmConversationBoxViewDao;
 import com.zfgc.dao.PmConversationDao;
@@ -16,6 +18,8 @@ import com.zfgc.dbobj.PmConversationBoxViewDbObjWithBLOBs;
 import com.zfgc.dbobj.PmConversationDbObj;
 import com.zfgc.dbobj.PmConversationDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.pm.BrPmConversationArchive;
+import com.zfgc.model.pm.BrUserConversation;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.users.Users;
@@ -33,12 +37,26 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	@Autowired
 	BrUserConversationDao brUserConversationDao;
 	
+	@Autowired
+	BrPmConversationArchiveDao brPmConversationArchiveDao;
+	
+	@Transactional
+	public void addToArchive(BrPmConversationArchive obj){
+		brPmConversationArchiveDao.updateOrInsert(obj);
+	}
+	
+	@Transactional
 	public PmConversation createConversation(Integer initiator){
 		PmConversation obj = new PmConversation();
 		obj.setStartDt(ZfgcTimeUtils.getToday());
 		obj.setInitiatorId(initiator);
 		
 		pmConversationDao.updateOrInsert(obj);
+		
+		BrUserConversation userToConvoMapping = new BrUserConversation();
+		userToConvoMapping.setUsersId(initiator);
+		userToConvoMapping.setPmConversationId(obj.getPmConversationId());
+		brUserConversationDao.updateOrInsert(userToConvoMapping);
 		
 		return obj;
 	}

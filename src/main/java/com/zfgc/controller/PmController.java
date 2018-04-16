@@ -20,6 +20,7 @@ import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversation;
+import com.zfgc.model.pm.PmConversationMulti;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmGenerator;
@@ -176,4 +177,52 @@ public class PmController extends BaseController {
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
+	
+	@RequestMapping(value="/conversation/delete",method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity deleteConversation(@RequestBody PmConversationMulti conversations){
+		try{
+			pmService.removeMultiConvoFromInbox(conversations, zfgcUser());
+		} catch (ZfgcInvalidAesKeyException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} catch (ZfgcNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	@RequestMapping(value="/converstion/{conversationId}/archive",method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity archiveConversation(@RequestBody TwoFactorKey aesKey, @PathVariable("conversationId") Integer convoId){
+		
+		try{
+			pmService.moveConversationToArchive(aesKey, convoId, zfgcUser());
+		} catch (ZfgcInvalidAesKeyException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} catch (ZfgcNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	@RequestMapping(value="/conversation/archive",method=RequestMethod.POST,produces="application/json")
+	public ResponseEntity archiveConversation(@RequestBody PmConversationMulti conversations){
+		
+		try{
+			pmService.moveMultiConversationToArchive(conversations, zfgcUser());
+		} catch (ZfgcInvalidAesKeyException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} catch (ZfgcNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
 }

@@ -1,11 +1,19 @@
 (function(){
 	
-	function ConvoBoxService($resource, localStorageService){
+	function ConvoBoxService($resource, $state, localStorageService){
 		var service = {};
 		
 		service.resource = $resource('/forum/pm/convobox',{},{
 			convoBox : {
 				url : '/forum/pm/convobox',
+				method : 'POST'
+			},
+			archive : {
+				url : '/forum/pm/conversation/archive',
+				method : 'POST'
+			},
+			leave : {
+				url : '/forum/pm/conversation/delete',
 				method : 'POST'
 			}
 		});
@@ -17,6 +25,32 @@
 			return service.resource.convoBox({'key' : localStorageService.get('pmKey')});
 		};
 		
+		service.deleteConversations = function(vm){
+			var convos = [];
+			for(var i = 0; i < vm.convoBox.conversations.length; i++){
+				if(vm.convoBox.conversations[i].isSelected){
+					convos.push(vm.convoBox.conversations[i].pmConversationId);
+				}
+			}
+			
+			if(convos.length > 0){
+				return service.resource.leave({'aesKey' : {'key':localStorageService.get('pmKey')}, 'convoIds' : convos });
+			}
+		};
+		
+		service.archiveConversations = function(vm){
+			var convos = [];
+			for(var i = 0; i < vm.convoBox.conversations.length; i++){
+				if(vm.convoBox.conversations[i].isSelected){
+					convos.push(vm.convoBox.conversations[i].pmConversationId);
+				}
+			}
+			
+			if(convos.length > 0){
+				return service.resource.archive({'aesKey' : {'key':localStorageService.get('pmKey')}, 'convoIds' : convos });
+			}
+		};
+		
 		service.stripHtml = function (text) {
 		      var result = text ? String(text).replace(/<[^>]+>/gm, '') : '';
 		      
@@ -26,11 +60,26 @@
 		      
 		      return result;
 	    };
+	    
+	    service.checkForCheckedBoxes = function(vm){
+	    	for(var i = 0; i < vm.convoBox.conversations.length; i++){
+	    		if(vm.convoBox.conversations[i].isSelected === true){
+	    			vm.boxesSelected = true;
+	    			return;
+	    		}
+	    	}
+	    	
+	    	vm.boxesSelected = false;
+	    };
+	    
+	    service.newMessage = function(){
+	    	$state.go('sendPm');
+	    };
 		
 		return service;
 	};
 	
 	angular.module('zfgc.pm')
-		   .service('ConvoBoxService',['$resource','localStorageService',ConvoBoxService]);
+		   .service('ConvoBoxService',['$resource','$state','localStorageService',ConvoBoxService]);
 	
 })();

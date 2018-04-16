@@ -110,7 +110,7 @@
 				return null;
 			}
 			
-			for(var i = 0; i < vm.sendersList.length; i++){
+			for(var i = 0; i < vm.personalMessage.receivers.length; i++){
 				if(vm.personalMessage.receivers[i].userId === usersId){
 					return true;
 				}

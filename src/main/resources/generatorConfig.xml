@@ -142,9 +142,12 @@
     
     <table schema="Zfgc3" tableName="PM_CONVERSATION" domainObjectName="PmConversationDbObj">
     	<generatedKey column="PM_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(PM_CONVERSATION_ID) + 1,0) FROM PM_CONVERSATION"/>
-    </table>-->
+    </table>
     
     <table schema="Zfgc3" tableName="BR_USER_CONVERSATION" domainObjectName="BrUserConversationDbObj">
+    </table>-->
+    
+    <table schema="Zfgc3" tableName="BR_PM_CONVERSATION_ARCHIVE" domainObjectName="BrPmConversationArchiveDbObj">
     </table>
     
     <!-- views -->

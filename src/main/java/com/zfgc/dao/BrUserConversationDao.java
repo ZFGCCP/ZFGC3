@@ -10,9 +10,10 @@ import com.zfgc.dbobj.BrUserConversationDbObjKey;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.BrUserConversationDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.pm.BrUserConversation;
 
 @Component
-public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjExample,BrUserConversationDbObjKey,BaseZfgcModel>{
+public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjExample,BrUserConversationDbObjKey,BrUserConversation>{
 
 	@Autowired
 	BrUserConversationDbObjMapper dbObjMapper;
@@ -25,25 +26,25 @@ public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjEx
 	}
 
 	@Override
-	public void hardDelete(BaseZfgcModel obj) {
+	public void hardDelete(BrUserConversation obj) {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void updateOrInsert(BaseZfgcModel obj) {
-		// TODO Auto-generated method stub
-		
+	public void updateOrInsert(BrUserConversation obj) {
+		BrUserConversationDbObjKey dbObj = mapper.map(obj, BrUserConversationDbObjKey.class);
+		dbObjMapper.insert(dbObj);
 	}
 
 	@Override
-	public void updateByExample(BaseZfgcModel obj,
+	public void updateByExample(BrUserConversation obj,
 			BrUserConversationDbObjExample ex) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(BaseZfgcModel obj,
+	public Integer deleteByExample(BrUserConversation obj,
 			BrUserConversationDbObjExample ex) throws Exception, ZfgcNotFoundException {
 		
 		Integer resultCount = dbObjMapper.deleteByExample(ex);
