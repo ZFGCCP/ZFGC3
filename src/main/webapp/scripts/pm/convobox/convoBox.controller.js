@@ -19,6 +19,14 @@
 			ConvoBoxService.newMessage();
 		};
 		
+		vm.archiveConversations = function(){
+			ConvoBoxService.archiveConversations(vm);
+		};
+		
+		vm.deleteConversations = function(){
+			ConvoBoxService.deleteConversations(vm);
+		};
+		
 		vm.convoBox = PmService.getConvoBox();
 	}
 	

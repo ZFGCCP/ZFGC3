@@ -18,9 +18,11 @@ import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
+import com.zfgc.model.pm.BrPmConversationArchive;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversation;
+import com.zfgc.model.pm.PmConversationMulti;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmKey;
@@ -363,4 +365,66 @@ public class PmService extends AbstractService {
 		
 		pmConversationDataProvider.deleteConversationFromBox(convo, zfgcUser);
 	}
+	
+	@Transactional
+	public void removeMultiConvoFromInbox(PmConversationMulti convos, Users zfgcUser)  throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!checkIfAesKeyValid(convos.getAesKey(),zfgcUser)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
+		for(Integer convo : convos.getConvoIds()){
+			PmConversation convoObj = new PmConversation();
+			convoObj.setPmConversationId(convo);
+			pmConversationDataProvider.deleteConversationFromBox(convoObj, zfgcUser);
+		}
+	}
+	
+	@Transactional
+	public void moveMultiConversationToArchive(PmConversationMulti convos, Users zfgcUser)  throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!checkIfAesKeyValid(convos.getAesKey(),zfgcUser)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
+		for(Integer convo : convos.getConvoIds()){
+			BrPmConversationArchive archive = new BrPmConversationArchive();
+			archive.setUsersId(zfgcUser.getUsersId());
+			archive.setPmConversationId(convo);
+			archive.setArchiveDt(new Date());
+			
+			//confirm that the convo exists
+			//throws an exception if not
+			pmConversationDataProvider.getConversation(convo);
+			pmConversationDataProvider.addToArchive(archive);
+		}
+	}
+	
+	public void moveConversationToArchive(TwoFactorKey aesKey, Integer convoId, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!checkIfAesKeyValid(aesKey,zfgcUser)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
+		BrPmConversationArchive archive = new BrPmConversationArchive();
+		archive.setUsersId(zfgcUser.getUsersId());
+		archive.setPmConversationId(convoId);
+		archive.setArchiveDt(new Date());
+		
+		//confirm that the convo exists
+		//throws an exception if not
+		pmConversationDataProvider.getConversation(convoId);
+	
+		pmConversationDataProvider.addToArchive(archive);
+	}
+	
+	private boolean checkIfAesKeyValid(TwoFactorKey aesKey,Users zfgcUser) throws ZfgcInvalidAesKeyException{
+		aesKey.setUsersId(zfgcUser.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			return false;
+		}
+		
+		return true;
+	}
+	
 }

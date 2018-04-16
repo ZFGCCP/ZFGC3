@@ -18,6 +18,7 @@ public class PmConversationView extends BaseZfgcModel{
     private Date startDt;
     private String subject;
     private String message;
+    private Boolean isSelected;
 	
 	public Integer getPmConversationId() {
 		return pmConversationId;
@@ -132,6 +133,14 @@ public class PmConversationView extends BaseZfgcModel{
 
 	public void setReceiverName(String receiverName) {
 		this.receiverName = receiverName;
+	}
+
+	public Boolean getIsSelected() {
+		return isSelected;
+	}
+
+	public void setIsSelected(Boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 
 }

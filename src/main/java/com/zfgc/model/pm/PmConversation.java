@@ -11,6 +11,7 @@ public class PmConversation extends BaseZfgcModel {
 	private Date startDt;
 	private List<PersonalMessage> messages;
 	private Integer initiatorId;
+	private Boolean isSelected;
 	
 	public Integer getPmConversationId() {
 		return pmConversationId;
@@ -48,6 +49,14 @@ public class PmConversation extends BaseZfgcModel {
 
 	public void setInitiatorId(Integer initiatorId) {
 		this.initiatorId = initiatorId;
+	}
+
+	public Boolean getIsSelected() {
+		return isSelected;
+	}
+
+	public void setIsSelected(Boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 	
 }
