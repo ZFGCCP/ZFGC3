@@ -81,6 +81,46 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		} 
 	}
 	
+	public List<PmConversationView> getSentBoxViewByUsersId(Users user) throws Exception{
+		Integer usersId = user.getUsersId();
+		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId).andReceiverIdNotEqualTo(usersId);
+		
+		try {
+			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
+			List<PmConversationView> result = new ArrayList<>();
+			
+			for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
+				result.add(mapper.map(obj, PmConversationView.class));
+			}
+			
+			return result;
+			
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		} 
+	}
+	
+	public List<PmConversationView> getInBoxViewByUsersId(Users user) throws Exception{
+		Integer usersId = user.getUsersId();
+		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId).andReceiverIdEqualTo(usersId);
+		
+		try {
+			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
+			List<PmConversationView> result = new ArrayList<>();
+			
+			for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
+				result.add(mapper.map(obj, PmConversationView.class));
+			}
+			
+			return result;
+			
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		} 
+	}
+	
 	public PmConversation getConversation(Integer convoId) throws ZfgcNotFoundException, Exception {
 		PmConversationDbObjExample ex = new PmConversationDbObjExample();
 		ex.createCriteria().andPmConversationIdEqualTo(convoId);

@@ -26,7 +26,10 @@
 					<span class="filter-wrapper">
 						<div class="col-xs-3">
 							<label>Filter By</label>
-							<select class="small-input form-control" ng-model="vm.filters.filterBy" ng-options="filterOption.id as filterOption.value for filterOption in vm.filterOptions">
+							<select class="small-input form-control" 
+							        ng-model="vm.filters.filterBy" 
+							        ng-change="vm.getConversations()"
+							        ng-options="filterOption.id as filterOption.value for filterOption in vm.filterOptions">
 							</select>
 						</div>
 						

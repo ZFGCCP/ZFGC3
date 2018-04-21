@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
+import com.zfgc.global.ConstPm;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversation;
@@ -129,9 +130,27 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity viewConvoBox(@RequestBody TwoFactorKey aesKey){
+	public ResponseEntity viewConvoBox(@RequestParam("filterType") Integer filterType, @RequestBody TwoFactorKey aesKey){
 		try{
-			PmConvoBox convos = pmService.getConversationBox(aesKey, zfgcUser());
+			
+			PmConvoBox convos = null;
+			//todo: use constants
+			switch(filterType) {
+			case 0:
+				convos = pmService.getConversationBox(aesKey, zfgcUser());
+				break;
+				
+			case 1:
+				convos = pmService.getConversationsInBox(aesKey, zfgcUser());
+				break;
+				
+			case 2:
+				convos = pmService.getConversationsSentBox(aesKey, zfgcUser());
+				break;
+				
+			case 3:
+				break;
+			}
 			
 			if(convos == null){
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
