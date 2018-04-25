@@ -5,10 +5,10 @@
 				<div class="section-title">Mail Box</div>
 			</div>
 			<div class="navigation-wrapper">
-				<button class="navigation-icon" title="Leave Conversation" ng-disabled="!vm.boxesSelected" ng-click="vm.deleteConversations()">
+				<button class="navigation-icon" title="Leave Conversation" ng-disabled="!vm.boxesSelected || vm.filters.filterBy === 3" ng-click="vm.deleteConversations()">
 					<i class="fas fa-sign-out-alt"></i><label>Leave</label>
 				</button>
-				<button class="navigation-icon" title="Archive" ng-disabled="!vm.boxesSelected" ng-click="vm.archiveConversations()">
+				<button class="navigation-icon" title="Archive" ng-disabled="!vm.boxesSelected || vm.filters.filterBy === 3" ng-click="vm.archiveConversations()">
 					<i class="fas fa-archive"></i><label>Archive</label>
 				</button>
 				<button class="navigation-icon" title="Prune">

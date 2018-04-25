@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
-import com.zfgc.global.ConstPm;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversation;
@@ -149,6 +148,7 @@ public class PmController extends BaseController {
 				break;
 				
 			case 3:
+				convos = pmService.getArchiveBox(aesKey, zfgcUser());
 				break;
 			}
 			
@@ -160,7 +160,11 @@ public class PmController extends BaseController {
 		}
 	    catch (ZfgcInvalidAesKeyException e) {
 	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	    }
+	    } catch (ZfgcNotFoundException e) {
+	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	    } catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")

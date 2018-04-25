@@ -68,4 +68,6 @@ public interface PmConversationBoxViewDbObjMapper {
 	 */
 	int updateByExample(@Param("record") PmConversationBoxViewDbObj record,
 			@Param("example") PmConversationBoxViewDbObjExample example);
+	
+	List<PmConversationBoxViewDbObj> selectArchived(Integer usersId);
 }
