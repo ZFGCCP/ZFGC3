@@ -3,7 +3,7 @@
 	function ConvoBoxService($resource, $state, localStorageService){
 		var service = {};
 		
-		service.resource = $resource('/forum/pm/convobox',{},{
+		service.resource = $resource('/forum/pm/convobox',{'filterType' : '@filterType'},{
 			convoBox : {
 				url : '/forum/pm/convobox',
 				method : 'POST'
@@ -21,8 +21,8 @@
 		//testing purposes only
 		localStorageService.set('pmKey', 'butts');
 		
-		service.getConvoBox = function(){
-			return service.resource.convoBox({'key' : localStorageService.get('pmKey')});
+		service.getConvoBox = function(vm){
+			return service.resource.convoBox({'filterType' : vm.filters.filterBy, 'key' : localStorageService.get('pmKey')});
 		};
 		
 		service.deleteConversations = function(vm){

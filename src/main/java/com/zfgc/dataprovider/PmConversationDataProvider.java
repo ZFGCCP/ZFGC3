@@ -9,9 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dao.BrPmConversationArchiveDao;
 import com.zfgc.dao.BrUserConversationDao;
+import com.zfgc.dao.PmArchiveBoxViewDao;
 import com.zfgc.dao.PmConversationBoxViewDao;
 import com.zfgc.dao.PmConversationDao;
 import com.zfgc.dbobj.BrUserConversationDbObjExample;
+import com.zfgc.dbobj.PmArchiveBoxViewDbObj;
+import com.zfgc.dbobj.PmArchiveBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObj;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjWithBLOBs;
@@ -20,6 +23,7 @@ import com.zfgc.dbobj.PmConversationDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.pm.BrPmConversationArchive;
 import com.zfgc.model.pm.BrUserConversation;
+import com.zfgc.model.pm.PmArchiveBoxView;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.users.Users;
@@ -39,6 +43,9 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	
 	@Autowired
 	BrPmConversationArchiveDao brPmConversationArchiveDao;
+	
+	@Autowired
+	PmArchiveBoxViewDao pmArchiveBoxViewDao;
 	
 	@Transactional
 	public void addToArchive(BrPmConversationArchive obj){
@@ -65,6 +72,46 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		Integer usersId = user.getUsersId();
 		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
 		ex.createCriteria().andUsersIdEqualTo(usersId);
+		
+		try {
+			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
+			List<PmConversationView> result = new ArrayList<>();
+			
+			for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
+				result.add(mapper.map(obj, PmConversationView.class));
+			}
+			
+			return result;
+			
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		} 
+	}
+	
+	public List<PmConversationView> getSentBoxViewByUsersId(Users user) throws Exception{
+		Integer usersId = user.getUsersId();
+		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId).andReceiverIdNotEqualTo(usersId);
+		
+		try {
+			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
+			List<PmConversationView> result = new ArrayList<>();
+			
+			for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
+				result.add(mapper.map(obj, PmConversationView.class));
+			}
+			
+			return result;
+			
+		} catch (Exception e) {
+			throw new Exception(e.getMessage());
+		} 
+	}
+	
+	public List<PmConversationView> getInBoxViewByUsersId(Users user) throws Exception{
+		Integer usersId = user.getUsersId();
+		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId).andReceiverIdEqualTo(usersId);
 		
 		try {
 			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
@@ -111,5 +158,25 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		ex.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId()).andPmConversationIdEqualTo(convo.getPmConversationId());
 		
 		brUserConversationDao.deleteByExample(null, ex);
+	}
+	
+	public List<PmArchiveBoxView> getArchiveBox(Users zfgcUser) throws ZfgcNotFoundException, Exception{
+		PmArchiveBoxViewDbObjExample sendEx = pmArchiveBoxViewDao.getExample();
+		sendEx.createCriteria().andSenderIdEqualTo(zfgcUser.getUsersId()).andSendCopyFlagEqualTo(true);
+		
+		PmArchiveBoxViewDbObjExample receiveEx = pmArchiveBoxViewDao.getExample();
+		receiveEx.createCriteria().andReceiverIdEqualTo(zfgcUser.getUsersId()).andSendCopyFlagEqualTo(false);
+		
+		List<PmArchiveBoxViewDbObj> dbObj = new ArrayList<>();
+		dbObj.addAll(pmArchiveBoxViewDao.get(sendEx));
+		dbObj.addAll(pmArchiveBoxViewDao.get(receiveEx));
+		
+		List<PmArchiveBoxView> result = new ArrayList<>(dbObj.size());
+		
+		for(PmArchiveBoxViewDbObj db : dbObj){
+			result.add(mapper.map(db, PmArchiveBoxView.class));
+		}
+		
+		return result;
 	}
 }

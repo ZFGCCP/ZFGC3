@@ -145,10 +145,10 @@
     </table>
     
     <table schema="Zfgc3" tableName="BR_USER_CONVERSATION" domainObjectName="BrUserConversationDbObj">
-    </table>-->
+    </table>
     
     <table schema="Zfgc3" tableName="BR_PM_CONVERSATION_ARCHIVE" domainObjectName="BrPmConversationArchiveDbObj">
-    </table>
+    </table>-->
     
     <!-- views -->
     
@@ -215,6 +215,9 @@
     
     <table schema="zfgc3" tableName="PM_CONVERSATION_BOX_VIEW" domainObjectName="PmConversationBoxViewDbObj">
     </table>-->
+    
+    <table schema="zfgc3" tableName="PM_ARCHIVE_BOX_VIEW" domainObjectName="PmArchiveBoxViewDbObj">
+    </table>
     
   </context>
 </generatorConfiguration>

@@ -3,8 +3,8 @@
 	function ConvoBoxCtrl($scope, PmService, ConvoBoxService){
 		var vm = this;
 		
-		vm.filters = {'filterBy' : -1};
-		vm.filterOptions = [{'id': -1, 'value': 'All Messages'},{'id' : 0, 'value':'Inbox'},{'id':1,'value':'Outbox'},{'id':2,'value':'Archived'}];
+		vm.filters = {'filterBy' : 0};
+		vm.filterOptions = [{'id': 0, 'value': 'All Messages'},{'id' : 1, 'value':'Inbox'},{'id':2,'value':'Outbox'},{'id':3,'value':'Archived'}];
 		vm.boxesSelected = false;
 		
 		vm.stripHtml = function(text){
@@ -27,7 +27,11 @@
 			ConvoBoxService.deleteConversations(vm);
 		};
 		
-		vm.convoBox = PmService.getConvoBox();
+		vm.getConversations = function(){
+			vm.convoBox = ConvoBoxService.getConvoBox(vm);
+		};
+
+		vm.getConversations();
 	}
 	
 	angular.module('zfgc.pm')

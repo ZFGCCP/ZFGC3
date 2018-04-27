@@ -20,6 +20,7 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.BrPmConversationArchive;
 import com.zfgc.model.pm.PersonalMessage;
+import com.zfgc.model.pm.PmArchiveBoxView;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationMulti;
@@ -114,6 +115,42 @@ public class PmService extends AbstractService {
 		
 		try {
 			List<PmConversationView> convoView = pmConversationDataProvider.getBoxViewByUsersId(zfgcUser);
+			PmConvoBox convoBox = new  PmConvoBox();
+			convoBox.setConversations(decryptAndPrepareConvoBox(convoView, senderKeys, aesKey));
+			return convoBox;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public PmConvoBox getConversationsSentBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+		aesKey.setUsersId(zfgcUser.getUsersId());
+		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
+		}
+		
+		try {
+			List<PmConversationView> convoView = pmConversationDataProvider.getSentBoxViewByUsersId(zfgcUser);
+			PmConvoBox convoBox = new  PmConvoBox();
+			convoBox.setConversations(decryptAndPrepareConvoBox(convoView, senderKeys, aesKey));
+			return convoBox;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public PmConvoBox getConversationsInBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
+		aesKey.setUsersId(zfgcUser.getUsersId());
+		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
+		}
+		
+		try {
+			List<PmConversationView> convoView = pmConversationDataProvider.getInBoxViewByUsersId(zfgcUser);
 			PmConvoBox convoBox = new  PmConvoBox();
 			convoBox.setConversations(decryptAndPrepareConvoBox(convoView, senderKeys, aesKey));
 			return convoBox;
@@ -416,6 +453,34 @@ public class PmService extends AbstractService {
 		pmConversationDataProvider.getConversation(convoId);
 	
 		pmConversationDataProvider.addToArchive(archive);
+	}
+	
+	@Transactional
+	public PmConvoBox getArchiveBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!checkIfAesKeyValid(aesKey,zfgcUser)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
+		List<PmArchiveBoxView> archive = pmConversationDataProvider.getArchiveBox(zfgcUser);
+		PmConvoBox archiveBox = new PmConvoBox();
+		archiveBox.setConversations(new ArrayList<>());
+		
+		for(PmArchiveBoxView archived : archive){
+			PmConversationView convo = new PmConversationView();
+			convo.setMessage(archived.getMessage());
+			convo.setSubject(archived.getSubject());
+			convo.setPmConversationId(archived.getPmConversationId());
+			convo.setPersonalMessageId(archived.getPersonalMessageId());
+			convo.setSentDt(archived.getSentDt());
+			convo.setReceiverId(archived.getReceiverId());
+			
+			archiveBox.getConversations().add(convo);
+		}
+		
+		archiveBox.setConversations(decryptAndPrepareConvoBox(archiveBox.getConversations(), receiverKeys, aesKey));
+		
+		return archiveBox;
 	}
 	
 	private boolean checkIfAesKeyValid(TwoFactorKey aesKey,Users zfgcUser) throws ZfgcInvalidAesKeyException{

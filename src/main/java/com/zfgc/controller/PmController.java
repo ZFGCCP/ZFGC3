@@ -129,9 +129,28 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity viewConvoBox(@RequestBody TwoFactorKey aesKey){
+	public ResponseEntity viewConvoBox(@RequestParam("filterType") Integer filterType, @RequestBody TwoFactorKey aesKey){
 		try{
-			PmConvoBox convos = pmService.getConversationBox(aesKey, zfgcUser());
+			
+			PmConvoBox convos = null;
+			//todo: use constants
+			switch(filterType) {
+			case 0:
+				convos = pmService.getConversationBox(aesKey, zfgcUser());
+				break;
+				
+			case 1:
+				convos = pmService.getConversationsInBox(aesKey, zfgcUser());
+				break;
+				
+			case 2:
+				convos = pmService.getConversationsSentBox(aesKey, zfgcUser());
+				break;
+				
+			case 3:
+				convos = pmService.getArchiveBox(aesKey, zfgcUser());
+				break;
+			}
 			
 			if(convos == null){
 				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
@@ -141,7 +160,11 @@ public class PmController extends BaseController {
 		}
 	    catch (ZfgcInvalidAesKeyException e) {
 	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-	    }
+	    } catch (ZfgcNotFoundException e) {
+	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+	    } catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
