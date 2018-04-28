@@ -1,6 +1,6 @@
 (function(){
 	
-	function ConvoBoxCtrl($scope, PmService, ConvoBoxService){
+	function ConvoBoxCtrl($scope, $state, PmService, ConvoBoxService){
 		var vm = this;
 		
 		vm.filters = {'filterBy' : 0};
@@ -30,11 +30,15 @@
 		vm.getConversations = function(){
 			vm.convoBox = ConvoBoxService.getConvoBox(vm);
 		};
+		
+		vm.prune = function(){
+			$state.go('convoBox.prune');
+		};
 
 		vm.getConversations();
 	}
 	
 	angular.module('zfgc.pm')
-		   .controller('ConvoBoxCtrl',['$scope','PmService','ConvoBoxService',ConvoBoxCtrl])
+		   .controller('ConvoBoxCtrl',['$scope','$state','PmService','ConvoBoxService',ConvoBoxCtrl])
 	
 })();
