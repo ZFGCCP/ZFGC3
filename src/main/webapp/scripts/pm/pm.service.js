@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService){
+	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService, ModalService){
 		var pmService = {};
 		
 		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
@@ -144,11 +144,15 @@
 			
 			return vm.conversation.messages[lastMessage].subject;
 		};
+		
+		pmService.openPruneDialog = function(vm){
+			ModalService.createTemplatedPopup('ConvoBoxCtrl','scripts/modal/templates/modalConvoPrune.html','prune-modal');
+		};
 
 		return pmService;
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService',PmService]);
+		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService','ModalService',PmService]);
 	
 })();

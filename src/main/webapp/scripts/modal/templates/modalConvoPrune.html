@@ -1,0 +1,58 @@
+<div class="modal-wrapper">
+	<div class="modal-header">
+		<h2>Prune Conversations</h2>
+	</div>
+	<form>
+		<div class="modal-body">
+			<div class="row form-control-wrapper">
+				<div class="col-xs-12">
+					<input type="radio"/> <label>Prune</label>
+					<input type="radio"/> <label>Archive</label>
+				</div>
+			</div>
+			<div class="row form-control-wrapper">
+				<div class="col-xs-12">
+					<label>Delete older than...</label>
+				</div>
+				<div class="col-xs-4">
+					<input type="number" class="form-control small-input" placeholder="days"/>
+				</div>
+			</div>
+			<div class="row form-control-wrapper">
+				<div class="col-xs-12">
+					<label>Delete inactive longer than...</label>
+				</div>
+				<div class="col-xs-4">
+					<input type="number" class="form-control small-input" placeholder="days"/>
+				</div>
+			</div>
+			<div class="row form-control-wrapper">
+				<div class="col-xs-12">
+					<label>Delete all started by user...</label>
+				</div>
+				<div class="col-xs-4">
+					<input type="text" class="form-control small-input" placeholder="Search members..."/>
+				</div>
+			</div>
+			<div class="row form-control-wrapper">
+				<div class="col-xs-12">
+					<label>Delete all containing user...</label>
+				</div>
+				<div class="col-xs-4">
+					<input type="text" class="form-control small-input" placeholder="Search members..."/>
+				</div>
+			</div>
+			<div class="row form-control-wrapper">
+				<div class="col-xs-12">
+					<label>Delete all started by me.</label>
+				</div>
+			</div>
+		</div>
+		<div class="modal-footer">
+			<span class="modal-button-wrapper">
+				<button class="btn btn-critical">Prune</button>
+				<button class="btn btn-def" ng-click="$dismiss()">Cancel</button>
+			</span>
+		</div>
+	</form>
+</div>

@@ -32,7 +32,7 @@
 		};
 		
 		vm.prune = function(){
-			$state.go('convoBox.prune');
+			PmService.openPruneDialog(vm);
 		};
 
 		vm.getConversations();

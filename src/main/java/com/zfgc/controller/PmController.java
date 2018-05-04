@@ -248,4 +248,8 @@ public class PmController extends BaseController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
+	/*@RequestMapping(value="/prune", method=RequestMethod.POST,produces="application/json")
+	public ResponseEntity pruneConversations(){
+		
+	}*/
 }
