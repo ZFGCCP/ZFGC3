@@ -53,15 +53,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
 	    
-	"./src/main/webapp/scripts/forum/forum.module.js",
-	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
-	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
+	"./src/main/webapp/scripts/forum/forum.module.js",
+	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -97,9 +97,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
-	"./src/main/webapp/scripts/error/error.module.js",
-	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
+	    
+	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -111,21 +111,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.html",
 	    
-	"./src/main/webapp/scripts/idp/idpSelection.html",
-	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.html",
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
@@ -134,6 +132,10 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
@@ -149,11 +151,7 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
 	    
-	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
-	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
-	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html"
+	"./src/main/webapp/scripts/users/user-profile/user-summary.html"
 	    
 	],
 
