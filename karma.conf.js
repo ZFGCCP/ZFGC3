@@ -43,6 +43,10 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
 	    
+	"./src/main/webapp/scripts/forum/forum.module.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
+	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
@@ -56,8 +60,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
-	    
-	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -155,7 +157,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
 	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html"
+	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
 	    
 	],
 

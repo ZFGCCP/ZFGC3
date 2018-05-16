@@ -64,6 +64,14 @@ form{
 		display:block;
 		padding-left:18px;
 	}
+	
+	//input specific classes
+	input{
+		&.dropdown-selector{
+			border-bottom-left-radius: 0;
+    		border-bottom-right-radius: 0;
+		}
+	}
 }
 
 .padded-form{
