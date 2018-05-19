@@ -1,12 +1,13 @@
-<div class="{{classList}} dropdown-parent" uib-dropdown is-open="dropdownOpen" dropdown-append-to-body>
+<div class="{{classList}} dropdown-parent" uib-dropdown is-open="dropdownOpen">
 	<input ng-model="ngModel" 
 		   type="text" 
 		   ng-class="{'dropdown-selector' : dropdownOpen}" 
 		   class="form-control small-input" 
-		   placeholder="Search members..."/>
-	<a uib-dropdown-toggle>test</a>
+		   placeholder="Search members..."
+		   uib-typeahead="user for user in termChanged($viewValue)"/>
 	<ul class="dropdown-wrapper" uib-dropdown-menu>
-		<li>test</li>
-		<li>test2</li>
+		<li ng-repeat="result in results" ng-click="selectUser(result)">
+			{{result.displayName}}
+		</li>
 	</ul>
 </div>

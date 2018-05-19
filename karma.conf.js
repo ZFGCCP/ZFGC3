@@ -61,8 +61,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
-	"./src/main/webapp/scripts/forum/forum.module.js",
-	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
@@ -141,10 +139,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
 	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
-	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
-	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/buddy-ignore.html",
@@ -159,7 +153,7 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
 	    
-	"./src/main/webapp/scripts/users/user-profile/user-summary.html"
+	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
 	    
