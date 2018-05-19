@@ -3,6 +3,8 @@ package com.zfgc.mappers;
 import com.zfgc.dbobj.PmConversationBoxViewDbObj;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjWithBLOBs;
+import com.zfgc.model.pm.PmPrune;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
@@ -70,4 +72,6 @@ public interface PmConversationBoxViewDbObjMapper {
 			@Param("example") PmConversationBoxViewDbObjExample example);
 	
 	List<PmConversationBoxViewDbObj> selectArchived(Integer usersId);
+	
+	List<Integer> prune(PmPrune prune);
 }

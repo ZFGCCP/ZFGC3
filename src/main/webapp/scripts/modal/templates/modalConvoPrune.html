@@ -6,8 +6,8 @@
 		<div class="modal-body">
 			<div class="row form-control-wrapper">
 				<div class="col-xs-12">
-					<input type="radio"/> <label>Prune</label>
-					<input type="radio"/> <label>Archive</label>
+					<input type="radio" ng-model="vm.prune.pruneFlag" ng-value="0"/> <label>Prune</label>
+					<input type="radio" ng-model="vm.prune.pruneFlag" ng-value="1"/> <label>Archive</label>
 				</div>
 			</div>
 			<div class="row form-control-wrapper">
@@ -15,7 +15,7 @@
 					<label>Delete older than...</label>
 				</div>
 				<div class="col-xs-4">
-					<input type="number" class="form-control small-input" placeholder="days"/>
+					<input type="number" ng-model="vm.prune.olderThan" class="form-control small-input" placeholder="days"/>
 				</div>
 			</div>
 			<div class="row form-control-wrapper">
@@ -23,22 +23,20 @@
 					<label>Delete inactive longer than...</label>
 				</div>
 				<div class="col-xs-4">
-					<input type="number" class="form-control small-input" placeholder="days"/>
+					<input type="number" ng-model="vm.prune.inactiveFor" class="form-control small-input" placeholder="days"/>
 				</div>
 			</div>
 			<div class="row form-control-wrapper">
 				<div class="col-xs-12">
 					<label>Delete all started by user...</label>
 				</div>
-				<div class="col-xs-4">
-					<input type="text" class="form-control small-input" placeholder="Search members..."/>
-				</div>
+				<user-search class-list="col-xs-4" ng-model="vm.prune.deleteStartedUserId"></user-search>
 			</div>
 			<div class="row form-control-wrapper">
 				<div class="col-xs-12">
 					<label>Delete all containing user...</label>
 				</div>
-				<user-search class-list="col-xs-4" ng-model="vm.test"></user-search>
+				<user-search class-list="col-xs-4" ng-model="vm.prune.deleteContainingUserId"></user-search>
 			</div>
 			<div class="row form-control-wrapper">
 				<div class="col-xs-12">

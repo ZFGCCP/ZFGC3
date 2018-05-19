@@ -61,6 +61,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/member-search/member-search.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
@@ -71,11 +73,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
+	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
-	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
@@ -85,11 +87,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.service.js",
 	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -97,11 +99,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
+	"./src/main/webapp/scripts/error/error.module.js",
+	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
-	    
-	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -112,6 +114,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/error/notFound.html",
 	    
 	"./src/main/webapp/scripts/forum/forum.html",
+	    
+	"./src/main/webapp/scripts/idp/idpSelection.html",
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
@@ -125,15 +129,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
+	"./src/main/webapp/scripts/directives/member-search/member-search.html",
+	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalConvoPrune.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
-	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    

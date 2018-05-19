@@ -24,7 +24,12 @@
 						return data;
 					});
 				}
-			}
+			};
+			
+			$scope.selectUser = function(result){
+				$scope.ngModel = result.usersId;
+				$scope.displayName = result.displayName;
+			};
 		}
 		
 		return directive;
