@@ -1,11 +1,12 @@
 (function(){
 	
-	function ConvoBoxCtrl($scope, PmService, ConvoBoxService){
+	function ConvoBoxCtrl($scope, $state, PmService, ConvoBoxService){
 		var vm = this;
 		
 		vm.filters = {'filterBy' : 0};
 		vm.filterOptions = [{'id': 0, 'value': 'All Messages'},{'id' : 1, 'value':'Inbox'},{'id':2,'value':'Outbox'},{'id':3,'value':'Archived'}];
 		vm.boxesSelected = false;
+		vm.prune = {};
 		
 		vm.stripHtml = function(text){
 			return ConvoBoxService.stripHtml(text);
@@ -30,11 +31,15 @@
 		vm.getConversations = function(){
 			vm.convoBox = ConvoBoxService.getConvoBox(vm);
 		};
+		
+		vm.prune = function(){
+			PmService.openPruneDialog(vm);
+		};
 
 		vm.getConversations();
 	}
 	
 	angular.module('zfgc.pm')
-		   .controller('ConvoBoxCtrl',['$scope','PmService','ConvoBoxService',ConvoBoxCtrl])
+		   .controller('ConvoBoxCtrl',['$scope','$state','PmService','ConvoBoxService',ConvoBoxCtrl])
 	
 })();

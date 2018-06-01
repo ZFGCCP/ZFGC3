@@ -1,0 +1,28 @@
+.dropdown-parent{
+	ul{
+		&.dropdown-wrapper{
+	        border-top-left-radius: 0;
+		    border-top-right-radius: 0;
+		    border-bottom-left-radius: 5px;
+		    border-bottom-right-radius: 5px;
+		    top: 26px;
+		    background-color: #FFF;
+		    border: 1px solid #ccc;
+		    border-top: 1px solid #ccc;
+		    list-style-type: none;
+		    font-size: 12px;
+		    padding-left: 0px;
+		    left: auto;
+		    width: 176px;
+		    
+		    li{
+		   		padding: 10px 0 10px 25px;
+	    		color: #000;
+		    }
+		    
+		    li:hover{
+		    	background-color:black;
+		    }
+		}
+	}
+}

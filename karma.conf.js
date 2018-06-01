@@ -43,21 +43,27 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
 	    
+	"./src/main/webapp/scripts/forum/forum.module.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
+	    
+	"./src/main/webapp/scripts/pm/conversation/prune-convo-modal.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.service.js",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
-	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
-	    
-	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -125,17 +131,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
+	"./src/main/webapp/scripts/modal/templates/modalConvoPrune.html",
+	    
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
-	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
+	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
 	    
-	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
@@ -151,7 +157,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
 	    
-	"./src/main/webapp/scripts/users/user-profile/user-summary.html"
+	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
+	    
+	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
 	    
 	],
 

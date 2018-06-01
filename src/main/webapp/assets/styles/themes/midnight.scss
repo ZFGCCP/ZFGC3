@@ -45,11 +45,19 @@
 
 form{
 	.btn{
-		background-color:$midnight-std-btn;
 		
-		.btn-save{
-			background-color:$midnight-save-btn !important;
-		}
+	}
+	
+	.btn-save{
+		background-color:$midnight-save-btn !important;
+	}
+	
+	.btn-critical{
+		background-color:$midnight-btn-danger !important;
+	}
+
+	.btn-def{
+		background-color:$midnight-btn-default !important;
 	}
 }
 
@@ -136,4 +144,15 @@ a:visited{
 
 a:hover{
 	color : $midnight-a-hover;
+}
+
+//modal
+.modal-content{
+	background-color:$midnight-modal-background-color;
+	
+	.modal-header{
+		h2{
+			color:$midnight-modal-header-text-color;
+		}
+	}
 }

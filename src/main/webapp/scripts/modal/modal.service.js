@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function ModalService(ngDialog){
+	function ModalService($uibModal, ngDialog){
 		var ModalService = {};
 		
 		ModalService.requiredFieldsErrors = [];
@@ -10,10 +10,16 @@
 		
 		ModalService.currentDialog = null;
 		
+		ModalService.createTemplatedPopup = function(controller,templateUrl,windowClass){
+			ModalService.currentDialog = $uibModal.open({'controller' : controller + ' as vm',
+														 'templateUrl' : templateUrl,
+														 'windowClass' : windowClass
+														});
+		};
+		
 		ModalService.createGeneralErrorPopup = function(){
-			ModalService.currentDialog = ngDialog.open({ template: 'scripts/modal/templates/modalGeneralError.html', 
-				                         className: 'ngdialog-theme-default',
-				                         closeByNavigation : true});
+			ModalService.currentDialog = $uibModal.open({ templateUrl: 'scripts/modal/templates/modalGeneralError.html', 
+				                         windowClass: 'ngdialog-theme-default'});
 		};
 		
 		ModalService.createValidationErrorPopup = function(errorResponse){
@@ -28,11 +34,10 @@
 			}
 			
 			
-			ModalService.currentDialog = ngDialog.open({ template: 'scripts/modal/templates/modalValidationError.html', 
-                						 className: 'ngdialog-theme-default',
+			ModalService.currentDialog = $uibModal.open({ templateUrl: 'scripts/modal/templates/modalValidationError.html', 
+                						 windowClass: 'ngdialog-theme-default',
                 						 controller: 'ModalCtrl',
-                						 closeByNavigation : true,
-                						 preCloseCallback: ModalService.closeValidationErrors});
+                						 controllerAs : 'vm'});
 		}
 		
 		ModalService.closeValidationErrors = function(){
@@ -46,5 +51,5 @@
 	
 	angular
 	.module('zfgc.forum')
-	.service('ModalService',['ngDialog',ModalService])
+	.service('ModalService',['$uibModal','ngDialog',ModalService])
 })();

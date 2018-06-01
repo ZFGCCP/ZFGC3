@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService){
+	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService, ModalService){
 		var pmService = {};
 		
 		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
@@ -18,6 +18,14 @@
 			},
 			leave : {
 				url : '/forum/pm/conversation/:conversationId/delete',
+				method : 'POST'
+			},
+			pruneTemplate : {
+				url : '/forum/pm/convobox/prune/template',
+				method : 'GET'
+			},
+			prune : {
+				url : '/forum/pm/convobox/prune',
 				method : 'POST'
 			}
 		});
@@ -144,11 +152,20 @@
 			
 			return vm.conversation.messages[lastMessage].subject;
 		};
+		
+		pmService.openPruneDialog = function(vm){
+			ModalService.createTemplatedPopup('PruneConvoCtrl','scripts/modal/templates/modalConvoPrune.html','prune-modal');
+		};
+		
+		pmService.pruneConversations = function(vm){
+			vm.prune.tfa = {'key' : localStorageService.get('pmKey')};
+			var result = pmService.resource.prune(vm.prune);
+		};
 
 		return pmService;
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService',PmService]);
+		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService','ModalService',PmService]);
 	
 })();

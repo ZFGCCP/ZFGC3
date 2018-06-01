@@ -27,6 +27,7 @@ import com.zfgc.model.pm.PmConversationMulti;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmKey;
+import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
@@ -490,6 +491,26 @@ public class PmService extends AbstractService {
 		}
 		
 		return true;
+	}
+	
+	public void pruneConversations(PmPrune prune, Users zfgcUser) throws Exception{
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		if(!checkIfAesKeyValid(prune.getTfa(),zfgcUser)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
+		List<Integer> pruneIds = pmConversationDataProvider.getConvosToBePruned(prune, zfgcUser);
+		
+		if(prune.getPruneFlag() == true){
+			pmConversationDataProvider.bulkDeleteConversation(pruneIds, zfgcUser);
+		}
+		else{
+			PmConversationMulti multi = new PmConversationMulti();
+			multi.setAesKey(prune.getTfa());
+			multi.setConvoIds(pruneIds);
+			moveMultiConversationToArchive(multi, zfgcUser);
+		}
+		
 	}
 	
 }

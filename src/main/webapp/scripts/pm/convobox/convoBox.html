@@ -11,7 +11,7 @@
 				<button class="navigation-icon" title="Archive" ng-disabled="!vm.boxesSelected || vm.filters.filterBy === 3" ng-click="vm.archiveConversations()">
 					<i class="fas fa-archive"></i><label>Archive</label>
 				</button>
-				<button class="navigation-icon" title="Prune">
+				<button class="navigation-icon" title="Prune" ng-click="vm.prune()">
 					<i class="fas fa-comment-slash"></i><label>Prune</label>
 				</button>
 				<button class="navigation-icon" title="New" ng-click="vm.newMessage()">

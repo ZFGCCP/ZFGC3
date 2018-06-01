@@ -51,7 +51,7 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 			throw new ZfgcValidationException(typeName);
 		}
 	}
-	
+
 	protected void checkEmailFormat(Users model){
 		if(model.getEmailAddress() != null &&
 		   !Pattern.matches(GENERAL_STRING_FORMAT, model.getEmailAddress().getEmailAddress()) ||
