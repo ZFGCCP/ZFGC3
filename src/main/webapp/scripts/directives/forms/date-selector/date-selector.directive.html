@@ -1,0 +1,13 @@
+<span class="input-group">
+<input type="text" 
+       class="form-control" 
+       uib-datepicker-popup="{{format}}" 
+       ng-model="internalDate"
+       ng-change="parseDate()" 
+       is-open="isOpen"
+       placeholder="Select a date..."
+       close-text="Close"/>
+<span class="input-group-btn">
+  <button type="button" class="btn btn-default" ng-click="open()"><i class="far fa-calendar-alt"></i></button>
+</span>
+</span>

@@ -17,6 +17,7 @@ import com.zfgc.dbobj.PmArchiveBoxViewDbObj;
 import com.zfgc.dbobj.PmArchiveBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObj;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjExample;
+import com.zfgc.dbobj.PmConversationBoxViewDbObjExample.Criteria;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjWithBLOBs;
 import com.zfgc.dbobj.PmConversationDbObj;
 import com.zfgc.dbobj.PmConversationDbObjExample;
@@ -26,6 +27,7 @@ import com.zfgc.model.pm.BrUserConversation;
 import com.zfgc.model.pm.PmArchiveBoxView;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
+import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.users.Users;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
@@ -160,6 +162,13 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brUserConversationDao.deleteByExample(null, ex);
 	}
 	
+	public void bulkDeleteConversation(List<Integer> ids, Users zfgcUser) throws Exception{
+		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId()).andPmConversationIdIn(ids);
+		
+		brUserConversationDao.deleteByExample(null,ex);
+	}
+	
 	public List<PmArchiveBoxView> getArchiveBox(Users zfgcUser) throws ZfgcNotFoundException, Exception{
 		PmArchiveBoxViewDbObjExample sendEx = pmArchiveBoxViewDao.getExample();
 		sendEx.createCriteria().andSenderIdEqualTo(zfgcUser.getUsersId()).andSendCopyFlagEqualTo(true);
@@ -178,5 +187,36 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		}
 		
 		return result;
+	}
+	
+	public List<Integer> getConvosToBePruned(PmPrune prune, Users zfgcUser) throws Exception{
+		PmConversationBoxViewDbObjExample pruneEx = pmConversationBoxViewDao.getExample();
+		Criteria crit = pruneEx.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId());
+		
+		if(prune.getOlderThanDt() != null){
+			crit = crit.andStartDtLessThan(prune.getOlderThanDt());
+		}
+		
+		if(prune.getInactiveForDt() != null){
+			crit = crit.andSentDtLessThanOrEqualTo(prune.getInactiveForDt());
+		}
+		
+		if(prune.getDeleteStartedUserId() != null){
+			crit = crit.andInitiatorIdEqualTo(prune.getDeleteStartedUserId());
+		}
+		
+		if(prune.getStartedByMeFlag()){
+			crit = crit.andInitiatorIdEqualTo(zfgcUser.getUsersId());
+		}
+		
+		List<PmConversationBoxViewDbObjWithBLOBs> dbs = pmConversationBoxViewDao.get(pruneEx);
+		List<Integer> results = new ArrayList<>();
+		
+		for(PmConversationBoxViewDbObjWithBLOBs db : dbs){
+			results.add(db.getPmConversationId());
+		}
+		
+		return results;
+		
 	}
 }

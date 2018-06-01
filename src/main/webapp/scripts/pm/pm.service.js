@@ -19,6 +19,14 @@
 			leave : {
 				url : '/forum/pm/conversation/:conversationId/delete',
 				method : 'POST'
+			},
+			pruneTemplate : {
+				url : '/forum/pm/convobox/prune/template',
+				method : 'GET'
+			},
+			prune : {
+				url : '/forum/pm/convobox/prune',
+				method : 'POST'
 			}
 		});
 		
@@ -146,7 +154,12 @@
 		};
 		
 		pmService.openPruneDialog = function(vm){
-			ModalService.createTemplatedPopup('ConvoBoxCtrl','scripts/modal/templates/modalConvoPrune.html','prune-modal');
+			ModalService.createTemplatedPopup('PruneConvoCtrl','scripts/modal/templates/modalConvoPrune.html','prune-modal');
+		};
+		
+		pmService.pruneConversations = function(vm){
+			vm.prune.tfa = {'key' : localStorageService.get('pmKey')};
+			var result = pmService.resource.prune(vm.prune);
 		};
 
 		return pmService;

@@ -24,6 +24,7 @@ import com.zfgc.model.pm.PmConversationMulti;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmGenerator;
+import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.pm.PmService;
@@ -167,6 +168,11 @@ public class PmController extends BaseController {
 		}
 	}
 	
+	@RequestMapping(value="/convobox/prune/template", method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity getPruneTemplate(){
+		return ResponseEntity.ok(new PmPrune());
+	}
+	
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId) {
 		try {
@@ -248,8 +254,18 @@ public class PmController extends BaseController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
-	/*@RequestMapping(value="/prune", method=RequestMethod.POST,produces="application/json")
-	public ResponseEntity pruneConversations(){
+	@RequestMapping(value="/convobox/prune", method=RequestMethod.POST,produces="application/json")
+	public ResponseEntity pruneConversations(@RequestBody PmPrune prune){
+		try{
+			pmService.pruneConversations(prune, zfgcUser());
+		} catch (ZfgcInvalidAesKeyException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} catch (ZfgcNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 		
-	}*/
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
 }
