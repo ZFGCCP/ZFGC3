@@ -3,6 +3,9 @@ It's a secret to everyone.
 [![Build Status](https://api.travis-ci.org/ZFGCCP/ZFGC3.png)](http://travis-ci.org/ZFGCCP/ZFGC3)
 
 ## Installation
+Install Node 6.11.0
+Install Python
+
 `npm install .`  
 `npm install -g bower gulp-cli`
 
