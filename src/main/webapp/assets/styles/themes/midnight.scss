@@ -45,19 +45,21 @@
 
 form{
 	.btn{
+		&.btn-save{
+			background-color:$midnight-save-btn !important;
+		}
+	
+		&.btn-critical{
+			background-color:$midnight-btn-danger !important;
+		}
+	
+		&.btn-def{
+			background-color:$midnight-btn-default !important;
+		}
 		
-	}
-	
-	.btn-save{
-		background-color:$midnight-save-btn !important;
-	}
-	
-	.btn-critical{
-		background-color:$midnight-btn-danger !important;
-	}
-
-	.btn-def{
-		background-color:$midnight-btn-default !important;
+		&.btn-confirm{
+			background-color:$midnight-btn-confirm !important;
+		}
 	}
 }
 

@@ -19,7 +19,7 @@
 		});
 		
 		//testing purposes only
-		localStorageService.set('pmKey', 'butts');
+		//localStorageService.set('pmKey', 'butts');
 		
 		service.getConvoBox = function(vm){
 			return service.resource.convoBox({'filterType' : vm.filters.filterBy, 'key' : localStorageService.get('pmKey')});

@@ -31,6 +31,10 @@
 	    	  	else if(resE.status === 500){
 	    	  		modalService.createGeneralErrorPopup();
 	    	  	}
+	    	  	else if(resE.status === 401){
+	    	  		//unauthorized pm box access
+	    	  		state.go('pmAuth');
+	    	  	}
 	    	  
 	    	  	return resE;
 	      }

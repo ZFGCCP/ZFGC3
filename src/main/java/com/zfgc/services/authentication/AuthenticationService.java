@@ -220,6 +220,10 @@ public class AuthenticationService  extends AbstractService {
 	public Boolean isValidAesKey(TwoFactorKey aes) throws ZfgcInvalidAesKeyException{
 		PmKey pmKey = pmKeyDataProvider.getPmKeyByUsersId(aes.getUsersId());
 		
+		if(aes.getKey() == null){
+			throw new ZfgcInvalidAesKeyException(pmKey.getParityWord());
+		}
+		
 		String decrypted = ZfgcSecurityUtils.decryptAes(pmKey.getParityWord(), aes.getKey());
 		
 		if(decrypted == null){

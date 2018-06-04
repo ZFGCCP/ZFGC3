@@ -161,6 +161,10 @@
 			vm.prune.tfa = {'key' : localStorageService.get('pmKey')};
 			var result = pmService.resource.prune(vm.prune);
 		};
+		
+		pmService.setAuthorization = function(key){
+			localStorageService.set('pmKey', key);
+		};
 
 		return pmService;
 	}
