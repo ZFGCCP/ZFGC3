@@ -1,7 +1,7 @@
 <div class="forum-header">
 	<div class="user-header-wrapper">
 		<div>
-			Welcome, <a ng-href="/forum/userprofile?userId={{user.usersId}}">{{user.displayName}}</a>
+			Welcome, <a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
 		</div>
 		<div>
 			Logout | <a href="/forum/mailBox">Conversations (0)</a>

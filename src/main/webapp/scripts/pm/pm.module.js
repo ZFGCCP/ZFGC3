@@ -13,11 +13,17 @@ angular.module('zfgc.pm',['zfgc.config'])
 					templateUrl: basePath + '/convobox/convoBox.html'
 			})
 			.state('convo',{
-				url : '/mailBox/conversation?convoId',
+				url : '/mailBox/conversation?:conversationId',
 				templateUrl: basePath +'/conversation/conversation.html'
 			})
 			.state('prune',{
 				url : '/mailBox/prune',
 				templateUrl : basePath + '/convobox/prune-convos.html'
+			});
+		
+		$stateProvider
+			.state('pmAuth',{
+				url : '/pmAuth',
+				templateUrl : basePath + '/pmTwoFactor/pmTwoFactor.html'
 			});
 }]);

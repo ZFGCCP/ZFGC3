@@ -7,7 +7,7 @@ angular.module('zfgc.users',['zfgc.config'])
 				templateUrl: basePath + '/users.html'
 			})
 			.state('user-profile', {
-				url: '/userprofile',
+				url: '/userprofile?:userId',
 				templateUrl: basePath + '/user-profile/user-profile.html'
 			})
 			.state('registration', {

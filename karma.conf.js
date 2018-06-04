@@ -53,13 +53,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
-	"./src/main/webapp/scripts/pm/conversation/prune-convo-modal.controller.js",
-	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
+	"./src/main/webapp/scripts/pm/pmTwoFactor/pm-two-factor.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.service.js",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/conversation/prune-convo-modal.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
@@ -137,11 +139,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	"./src/main/webapp/scripts/pm/pmTwoFactor/pm-two-factor.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    

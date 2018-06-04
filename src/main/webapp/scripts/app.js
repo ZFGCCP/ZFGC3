@@ -17,7 +17,18 @@ angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'd
 		localStorageServiceProvider.setDefaultToCookie(false);
 		localStorageServiceProvider.setNotify(false,false);
 		
-	}]);
+		
+		
+	}])
+	.run(['$rootScope', '$transitions', function($rootScope,$transitions){
+		$transitions.onSuccess({}, function($transition){
+			$rootScope.previousStateObject = $transition.$from();
+			$rootScope.previousState = $transition.$from().name;
+			
+			$rootScope.previousStateParams = $rootScope.currentStateParams;
+			$rootScope.currentStateParams = $transition.params();
+	    });
+    }]);
 
 angular.module('zfgc.modules', [
     'zfgc.users',
