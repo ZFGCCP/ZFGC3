@@ -22,6 +22,28 @@
 				                         windowClass: 'ngdialog-theme-default'});
 		};
 		
+		ModalService.createConfirmDialog = function(confirmationTitle, confirmationMessage, confirmBehavior){
+			if(confirmationTitle === null){
+				confirmationTitle = "Are you sure?";
+			}
+			
+			if(confirmationMessage === null){
+				confirmationMessage ="Any unsaved changes will be lost.";
+			}
+			
+			ModalService.currentDialog = $uibModal.open({
+				templateUrl : 'scripts/modal/templates/modalConfirm.html',
+				controller : 'ModalCtrl as vm',
+				resolve : {
+					params : {
+						'confirmationTitle' : confirmationTitle,
+						'confirmationMessage' : confirmationMessage,
+						'confirmBehavior' : confirmBehavior
+					}
+				}
+			});
+		};
+		
 		ModalService.createValidationErrorPopup = function(errorResponse){
 			if(errorResponse.requiredFieldsErrors.length > 0){
 				ModalService.requiredFieldsErrors = errorResponse.requiredFieldsErrors;

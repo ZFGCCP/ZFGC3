@@ -6,7 +6,7 @@
 		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
 			template : {
 				url : '/forum/pm/template',
-				method : 'GET'
+				method : 'POST'
 			},
 			send : {
 				url : '/forum/pm/send',
@@ -49,6 +49,12 @@
 		
 		pmService.openConvo = function(vm,convoId){
 			var convo = pmService.resource.open({'key' : localStorageService.get('pmKey'), 'conversationId' : convoId});
+			
+			convo.$promise.then(function(data){
+				for(var i = 0; i < data.messages[0].receivers; i++){
+					vm.participants.push(data.messages[0].receivers[i]);
+				}
+			});
 			
 			return convo;
 		};
@@ -109,8 +115,13 @@
 			vm.personalMessage.receivers.push({'usersId' : user.usersId, 'displayName' : user.displayName});
 		};
 		
-		pmService.getTemplate = function(){
-			return pmService.resource.template();
+		pmService.getTemplate = function(templateConfig){
+			if(templateConfig && templateConfig !== null){
+				return pmService.resource.template(templateConfig);
+			}
+			else{
+				return pmService.resource.template();
+			}
 		};
 		
 		pmService.checkIfUserInList = function(vm,usersId){
