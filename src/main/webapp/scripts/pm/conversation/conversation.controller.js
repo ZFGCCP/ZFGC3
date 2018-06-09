@@ -1,6 +1,6 @@
 (function(){
 	
-	function conversationCtrl($scope, $location, PmService){
+	function conversationCtrl($rootScope, $scope, $state, $location, PmService){
 		var vm = this;
 		
 		vm.openConversation = function(conversationId){
@@ -15,12 +15,21 @@
 			PmService.leaveConversation(vm,vm.conversation.pmConversationId);
 		};
 		
+		vm.closeConversation = function(){
+			if($rootScope.previousState){
+				$state.go($rootScope.previousState,$rootScope.previousStateParams)
+			}
+			else{
+				$location.url("/");
+			}
+		};
+		
 		if($location.search().conversationId && $location.search().conversationId !== null){
 			vm.openConversation($location.search().conversationId);
 		}
 	}
 	
 	angular.module('zfgc.pm')
-		   .controller('ConversationCtrl',['$scope','$location','PmService',conversationCtrl]);
+		   .controller('ConversationCtrl',['$rootScope','$scope','$state','$location','PmService',conversationCtrl]);
 	
 })();
