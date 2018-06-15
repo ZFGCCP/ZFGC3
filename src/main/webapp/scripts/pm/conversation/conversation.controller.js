@@ -1,6 +1,6 @@
 (function(){
 	
-	function conversationCtrl($scope, $location, PmService, ForumPostService, ModalService){
+	function conversationCtrl($rootScope, $scope, $state, $location, PmService, ForumPostService, ModalService){
 		var vm = this;
 		vm.showReplyBox = false;
 		
@@ -18,6 +18,15 @@
 			PmService.leaveConversation(vm,vm.conversation.pmConversationId);
 		};
 		
+		vm.closeConversation = function(){
+			if($rootScope.previousState){
+				$state.go($rootScope.previousState,$rootScope.previousStateParams)
+			}
+			else{
+				$location.url("/");
+			}
+		};
+		
 		vm.toggleReplyBox = function(){
 			ForumPostService.toggleMessageReply(vm);
 			
@@ -32,6 +41,6 @@
 	}
 	
 	angular.module('zfgc.pm')
-		   .controller('ConversationCtrl',['$scope','$location','PmService','ForumPostService','ModalService',conversationCtrl]);
+		   .controller('ConversationCtrl',['$rootScope','$scope','$state','$location','PmService','ForumPostService','ModalService',conversationCtrl]);
 	
 })();

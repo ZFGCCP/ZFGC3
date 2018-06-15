@@ -49,7 +49,7 @@
 								<span class="responsive-col-title responsive-table-cell">Conversation</span>
 								<span class="responsive-col-last-updated responsive-table-cell">Started By</span>
 							</div>
-							<div class="responsive-table-body">
+							<div class="responsive-table-body" ng-if="vm.convoBox.conversations.length > 0">
 								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
 									<span class="responsive-col-del responsive-table-cell"><input type="checkbox" ng-model="convo.isSelected" value="true" ng-change="vm.checkForCheckedBoxes()"/></span>
 									<span class="responsive-col-title responsive-table-cell">
@@ -71,6 +71,7 @@
 								</div>
 							</div>
 						</div>
+						<span class="responsive-table-note col-xs-12" ng-if="vm.convoBox.conversations.length == 0">You have no conversations in this box.</span>
 					</form>
 				</div>
 			</div>
