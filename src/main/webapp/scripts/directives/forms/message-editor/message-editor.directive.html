@@ -1,25 +1,25 @@
 <form>
 	<div class="message-text-area">
 		<div class="col-xs-12">
-			<button class="btn btn-editor" title="Bold" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.bold)">B</button>
-			<button class="btn btn-editor" title="Italic" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.italic)">I</button>
-			<button class="btn btn-editor" title="Underline" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.underline)">U</button>
-			<button class="btn btn-editor" title="Strikethrough" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.strikethrough)">S</button>
+			<button class="btn btn-def btn-editor" title="Bold" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.bold)">B</button>
+			<button class="btn btn-def btn-editor" title="Italic" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.italic)">I</button>
+			<button class="btn btn-def btn-editor" title="Underline" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.underline)">U</button>
+			<button class="btn btn-def btn-editor" title="Strikethrough" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.strikethrough)">S</button>
 			<span></span>
-			<button class="btn btn-editor" title="Left Justify"><span class="fa fa-align-left"></span></button>
-			<button class="btn btn-editor" title="Center"><span class="fa fa-align-center"></span></button>
-			<button class="btn btn-editor" title="Right Justify"><span class="fa fa-align-right"></span></button>
+			<button class="btn btn-def btn-editor" title="Left Justify"><span class="fa fa-align-left"></span></button>
+			<button class="btn btn-def btn-editor" title="Center"><span class="fa fa-align-center"></span></button>
+			<button class="btn btn-def btn-editor" title="Right Justify"><span class="fa fa-align-right"></span></button>
 			<span></span>
-			<button class="btn btn-editor" title="Ordered List"><span class="fa fa-list-ol"></span></button>
-			<button class="btn btn-editor" title="Unordered List"><span class="fa fa-list-ul"></span></button>
+			<button class="btn btn-def btn-editor" title="Ordered List"><span class="fa fa-list-ol"></span></button>
+			<button class="btn btn-def btn-editor" title="Unordered List"><span class="fa fa-list-ul"></span></button>
 		</div>
 		<div class="col-xs-12">
-			<button class="btn btn-editor" title="Youtube Link"><span class="fa fa-youtube"></span></button>
-			<button class="btn btn-editor" title="Email"><span class="fa fa-envelope-o"></span></button>
-			<button class="btn btn-editor" title="Image"><span class="fa fa-file-picture-o"></span></button>
-			<button class="btn btn-editor" title="Spoiler"><span class="fa fa-exclamation-triangle"></span></button>
-			<button class="btn btn-editor" title="Hyperlink"><span class="fa fa-external-link"></span></button>
-			<button class="btn btn-editor" title="FTP Link"><span class="fa fa-file-o"></span></button>
+			<button class="btn btn-def btn-editor" title="Youtube Link"><span class="fab fa-youtube"></span></button>
+			<button class="btn btn-def btn-editor" title="Email"><span class="fas fa-envelope"></span></button>
+			<button class="btn btn-def btn-editor" title="Image"><span class="far fa-image"></span></button>
+			<button class="btn btn-def btn-editor" title="Spoiler"><span class="fas fa-exclamation-triangle"></span></button>
+			<button class="btn btn-def btn-editor" title="Hyperlink"><span class="fas fa-globe"></span></button>
+			<button class="btn btn-def btn-editor" title="FTP Link"><span class="far fa-file"></span></button>
 		</div>
 		<textarea ng-model="vm.personalMessage.message" 
 				  class="form-control" 
@@ -27,7 +27,8 @@
 				  ng-focus="vm.getLastCursorPos()"
 				  ng-change="vm.getLastCursorPos()"/>
 	</div>
-	<div class="xl-button-wrapper">
-		<button type="button" class="btn btn-save col-xs-12" ng-click="vm.sendPm()">Send</button>
+	<div class="message-buttons-wrapper">
+		<button class="btn btn-confirm" ng-click="vm.send()">Send</button>
+		<button class="btn btn-def" ng-click="vm.toggleReplyBox()">Cancel</button>
 	</div>
 </form>
