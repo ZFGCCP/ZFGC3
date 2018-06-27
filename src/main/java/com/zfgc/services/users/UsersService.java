@@ -2,6 +2,7 @@ package com.zfgc.services.users;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -45,6 +46,24 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	UsersRuleChecker ruleChecker;
+	
+	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
+		List<Users> result = null;
+		
+		try{
+			result = usersDataProvider.getUsersByConversation(conversationId);
+		}
+		catch(ZfgcNotFoundException ex){
+			ex.printStackTrace();
+			throw new ZfgcNotFoundException(ex.getResourceName());
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			throw new Exception(ex.getMessage());
+		}
+		
+		return result;
+	}
 	
 	public Users createNewUser(Users user, HttpServletRequest requestHeader){
 

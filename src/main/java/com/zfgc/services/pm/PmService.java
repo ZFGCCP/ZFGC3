@@ -28,6 +28,7 @@ import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.PmPrune;
+import com.zfgc.model.pm.PmTemplateConfig;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
@@ -58,6 +59,9 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	PmConversationDataProvider pmConversationDataProvider;
+	
+	@Autowired
+	UsersService usersService;
 	
 	private PmBox decryptPmBox(PmBox pmBox, PmKey keys, TwoFactorKey aesKey){
 		String decryptedRsa = ZfgcSecurityUtils.decryptAes(keys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
@@ -347,8 +351,16 @@ public class PmService extends AbstractService {
 		pmKeyDataProvider.createPmKeyPair(pmKey);
 	}
 	
-	public PersonalMessage getPmTemplate(){
-		return new PersonalMessage();
+	public PersonalMessage getPmTemplate(PmTemplateConfig templateConfig){
+		PersonalMessage pm = new PersonalMessage();
+		
+		if(templateConfig != null){
+			pm.setReceivers(templateConfig.getReceivers());
+			pm.setPmConversationId(templateConfig.getPmConversationId());
+			pm.setSubject(templateConfig.getSubject());
+		}
+		
+		return pm;
 	}
 	
 	public PmConvoBox getConvoBox(Users user){
@@ -381,6 +393,8 @@ public class PmService extends AbstractService {
 			
 			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), user));
 			convo = decryptConversation(convo, receiverKeys, aesKey);
+			
+			convo.setParticipants(usersService.getUsersByConversation(convoId));
 			
 			if(convo.getMessages().size() == 0) {
 				return null;

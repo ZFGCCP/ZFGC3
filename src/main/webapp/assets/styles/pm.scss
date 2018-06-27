@@ -1,3 +1,17 @@
 .mailbox-auth-wrapper{
 	padding-left:10px;
 }
+
+.message-text-area{
+	
+	.button-section-wrapper{
+		padding-bottom:12px;
+		display:inline-block;
+	}
+
+	padding:10px;
+	
+	textarea{
+		resize:none;
+	}
+}

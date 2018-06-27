@@ -16,6 +16,7 @@ import com.zfgc.dbobj.BrUsersIpAddressDbObjKey;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.mappers.BrUserConversationDbObjMapper;
 import com.zfgc.mappers.BrUsersIpAddressDbObjMapper;
 import com.zfgc.mappers.UsersDbObjMapper;
 import com.zfgc.model.users.IpAddress;
@@ -33,6 +34,17 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 	Logger LOGGER = Logger.getLogger(UsersDao.class);
 	
 	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_TOKEN A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
+	
+	public List<UsersDbObj> getUsersByConversation(Integer conversationId) throws Exception{
+		List<UsersDbObj> result = usersDbObjMapper.getUsersByConversation(conversationId);
+		
+		if(result.size() <= 0){
+			super.logDbGeneralError(LOGGER, "Users");
+			throw new ZfgcNotFoundException("Converation Id");
+		}
+		
+		return result;
+	}
 	
 	public List<UsersDbObj> getUsersById(List<Integer> userIds) throws Exception{
 		UsersDbObjExample ex = getExample();

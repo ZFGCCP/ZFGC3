@@ -25,6 +25,7 @@ import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmGenerator;
 import com.zfgc.model.pm.PmPrune;
+import com.zfgc.model.pm.PmTemplateConfig;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.pm.PmService;
@@ -40,10 +41,9 @@ public class PmController extends BaseController {
 	AuthenticationService authenticationService;
 	
 	
-	@RequestMapping(value="/template", method=RequestMethod.GET, produces="application/json")
-	@ResponseBody
-	public ResponseEntity getPmTemplate(){
-		return ResponseEntity.status(HttpStatus.OK).body(pmService.getPmTemplate());
+	@RequestMapping(value="/template", method=RequestMethod.POST, produces="application/json")
+	public ResponseEntity getPmTemplate(@RequestBody PmTemplateConfig templateConfig){
+		return ResponseEntity.status(HttpStatus.OK).body(pmService.getPmTemplate(templateConfig));
 	}
 	
 	@RequestMapping(value="/send", method=RequestMethod.POST, produces="application/json")

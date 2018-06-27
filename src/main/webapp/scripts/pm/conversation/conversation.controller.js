@@ -1,7 +1,10 @@
 (function(){
 	
-	function conversationCtrl($rootScope, $scope, $state, $location, PmService){
+	function conversationCtrl($rootScope, $scope, $state, $location, PmService, ForumPostService, ModalService){
 		var vm = this;
+		vm.showReplyBox = false;
+		
+		vm.participants = [];
 		
 		vm.openConversation = function(conversationId){
 			vm.conversation = PmService.openConvo(vm,conversationId);
@@ -24,12 +27,20 @@
 			}
 		};
 		
+		vm.toggleReplyBox = function(){
+			ForumPostService.toggleMessageReply(vm);
+			
+			if(vm.showReplyBox){
+				vm.personalMessage = PmService.getTemplate({receivers : vm.conversation.participants, pmConversationId : vm.conversation.pmConversationId});
+			}
+		};
+		
 		if($location.search().conversationId && $location.search().conversationId !== null){
 			vm.openConversation($location.search().conversationId);
 		}
 	}
 	
 	angular.module('zfgc.pm')
-		   .controller('ConversationCtrl',['$rootScope','$scope','$state','$location','PmService',conversationCtrl]);
+		   .controller('ConversationCtrl',['$rootScope','$scope','$state','$location','PmService','ForumPostService','ModalService',conversationCtrl]);
 	
 })();

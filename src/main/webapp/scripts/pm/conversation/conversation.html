@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<div class="navigation-wrapper">
-				<button class="navigation-icon" title="Reply">
+				<button class="navigation-icon" title="Reply" ng-click="vm.toggleReplyBox()" ng-disabled="vm.showReplyBox">
 					<i class="fas fa-reply-all"></i><label>Reply</label>
 				</button>
 				<button ng-click="vm.leaveConvo()" class="navigation-icon" title="Leave Conversation">
@@ -49,4 +49,73 @@
 			</div>
 		</div>
 	</div>
+	
+	<div class="section-container" ng-if="vm.showReplyBox === true">
+		<div class="section-header">
+			<div class="section-title-wrapper">
+				<div class="section-title">Reply</div>
+				<div class="subsection-title">
+					<div>
+						Subject : <span ng-bind-html="vm.getConvoTitle()"></span><i class="fas fa-pencil-alt edit-text-icon"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="section-body">
+			<message-editor ng-model="vm.test" show-reply-box="vm.showReplyBox" conversation="vm.conversation"></message-editor>
+		</div>
+	</div>
+	
+	<!--<div class="section-container" ng-if="vm.showReplyBox === true">
+		<div class="section-header">
+			<div class="section-title-wrapper">
+				<div class="section-title">Reply</div>
+				<div class="subsection-title">
+					<div>
+						Subject : <span ng-bind-html="vm.getConvoTitle()"></span><i class="fas fa-pencil-alt edit-text-icon"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<div class="section-body">
+			<form>
+				<div class="message-text-area">
+					<div class="button-section-wrapper">
+						<div class="col-xs-12">
+							<button class="btn btn-def btn-editor" title="Bold" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.bold)">B</button>
+							<button class="btn btn-def btn-editor" title="Italic" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.italic)">I</button>
+							<button class="btn btn-def btn-editor" title="Underline" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.underline)">U</button>
+							<button class="btn btn-def btn-editor" title="Strikethrough" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.strikethrough)">S</button>
+							<span></span>
+							<button class="btn btn-def btn-editor" title="Left Justify"><span class="fa fa-align-left"></span></button>
+							<button class="btn btn-def btn-editor" title="Center"><span class="fa fa-align-center"></span></button>
+							<button class="btn btn-def btn-editor" title="Right Justify"><span class="fa fa-align-right"></span></button>
+							<span></span>
+							<button class="btn btn-def btn-editor" title="Ordered List"><span class="fa fa-list-ol"></span></button>
+							<button class="btn btn-def btn-editor" title="Unordered List"><span class="fa fa-list-ul"></span></button>
+						</div>
+						<div class="col-xs-12">
+							<button class="btn btn-def btn-editor" title="Youtube Link"><span class="fab fa-youtube"></span></button>
+							<button class="btn btn-def btn-editor" title="Email"><span class="fas fa-envelope"></span></button>
+							<button class="btn btn-def btn-editor" title="Image"><span class="far fa-image"></span></button>
+							<button class="btn btn-def btn-editor" title="Spoiler"><span class="fas fa-exclamation-triangle"></span></button>
+							<button class="btn btn-def btn-editor" title="Hyperlink"><span class="fas fa-globe"></span></button>
+							<button class="btn btn-def btn-editor" title="FTP Link"><span class="far fa-file"></span></button>
+						</div>
+					</div>
+					<textarea ng-model="vm.personalMessage.message" 
+							  class="form-control" 
+							  rows="10"
+							  ng-focus="vm.getLastCursorPos()"
+							  ng-change="vm.getLastCursorPos()"></textarea>
+				</div>
+				<div class="message-buttons-wrapper">
+					<button class="btn btn-confirm" ng-click="vm.send()">Send</button>
+					<button class="btn btn-def" ng-click="vm.toggleReplyBox()">Cancel</button>
+				</div>
+			</form>
+		</div>
+	</div>-->
 </div>

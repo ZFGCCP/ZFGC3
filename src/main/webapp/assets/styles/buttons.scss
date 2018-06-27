@@ -22,4 +22,14 @@ form{
 	.btn-def{
 		border:1px solid black;
 	}
+	
+	.btn-editor{
+		width:50px;
+	}
+	
+	.message-buttons-wrapper{
+		padding: 0 0 10px 10px;
+	}
 }
+
+button:focus {outline:0;}

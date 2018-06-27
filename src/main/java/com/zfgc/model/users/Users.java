@@ -269,6 +269,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	public List<Integer> getMemberGroups() {
 		return new ArrayList<Integer>(memberGroups.keySet());
 	}
+	@JsonIgnore
 	public void setMemberGroups(Map<Integer,String> memberGroups) {
 		this.memberGroups = memberGroups;
 	}

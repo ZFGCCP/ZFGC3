@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.users.Users;
 
 public class PmConversation extends BaseZfgcModel {
 
@@ -12,6 +13,7 @@ public class PmConversation extends BaseZfgcModel {
 	private List<PersonalMessage> messages;
 	private Integer initiatorId;
 	private Boolean isSelected;
+	private List<Users> participants;
 	
 	public Integer getPmConversationId() {
 		return pmConversationId;
@@ -57,6 +59,14 @@ public class PmConversation extends BaseZfgcModel {
 
 	public void setIsSelected(Boolean isSelected) {
 		this.isSelected = isSelected;
+	}
+
+	public List<Users> getParticipants() {
+		return participants;
+	}
+
+	public void setParticipants(List<Users> participants) {
+		this.participants = participants;
 	}
 	
 }
