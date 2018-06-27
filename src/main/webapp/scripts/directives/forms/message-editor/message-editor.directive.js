@@ -6,11 +6,18 @@
 		directive.restrict = 'E';
 		directive.templateUrl = "scripts/directives/forms/message-editor/message-editor.directive.html";
 		directive.scope = {
-				ngModel:'=',
-				showReplyBox:'='
+				showReplyBox:'=',
+				conversation:'='
 		}
 
 		directive.link = function ($scope, element, attrs) {
+			$scope.template = {
+				pmConversationId : $scope.conversation.pmConversationId,
+				receivers : $scope.conversation.participants,
+				subject : ""
+			};
+			$scope.personalMessage = PmService.getTemplate($scope.template);
+			
 			$scope.getLastCursorPos = function(){
 				PmService.getLastCursorPos(vm);
 			};
@@ -21,12 +28,14 @@
 			
 			$scope.toggleReplyBox = function(){
 				ForumPostService.toggleMessageReply($scope);
-				
-				if($scope.showReplyBox){
-					vm.personalMessage = PmService.getTemplate({receivers : vm.participants, pmConversationId : vm.conversation.pmConversationId});
-				}
+			};
+			
+			$scope.reply = function(){
+				PmService.sendPm($scope.personalMessage);
 			};
 		}
+		
+		return directive;
 	}
 	
 	angular.module("zfgc.forum")

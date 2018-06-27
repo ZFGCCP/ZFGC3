@@ -60,6 +60,9 @@ public class PmService extends AbstractService {
 	@Autowired
 	PmConversationDataProvider pmConversationDataProvider;
 	
+	@Autowired
+	UsersService usersService;
+	
 	private PmBox decryptPmBox(PmBox pmBox, PmKey keys, TwoFactorKey aesKey){
 		String decryptedRsa = ZfgcSecurityUtils.decryptAes(keys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
 		Key senderKey = null;
@@ -354,6 +357,7 @@ public class PmService extends AbstractService {
 		if(templateConfig != null){
 			pm.setReceivers(templateConfig.getReceivers());
 			pm.setPmConversationId(templateConfig.getPmConversationId());
+			pm.setSubject(templateConfig.getSubject());
 		}
 		
 		return pm;
@@ -389,6 +393,8 @@ public class PmService extends AbstractService {
 			
 			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), user));
 			convo = decryptConversation(convo, receiverKeys, aesKey);
+			
+			convo.setParticipants(usersService.getUsersByConversation(convoId));
 			
 			if(convo.getMessages().size() == 0) {
 				return null;

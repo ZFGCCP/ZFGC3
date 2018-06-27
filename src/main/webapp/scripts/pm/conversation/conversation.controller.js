@@ -31,7 +31,7 @@
 			ForumPostService.toggleMessageReply(vm);
 			
 			if(vm.showReplyBox){
-				vm.personalMessage = PmService.getTemplate({receivers : vm.participants, pmConversationId : vm.conversation.pmConversationId});
+				vm.personalMessage = PmService.getTemplate({receivers : vm.conversation.participants, pmConversationId : vm.conversation.pmConversationId});
 			}
 		};
 		

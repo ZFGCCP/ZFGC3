@@ -146,11 +146,11 @@
 			vm.personalMessage.receivers.splice(index,1);
 		};
 		
-		pmService.sendPm = function(vm){
-			var result = pmService.resource.send(vm.personalMessage);
+		pmService.sendPm = function(message){
+			var result = pmService.resource.send(message);
 			
 			result.$promise.then(function(data){
-				//go to conversation
+				$state.go('convo',{conversationId : data.pmConversationId},{reload : true});
 			});
 		};
 		

@@ -42,7 +42,6 @@ public class PmController extends BaseController {
 	
 	
 	@RequestMapping(value="/template", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
 	public ResponseEntity getPmTemplate(@RequestBody PmTemplateConfig templateConfig){
 		return ResponseEntity.status(HttpStatus.OK).body(pmService.getPmTemplate(templateConfig));
 	}

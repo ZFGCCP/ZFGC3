@@ -47,9 +47,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
@@ -63,19 +65,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
 	    
-	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
-	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
-	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
-	"./src/main/webapp/scripts/pm/pmSend.controller.js",
-	    
-	"./src/main/webapp/scripts/pm/pm.service.js",
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -89,15 +85,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
+	"./src/main/webapp/scripts/pm/pmSend.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/pm.service.js",
+	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.service.js",
 	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
-	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
+	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -123,19 +123,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.html",
 	    
+	"./src/main/webapp/scripts/pm/sendPm.html",
+	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
-	"./src/main/webapp/scripts/pm/sendPm.html",
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalConvoPrune.html",
 	    
@@ -171,17 +171,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
-	    
-	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
-	    
-	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
-	    
-	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
-	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
 	    

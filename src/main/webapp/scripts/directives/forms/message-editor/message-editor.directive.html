@@ -21,14 +21,14 @@
 			<button class="btn btn-def btn-editor" title="Hyperlink"><span class="fas fa-globe"></span></button>
 			<button class="btn btn-def btn-editor" title="FTP Link"><span class="far fa-file"></span></button>
 		</div>
-		<textarea ng-model="vm.personalMessage.message" 
+		<textarea ng-model="personalMessage.message" 
 				  class="form-control" 
 				  rows="10"
 				  ng-focus="vm.getLastCursorPos()"
 				  ng-change="vm.getLastCursorPos()"/>
 	</div>
 	<div class="message-buttons-wrapper">
-		<button class="btn btn-confirm" ng-click="vm.send()">Send</button>
-		<button class="btn btn-def" ng-click="vm.toggleReplyBox()">Cancel</button>
+		<button class="btn btn-confirm" ng-click="reply()">Send</button>
+		<button class="btn btn-def" ng-click="toggleReplyBox()">Cancel</button>
 	</div>
 </form>

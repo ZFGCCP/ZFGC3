@@ -52,6 +52,26 @@ public class UsersDataProvider extends AbstractDataProvider {
 		}
 	}
 	
+	public List<Users> getUsersByConversation(Integer conversationId) throws ZfgcNotFoundException, Exception{
+		try{
+			List<UsersDbObj> dbObj = usersDao.getUsersByConversation(conversationId);
+			List<Users> users = new ArrayList<>();
+			
+			for(UsersDbObj db : dbObj){
+				users.add(mapper.map(db, Users.class));
+			}
+			
+			return users;
+			
+		}
+		catch(ZfgcNotFoundException ex){
+			throw new ZfgcNotFoundException(ex.getResourceName());
+		}
+		catch(Exception ex){
+			throw new Exception(ex.getMessage());
+		}
+	}
+	
 	@Transactional
 	public Users createUser(Users user) throws Exception{
 		

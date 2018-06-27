@@ -8,6 +8,7 @@ import com.zfgc.model.users.Users;
 public class PmTemplateConfig extends BaseZfgcModel{
 
 	private Integer pmConversationId;
+	private String subject;
 	private List<Users> receivers;
 	
 	@Override
@@ -30,6 +31,14 @@ public class PmTemplateConfig extends BaseZfgcModel{
 
 	public void setPmConversationId(Integer pmConversationId) {
 		this.pmConversationId = pmConversationId;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 	
 }

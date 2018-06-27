@@ -1017,4 +1017,11 @@
   	FROM users U
   	WHERE U.USERS_ID = #{usersId,jdbcType=INTEGER}
   </select>
+  
+  <select id="getUsersByConversation" parameterType="java.lang.Integer"  resultMap="BaseResultMap">
+  	SELECT U.USERS_ID, U.DISPLAY_NAME
+  	FROM users U
+  	JOIN BR_USER_CONVERSATION C ON C.USERS_ID = U.USERS_ID
+  	WHERE C.PM_CONVERSATION_ID = #{conversationId,jdbcType=INTEGER}
+  </select>
 </mapper>
