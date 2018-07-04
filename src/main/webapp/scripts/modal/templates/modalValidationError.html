@@ -1,31 +1,31 @@
-<div class="modal-fade" role="dialog" x-ng-controller="ModalCtrl as vm">
-	<div class="modal-dialog" role="document">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h4 ng-if="vm.checkHasRequiredFields()">Required Fields Error</h4>
-				<h4 ng-if="vm.checkHasValidation()">Validation Error</h4>
-				<h4 ng-if="vm.checkHasRules()">Rule Error</h4>
+<div class="modal-wrapper modal-fade">
+	<div class="modal-header">
+		<h2 ng-if="vm.checkHasRequiredFields()">Required Fields Error</h2>
+		<h2 ng-if="vm.checkHasValidation()">Validation Error</h2>
+		<h2 ng-if="vm.checkHasRules()">Rule Error</h2>
+	</div>
+	<form>
+		<div class="modal-body">
+			<div ng-if="vm.checkHasRequiredFields()">
+				<ul>
+					<li ng-repeat="error in vm.requiredFields()">{{error.errorMessage}}</li>
+				</ul>
 			</div>
-			<div class="modal-body">
-				<div ng-if="vm.checkHasRequiredFields()">
-					<ul>
-						<li ng-repeat="error in vm.requiredFields()">{{error.errorMessage}}</li>
-					</ul>
-				</div>
-				<div ng-if="vm.checkHasValidation()">
-					<ul>
-						<li ng-repeat="error in vm.validation()">{{error.errorMessage}}</li>
-					</ul>
-				</div>
-				<div ng-if="vm.checkHasRules()">
-					<ul>
-						<li ng-repeat="error in vm.rules()">{{error.errorMessage}}</li>
-					</ul>
-				</div>
+			<div ng-if="vm.checkHasValidation()">
+				<ul>
+					<li ng-repeat="error in vm.validation()">{{error.errorMessage}}</li>
+				</ul>
 			</div>
-			<div class="modal-footer">
-				<button type="button">Ok</button>
+			<div ng-if="vm.checkHasRules()">
+				<ul>
+					<li ng-repeat="error in vm.rules()">{{error.errorMessage}}</li>
+				</ul>
 			</div>
 		</div>
-	</div>
+		<div class="modal-footer">
+			<span class="modal-button-wrapper">
+				<button class="btn btn-def" ng-click="$dismiss()">Ok</button>
+			</span>
+		</div>
+	</form>
 </div>

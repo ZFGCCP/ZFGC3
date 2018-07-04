@@ -17,6 +17,7 @@ import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.BrPmConversationArchive;
 import com.zfgc.model.pm.PersonalMessage;
@@ -31,6 +32,7 @@ import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.pm.PmTemplateConfig;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
+import com.zfgc.requiredfields.pm.PmPruneRequiredFields;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.bbcode.BbcodeService;
@@ -62,6 +64,9 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	UsersService usersService;
+	
+	@Autowired
+	PmPruneRequiredFields pmPruneRequiredFields;
 	
 	private PmBox decryptPmBox(PmBox pmBox, PmKey keys, TwoFactorKey aesKey){
 		String decryptedRsa = ZfgcSecurityUtils.decryptAes(keys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
@@ -513,18 +518,26 @@ public class PmService extends AbstractService {
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
 		}
 		
+		try{
+			pmPruneRequiredFields.requiredFieldsCheck(prune);
+		}
+		catch(ZfgcValidationException ex){
+			throw ex;
+		}
+		
 		List<Integer> pruneIds = pmConversationDataProvider.getConvosToBePruned(prune, zfgcUser);
 		
-		if(prune.getPruneFlag() == true){
-			pmConversationDataProvider.bulkDeleteConversation(pruneIds, zfgcUser);
+		if(pruneIds.size() > 0){
+			if(prune.getPruneFlag() == true){
+				pmConversationDataProvider.bulkDeleteConversation(pruneIds, zfgcUser);
+			}
+			else{
+				PmConversationMulti multi = new PmConversationMulti();
+				multi.setAesKey(prune.getTfa());
+				multi.setConvoIds(pruneIds);
+				moveMultiConversationToArchive(multi, zfgcUser);
+			}
 		}
-		else{
-			PmConversationMulti multi = new PmConversationMulti();
-			multi.setAesKey(prune.getTfa());
-			multi.setConvoIds(pruneIds);
-			moveMultiConversationToArchive(multi, zfgcUser);
-		}
-		
 	}
 	
 }

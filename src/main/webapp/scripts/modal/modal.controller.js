@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function ModalCtrl(ModalService,params){
+	function ModalCtrl(ModalService){
 		var vm = this;
 		
 		vm.checkHasRequiredFields = function(){
@@ -33,6 +33,6 @@
 	
 	angular
 		.module('zfgc.forum')
-		.controller('ModalCtrl',['ModalService','params',ModalCtrl])
+		.controller('ModalCtrl',['ModalService',ModalCtrl])
 	
 })();
