@@ -171,6 +171,8 @@
 		pmService.pruneConversations = function(vm){
 			vm.prune.tfa = {'key' : localStorageService.get('pmKey')};
 			var result = pmService.resource.prune(vm.prune);
+			
+			return result;
 		};
 		
 		pmService.setAuthorization = function(key){

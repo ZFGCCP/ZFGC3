@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
@@ -262,6 +263,8 @@ public class PmController extends BaseController {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch(ZfgcValidationException e){
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getErrors());
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}

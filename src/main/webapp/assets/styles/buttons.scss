@@ -1,35 +1,33 @@
-form{
-	.btn{
-		.btn-img{
-			width:16px;
-			height:16px;
-			background:url('/forum/assets/images/icons/cc-icons-01.png') 30 30;
-		}
-		
+.btn{
+	.btn-img{
+		width:16px;
+		height:16px;
+		background:url('/forum/assets/images/icons/cc-icons-01.png') 30 30;
 	}
 	
-	.btn-editor{
-		.fa{
-			font-size:20px !important;
-		}
+}
+
+.btn-editor{
+	.fa{
+		font-size:20px !important;
 	}
-	
-	.btn-critical, .btn-confirm{
-		border:1px solid black;
-		box-shadow: 1px 1px 2px black !important;
-	}
-	
-	.btn-def{
-		border:1px solid black;
-	}
-	
-	.btn-editor{
-		width:50px;
-	}
-	
-	.message-buttons-wrapper{
-		padding: 0 0 10px 10px;
-	}
+}
+
+.btn-critical, .btn-confirm{
+	border:1px solid black;
+	box-shadow: 1px 1px 2px black !important;
+}
+
+.btn-def{
+	border:1px solid black;
+}
+
+.btn-editor{
+	width:50px;
+}
+
+.message-buttons-wrapper{
+	padding: 0 0 10px 10px;
 }
 
 button:focus {outline:0;}

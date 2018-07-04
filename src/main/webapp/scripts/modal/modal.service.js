@@ -10,11 +10,15 @@
 		
 		ModalService.currentDialog = null;
 		
-		ModalService.createTemplatedPopup = function(controller,templateUrl,windowClass){
-			ModalService.currentDialog = $uibModal.open({'controller' : controller + ' as vm',
+		ModalService.createTemplatedPopup = function(controller,templateUrl,windowClass,params){
+			var params = {};
+			params.modal = $uibModal.open({'controller' : controller + ' as vm',
 														 'templateUrl' : templateUrl,
-														 'windowClass' : windowClass
-														});
+														 'windowClass' : windowClass,
+														 'resolve' : {
+															 'params' : params
+														 }
+													});
 		};
 		
 		ModalService.createGeneralErrorPopup = function(){
@@ -58,8 +62,7 @@
 			
 			ModalService.currentDialog = $uibModal.open({ templateUrl: 'scripts/modal/templates/modalValidationError.html', 
                 						 windowClass: 'ngdialog-theme-default',
-                						 controller: 'ModalCtrl',
-                						 controllerAs : 'vm'});
+                						 controller: 'ModalCtrl as vm'});
 		}
 		
 		ModalService.closeValidationErrors = function(){
