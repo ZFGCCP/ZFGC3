@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService, ModalService){
+	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService, ModalService,PmComparatorService){
 		var pmService = {};
 		
 		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
@@ -187,11 +187,35 @@
 		pmService.setAuthorization = function(key){
 			localStorageService.set('pmKey', key);
 		};
+		
+		pmService.sortMessages = function(vm){
+			switch(vm.filters.sortBy){
+			case 0:
+				vm.convoBox.conversations.sort(PmComparatorService.compareByLastSentTime);
+				break;
+				
+			case 1:
+				vm.convoBox.conversations.sort(PmComparatorService.compareByStartedDt);
+				break;
+				
+			case 2:
+				vm.convoBox.conversations.sort(PmComparatorService.compareByStartingUser);
+				break;
+				
+			case 3:
+				vm.convoBox.conversations.sort(PmComparatorService.compareByLastSentUser);
+				break;
+				
+			case 4:
+				vm.convoBox.conversations.sort(PmComparatorService.compareBySubject);
+				break;
+			}
+		};
 
 		return pmService;
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService','ModalService',PmService]);
+		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService','ModalService','PmComparatorService',PmService]);
 	
 })();

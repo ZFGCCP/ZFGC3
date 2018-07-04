@@ -3,8 +3,9 @@
 	function ConvoBoxCtrl($scope, $state, PmService, ConvoBoxService){
 		var vm = this;
 		
-		vm.filters = {'filterBy' : 0};
+		vm.filters = {'filterBy' : 0, 'sortBy' : 0};
 		vm.filterOptions = [{'id': 0, 'value': 'All Messages'},{'id' : 1, 'value':'Inbox'},{'id':2,'value':'Outbox'},{'id':3,'value':'Archived'}];
+		vm.sortOptions = [{'id' : 0, 'value' : 'Latest Message'},{'id' : 1, 'value' : 'Started Date'},{'id' : 2, 'value' : 'Started By'},{'id' : 3, 'value' : 'Last Message By'},{'id' : 4, 'value' : 'Subject'}];
 		vm.boxesSelected = false;
 		vm.prune = {};
 		
@@ -34,6 +35,10 @@
 		
 		vm.prune = function(){
 			PmService.openPruneDialog(vm);
+		};
+		
+		vm.sortConversations = function(){
+			PmService.sortMessages(vm);
 		};
 
 		vm.getConversations();
