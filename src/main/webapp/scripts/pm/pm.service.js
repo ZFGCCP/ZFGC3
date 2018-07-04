@@ -40,9 +40,18 @@
 		};
 		
 		pmService.leaveConversation = function(vm,convoId){
-			var result = pmService.resource.leave({'key' : localStorageService.get('pmKey'), 'conversationId' : convoId});
+			var params = {convoId : convoId};
+			params.modal = ModalService.createConfirmDialog("Are you sure you want to leave?",
+											 "You will not be able to rejoin the conversation unless someone adds you.",
+											 pmService.leaveConversationConfirm,
+											 params);
+		};
+		
+		pmService.leaveConversationConfirm = function(params){
+			var result = pmService.resource.leave({'key' : localStorageService.get('pmKey'), 'conversationId' : params.convoId});
 			
 			result.$promise.then(function(data){
+				params.modal.close();
 				$state.go('convoBox');
 			});
 		};
