@@ -87,6 +87,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
+	"./src/main/webapp/scripts/pm/pmComparator.service.js",
+	    
 	"./src/main/webapp/scripts/pm/pm.service.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
