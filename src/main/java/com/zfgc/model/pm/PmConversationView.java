@@ -3,6 +3,7 @@ package com.zfgc.model.pm;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.zfgc.constants.pm.PmConstants;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
@@ -20,6 +21,14 @@ public class PmConversationView extends BaseZfgcModel{
     private String message;
     private Boolean isSelected;
 	
+	public PmConstants.BoxType getBoxType() {
+		if(usersId != receiverId) {
+			return PmConstants.BoxType.OUTBOX;
+		}
+		
+		return PmConstants.BoxType.INBOX;
+	}
+
 	public Integer getPmConversationId() {
 		return pmConversationId;
 	}
