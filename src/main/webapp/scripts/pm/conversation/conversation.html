@@ -24,6 +24,40 @@
 		
 		<div class="section-body">
 			<div class="row conversation-wrapper">
+				<div class="conversation-participants-wrapper col-xs-12">
+					<span class="conversation-participants-label">Participants:</span> 
+					<span class="conversation-participants">
+						<span class="user-name-text-icon">
+							<span ng-click="vm.removeUserFromList($index)">X</span>
+							<div>
+								Testtestestetsetestet
+							</div>
+						</span>
+						<span class="user-name-text-icon">
+							<span ng-click="vm.removeUserFromList($index)">X</span>
+							Test
+						</span>
+						<span class="user-name-text-icon">
+							<span ng-click="vm.removeUserFromList($index)">X</span>
+							Test
+						</span>
+						<span class="user-name-text-icon">
+							<span ng-click="vm.removeUserFromList($index)">X</span>
+							Test
+						</span>
+						<span class="user-name-text-icon">
+							<span ng-click="vm.removeUserFromList($index)">X</span>
+							Test
+						</span>
+						<span class="user-name-text-icon">
+							<span ng-click="vm.removeUserFromList($index)">X</span>
+							Test
+						</span>
+						<div>
+							And 4 others...
+						</div>
+					</span>
+				</div>
 				<div class="conversation col-xs-12">
 					<div class="message-wrapper" ng-repeat="($index, convo) in vm.conversation.messages">
 						<div class="message-content">

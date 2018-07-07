@@ -1,11 +1,12 @@
 .user-name-text-icon {
 	padding: 5px;
 	background-color: #66889e;
-	width: 100px;
+	max-width: 100px;
+	min-width:100px;
 	border: 1px solid;
 	border-radius: 5px;
 	cursor:pointer;
-	margin:10px;
+	margin: 10px 3px 3px 2px;
 	display:inline-block;
 	
 	&:hover{
