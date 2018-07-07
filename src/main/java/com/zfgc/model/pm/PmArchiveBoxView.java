@@ -2,6 +2,7 @@ package com.zfgc.model.pm;
 
 import java.util.Date;
 
+import com.zfgc.constants.pm.PmConstants;
 import com.zfgc.model.BaseZfgcModel;
 
 public class PmArchiveBoxView extends BaseZfgcModel{
@@ -15,6 +16,11 @@ public class PmArchiveBoxView extends BaseZfgcModel{
     private Boolean readFlag;
     private String message;
     private String subject;
+    private PmConstants.BoxType boxType = PmConstants.BoxType.ARCHIVE;
+
+	public PmConstants.BoxType getBoxType() {
+		return boxType;
+	}
 
 	public Integer getPmConversationId() {
 		return pmConversationId;
