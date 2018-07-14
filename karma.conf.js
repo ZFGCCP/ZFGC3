@@ -65,7 +65,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
 	    
+	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
+	    
 	"./src/main/webapp/scripts/users/users.module.js",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
@@ -103,13 +107,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
 	"./src/main/webapp/scripts/forum/forum-post.service.js",
-	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
@@ -138,6 +142,10 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	    
+	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalConfirm.html",
 	    

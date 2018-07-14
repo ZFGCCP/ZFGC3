@@ -27,35 +27,11 @@
 				<div class="conversation-participants-wrapper col-xs-12">
 					<span class="conversation-participants-label">Participants:</span> 
 					<span class="conversation-participants">
-						<span class="user-name-text-icon">
-							<span ng-click="vm.removeUserFromList($index)">X</span>
-							<div>
-								Testtestestetsetestet
-							</div>
-						</span>
-						<span class="user-name-text-icon">
-							<span ng-click="vm.removeUserFromList($index)">X</span>
-							Test
-						</span>
-						<span class="user-name-text-icon">
-							<span ng-click="vm.removeUserFromList($index)">X</span>
-							Test
-						</span>
-						<span class="user-name-text-icon">
-							<span ng-click="vm.removeUserFromList($index)">X</span>
-							Test
-						</span>
-						<span class="user-name-text-icon">
-							<span ng-click="vm.removeUserFromList($index)">X</span>
-							Test
-						</span>
-						<span class="user-name-text-icon">
-							<span ng-click="vm.removeUserFromList($index)">X</span>
-							Test
-						</span>
-						<div>
-							And 4 others...
-						</div>
+						<user-name-icon ng-repeat="($index, participant) in vm.conversation.participants | limitTo : 6" 
+									    users-id="participant.usersId" 
+									    display-name="participant.displayName"></user-name-icon>
+						<span ng-click="vm.openAddUserModal()"><i class="fas fa-user-plus" title="Add User"></i></span>
+						<div ng-if="vm.conversation.participants.length > 6">And {{vm.conversation.participants.length - 6}} more...</div>
 					</span>
 				</div>
 				<div class="conversation col-xs-12">

@@ -16,10 +16,18 @@
 	span{
 		font-weight: bold;
 		color: #c2e2f7;
+		display: inline-block;
 		
 		&:hover{
 			color:#FFF;
 		}
+	}
+	
+	.user-name{
+		text-overflow: ellipsis;
+	    overflow: hidden;
+	    width: 85%;
+	    float: right;
 	}
 	
 }

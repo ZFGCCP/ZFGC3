@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
+import com.zfgc.exception.security.ZfgcSecurityException;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmBox;
 import com.zfgc.model.pm.PmConversation;
@@ -28,6 +29,7 @@ import com.zfgc.model.pm.PmGenerator;
 import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.pm.PmTemplateConfig;
 import com.zfgc.model.pm.TwoFactorKey;
+import com.zfgc.model.users.Users;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.pm.PmService;
 
@@ -198,6 +200,27 @@ public class PmController extends BaseController {
 		try {
 			pmService.removeConvoFromInbox(aesKey, convo, zfgcUser());
 		} catch (ZfgcInvalidAesKeyException e) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+		} catch (ZfgcNotFoundException e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
+		
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	@RequestMapping(value="/conversation/{conversationId}/delete/{usersId}")
+	public ResponseEntity deleteConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId, @PathVariable("usersId") Integer usersId){
+		Users remove = new Users();
+		remove.setUsersId(usersId);
+		
+		PmConversation convo = new PmConversation();
+		convo.setPmConversationId(convoId);
+		
+		try{
+			pmService.removeUserFromConvo(aesKey, convo, remove, zfgcUser());
+		} catch (ZfgcSecurityException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();

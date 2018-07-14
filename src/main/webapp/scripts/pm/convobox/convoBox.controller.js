@@ -40,7 +40,7 @@
 		vm.sortConversations = function(){
 			PmService.sortMessages(vm);
 		};
-
+		
 		vm.getConversations();
 	}
 	

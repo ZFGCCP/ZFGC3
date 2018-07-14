@@ -3,3 +3,29 @@
 		text-align:left !important;
 	}
 }
+
+.modal-wrapper{
+	form{
+		display:inline-block;
+		
+		.user-select-area{
+		    display: inline-block;
+			max-height: 400px;
+			overflow-y: scroll;
+		
+			.user-select-wrapper{
+				padding-top:10px;
+				padding-bottom:10px;
+				
+				img {
+					width:10%;
+					border-radius:30px;
+				}
+				
+				.user-name{
+					padding-left:10px;
+				}
+			}
+		}
+	}
+}

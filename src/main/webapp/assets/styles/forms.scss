@@ -4,6 +4,10 @@ form{
 		font-size:12px;
 	}
 	
+	 input[type="checkbox"]:checked + label::after {
+	 	color:red;
+	 }
+	
 	.labeled-checkbox{
 		label{
 			padding-bottom:2px;

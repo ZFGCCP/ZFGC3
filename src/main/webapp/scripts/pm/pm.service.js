@@ -20,6 +20,10 @@
 				url : '/forum/pm/conversation/:conversationId/delete',
 				method : 'POST'
 			},
+			removeUser : {
+				url : '/forum/pm/conversation/:conversationId/delete/:usersId',
+				method : 'POST'
+			},
 			pruneTemplate : {
 				url : '/forum/pm/convobox/prune/template',
 				method : 'GET'
@@ -210,6 +214,10 @@
 				vm.convoBox.conversations.sort(PmComparatorService.compareBySubject);
 				break;
 			}
+		};
+		
+		pmService.openAddUserModal = function(vm){
+			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal');
 		};
 
 		return pmService;
