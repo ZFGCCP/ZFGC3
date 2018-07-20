@@ -6,7 +6,7 @@
 		   placeholder="Search members..."
 		   uib-typeahead="user for user in termChanged($viewValue)"/>
 	<ul class="dropdown-wrapper" uib-dropdown-menu>
-		<li ng-repeat="result in results" ng-click="selectUser(result)">
+		<li ng-repeat="result in results" ng-click="callSelect(result)">
 			{{result.displayName}}
 		</li>
 	</ul>

@@ -20,6 +20,10 @@
 				url : '/forum/pm/conversation/:conversationId/delete',
 				method : 'POST'
 			},
+			removeUser : {
+				url : '/forum/pm/conversation/:conversationId/delete/:usersId',
+				method : 'POST'
+			},
 			pruneTemplate : {
 				url : '/forum/pm/convobox/prune/template',
 				method : 'GET'
@@ -53,6 +57,12 @@
 			result.$promise.then(function(data){
 				params.modal.close();
 				$state.go('convoBox');
+			});
+		};
+		
+		pmService.removeUser = function(conversationId, usersId,vm){
+			pmService.resource.removeUser({conversationId : conversationId, usersId : usersId},{'key' : localStorageService.get('pmKey')}).$promise.then(function(data){
+				$state.reload();
 			});
 		};
 		
@@ -210,6 +220,10 @@
 				vm.convoBox.conversations.sort(PmComparatorService.compareBySubject);
 				break;
 			}
+		};
+		
+		pmService.openAddUserModal = function(vm){
+			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal');
 		};
 
 		return pmService;

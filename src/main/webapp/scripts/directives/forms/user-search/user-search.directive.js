@@ -7,7 +7,8 @@
 		directive.templateUrl = "scripts/directives/forms/user-search/user-search.directive.html";
 		directive.scope = {
 				classList:"@",
-				ngModel:'='
+				ngModel:'=',
+				onSelect:'&?'
 		}
 
 		directive.link = function ($scope, element, attrs) 
@@ -29,6 +30,14 @@
 			$scope.selectUser = function(result){
 				$scope.ngModel = result.usersId;
 				$scope.displayName = result.displayName;
+			};
+			
+			if(!$scope.onSelect || $scope.onSelect === null){
+				$scope.onSelect = $scope.selectUser;
+			}
+			
+			$scope.callSelect = function(param) {
+				$scope.onSelect()(param);
 			};
 		}
 		

@@ -19,6 +19,8 @@ import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
+import com.zfgc.exception.security.ZfgcSecurityException;
+import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.pm.BrPmConversationArchive;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmArchiveBoxView;
@@ -421,6 +423,23 @@ public class PmService extends AbstractService {
 		
 		
 		pmConversationDataProvider.deleteConversationFromBox(convo, zfgcUser);
+	}
+	
+	public void removeUserFromConvo(TwoFactorKey aesKey, Integer convoId, Users remove, Users zfgcUser) throws ZfgcSecurityException, ZfgcNotFoundException, Exception{
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
+		aesKey.setUsersId(zfgcUser.getUsersId());
+		if(!authenticationService.isValidAesKey(aesKey)){
+			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
+		}
+		
+		PmConversation convo = pmConversationDataProvider.getConversation(convoId);
+		
+		//verify that this user is the starting user
+		if(convo.getInitiatorId() != zfgcUser.getUsersId()){
+			throw new ZfgcUnauthorizedException();
+		}
+		
+		pmConversationDataProvider.deleteConversationFromBox(convo, remove);
 	}
 	
 	@Transactional

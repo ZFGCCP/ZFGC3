@@ -1,11 +1,12 @@
 .user-name-text-icon {
 	padding: 5px;
 	background-color: #66889e;
-	width: 100px;
+	max-width: 100px;
+	min-width:100px;
 	border: 1px solid;
 	border-radius: 5px;
 	cursor:pointer;
-	margin:10px;
+	margin: 10px 3px 3px 2px;
 	display:inline-block;
 	
 	&:hover{
@@ -15,10 +16,18 @@
 	span{
 		font-weight: bold;
 		color: #c2e2f7;
+		display: inline-block;
 		
 		&:hover{
 			color:#FFF;
 		}
+	}
+	
+	.user-name{
+		text-overflow: ellipsis;
+	    overflow: hidden;
+	    width: 85%;
+	    float: right;
 	}
 	
 }

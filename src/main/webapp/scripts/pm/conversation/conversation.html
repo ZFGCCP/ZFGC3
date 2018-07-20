@@ -24,6 +24,17 @@
 		
 		<div class="section-body">
 			<div class="row conversation-wrapper">
+				<div class="conversation-participants-wrapper col-xs-12">
+					<span class="conversation-participants-label">Participants:</span> 
+					<span class="conversation-participants">
+						<user-name-icon ng-repeat="($index, participant) in vm.conversation.participants | limitTo : 6" 
+									    users-id="participant.usersId" 
+									    vm="vm"
+									    display-name="participant.displayName"></user-name-icon>
+						<span ng-click="vm.openAddUserModal()"><i class="fas fa-user-plus" title="Add User"></i></span>
+						<div ng-if="vm.conversation.participants.length > 6">And {{vm.conversation.participants.length - 6}} more...</div>
+					</span>
+				</div>
 				<div class="conversation col-xs-12">
 					<div class="message-wrapper" ng-repeat="($index, convo) in vm.conversation.messages">
 						<div class="message-content">
