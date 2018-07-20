@@ -5,12 +5,12 @@
 	<div class="modal-body">
 		<form>
 			<div class="col-xs-12">
-				<user-search ng-model="vm.searchTerm"/> 
+				<user-search ng-model="vm.searchTerm" on-select="vm.addUser"/> 
 			</div>
 			<span class="user-select-area">
-				<div class="user-select-wrapper col-xs-12">
-					<input type="checkbox"/>
-					<span><img src="http://zfgc.com/forum/index.php?action=dlattach;attach=12126;type=avatar"/><span class="user-name">MG-Zero</span></span>
+				<div class="user-select-wrapper col-xs-12" ng-repeat="($index,user) in vm.usersToAdd track by $index">
+					<span ng-click="vm.removeUser($index)">X</span>
+					<span><img ng-src="{{vm.getAvatar(user.avatar)}}"/><span class="user-name">{{user.displayName}}</span></span>
 				</div>
 			</span>
 		</form>

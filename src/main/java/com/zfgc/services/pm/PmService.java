@@ -425,12 +425,14 @@ public class PmService extends AbstractService {
 		pmConversationDataProvider.deleteConversationFromBox(convo, zfgcUser);
 	}
 	
-	public void removeUserFromConvo(TwoFactorKey aesKey, PmConversation convo, Users remove, Users zfgcUser) throws ZfgcSecurityException, ZfgcNotFoundException, Exception{
+	public void removeUserFromConvo(TwoFactorKey aesKey, Integer convoId, Users remove, Users zfgcUser) throws ZfgcSecurityException, ZfgcNotFoundException, Exception{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		aesKey.setUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
 		}
+		
+		PmConversation convo = pmConversationDataProvider.getConversation(convoId);
 		
 		//verify that this user is the starting user
 		if(convo.getInitiatorId() != zfgcUser.getUsersId()){

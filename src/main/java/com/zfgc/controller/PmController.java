@@ -28,6 +28,7 @@ import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmGenerator;
 import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.pm.PmTemplateConfig;
+import com.zfgc.model.pm.PmUsersToAdd;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.authentication.AuthenticationService;
@@ -215,11 +216,8 @@ public class PmController extends BaseController {
 		Users remove = new Users();
 		remove.setUsersId(usersId);
 		
-		PmConversation convo = new PmConversation();
-		convo.setPmConversationId(convoId);
-		
 		try{
-			pmService.removeUserFromConvo(aesKey, convo, remove, zfgcUser());
+			pmService.removeUserFromConvo(aesKey, convoId, remove, zfgcUser());
 		} catch (ZfgcSecurityException e) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 		} catch (ZfgcNotFoundException e) {
@@ -275,6 +273,11 @@ public class PmController extends BaseController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	@RequestMapping(value="/conversation/{conversationId}/inviteUsers",method=RequestMethod.POST,produces="application/json")
+	public ResponseEntity inviteUsersToConversation(@RequestBody PmUsersToAdd pmUsers, @PathVariable("conversationId") Integer conversationId){
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	

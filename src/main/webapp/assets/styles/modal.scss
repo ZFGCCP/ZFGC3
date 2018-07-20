@@ -7,11 +7,13 @@
 .modal-wrapper{
 	form{
 		display:inline-block;
+		width:100%;
 		
 		.user-select-area{
 		    display: inline-block;
 			max-height: 400px;
 			overflow-y: scroll;
+			width:100%;
 		
 			.user-select-wrapper{
 				padding-top:10px;

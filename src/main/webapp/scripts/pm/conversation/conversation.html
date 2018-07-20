@@ -29,6 +29,7 @@
 					<span class="conversation-participants">
 						<user-name-icon ng-repeat="($index, participant) in vm.conversation.participants | limitTo : 6" 
 									    users-id="participant.usersId" 
+									    vm="vm"
 									    display-name="participant.displayName"></user-name-icon>
 						<span ng-click="vm.openAddUserModal()"><i class="fas fa-user-plus" title="Add User"></i></span>
 						<div ng-if="vm.conversation.participants.length > 6">And {{vm.conversation.participants.length - 6}} more...</div>

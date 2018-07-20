@@ -60,6 +60,12 @@
 			});
 		};
 		
+		pmService.removeUser = function(conversationId, usersId,vm){
+			pmService.resource.removeUser({conversationId : conversationId, usersId : usersId},{'key' : localStorageService.get('pmKey')}).$promise.then(function(data){
+				$state.reload();
+			});
+		};
+		
 		pmService.openConvo = function(vm,convoId){
 			var convo = pmService.resource.open({'key' : localStorageService.get('pmKey'), 'conversationId' : convoId});
 			

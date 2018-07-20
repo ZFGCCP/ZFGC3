@@ -39,6 +39,10 @@
 			PmService.openAddUserModal(vm);
 		};
 		
+		vm.removeUser = function(userId,conversationId){
+			PmService.removeUser(conversationId,userId,vm);
+		};
+		
 		if($location.search().conversationId && $location.search().conversationId !== null){
 			vm.openConversation($location.search().conversationId);
 		}
