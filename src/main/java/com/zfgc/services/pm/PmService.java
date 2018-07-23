@@ -32,6 +32,7 @@ import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.pm.PmTemplateConfig;
+import com.zfgc.model.pm.PmUsersToAdd;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.pm.PmPruneRequiredFields;
@@ -556,6 +557,28 @@ public class PmService extends AbstractService {
 				multi.setConvoIds(pruneIds);
 				moveMultiConversationToArchive(multi, zfgcUser);
 			}
+		}
+	}
+	
+	@Transactional
+	public void inviteUsers(Integer conversationId, PmUsersToAdd pmUsers, Users user) throws ZfgcNotFoundException{
+		
+		Users zfgc = new Users();
+		//todo: move this ID to a constants class
+		zfgc.setUsersId(2279);
+		PmTemplateConfig pmTemplate = new PmTemplateConfig();
+		pmTemplate.setPmConversationId(null);
+		pmTemplate.setSubject(user.getDisplayName() + " has invited you to a conversation!");
+		pmTemplate.setReceivers(pmUsers.getUsers());
+		
+		PersonalMessage pm = getPmTemplate(pmTemplate);
+		pm.setMessage(user.getDisplayName() + " has invited you to their conversation! Click here to join!");
+		
+		try {
+			sendMessageInConversation(zfgc,pmUsers.getUsers(),pm);
+		} catch (ZfgcNotFoundException e) {
+			e.printStackTrace();
+			throw e;
 		}
 	}
 	

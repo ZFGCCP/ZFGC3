@@ -31,6 +31,10 @@
 			prune : {
 				url : '/forum/pm/convobox/prune',
 				method : 'POST'
+			},
+			invite : {
+				url : '/forum/pm/conversation/:conversationId/inviteUsers',
+				method : 'POST'
 			}
 		});
 		
@@ -221,12 +225,18 @@
 		};
 		
 		pmService.openAddUserModal = function(vm){
-			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal');
+			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversationId : vm.conversation.pmConversationId});
 		};
 		
 		pmService.openParticipantsModal = function(vm){
 			ModalService.createTemplatedPopup('RemoveUserModalCtrl','scripts/modal/templates/modalRemoveUserFromConvo.html','remove-user-modal',{conversation : vm.conversation});
 		}
+		
+		pmService.inviteUsers = function(conversationId, users){
+			var usersToInvite = {'aesKey' : {'key' : localStorageService.get('pmKey')}, users : users};
+			var result = pmService.resource.invite({conversationId : conversationId},usersToInvite);
+			return result;
+		};
 
 		return pmService;
 	}
