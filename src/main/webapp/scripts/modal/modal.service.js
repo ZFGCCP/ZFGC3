@@ -11,7 +11,10 @@
 		ModalService.currentDialog = null;
 		
 		ModalService.createTemplatedPopup = function(controller,templateUrl,windowClass,params){
-			var params = {};
+			if(!params || params === null){
+				params = {};
+			}
+			
 			params.modal = $uibModal.open({'controller' : controller + ' as vm',
 														 'templateUrl' : templateUrl,
 														 'windowClass' : windowClass,

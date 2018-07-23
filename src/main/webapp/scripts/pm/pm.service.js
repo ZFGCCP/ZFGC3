@@ -61,9 +61,7 @@
 		};
 		
 		pmService.removeUser = function(conversationId, usersId,vm){
-			pmService.resource.removeUser({conversationId : conversationId, usersId : usersId},{'key' : localStorageService.get('pmKey')}).$promise.then(function(data){
-				$state.reload();
-			});
+			return pmService.resource.removeUser({conversationId : conversationId, usersId : usersId},{'key' : localStorageService.get('pmKey')});
 		};
 		
 		pmService.openConvo = function(vm,convoId){
@@ -225,6 +223,10 @@
 		pmService.openAddUserModal = function(vm){
 			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal');
 		};
+		
+		pmService.openParticipantsModal = function(vm){
+			ModalService.createTemplatedPopup('RemoveUserModalCtrl','scripts/modal/templates/modalRemoveUserFromConvo.html','remove-user-modal',{conversation : vm.conversation});
+		}
 
 		return pmService;
 	}

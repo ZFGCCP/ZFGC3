@@ -32,7 +32,7 @@
 									    vm="vm"
 									    display-name="participant.displayName"></user-name-icon>
 						<span ng-click="vm.openAddUserModal()"><i class="fas fa-user-plus" title="Add User"></i></span>
-						<div ng-if="vm.conversation.participants.length > 6">And {{vm.conversation.participants.length - 6}} more...</div>
+						<div ng-click="vm.openParticipantsModal()" ng-if="vm.conversation.participants.length > 6">And {{vm.conversation.participants.length - 6}} more...</div>
 					</span>
 				</div>
 				<div class="conversation col-xs-12">
