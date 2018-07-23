@@ -4,6 +4,8 @@
 		var vm = this;
 		
 		vm.usersToAdd = [];
+		vm.conversationId = params.conversationId;
+		vm.modal = params.modal;
 		
 		vm.addUser = function(user){
 			vm.usersToAdd.push(user);
@@ -15,6 +17,12 @@
 		
 		vm.getAvatar = function(avatar){
 			return UserService.getAvatarUrl(avatar);
+		};
+		
+		vm.inviteUsers = function(){
+			PmService.inviteUsers(vm.conversationId,vm.usersToAdd).$promise.then(function(data){
+				vm.modal.close();
+			});
 		};
 	}
 	
