@@ -27,6 +27,15 @@
 				.user-name{
 					padding-left:10px;
 				}
+				
+				.user-remove{
+					font-size:14px;
+					font-weight:bold;
+				}
+				
+				.user-remove:hover{
+					cursor:pointer;
+				}
 			}
 		}
 	}

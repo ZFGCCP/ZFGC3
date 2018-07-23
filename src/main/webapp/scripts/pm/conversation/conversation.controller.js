@@ -40,7 +40,15 @@
 		};
 		
 		vm.removeUser = function(userId,conversationId){
-			PmService.removeUser(conversationId,userId,vm);
+			var result = PmService.removeUser(conversationId,userId,vm);
+			
+			result.$promise.then(function(data){
+				$state.reload();
+			});
+		};
+		
+		vm.openParticipantsModal = function(){
+			PmService.openParticipantsModal(vm);
 		};
 		
 		if($location.search().conversationId && $location.search().conversationId !== null){
