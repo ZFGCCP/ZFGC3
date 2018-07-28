@@ -7,10 +7,12 @@ import java.security.KeyPairGenerator;
 import java.security.KeyPair;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.RSAPrivateKeySpec;
 import java.security.spec.X509EncodedKeySpec;
+import java.util.Random;
 
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
@@ -125,6 +127,21 @@ public class ZfgcSecurityUtils {
 			return null;
 		}
 	}
+
+	public static String generateMd5(String digestStr){
+		MessageDigest digest;
+		try {
+			digest = MessageDigest.getInstance("MD5");
+			digest.update(digestStr.getBytes());
+			byte[] hash = digest.digest();
+			
+			return Base64.encodeBase64URLSafeString(hash);
+		} catch (NoSuchAlgorithmException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return null;
+		}
+	}
 	
 	public static Key stringToRsaKey(String key) throws NoSuchAlgorithmException, InvalidKeySpecException{
 		try {
@@ -155,4 +172,10 @@ public class ZfgcSecurityUtils {
 		return result;
 	}
 	
+	public static String generateCryptoString(int unencodedLength){
+		Random cryptoRand = new SecureRandom();
+		byte[] salt = new byte[unencodedLength];
+		cryptoRand.nextBytes(salt);
+		return Base64.encodeBase64URLSafeString(salt);
+	}
 }

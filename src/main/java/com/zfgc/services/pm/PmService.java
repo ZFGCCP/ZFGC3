@@ -22,6 +22,7 @@ import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
 import com.zfgc.exception.security.ZfgcSecurityException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.pm.BrPmConversationArchive;
+import com.zfgc.model.pm.BrPmConversationUserInvite;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmArchiveBoxView;
 import com.zfgc.model.pm.PmBox;
@@ -294,6 +295,23 @@ public class PmService extends AbstractService {
 		}
 	}
 	
+	public String createInviteKey(Users user, Integer receiverId, TwoFactorKey aes){
+		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
+		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
+		String decryptedRsa = ZfgcSecurityUtils.decryptAes(senderKeys.getPmPrivKeyRsaEncrypted(), aes.getKey());
+		
+		Key receiverKey = null;
+		try {
+			receiverKey = ZfgcSecurityUtils.stringToRsaKey(receiverKeys.getPmPubKeyRsa());
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			e.printStackTrace();
+			return null;
+		}
+		
+		String senderKeyEncrypted = ZfgcSecurityUtils.encryptRsa(decryptedRsa, receiverKey);
+		return senderKeyEncrypted;
+	}
+	
 	@Transactional
 	public PersonalMessage sendMessage(Users user, Integer receiverId, PersonalMessage message){
 		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
@@ -398,6 +416,17 @@ public class PmService extends AbstractService {
 			if(convo == null) {
 				return null;
 			}
+			
+			//make sure user belongs to this convo.  If not, check if they have an invite.
+			if(!pmConversationDataProvider.isUserPartOfConvo(convoId, user.getUsersId())){
+				String inviteCode = pmConversationDataProvider.getConvoInvite(convoId, user.getUsersId());
+				if(inviteCode == null){
+					throw new ZfgcNotFoundException("conversation Id" + convoId);
+				}
+				
+				
+			}
+			
 			
 			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), user));
 			convo = decryptConversation(convo, receiverKeys, aesKey);
@@ -574,12 +603,26 @@ public class PmService extends AbstractService {
 		PersonalMessage pm = getPmTemplate(pmTemplate);
 		pm.setMessage(user.getDisplayName() + " has invited you to their conversation! Click here to join!");
 		
+		//create an invite code - using this user's private key and the receiving user's public key
+		for(Users receiver : pmUsers.getUsers()){
+			String encryptedKey = createInviteKey(user,receiver.getUsersId(),pmUsers.getAesKey());
+			String inviteCode = ZfgcSecurityUtils.generateMd5(ZfgcSecurityUtils.generateCryptoString(32));
+			BrPmConversationUserInvite invite = new BrPmConversationUserInvite();
+			invite.setInviteCode(inviteCode);
+			invite.setDecryptor(encryptedKey);
+			invite.setUsersId(receiver.getUsersId());
+		}
+		
 		try {
 			sendMessageInConversation(zfgc,pmUsers.getUsers(),pm);
 		} catch (ZfgcNotFoundException e) {
 			e.printStackTrace();
 			throw e;
 		}
+	}
+	
+	public void addUserToConvo(Integer conversationId, Users user) throws ZfgcNotFoundException{
+		
 	}
 	
 }

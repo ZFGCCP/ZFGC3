@@ -8,11 +8,15 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dao.BrPmConversationArchiveDao;
+import com.zfgc.dao.BrPmConversationUserInviteDao;
 import com.zfgc.dao.BrUserConversationDao;
 import com.zfgc.dao.PmArchiveBoxViewDao;
 import com.zfgc.dao.PmConversationBoxViewDao;
 import com.zfgc.dao.PmConversationDao;
+import com.zfgc.dbobj.BrPmConversationUserInviteDbObj;
+import com.zfgc.dbobj.BrPmConversationUserInviteDbObjExample;
 import com.zfgc.dbobj.BrUserConversationDbObjExample;
+import com.zfgc.dbobj.BrUserConversationDbObjKey;
 import com.zfgc.dbobj.PmArchiveBoxViewDbObj;
 import com.zfgc.dbobj.PmArchiveBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObj;
@@ -48,6 +52,9 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	
 	@Autowired
 	PmArchiveBoxViewDao pmArchiveBoxViewDao;
+	
+	@Autowired
+	BrPmConversationUserInviteDao brPmConversationUserInviteDao;
 	
 	@Transactional
 	public void addToArchive(BrPmConversationArchive obj){
@@ -218,5 +225,37 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		
 		return results;
 		
+	}
+	
+	public String getConvoInvite(Integer pmConversationId, Integer usersId) throws Exception{
+		BrPmConversationUserInviteDbObjExample ex = new BrPmConversationUserInviteDbObjExample(); 
+		ex.createCriteria().andUsersIdEqualTo(usersId).andPmConversationIdEqualTo(pmConversationId);
+		List<BrPmConversationUserInviteDbObj> result = null;
+		try {
+			result = brPmConversationUserInviteDao.get(ex);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		
+		if(result.isEmpty()){
+			return null;
+		}
+		
+		return result.get(0).getInviteCode();
+	}
+	
+	public boolean isUserPartOfConvo(Integer pmConversationId, Integer usersId) throws Exception{
+		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId).andPmConversationIdEqualTo(pmConversationId);
+		List<BrUserConversationDbObjKey> result = null;
+		try {
+			result = brUserConversationDao.get(ex);
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+		return result.size() > 0;
 	}
 }
