@@ -55,7 +55,7 @@
 		      var result = text ? String(text).replace(/<[^>]+>/gm, '') : '';
 		      
 		      if(result.length > 20){
-		    	  result = result.subString(0,10) + "...";
+		    	  result = result.substring(0,10) + "...";
 		      }
 		      
 		      return result;

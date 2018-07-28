@@ -21,8 +21,7 @@ public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjEx
 	@Override
 	public List<BrUserConversationDbObjKey> get(
 			BrUserConversationDbObjExample ex) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return dbObjMapper.selectByExample(ex);
 	}
 
 	@Override

@@ -24,8 +24,10 @@ public class BrPmConversationUserInviteDao extends AbstractDao<BrPmConversationU
 
 	@Override
 	public void hardDelete(BrPmConversationUserInvite obj) {
-		// TODO Auto-generated method stub
+		BrPmConversationUserInviteDbObjExample ex = getExample();
+		ex.createCriteria().andUsersIdEqualTo(obj.getUsersId()).andPmConversationIdEqualTo(obj.getPmConversationId());
 		
+		brPmConversationUserInviteDbObjMapper.deleteByExample(ex);
 	}
 
 	@Override

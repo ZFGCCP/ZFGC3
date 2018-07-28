@@ -271,4 +271,8 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	public void createInvite(BrPmConversationUserInvite invite) {
 		brPmConversationUserInviteDao.updateOrInsert(invite);
 	}
+	
+	public void deleteInvite(BrPmConversationUserInvite invite) {
+		brPmConversationUserInviteDao.hardDelete(invite);
+	}
 }

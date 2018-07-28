@@ -59,6 +59,9 @@ public class PmController extends BaseController {
 		catch(ZfgcNotFoundException ex){
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+		catch(Exception ex){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 		
 		return ResponseEntity.ok().build();
 	}

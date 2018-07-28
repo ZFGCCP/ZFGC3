@@ -7,7 +7,7 @@ public class BrPmConversationUserInvite extends BaseZfgcModel{
 	private String inviteCode;
 	private String decryptor;
 	private Integer usersId;
-	
+	private Integer pmConversationId;
 	
 	public String getInviteCode() {
 		return inviteCode;
@@ -43,6 +43,16 @@ public class BrPmConversationUserInvite extends BaseZfgcModel{
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	public Integer getPmConversationId() {
+		return pmConversationId;
+	}
+
+
+	public void setPmConversationId(Integer pmConversationId) {
+		this.pmConversationId = pmConversationId;
 	}
 	
 }
