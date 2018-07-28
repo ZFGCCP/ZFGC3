@@ -30,8 +30,8 @@ public class BrPmConversationUserInviteDao extends AbstractDao<BrPmConversationU
 
 	@Override
 	public void updateOrInsert(BrPmConversationUserInvite obj) {
-		
-		
+		BrPmConversationUserInviteDbObj dbObj = mapper.map(obj, BrPmConversationUserInviteDbObj.class);
+		brPmConversationUserInviteDbObjMapper.insert(dbObj);
 	}
 
 	@Override

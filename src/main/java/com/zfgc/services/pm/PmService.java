@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dao.BrPmConversationUserInviteDao;
 import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
@@ -611,6 +612,8 @@ public class PmService extends AbstractService {
 			invite.setInviteCode(inviteCode);
 			invite.setDecryptor(encryptedKey);
 			invite.setUsersId(receiver.getUsersId());
+			
+			pmConversationDataProvider.createInvite(invite);
 		}
 		
 		try {
@@ -621,8 +624,32 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public void addUserToConvo(Integer conversationId, Users user) throws ZfgcNotFoundException{
-		
+	@Transactional
+	private void addUserToConvo(Integer conversationId, Users user, TwoFactorKey aes) throws Exception{
+		//get the user's invite
+		try {
+			BrPmConversationUserInvite invite = pmConversationDataProvider.getConvoInvite(conversationId, user.getUsersId());
+			
+			//decrypt the key
+			String decryptedKey = ZfgcSecurityUtils.decryptAes(invite.getDecryptor(), aes.getKey());
+			
+			//add an entry to the user to conversation mapping
+			pmConversationDataProvider.addUserMappingToConvo(conversationId, user.getUsersId());
+			
+			//get the encrypted conversation messages, decrypt them and reencrypt them wth the current user's key.
+			Users startingUser = new Users();
+			PmConversation convo = pmConversationDataProvider.getConversation(conversationId);
+			startingUser.setUsersId(convo.getInitiatorId());
+			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), startingUser));
+			
+			
+			for(PersonalMessage pm : convo.getMessages()) {
+				
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 }

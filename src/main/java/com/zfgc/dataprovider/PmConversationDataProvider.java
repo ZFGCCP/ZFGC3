@@ -27,6 +27,7 @@ import com.zfgc.dbobj.PmConversationDbObj;
 import com.zfgc.dbobj.PmConversationDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.pm.BrPmConversationArchive;
+import com.zfgc.model.pm.BrPmConversationUserInvite;
 import com.zfgc.model.pm.BrUserConversation;
 import com.zfgc.model.pm.PmArchiveBoxView;
 import com.zfgc.model.pm.PmConversation;
@@ -75,6 +76,14 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brUserConversationDao.updateOrInsert(userToConvoMapping);
 		
 		return obj;
+	}
+	
+	public void addUserMappingToConvo(Integer conversationId, Integer usersId) {
+		BrUserConversation mapping = new BrUserConversation();
+		mapping.setPmConversationId(conversationId);
+		mapping.setUsersId(usersId);
+		
+		brUserConversationDao.updateOrInsert(mapping);
 	}
 	
 	public List<PmConversationView> getBoxViewByUsersId(Users user) throws Exception{
@@ -227,7 +236,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		
 	}
 	
-	public String getConvoInvite(Integer pmConversationId, Integer usersId) throws Exception{
+	public BrPmConversationUserInvite getConvoInvite(Integer pmConversationId, Integer usersId) throws Exception{
 		BrPmConversationUserInviteDbObjExample ex = new BrPmConversationUserInviteDbObjExample(); 
 		ex.createCriteria().andUsersIdEqualTo(usersId).andPmConversationIdEqualTo(pmConversationId);
 		List<BrPmConversationUserInviteDbObj> result = null;
@@ -242,7 +251,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 			return null;
 		}
 		
-		return result.get(0).getInviteCode();
+		return mapper.map(result.get(0),BrPmConversationUserInvite.class);
 	}
 	
 	public boolean isUserPartOfConvo(Integer pmConversationId, Integer usersId) throws Exception{
@@ -257,5 +266,9 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		}
 
 		return result.size() > 0;
+	}
+	
+	public void createInvite(BrPmConversationUserInvite invite) {
+		brPmConversationUserInviteDao.updateOrInsert(invite);
 	}
 }
