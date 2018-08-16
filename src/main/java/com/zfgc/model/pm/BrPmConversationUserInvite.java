@@ -8,6 +8,7 @@ public class BrPmConversationUserInvite extends BaseZfgcModel{
 	private String decryptor;
 	private Integer usersId;
 	private Integer pmConversationId;
+	private Integer inviterId;
 	
 	public String getInviteCode() {
 		return inviteCode;
@@ -53,6 +54,16 @@ public class BrPmConversationUserInvite extends BaseZfgcModel{
 
 	public void setPmConversationId(Integer pmConversationId) {
 		this.pmConversationId = pmConversationId;
+	}
+
+
+	public Integer getInviterId() {
+		return inviterId;
+	}
+
+
+	public void setInviterId(Integer inviterId) {
+		this.inviterId = inviterId;
 	}
 	
 }

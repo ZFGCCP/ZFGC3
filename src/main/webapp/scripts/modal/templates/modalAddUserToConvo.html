@@ -17,7 +17,8 @@
 	</div>
 	<div class="modal-footer">
 		<span class="modal-button-wrapper">
-			<button class="btn btn-confirm" ng-click="vm.inviteUsers()">Invite</button>
+			<button class="btn btn-confirm" ng-if="vm.conversationId !== null" ng-click="vm.inviteUsers()">Invite</button>
+			<button class="btn btn-confirm" ng-if="vm.conversationId === null" ng-click="vm.addUsers()">Add</button>
 			<button class="btn btn-def" ng-click="$dismiss()">Cancel</button>
 		</span>
 	</div>

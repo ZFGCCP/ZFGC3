@@ -16,6 +16,10 @@
 				url : '/forum/pm/conversation/:conversationId',
 				method : 'POST'
 			},
+			convoTemplate : {
+				url : '/forum/pm/conversation/template',
+				method : 'GET'
+			},
 			leave : {
 				url : '/forum/pm/conversation/:conversationId/delete',
 				method : 'POST'
@@ -225,7 +229,7 @@
 		};
 		
 		pmService.openAddUserModal = function(vm){
-			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversationId : vm.conversation.pmConversationId});
+			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversation : vm.conversation, conversationId : vm.conversation.pmConversationId});
 		};
 		
 		pmService.openParticipantsModal = function(vm){

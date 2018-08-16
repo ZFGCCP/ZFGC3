@@ -180,6 +180,11 @@ public class PmController extends BaseController {
 		return ResponseEntity.ok(new PmPrune());
 	}
 	
+	@RequestMapping(value="/conversation/template", method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity getConvoTemplate(){
+		return ResponseEntity.ok(pmService.getConvoTemplate(zfgcUser()));
+	}
+	
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId) {
 		try {
@@ -222,7 +227,7 @@ public class PmController extends BaseController {
 		try{
 			pmService.removeUserFromConvo(aesKey, convoId, remove, zfgcUser());
 		} catch (ZfgcSecurityException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (Exception e) {

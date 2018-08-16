@@ -88,8 +88,8 @@ public class PersonalMessageDataProvider extends AbstractDataProvider {
 		}
 		
 		for(PersonalMessageDbObjWithBLOBs db : dbObj){
-			if((db.getSenderId() == user.getUsersId() && db.getSendCopyFlag()) ||
-			   (db.getReceiverId() == user.getUsersId() && !db.getSendCopyFlag())){
+			if((db.getSenderId() == user.getUsersId() && db.getReceiverId() == user.getUsersId() && db.getSendCopyFlag()) ||
+			   (db.getSenderId() != user.getUsersId() && db.getReceiverId() == user.getUsersId() && !db.getSendCopyFlag())){
 			
 				obj.add(mapper.map(db,PersonalMessage.class));
 			}

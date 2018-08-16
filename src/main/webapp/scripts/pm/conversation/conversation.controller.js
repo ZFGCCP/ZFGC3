@@ -18,6 +18,10 @@
 			PmService.leaveConversation(vm,vm.conversation.pmConversationId);
 		};
 		
+		vm.getConvoTemplate = function(){
+			return PmService.resource.convoTemplate();
+		};
+		
 		vm.closeConversation = function(){
 			if($rootScope.previousState){
 				$state.go($rootScope.previousState,$rootScope.previousStateParams)
@@ -53,6 +57,9 @@
 		
 		if($location.search().conversationId && $location.search().conversationId !== null){
 			vm.openConversation($location.search().conversationId);
+		}
+		else{
+			vm.conversation = vm.getConvoTemplate();
 		}
 	}
 	

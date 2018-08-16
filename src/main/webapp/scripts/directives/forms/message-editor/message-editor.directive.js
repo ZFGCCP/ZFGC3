@@ -7,7 +7,8 @@
 		directive.templateUrl = "scripts/directives/forms/message-editor/message-editor.directive.html";
 		directive.scope = {
 				showReplyBox:'=',
-				conversation:'='
+				conversation:'=',
+				getTemplate:'@?'
 		}
 
 		directive.link = function ($scope, element, attrs) {
@@ -16,7 +17,20 @@
 				receivers : $scope.conversation.participants,
 				subject : ""
 			};
-			$scope.personalMessage = PmService.getTemplate($scope.template);
+			
+			$scope.conversation.$promise.then(function(data){
+				if(!$scope.getTemplate || $scope.getTemplate === null || $scope.getTemplate === false){
+					$scope.personalMessage = $scope.conversation.messages[0];
+				}
+				else{
+					var template = {};
+					template.pmConversationId = $scope.conversation.pmConversationId;
+					template.subject = !$scope.conversation.subject || $scope.conversation.subject === null ? "" : $scope.conversation.subject;
+					template.receivers = $scope.conversation.participants;
+					$scope.personalMessage = PmService.getTemplate(template);
+				}
+			});
+			
 			
 			$scope.getLastCursorPos = function(){
 				PmService.getLastCursorPos(vm);
@@ -31,6 +45,7 @@
 			};
 			
 			$scope.reply = function(){
+				$scope.personalMessage.receivers = $scope.conversation.participants;
 				PmService.sendPm($scope.personalMessage);
 			};
 		}

@@ -22,7 +22,7 @@ public class PmConversationView extends BaseZfgcModel{
     private Boolean isSelected;
 	
 	public PmConstants.BoxType getBoxType() {
-		if(usersId != receiverId) {
+		if(super.getUserId() == receiverId && super.getUserId() == usersId) {
 			return PmConstants.BoxType.OUTBOX;
 		}
 		

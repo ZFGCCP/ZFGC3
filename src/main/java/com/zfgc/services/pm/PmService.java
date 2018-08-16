@@ -45,6 +45,7 @@ import com.zfgc.services.sanitization.SanitizationService;
 import com.zfgc.services.users.UsersService;
 import com.zfgc.util.security.RsaKeyPair;
 import com.zfgc.util.security.ZfgcSecurityUtils;
+import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
 public class PmService extends AbstractService {
@@ -395,6 +396,26 @@ public class PmService extends AbstractService {
 		return pm;
 	}
 	
+	public PmConversation getConvoTemplate(Users user){
+		PmConversation convo = new PmConversation();
+		convo.setParticipants(new ArrayList<Users>());
+		convo.setMessages(new ArrayList<PersonalMessage>());
+		convo.setInitiatorId(user.getUsersId());
+		convo.setStartDt(ZfgcTimeUtils.getToday());
+		
+		Users temp = new Users();
+		temp.setDisplayName(user.getDisplayName());
+		temp.setUsersId(user.getUsersId());
+		convo.getParticipants().add(temp);
+		
+		PmTemplateConfig templateConfig = new PmTemplateConfig();
+		templateConfig.setReceivers(convo.getParticipants());
+		templateConfig.setSubject("");
+		
+		convo.getMessages().add(getPmTemplate(templateConfig));
+		return convo;
+	}
+	
 	public PmConvoBox getConvoBox(Users user){
 		try {
 			List<PmConversationView> convos = pmConversationDataProvider.getBoxViewByUsersId(user);
@@ -620,6 +641,7 @@ public class PmService extends AbstractService {
 			invite.setDecryptor(encryptedKey);
 			invite.setUsersId(receiver.getUsersId());
 			invite.setPmConversationId(conversationId);
+			invite.setInviterId(user.getUsersId());
 			
 			pmConversationDataProvider.createInvite(invite);
 		}

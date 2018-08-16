@@ -35,10 +35,6 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 		if(dbObj.getPersonalMessageId() == null || dbObj.getPersonalMessageId() == -1){
 			personalMessageDbObjMapper.insert(dbObj);
 		}
-		else{
-			personalMessageDbObjMapper.updateByPrimaryKey(dbObj);
-		}
-		
 	}
 
 	@Override
