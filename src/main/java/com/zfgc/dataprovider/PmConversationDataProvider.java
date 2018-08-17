@@ -89,9 +89,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	public List<PmConversationView> getBoxViewByUsersId(Users user) throws Exception{
 		Integer usersId = user.getUsersId();
 		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
-		ex.createCriteria().andUsersIdEqualTo(usersId).andReceiverIdEqualTo(usersId);
-		
-		ex.or().andUsersIdNotEqualTo(usersId).andReceiverIdEqualTo(usersId);
+		ex.createCriteria().andReceiverIdEqualTo(usersId);
 		
 		try {
 			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
@@ -111,7 +109,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	public List<PmConversationView> getSentBoxViewByUsersId(Users user) throws Exception{
 		Integer usersId = user.getUsersId();
 		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
-		ex.createCriteria().andUsersIdEqualTo(usersId).andReceiverIdNotEqualTo(usersId);
+		ex.createCriteria().andSenderIdEqualTo(usersId);
 		
 		try {
 			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
@@ -131,7 +129,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	public List<PmConversationView> getInBoxViewByUsersId(Users user) throws Exception{
 		Integer usersId = user.getUsersId();
 		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
-		ex.createCriteria().andUsersIdEqualTo(usersId).andReceiverIdEqualTo(usersId);
+		ex.createCriteria().andReceiverIdEqualTo(usersId);
 		
 		try {
 			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
@@ -209,7 +207,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	
 	public List<Integer> getConvosToBePruned(PmPrune prune, Users zfgcUser) throws Exception{
 		PmConversationBoxViewDbObjExample pruneEx = pmConversationBoxViewDao.getExample();
-		Criteria crit = pruneEx.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId());
+		Criteria crit = pruneEx.createCriteria();
 		
 		if(prune.getOlderThanDt() != null){
 			crit = crit.andStartDtLessThan(prune.getOlderThanDt());

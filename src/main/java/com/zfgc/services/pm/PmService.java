@@ -226,9 +226,6 @@ public class PmService extends AbstractService {
 		}
 
 		for(PmConversationView view : convoView){
-			view.setMessage(ZfgcSecurityUtils.decryptRsa(view.getMessage(), senderKey).trim());
-			view.setSubject(ZfgcSecurityUtils.decryptRsa(view.getSubject(), senderKey).trim());
-
 			try {
 				view.setMessage(bbCodeService.parseText(view.getMessage()));
 			} catch (NoSuchFieldException | SecurityException
@@ -291,9 +288,19 @@ public class PmService extends AbstractService {
 		if(user.getUsersId() == null){
 			throw new ZfgcNotFoundException();
 		}
+
 		
-		for(Users receiver : receivers){
-			sendMessage(user, receiver.getUsersId(), message);
+		sendMessage(user, message);
+		
+		if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),user.getUsersId())){
+			pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), user.getUsersId());
+		}
+		
+		for (Users receiver : receivers){
+			//check if the user is in this convo already. if not, add them
+			if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),receiver.getUsersId())){
+				pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiver.getUsersId());
+			}
 		}
 	}
 	
@@ -310,20 +317,17 @@ public class PmService extends AbstractService {
 			return null;
 		}
 		
-		String senderKeyEncrypted = ZfgcSecurityUtils.encryptAes(decryptedRsa, aes.getKey());
+		String senderKeyEncrypted = ZfgcSecurityUtils.encryptRsa(decryptedRsa, receiverKey);
 		return senderKeyEncrypted;
 	}
 	
 	@Transactional
-	public PersonalMessage sendMessage(Users user, Integer receiverId, PersonalMessage message) throws Exception{
+	public PersonalMessage sendMessage(Users user, PersonalMessage message) throws Exception{
 		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
-		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
 		
 		Key senderKey = null;
-		Key receiverKey = null;
 		try {
 			senderKey = ZfgcSecurityUtils.stringToRsaKey(senderKeys.getPmPubKeyRsa());
-			receiverKey = ZfgcSecurityUtils.stringToRsaKey(receiverKeys.getPmPubKeyRsa());
 		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
 			e.printStackTrace();
 			return null;
@@ -332,36 +336,31 @@ public class PmService extends AbstractService {
 		message.setMessage(sanitizationService.sanitizeMessage(message.getMessage()));
 		message.setSubject(sanitizationService.sanitizeMessage(message.getSubject()));
 		message.setSenderId(user.getUsersId());
-		message.setReceiverId(receiverId);
 		
 		if(message.getPmConversationId() == null){
-			PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId());
-			message.setPmConversationId(convo.getPmConversationId());
+			try{
+				PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId());
+				message.setPmConversationId(convo.getPmConversationId());
+			}
+			catch(Exception ex){
+				ex.printStackTrace();
+				throw ex;
+			}
+			
 		}
-
-		//check if the user is in this convo already. if not, add them
-		if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),receiverId)){
-			pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiverId);
-		}
-
-		PersonalMessage senderSave = (PersonalMessage)message.copy(message);
-		PersonalMessage receiverSave = (PersonalMessage)message.copy(message);
-
-		String senderMsg = ZfgcSecurityUtils.encryptRsa(message.getMessage(), senderKey);
-		String receiverMsg = ZfgcSecurityUtils.encryptRsa(message.getMessage(), receiverKey);
-		String senderSubject = ZfgcSecurityUtils.encryptRsa(message.getSubject(), senderKey);
-		String receiverSubject = ZfgcSecurityUtils.encryptRsa(message.getSubject(), receiverKey);
 		
-		senderSave.setMessage(senderMsg);
-		senderSave.setSubject(senderSubject);
-		receiverSave.setMessage(receiverMsg);
-		receiverSave.setSubject(receiverSubject);
+		PersonalMessage senderSave = (PersonalMessage)message.copy(message);
+
 		senderSave.setSentDt(new Date());
-		receiverSave.setSentDt(new Date());
 		senderSave.setSendCopyFlag(true);
 		
+		try{
 		pmDataProvider.saveMessage(senderSave);
-		pmDataProvider.saveMessage(receiverSave);
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			throw ex;
+		}
 		
 		return message;
 		
@@ -451,13 +450,11 @@ public class PmService extends AbstractService {
 					throw new ZfgcNotFoundException("conversation Id" + convoId);
 				}
 				
-				Key rsaKey = ZfgcSecurityUtils.stringToRsaKey(receiverKeys.getPmPubKeyRsa());
-				addUserToConvo(convoId, user, aesKey, rsaKey);
+				addUserToConvo(convoId, user, aesKey);
 			}
 			
 			
 			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), user));
-			convo = decryptConversation(convo, receiverKeys, aesKey);
 			
 			convo.setParticipants(usersService.getUsersByConversation(convoId));
 			
@@ -655,13 +652,10 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	private void addUserToConvo(Integer conversationId, Users user, TwoFactorKey aes, Key rsa) throws Exception{
+	private void addUserToConvo(Integer conversationId, Users user, TwoFactorKey aes) throws Exception{
 		//get the user's invite
 		try {
 			BrPmConversationUserInvite invite = pmConversationDataProvider.getConvoInvite(conversationId, user.getUsersId());
-			
-			//decrypt the key
-			String decryptedKey = ZfgcSecurityUtils.decryptAes(invite.getDecryptor(), aes.getKey());
 			
 			//add an entry to the user to conversation mapping
 			pmConversationDataProvider.addUserMappingToConvo(conversationId, user.getUsersId());
@@ -671,14 +665,8 @@ public class PmService extends AbstractService {
 			PmConversation convo = pmConversationDataProvider.getConversation(conversationId);
 			startingUser.setUsersId(convo.getInitiatorId());
 			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), startingUser));
-			Key key = ZfgcSecurityUtils.stringToRsaPrivKey(decryptedKey);
 			
 			for(PersonalMessage pm : convo.getMessages()) {
-				String subject = ZfgcSecurityUtils.decryptRsa(pm.getSubject(), key);
-				String message = ZfgcSecurityUtils.decryptRsa(pm.getMessage(), key);
-				
-				pm.setSubject(ZfgcSecurityUtils.encryptRsa(subject,rsa));
-				pm.setMessage(ZfgcSecurityUtils.encryptRsa(message,rsa));
 				pm.setReceiverId(user.getUsersId());
 				pm.setPersonalMessageId(null);
 				

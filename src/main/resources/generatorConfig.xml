@@ -222,5 +222,8 @@
     <table schema="zfgc3" tableName="PM_ARCHIVE_BOX_VIEW" domainObjectName="PmArchiveBoxViewDbObj">
     </table>-->
     
+    <table schema="zfgc3" tableName="PM_CONVERSATION_BOX_VIEW" domainObjectName="PmConversationBoxViewDbObj">
+    </table>
+    
   </context>
 </generatorConfiguration>
