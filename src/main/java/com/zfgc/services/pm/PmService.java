@@ -660,19 +660,6 @@ public class PmService extends AbstractService {
 			//add an entry to the user to conversation mapping
 			pmConversationDataProvider.addUserMappingToConvo(conversationId, user.getUsersId());
 			
-			//get the encrypted conversation messages, decrypt them and reencrypt them wth the current user's key.
-			Users startingUser = new Users();
-			PmConversation convo = pmConversationDataProvider.getConversation(conversationId);
-			startingUser.setUsersId(convo.getInitiatorId());
-			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), startingUser));
-			
-			for(PersonalMessage pm : convo.getMessages()) {
-				pm.setReceiverId(user.getUsersId());
-				pm.setPersonalMessageId(null);
-				
-				pmDataProvider.saveMessage(pm);
-			}
-			
 			//delete the invite
 			pmConversationDataProvider.deleteInvite(invite);
 		} catch (Exception e) {
