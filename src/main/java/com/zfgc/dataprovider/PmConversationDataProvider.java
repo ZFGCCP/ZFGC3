@@ -91,6 +91,8 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
 		ex.createCriteria().andReceiverIdEqualTo(usersId).andSenderIdNotEqualTo(usersId);
 		
+		ex.or().andSenderIdEqualTo(usersId).andReceiverIdEqualTo(usersId);
+		
 		try {
 			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
 			List<PmConversationView> result = new ArrayList<>();
@@ -129,7 +131,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	public List<PmConversationView> getInBoxViewByUsersId(Users user) throws Exception{
 		Integer usersId = user.getUsersId();
 		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
-		ex.createCriteria().andReceiverIdEqualTo(usersId);
+		ex.createCriteria().andReceiverIdEqualTo(usersId).andSenderIdNotEqualTo(usersId);
 		
 		try {
 			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);

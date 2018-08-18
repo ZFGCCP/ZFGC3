@@ -176,42 +176,6 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	private PmConversation decryptConversation(PmConversation convo, PmKey key, TwoFactorKey aesKey) {
-		String decryptedRsa = ZfgcSecurityUtils.decryptAes(key.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
-		Key receiverKey = null;
-		
-		try {
-			receiverKey = ZfgcSecurityUtils.stringToRsaPrivKey(decryptedRsa);
-		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-			e.printStackTrace();
-			return null;
-		}
-		
-		for(PersonalMessage message : convo.getMessages()){
-			message.setSubject(ZfgcSecurityUtils.decryptRsa(message.getSubject(), receiverKey).trim());
-			message.setMessage(ZfgcSecurityUtils.decryptRsa(message.getMessage(), receiverKey).trim());
-			try {
-				message.setMessage(bbCodeService.parseText(message.getMessage()));
-			} catch (NoSuchFieldException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (SecurityException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalArgumentException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			
-		}
-		
-		return convo;
-		
-	}
-	
 	private List<PmConversationView> decryptAndPrepareConvoBox(List<PmConversationView> convoView, PmKey key, TwoFactorKey tfa){
 		List<PmConversationView> result = new ArrayList<>();
 		
@@ -529,6 +493,9 @@ public class PmService extends AbstractService {
 			//throws an exception if not
 			pmConversationDataProvider.getConversation(convo);
 			pmConversationDataProvider.addToArchive(archive);
+			PmConversation convoObj = new PmConversation();
+			convoObj.setPmConversationId(convo);
+			pmConversationDataProvider.deleteConversationFromBox(convoObj, zfgcUser);
 		}
 	}
 	
