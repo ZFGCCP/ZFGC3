@@ -9,8 +9,8 @@ import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class PmConversationView extends BaseZfgcModel{
 	private Integer pmConversationId;
-    private Integer usersId;
-    private String receiverName;
+    private Integer senderId;
+	private String receiverName;
     private Integer receiverId;
     private Integer initiatorId;
     private String initiatorName;
@@ -20,9 +20,22 @@ public class PmConversationView extends BaseZfgcModel{
     private String subject;
     private String message;
     private Boolean isSelected;
+    private boolean isArchived = false;
 	
+	public boolean isArchived() {
+		return isArchived;
+	}
+
+	public void setArchived(boolean isArchived) {
+		this.isArchived = isArchived;
+	}
+
 	public PmConstants.BoxType getBoxType() {
-		if(super.getUserId() == receiverId && super.getUserId() == usersId) {
+		if(isArchived) {
+			return PmConstants.BoxType.ARCHIVE;
+		}
+		
+		if(super.getUserId() == senderId && super.getUserId() == receiverId) {
 			return PmConstants.BoxType.OUTBOX;
 		}
 		
@@ -35,14 +48,6 @@ public class PmConversationView extends BaseZfgcModel{
 
 	public void setPmConversationId(Integer pmConversationId) {
 		this.pmConversationId = pmConversationId;
-	}
-
-	public Integer getUsersId() {
-		return usersId;
-	}
-
-	public void setUsersId(Integer usersId) {
-		this.usersId = usersId;
 	}
 
 	public Integer getReceiverId() {
@@ -151,5 +156,13 @@ public class PmConversationView extends BaseZfgcModel{
 	public void setIsSelected(Boolean isSelected) {
 		this.isSelected = isSelected;
 	}
+    public Integer getSenderId() {
+		return senderId;
+	}
+
+	public void setSenderId(Integer senderId) {
+		this.senderId = senderId;
+	}
+
 
 }

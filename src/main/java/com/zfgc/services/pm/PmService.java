@@ -406,9 +406,9 @@ public class PmService extends AbstractService {
 			if(convo == null) {
 				return null;
 			}
-			
+			convo.setIsArchived(pmConversationDataProvider.isConvoArchived(convoId, user.getUsersId()));
 			//make sure user belongs to this convo.  If not, check if they have an invite.
-			if(!pmConversationDataProvider.isUserPartOfConvo(convoId, user.getUsersId())){
+			if(!pmConversationDataProvider.isUserPartOfConvo(convoId, user.getUsersId()) && !convo.getIsArchived()){
 				BrPmConversationUserInvite inviteCode = pmConversationDataProvider.getConvoInvite(convoId, user.getUsersId());
 				if(inviteCode == null){
 					throw new ZfgcNotFoundException("conversation Id" + convoId);
@@ -536,6 +536,8 @@ public class PmService extends AbstractService {
 			convo.setPersonalMessageId(archived.getPersonalMessageId());
 			convo.setSentDt(archived.getSentDt());
 			convo.setReceiverId(archived.getReceiverId());
+			convo.setSenderId(archived.getSenderId());
+			convo.setArchived(true);
 			
 			archiveBox.getConversations().add(convo);
 		}

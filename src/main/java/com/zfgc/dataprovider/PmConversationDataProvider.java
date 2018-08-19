@@ -13,6 +13,8 @@ import com.zfgc.dao.BrUserConversationDao;
 import com.zfgc.dao.PmArchiveBoxViewDao;
 import com.zfgc.dao.PmConversationBoxViewDao;
 import com.zfgc.dao.PmConversationDao;
+import com.zfgc.dbobj.BrPmConversationArchiveDbObj;
+import com.zfgc.dbobj.BrPmConversationArchiveDbObjExample;
 import com.zfgc.dbobj.BrPmConversationUserInviteDbObj;
 import com.zfgc.dbobj.BrPmConversationUserInviteDbObjExample;
 import com.zfgc.dbobj.BrUserConversationDbObjExample;
@@ -267,6 +269,16 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 			throw e;
 		}
 
+		return result.size() > 0;
+	}
+	
+	public boolean isConvoArchived(Integer pmConversationId, Integer usersId) throws Exception{
+		BrPmConversationArchiveDbObjExample ex = brPmConversationArchiveDao.getExample();
+		ex.createCriteria().andPmConversationIdEqualTo(pmConversationId).andUsersIdEqualTo(usersId);
+		List<BrPmConversationArchiveDbObj> result = null;
+		
+		result = brPmConversationArchiveDao.get(ex);
+		
 		return result.size() > 0;
 	}
 	

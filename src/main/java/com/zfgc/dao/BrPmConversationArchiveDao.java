@@ -20,7 +20,13 @@ public class BrPmConversationArchiveDao extends AbstractDao<BrPmConversationArch
 	public List<BrPmConversationArchiveDbObj> get(
 			BrPmConversationArchiveDbObjExample ex) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			return dbObjMapper.selectByExample(ex);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override

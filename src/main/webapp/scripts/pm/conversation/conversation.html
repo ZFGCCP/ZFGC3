@@ -10,7 +10,7 @@
 				</div>
 			</div>
 			<div class="navigation-wrapper">
-				<button class="navigation-icon" title="Reply" ng-click="vm.toggleReplyBox()" ng-disabled="vm.showReplyBox">
+				<button class="navigation-icon" title="Reply" ng-click="vm.toggleReplyBox()" ng-disabled="vm.conversation.isArchived || vm.showReplyBox">
 					<i class="fas fa-reply-all"></i><label>Reply</label>
 				</button>
 				<button ng-click="vm.leaveConvo()" class="navigation-icon" title="Leave Conversation">

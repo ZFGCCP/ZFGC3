@@ -14,6 +14,7 @@ public class PmConversation extends BaseZfgcModel {
 	private Integer initiatorId;
 	private Boolean isSelected;
 	private List<Users> participants;
+	private Boolean isArchived = false;
 	
 	public Integer getPmConversationId() {
 		return pmConversationId;
@@ -67,6 +68,14 @@ public class PmConversation extends BaseZfgcModel {
 
 	public void setParticipants(List<Users> participants) {
 		this.participants = participants;
+	}
+
+	public Boolean getIsArchived() {
+		return isArchived;
+	}
+
+	public void setIsArchived(Boolean isArchived) {
+		this.isArchived = isArchived;
 	}
 	
 }
