@@ -148,10 +148,10 @@
     </table>
     
     <table schema="Zfgc3" tableName="BR_PM_CONVERSATION_ARCHIVE" domainObjectName="BrPmConversationArchiveDbObj">
-    </table>-->
+    </table>
     
     <table schema="Zfgc3" tableName="BR_PM_CONVERSATION_USER_INVITE" domainObjectName="BrPmConversationUserInviteDbObj">
-    </table>
+    </table>-->
     
     <!-- views -->
     
