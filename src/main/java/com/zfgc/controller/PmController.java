@@ -73,20 +73,6 @@ public class PmController extends BaseController {
 		return ResponseEntity.ok().build();
 	}
 	
-	@RequestMapping(value="/read/{pmId}", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity readPm(@RequestBody TwoFactorKey aes, @PathVariable("pmId") Integer pmId){
-		try {
-			PersonalMessage message = pmService.openMessage(pmId, aes.getUsersId(), aes);
-			
-			return ResponseEntity.ok(message);
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.notFound().build();
-		}
-		catch (ZfgcInvalidAesKeyException e){
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
-	}
-	
 	@RequestMapping(value="/auth", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity authenticatePmKey(@RequestBody TwoFactorKey aes){
 		if (aes.getKey() == null){
@@ -104,36 +90,6 @@ public class PmController extends BaseController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
-	}
-	
-	@RequestMapping(value="/outbox", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity viewOutbox(@RequestBody TwoFactorKey aesKey){
-		try {
-			PmBox outbox = pmService.getOutbox(aesKey, zfgcUser());
-			
-			if(outbox == null){
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			}
-			
-			return ResponseEntity.ok(outbox);
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
-	}
-	
-	@RequestMapping(value="/inbox", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity viewInbox(@RequestBody TwoFactorKey aesKey){
-		try {
-			PmBox inbox = pmService.getInbox(aesKey, zfgcUser());
-			
-			if(inbox == null){
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			}
-			
-			return ResponseEntity.ok(inbox);
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
 	}
 	
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")

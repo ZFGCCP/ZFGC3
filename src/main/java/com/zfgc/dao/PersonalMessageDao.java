@@ -18,8 +18,14 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 	PersonalMessageDbObjMapper personalMessageDbObjMapper;
 	
 	@Override
-	public List<PersonalMessageDbObjWithBLOBs> get(PersonalMessageDbObjExample ex) {
-		return personalMessageDbObjMapper.selectByExampleWithBLOBs(ex);
+	public List<PersonalMessageDbObjWithBLOBs> get(PersonalMessageDbObjExample ex) throws Exception{
+		try {
+			return personalMessageDbObjMapper.selectByExampleWithBLOBs(ex);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override

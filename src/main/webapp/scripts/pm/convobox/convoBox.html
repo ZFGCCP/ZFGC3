@@ -59,7 +59,7 @@
 										<a ng-href="mailBox/conversation?conversationId={{convo.pmConversationId}}">
 											<span><i ng-class="{'fas fa-archive' : convo.boxType === 'ARCHIVE', 'fas fa-inbox' : convo.boxType === 'INBOX', 'fas fa-share-square' : convo.boxType === 'OUTBOX'}"></i></span>
 											<span class="convo-box-subject" ng-bind-html="convo.subject"></span>
-											<span class="convo-box-subject"> - Last Message By: {{convo.receiverName}} On : {{convo.sentDtAsString}}</span>
+											<span class="convo-box-subject"> - Last Message By: {{convo.senderName}} On : {{convo.sentDtAsString}}</span>
 										</a>
 										<div class="convo-box-message">{{vm.stripHtml(convo.message)}}</div>
 									</span>

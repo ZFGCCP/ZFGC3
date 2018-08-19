@@ -10,6 +10,7 @@ import com.zfgc.util.time.ZfgcTimeUtils;
 public class PmConversationView extends BaseZfgcModel{
 	private Integer pmConversationId;
     private Integer senderId;
+    private String senderName;
 	private String receiverName;
     private Integer receiverId;
     private Integer initiatorId;
@@ -162,6 +163,14 @@ public class PmConversationView extends BaseZfgcModel{
 
 	public void setSenderId(Integer senderId) {
 		this.senderId = senderId;
+	}
+
+	public String getSenderName() {
+		return senderName;
+	}
+
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
 	}
 
 

@@ -1,6 +1,7 @@
 package com.zfgc.dataprovider;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -280,6 +281,20 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		result = brPmConversationArchiveDao.get(ex);
 		
 		return result.size() > 0;
+	}
+	
+	public Date getArchivalDate(Integer pmConversationId, Integer usersId) throws ZfgcNotFoundException, Exception{
+		BrPmConversationArchiveDbObjExample ex = brPmConversationArchiveDao.getExample();
+		ex.createCriteria().andPmConversationIdEqualTo(pmConversationId).andUsersIdEqualTo(usersId);
+		List<BrPmConversationArchiveDbObj> result = null;
+		
+		result = brPmConversationArchiveDao.get(ex);
+		
+		if(result.size() == 0) {
+			throw new ZfgcNotFoundException("Archived Conversation " + pmConversationId);
+		}
+		
+		return result.get(0).getArchiveDt();
 	}
 	
 	public void createInvite(BrPmConversationUserInvite invite) {

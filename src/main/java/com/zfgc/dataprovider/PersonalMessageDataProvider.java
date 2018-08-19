@@ -1,6 +1,7 @@
 package com.zfgc.dataprovider;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.zfgc.dbobj.OutboxViewDbObjExample;
 import com.zfgc.dbobj.OutboxViewDbObjWithBLOBs;
 import com.zfgc.dbobj.PersonalMessageDbObj;
 import com.zfgc.dbobj.PersonalMessageDbObjExample;
+import com.zfgc.dbobj.PersonalMessageDbObjExample.Criteria;
 import com.zfgc.dbobj.PersonalMessageDbObjWithBLOBs;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.pm.PersonalMessage;
@@ -63,7 +65,7 @@ public class PersonalMessageDataProvider extends AbstractDataProvider {
 		personalMessageDao.updateOrInsert(pm);
 	}
 	
-	public PersonalMessage getInboxMessage(Integer messageId) throws ZfgcNotFoundException{
+	public PersonalMessage getInboxMessage(Integer messageId) throws ZfgcNotFoundException, Exception{
 		PersonalMessageDbObjExample ex = new PersonalMessageDbObjExample();
 		ex.createCriteria().andPersonalMessageIdEqualTo(messageId);
 		
@@ -76,9 +78,13 @@ public class PersonalMessageDataProvider extends AbstractDataProvider {
 		return mapper.map(dbObj.get(0), PersonalMessage.class);
 	}
 	
-	public List<PersonalMessage> getMessagesByConversation(Integer conversationId, Users user) throws ZfgcNotFoundException{
+	public List<PersonalMessage> getMessagesByConversation(Integer conversationId, Date archiveDt, Users user) throws ZfgcNotFoundException, Exception{
 		PersonalMessageDbObjExample ex = new PersonalMessageDbObjExample();
-		ex.createCriteria().andPmConversationIdEqualTo(conversationId);
+		Criteria crit = ex.createCriteria().andPmConversationIdEqualTo(conversationId);
+		
+		if(archiveDt != null) {
+			crit.andSentDtLessThan(archiveDt);
+		}
 		
 		List<PersonalMessageDbObjWithBLOBs> dbObj = personalMessageDao.get(ex);
 		List<PersonalMessage> obj = new ArrayList<>();

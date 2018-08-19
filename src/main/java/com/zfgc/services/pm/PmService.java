@@ -204,49 +204,6 @@ public class PmService extends AbstractService {
 		return result;
 	}
 	
-	//todo: add user instead of receiverId
-	public PersonalMessage openMessage(Integer pmId, Integer receiverId, TwoFactorKey aesKey) throws ZfgcNotFoundException, ZfgcInvalidAesKeyException{
-		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(receiverId);
-		if(!authenticationService.isValidAesKey(aesKey)){
-			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
-		}
-		
-		try {
-			PersonalMessage pm = pmDataProvider.getInboxMessage(pmId);
-			PersonalMessage pmCopy = (PersonalMessage)pm.copy(pm);
-			pmCopy.setReadFlag(true);
-			
-			String decryptedRsa = ZfgcSecurityUtils.decryptAes(receiverKeys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
-			Key receiverKey = null;
-			
-			try {
-				receiverKey = ZfgcSecurityUtils.stringToRsaPrivKey(decryptedRsa);
-			} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
-				e.printStackTrace();
-				return null;
-			}
-			
-			pm.setMessage(ZfgcSecurityUtils.decryptRsa(pm.getMessage(), receiverKey).trim());
-			try {
-				pm.setMessage(bbCodeService.parseText(pm.getMessage()));
-			} catch (NoSuchFieldException | SecurityException
-					| IllegalArgumentException | IllegalAccessException e) {
-				e.printStackTrace();
-				return null;
-			}
-			
-			pm.setSubject(ZfgcSecurityUtils.decryptRsa(pm.getSubject(), receiverKey).trim());
-			
-			pmDataProvider.saveMessage(pmCopy);
-			
-			return pm;
-			
-		} catch (ZfgcNotFoundException e) {
-			e.printStackTrace();
-			throw e;
-		}
-	}
-	
 	@Transactional
 	public void sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException, Exception{
 		if(user.getUsersId() == null){
@@ -417,8 +374,11 @@ public class PmService extends AbstractService {
 				addUserToConvo(convoId, user, aesKey);
 			}
 			
+			if(convo.getIsArchived()) {
+				convo.setArchiveDt(pmConversationDataProvider.getArchivalDate(convoId, user.getUsersId()));
+			}
 			
-			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), user));
+			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), convo.getArchiveDt(), user));
 			
 			convo.setParticipants(usersService.getUsersByConversation(convoId));
 			
