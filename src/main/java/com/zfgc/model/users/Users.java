@@ -70,6 +70,8 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String authToken;
 	private Boolean fromDb = true;
 	
+	private Integer unreadPmCount = 0;
+	
 	@JsonIgnore
 	private String timeOffsetLkup;
 	
@@ -414,5 +416,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setTimeZone(String timeZone) {
 		this.timeZone = timeZone;
+	}
+	public Integer getUnreadPmCount() {
+		return unreadPmCount;
+	}
+	public void setUnreadPmCount(Integer unreadPmCount) {
+		this.unreadPmCount = unreadPmCount;
 	}
 }

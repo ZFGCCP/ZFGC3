@@ -147,4 +147,10 @@ public class AuthenticationDao extends AbstractDao{
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer countByExample(Object obj, Object ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -49,5 +49,12 @@ public class BrPmConversationUserInviteDao extends AbstractDao<BrPmConversationU
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Integer countByExample(BrPmConversationUserInvite obj,
+			BrPmConversationUserInviteDbObjExample ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

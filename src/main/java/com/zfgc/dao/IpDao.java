@@ -200,4 +200,11 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		
 	}
 
+	@Override
+	public Integer countByExample(IpAddress obj, IpAddressDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

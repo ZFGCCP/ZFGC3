@@ -153,6 +153,10 @@
     <table schema="Zfgc3" tableName="BR_PM_CONVERSATION_USER_INVITE" domainObjectName="BrPmConversationUserInviteDbObj">
     </table>-->
     
+    <table schema="Zfgc3" tableName="BR_USER_CONVERSATION" domainObjectName="BrUserConversationDbObj">
+    	<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
     <!-- views -->
     
     <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">

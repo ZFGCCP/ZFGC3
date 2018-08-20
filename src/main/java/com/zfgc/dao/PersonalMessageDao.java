@@ -60,4 +60,11 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 		
 	}
 
+	@Override
+	public Integer countByExample(PersonalMessage obj,
+			PersonalMessageDbObjExample ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

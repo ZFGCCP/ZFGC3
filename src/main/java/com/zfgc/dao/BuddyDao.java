@@ -85,4 +85,11 @@ public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddy
 		
 	}
 
+	@Override
+	public Integer countByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

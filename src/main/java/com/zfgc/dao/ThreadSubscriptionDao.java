@@ -86,4 +86,11 @@ public class ThreadSubscriptionDao extends AbstractDao<ThreadSubscriptionViewDbO
 		
 	}
 
+	@Override
+	public Integer countByExample(ThreadSubscription obj,
+			ThreadSubscriptionViewDbObjExample ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

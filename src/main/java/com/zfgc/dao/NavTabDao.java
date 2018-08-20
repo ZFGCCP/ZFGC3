@@ -58,4 +58,11 @@ public class NavTabDao extends AbstractDao<NavTabViewDbObjExample, NavTabViewDbO
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer countByExample(NavTab obj, NavTabViewDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -490,5 +490,12 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer countByExample(Users obj, UsersDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

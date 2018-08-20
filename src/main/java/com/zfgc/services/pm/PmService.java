@@ -24,6 +24,7 @@ import com.zfgc.exception.security.ZfgcSecurityException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.pm.BrPmConversationArchive;
 import com.zfgc.model.pm.BrPmConversationUserInvite;
+import com.zfgc.model.pm.BrUserConversation;
 import com.zfgc.model.pm.PersonalMessage;
 import com.zfgc.model.pm.PmArchiveBoxView;
 import com.zfgc.model.pm.PmBox;
@@ -210,17 +211,24 @@ public class PmService extends AbstractService {
 			throw new ZfgcNotFoundException();
 		}
 
-		
 		sendMessage(user, message);
 		
 		if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),user.getUsersId())){
 			pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), user.getUsersId());
+		}
+		else{
+			//set the convo to read
+			pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), user.getUsersId());
 		}
 		
 		for (Users receiver : receivers){
 			//check if the user is in this convo already. if not, add them
 			if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),receiver.getUsersId())){
 				pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiver.getUsersId());
+			}
+			else{
+				//set the convo to read
+				pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), receiver.getUsersId());
 			}
 		}
 	}
@@ -350,6 +358,7 @@ public class PmService extends AbstractService {
 		}
 	}
 	
+	@Transactional
 	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException {
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
 		aesKey.setUsersId(user.getUsersId());
@@ -385,6 +394,9 @@ public class PmService extends AbstractService {
 			if(convo.getMessages().size() == 0) {
 				return null;
 			}
+			
+			//set the convo to read
+			pmConversationDataProvider.setConvoToRead(convoId, user.getUsersId());
 			
 			return convo;
 		}
@@ -597,4 +609,7 @@ public class PmService extends AbstractService {
 		}
 	}
 	
+	public Integer getUnreadPmCount(Users user) throws Exception{
+		return pmConversationDataProvider.countUnread(user.getUsersId());
+	}
 }

@@ -4,7 +4,7 @@
 			Welcome, <a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
 		</div>
 		<div>
-			Logout | <a href="/forum/mailBox">Conversations (0)</a>
+			Logout | <a href="/forum/mailBox">Conversations ({{user.unreadPmCount}})</a>
 		</div>
 	</div>
 	<div class="zfgc-logo">

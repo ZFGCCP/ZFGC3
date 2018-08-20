@@ -71,5 +71,11 @@ public class LookupDao extends AbstractDao<Object,Object,Object>{
 		
 	}
 
+	@Override
+	public Integer countByExample(Object obj, Object ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 	
 }
