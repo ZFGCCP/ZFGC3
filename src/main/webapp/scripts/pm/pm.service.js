@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService, ModalService,PmComparatorService){
+	function PmService($rootScope,$timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService, ModalService,PmComparatorService,NotificationsService){
 		var pmService = {};
 		
 		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
@@ -176,6 +176,7 @@
 			
 			result.$promise.then(function(data){
 				$state.go('convo',{conversationId : data.pmConversationId},{reload : true});
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('PM Successfully Sent','Success'));
 			});
 		};
 		
@@ -246,6 +247,6 @@
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService','ModalService','PmComparatorService',PmService]);
+		   .service('PmService',['$rootScope','$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService','ModalService','PmComparatorService','NotificationsService',PmService]);
 	
 })();

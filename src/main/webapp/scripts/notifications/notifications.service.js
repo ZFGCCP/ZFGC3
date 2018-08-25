@@ -21,6 +21,15 @@
 			return notificationsService.resource.getThreadSubs({'userId' : userId, 'pageNo' : pageNo, 'itemsPerPage' : itemsPerPage});
 		};
 		
+		notificationsService.createAlert = function(message,type){
+			var alert = {
+				'message' : message,
+				'type' : type
+			};
+			
+			return alert;
+		};
+		
 		return notificationsService;
 	}
 	
