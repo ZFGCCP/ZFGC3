@@ -93,4 +93,11 @@ public class BbcodeDao extends AbstractDao<BbCodeConfigDbObjExample, BbCodeConfi
 		
 	}
 
+	@Override
+	public Integer countByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dbobj.BrUserConversationDbObj;
 import com.zfgc.dbobj.BrUserConversationDbObjExample;
 import com.zfgc.dbobj.BrUserConversationDbObjKey;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -13,16 +14,15 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.pm.BrUserConversation;
 
 @Component
-public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjExample,BrUserConversationDbObjKey,BrUserConversation>{
+public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjExample,BrUserConversationDbObj,BrUserConversation>{
 
 	@Autowired
 	BrUserConversationDbObjMapper dbObjMapper;
 	
 	@Override
-	public List<BrUserConversationDbObjKey> get(
+	public List<BrUserConversationDbObj> get(
 			BrUserConversationDbObjExample ex) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return dbObjMapper.selectByExample(ex);
 	}
 
 	@Override
@@ -32,14 +32,21 @@ public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjEx
 
 	@Override
 	public void updateOrInsert(BrUserConversation obj) {
-		BrUserConversationDbObjKey dbObj = mapper.map(obj, BrUserConversationDbObjKey.class);
+		BrUserConversationDbObj dbObj = mapper.map(obj, BrUserConversationDbObj.class);
 		dbObjMapper.insert(dbObj);
 	}
 
 	@Override
 	public void updateByExample(BrUserConversation obj,
-			BrUserConversationDbObjExample ex) {
-		// TODO Auto-generated method stub
+			BrUserConversationDbObjExample ex) throws Exception {
+		try{
+			BrUserConversationDbObj dbObj = mapper.map(obj, BrUserConversationDbObj.class);
+			dbObjMapper.updateByExample(dbObj, ex);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
 		
 	}
 
@@ -54,6 +61,18 @@ public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjEx
 		}
 		
 		return resultCount;
+	}
+
+	@Override
+	public Integer countByExample(BrUserConversation obj,
+			BrUserConversationDbObjExample ex) throws Exception {
+		try{
+			return dbObjMapper.countByExample(ex);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+			throw e;
+		}
 	}
 	
 }

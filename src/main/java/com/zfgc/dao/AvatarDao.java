@@ -75,4 +75,11 @@ public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj, Avat
 		
 	}
 
+	@Override
+	public Integer countByExample(Avatar obj, AvatarDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

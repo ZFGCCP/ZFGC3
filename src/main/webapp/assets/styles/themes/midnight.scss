@@ -156,3 +156,29 @@ a:hover{
 		}
 	}
 }
+
+.toast-wrapper{
+	&.toast-success {
+		background-color: $midnight-btn-confirm;
+	}
+	
+	&.toast-error {
+		background-color: $midnight-btn-danger;
+	}
+
+    .toast-icon{
+	    background-color: $midnight-color;
+	    
+	    .fa-check-circle, .fa-times-circle {
+    		color: $midnight-section-body-bg-color;
+    	}
+    }
+    .toast-text{
+	    display: inline-block;
+	    padding-top: 14px;
+	    padding-left: 10px;
+	    font-size: 14px;
+    }
+}
+
+

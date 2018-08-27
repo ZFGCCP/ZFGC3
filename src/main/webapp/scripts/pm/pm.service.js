@@ -1,6 +1,6 @@
 (function(){
 	
-	function PmService($timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService, ModalService,PmComparatorService){
+	function PmService($rootScope,$timeout,$resource,$state,UserSearchService, ConvoBoxService, localStorageService, UserService, ModalService,PmComparatorService,NotificationsService){
 		var pmService = {};
 		
 		pmService.resource = $resource('/forum/pm/template',{'conversationId' : '@conversationId'},{
@@ -15,6 +15,10 @@
 			open : {
 				url : '/forum/pm/conversation/:conversationId',
 				method : 'POST'
+			},
+			convoTemplate : {
+				url : '/forum/pm/conversation/template',
+				method : 'GET'
 			},
 			leave : {
 				url : '/forum/pm/conversation/:conversationId/delete',
@@ -60,7 +64,8 @@
 			
 			result.$promise.then(function(data){
 				params.modal.close();
-				$state.go('convoBox');
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('You have left the conversation','Success'));
+				$state.go('convoBox',{reload:true});
 			});
 		};
 		
@@ -172,6 +177,7 @@
 			
 			result.$promise.then(function(data){
 				$state.go('convo',{conversationId : data.pmConversationId},{reload : true});
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('PM Successfully Sent','success'));
 			});
 		};
 		
@@ -225,7 +231,7 @@
 		};
 		
 		pmService.openAddUserModal = function(vm){
-			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversationId : vm.conversation.pmConversationId});
+			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversation : vm.conversation, conversationId : vm.conversation.pmConversationId});
 		};
 		
 		pmService.openParticipantsModal = function(vm){
@@ -242,6 +248,6 @@
 	}
 	
 	angular.module('zfgc.pm')
-		   .service('PmService',['$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService','ModalService','PmComparatorService',PmService]);
+		   .service('PmService',['$rootScope','$timeout','$resource','$state','UserSearchService','ConvoBoxService','localStorageService','UserService','ModalService','PmComparatorService','NotificationsService',PmService]);
 	
 })();

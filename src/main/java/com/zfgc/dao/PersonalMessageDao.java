@@ -18,8 +18,14 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 	PersonalMessageDbObjMapper personalMessageDbObjMapper;
 	
 	@Override
-	public List<PersonalMessageDbObjWithBLOBs> get(PersonalMessageDbObjExample ex) {
-		return personalMessageDbObjMapper.selectByExampleWithBLOBs(ex);
+	public List<PersonalMessageDbObjWithBLOBs> get(PersonalMessageDbObjExample ex) throws Exception{
+		try {
+			return personalMessageDbObjMapper.selectByExampleWithBLOBs(ex);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
@@ -35,10 +41,6 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 		if(dbObj.getPersonalMessageId() == null || dbObj.getPersonalMessageId() == -1){
 			personalMessageDbObjMapper.insert(dbObj);
 		}
-		else{
-			personalMessageDbObjMapper.updateByPrimaryKey(dbObj);
-		}
-		
 	}
 
 	@Override
@@ -56,6 +58,13 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 				return null;
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Integer countByExample(PersonalMessage obj,
+			PersonalMessageDbObjExample ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

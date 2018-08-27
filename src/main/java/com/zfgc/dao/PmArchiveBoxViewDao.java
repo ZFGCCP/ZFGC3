@@ -52,5 +52,12 @@ public class PmArchiveBoxViewDao extends AbstractDao<PmArchiveBoxViewDbObjExampl
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public Integer countByExample(PmArchiveBoxView obj,
+			PmArchiveBoxViewDbObjExample ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	
 }

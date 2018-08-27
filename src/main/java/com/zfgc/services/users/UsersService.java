@@ -24,6 +24,7 @@ import com.zfgc.services.AbstractService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.lookups.LookupService;
+import com.zfgc.services.pm.PmService;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
 
@@ -46,6 +47,9 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	UsersRuleChecker ruleChecker;
+	
+	@Autowired
+	PmService pmService;
 	
 	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
 		List<Users> result = null;
@@ -239,7 +243,7 @@ public class UsersService extends AbstractService {
 		usersDataProvider.linkUserToIp(user,ipAddress, isPrimary);
 	}
 	
-	public Users getLoggedInUser(Users user){
+	public Users getLoggedInUser(Users user) throws Exception{
 		if(user.getUsersId() == null){
 			Users guest = new Users();
 			user.setDisplayName("Guest");
@@ -249,6 +253,8 @@ public class UsersService extends AbstractService {
 			
 			return guest;
 		}
+		
+		user.setUnreadPmCount(pmService.getUnreadPmCount(user));
 		
 		return user;
 	}

@@ -93,4 +93,11 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer countByExample(UserProfileView obj,
+			UserProfileViewDbObjExample ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

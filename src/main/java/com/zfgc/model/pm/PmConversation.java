@@ -3,6 +3,7 @@ package com.zfgc.model.pm;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
 
@@ -14,6 +15,8 @@ public class PmConversation extends BaseZfgcModel {
 	private Integer initiatorId;
 	private Boolean isSelected;
 	private List<Users> participants;
+	private Boolean isArchived = false;
+	private Date archiveDt;
 	
 	public Integer getPmConversationId() {
 		return pmConversationId;
@@ -67,6 +70,24 @@ public class PmConversation extends BaseZfgcModel {
 
 	public void setParticipants(List<Users> participants) {
 		this.participants = participants;
+	}
+
+	public Boolean getIsArchived() {
+		return isArchived;
+	}
+
+	public void setIsArchived(Boolean isArchived) {
+		this.isArchived = isArchived;
+	}
+
+	@JsonIgnore
+	public Date getArchiveDt() {
+		return archiveDt;
+	}
+
+	@JsonIgnore
+	public void setArchiveDt(Date archiveDt) {
+		this.archiveDt = archiveDt;
 	}
 	
 }

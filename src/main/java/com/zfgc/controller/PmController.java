@@ -52,15 +52,19 @@ public class PmController extends BaseController {
 	
 	@RequestMapping(value="/send", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity sendPm(@RequestBody PersonalMessage message){
+		PmConversation convo = null;
 		
 		try{
-			pmService.sendMessageInConversation(zfgcUser(), message.getReceivers(), message);
+			convo = pmService.sendMessageInConversation(zfgcUser(), message.getReceivers(), message);
 		}
 		catch(ZfgcNotFoundException ex){
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
+		catch(Exception ex){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(convo);
 	}
 	
 	@RequestMapping(value="/key", method=RequestMethod.POST, produces="application/json")
@@ -68,20 +72,6 @@ public class PmController extends BaseController {
 		pmService.createKeyPairs(pmGenerator.getUsersId(), pmGenerator.getPassPhrase());
 		
 		return ResponseEntity.ok().build();
-	}
-	
-	@RequestMapping(value="/read/{pmId}", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity readPm(@RequestBody TwoFactorKey aes, @PathVariable("pmId") Integer pmId){
-		try {
-			PersonalMessage message = pmService.openMessage(pmId, aes.getUsersId(), aes);
-			
-			return ResponseEntity.ok(message);
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.notFound().build();
-		}
-		catch (ZfgcInvalidAesKeyException e){
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
 	}
 	
 	@RequestMapping(value="/auth", method=RequestMethod.POST, produces="application/json")
@@ -101,36 +91,6 @@ public class PmController extends BaseController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
 		return ResponseEntity.status(HttpStatus.OK).build();
-	}
-	
-	@RequestMapping(value="/outbox", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity viewOutbox(@RequestBody TwoFactorKey aesKey){
-		try {
-			PmBox outbox = pmService.getOutbox(aesKey, zfgcUser());
-			
-			if(outbox == null){
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			}
-			
-			return ResponseEntity.ok(outbox);
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
-	}
-	
-	@RequestMapping(value="/inbox", method=RequestMethod.POST, produces="application/json")
-	public ResponseEntity viewInbox(@RequestBody TwoFactorKey aesKey){
-		try {
-			PmBox inbox = pmService.getInbox(aesKey, zfgcUser());
-			
-			if(inbox == null){
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			}
-			
-			return ResponseEntity.ok(inbox);
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-		}
 	}
 	
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
@@ -177,6 +137,11 @@ public class PmController extends BaseController {
 		return ResponseEntity.ok(new PmPrune());
 	}
 	
+	@RequestMapping(value="/conversation/template", method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity getConvoTemplate(){
+		return ResponseEntity.ok(pmService.getConvoTemplate(zfgcUser()));
+	}
+	
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId) {
 		try {
@@ -219,7 +184,7 @@ public class PmController extends BaseController {
 		try{
 			pmService.removeUserFromConvo(aesKey, convoId, remove, zfgcUser());
 		} catch (ZfgcSecurityException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (Exception e) {

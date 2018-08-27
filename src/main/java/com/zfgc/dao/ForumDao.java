@@ -172,4 +172,11 @@ public class ForumDao extends AbstractDao<ForumDbObjExample, ForumDbObj, Forum> 
 		// TODO Auto-generated method stub
 		
 	}
+
+	@Override
+	public Integer countByExample(Forum obj, ForumDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

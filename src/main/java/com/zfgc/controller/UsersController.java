@@ -45,7 +45,13 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/loggedInUser", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getCurrentlyLoggedInUser(){
-		Users user = usersService.getLoggedInUser(zfgcUser());
+		Users user = null;
+		try{
+			user = usersService.getLoggedInUser(zfgcUser());
+		}
+		catch(Exception ex){
+			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
+		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}

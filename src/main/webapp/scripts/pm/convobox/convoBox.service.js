@@ -1,6 +1,6 @@
 (function(){
 	
-	function ConvoBoxService($resource, $state, localStorageService){
+	function ConvoBoxService($resource, $state, NotificationsService,localStorageService, ModalService){
 		var service = {};
 		
 		service.resource = $resource('/forum/pm/convobox',{'filterType' : '@filterType'},{
@@ -26,6 +26,14 @@
 		};
 		
 		service.deleteConversations = function(vm){
+			var params = vm;
+			params.modal = ModalService.createConfirmDialog("Are you sure you want to leave?",
+											 "You will not be able to rejoin these conversations unless someone adds you.",
+											 service.deleteConversationsConfirm,
+											 params);
+		};
+		
+		service.deleteConversationsConfirm = function(vm){
 			var convos = [];
 			for(var i = 0; i < vm.convoBox.conversations.length; i++){
 				if(vm.convoBox.conversations[i].isSelected){
@@ -34,11 +42,22 @@
 			}
 			
 			if(convos.length > 0){
-				return service.resource.leave({'aesKey' : {'key':localStorageService.get('pmKey')}, 'convoIds' : convos });
+				service.resource.leave({'aesKey' : {'key':localStorageService.get('pmKey')}, 'convoIds' : convos }).$promise.then(function(data){
+					NotificationsService.addAlert("Conversations pruned successfully","success");
+					$state.reload();
+				});
 			}
 		};
 		
 		service.archiveConversations = function(vm){
+			var params = vm;
+			params.modal = ModalService.createConfirmDialog("Are you sure you want to archive?",
+											 "You will not be able to rejoin these conversations.",
+											 service.archiveConversationsConfirm,
+											 params);
+		};
+		
+		service.archiveConversationsConfirm = function(vm){
 			var convos = [];
 			for(var i = 0; i < vm.convoBox.conversations.length; i++){
 				if(vm.convoBox.conversations[i].isSelected){
@@ -47,7 +66,10 @@
 			}
 			
 			if(convos.length > 0){
-				return service.resource.archive({'aesKey' : {'key':localStorageService.get('pmKey')}, 'convoIds' : convos });
+				service.resource.archive({'aesKey' : {'key':localStorageService.get('pmKey')}, 'convoIds' : convos }).$promise.then(function(data){
+					NotificationsService.addAlert('Conversations Archived Successfully','success');
+					$state.reload();
+				});
 			}
 		};
 		
@@ -55,7 +77,7 @@
 		      var result = text ? String(text).replace(/<[^>]+>/gm, '') : '';
 		      
 		      if(result.length > 20){
-		    	  result = result.subString(0,10) + "...";
+		    	  result = result.substring(0,10) + "...";
 		      }
 		      
 		      return result;
@@ -80,6 +102,6 @@
 	};
 	
 	angular.module('zfgc.pm')
-		   .service('ConvoBoxService',['$resource','$state','localStorageService',ConvoBoxService]);
+		   .service('ConvoBoxService',['$resource','$state', 'NotificationsService','localStorageService','ModalService',ConvoBoxService]);
 	
 })();

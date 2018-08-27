@@ -42,7 +42,7 @@ public class SubscriptionService extends AbstractService{
 	}
 	
 	public void deleteThreadSubscriptions(List<ThreadSubscription> existingSubs, Integer userId, Users user) throws ZfgcNotFoundException{
-		if(!userId.equals(user.getUsersId())){
+		/*if(!userId.equals(user.getUsersId())){
 			throw new ZfgcNotFoundException("Thread subscriptions");
 		}
 		
@@ -55,6 +55,6 @@ public class SubscriptionService extends AbstractService{
 			}
 		}
 		
-		threadSubscriptionDataProvider.deleteThreadSubscriptions(subsToDelete);
+		threadSubscriptionDataProvider.deleteThreadSubscriptions(subsToDelete);*/
 	}
 }

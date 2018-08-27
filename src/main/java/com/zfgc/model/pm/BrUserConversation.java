@@ -6,6 +6,14 @@ public class BrUserConversation extends BaseZfgcModel {
 	
 	public Integer usersId;
 	public Integer pmConversationId;
+	public Boolean readFlag = false;
+	
+	public Boolean getReadFlag() {
+		return readFlag;
+	}
+	public void setReadFlag(Boolean readFlag) {
+		this.readFlag = readFlag;
+	}
 	public Integer getUsersId() {
 		return usersId;
 	}

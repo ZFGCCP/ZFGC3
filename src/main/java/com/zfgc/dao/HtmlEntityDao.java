@@ -45,4 +45,11 @@ public class HtmlEntityDao extends AbstractDao<HtmlEntityDbObjExample, HtmlEntit
 		
 	}
 
+	@Override
+	public Integer countByExample(Object obj, HtmlEntityDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -50,5 +50,12 @@ public class PmOutBoxDao extends AbstractDao<OutboxViewDbObjExample, OutboxViewD
 		
 	}
 
+	@Override
+	public Integer countByExample(PmBox obj, OutboxViewDbObjExample ex)
+			throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 
 }

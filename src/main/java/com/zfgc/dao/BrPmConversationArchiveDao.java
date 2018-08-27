@@ -20,7 +20,13 @@ public class BrPmConversationArchiveDao extends AbstractDao<BrPmConversationArch
 	public List<BrPmConversationArchiveDbObj> get(
 			BrPmConversationArchiveDbObjExample ex) throws Exception {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			return dbObjMapper.selectByExample(ex);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 	}
 
 	@Override
@@ -45,6 +51,13 @@ public class BrPmConversationArchiveDao extends AbstractDao<BrPmConversationArch
 
 	@Override
 	public Integer deleteByExample(BrPmConversationArchive obj,
+			BrPmConversationArchiveDbObjExample ex) throws Exception {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer countByExample(BrPmConversationArchive obj,
 			BrPmConversationArchiveDbObjExample ex) throws Exception {
 		// TODO Auto-generated method stub
 		return null;
