@@ -1,6 +1,6 @@
 (function(){
 	
-	function AddUserModalCtrl(PmService, UserService, params){
+	function AddUserModalCtrl($rootScope,PmService, UserService, params,NotificationsService){
 		var vm = this;
 		
 		vm.usersToAdd = [];
@@ -29,11 +29,12 @@
 		vm.inviteUsers = function(){
 			PmService.inviteUsers(vm.conversationId,vm.usersToAdd).$promise.then(function(data){
 				vm.modal.close();
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Users Invited Successfully','Success'));
 			});
 		};
 	}
 	
 	angular.module('zfgc.pm')
-		   .controller('AddUserModalCtrl',['PmService','UserService','params',AddUserModalCtrl]);
+		   .controller('AddUserModalCtrl',['$rootScope','PmService','UserService','params','NotificationsService',AddUserModalCtrl]);
 	
 })();

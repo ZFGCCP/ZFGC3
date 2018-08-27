@@ -52,9 +52,10 @@ public class PmController extends BaseController {
 	
 	@RequestMapping(value="/send", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity sendPm(@RequestBody PersonalMessage message){
+		PmConversation convo = null;
 		
 		try{
-			pmService.sendMessageInConversation(zfgcUser(), message.getReceivers(), message);
+			convo = pmService.sendMessageInConversation(zfgcUser(), message.getReceivers(), message);
 		}
 		catch(ZfgcNotFoundException ex){
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
@@ -63,7 +64,7 @@ public class PmController extends BaseController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
-		return ResponseEntity.ok().build();
+		return ResponseEntity.ok(convo);
 	}
 	
 	@RequestMapping(value="/key", method=RequestMethod.POST, produces="application/json")

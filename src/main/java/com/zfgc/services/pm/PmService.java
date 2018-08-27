@@ -206,7 +206,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public void sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException, Exception{
+	public PmConversation sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException, Exception{
 		if(user.getUsersId() == null){
 			throw new ZfgcNotFoundException();
 		}
@@ -217,7 +217,7 @@ public class PmService extends AbstractService {
 			pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), user.getUsersId());
 		}
 		else{
-			//set the convo to read
+			//set the convo to unread
 			pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), user.getUsersId());
 		}
 		
@@ -227,10 +227,15 @@ public class PmService extends AbstractService {
 				pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiver.getUsersId());
 			}
 			else{
-				//set the convo to read
+				//set the convo to unread
 				pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), receiver.getUsersId());
 			}
 		}
+		
+		PmConversation convo = new PmConversation();
+		convo.setPmConversationId(message.getPmConversationId());
+		
+		return convo;
 	}
 	
 	public String createInviteKey(Users user, Integer receiverId, TwoFactorKey aes){

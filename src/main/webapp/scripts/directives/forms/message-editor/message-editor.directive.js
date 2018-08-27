@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function MessageEditor(PmService, ForumPostService){
+	function MessageEditor($window,PmService, ForumPostService){
 		var directive = {};
 		directive.restrict = 'E';
 		directive.templateUrl = "scripts/directives/forms/message-editor/message-editor.directive.html";
@@ -41,7 +41,12 @@
 			};
 			
 			$scope.toggleReplyBox = function(){
-				ForumPostService.toggleMessageReply($scope);
+				if($scope.conversation.pmConversationId !== null){
+					ForumPostService.toggleMessageReply($scope);
+				}
+				else{
+					$window.history.back();
+				}
 			};
 			
 			$scope.reply = function(){
@@ -54,6 +59,6 @@
 	}
 	
 	angular.module("zfgc.forum")
-		   .directive("messageEditor", ['PmService','ForumPostService',MessageEditor]);
+		   .directive("messageEditor", ['$window','PmService','ForumPostService',MessageEditor]);
 	
 })();

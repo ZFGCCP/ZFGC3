@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function InterceptorService($q,$injector){
+	function InterceptorService($rootScope,$q,$injector){
 		var InterceptorService = {};
 		InterceptorService.response = function(res) {
 	        /* This is the code that transforms the response. `res.data` is the
@@ -33,6 +33,7 @@
 	    	  	}
 	    	  	else if(resE.status === 401){
 	    	  		//unauthorized pm box access
+	    	  		$rootScope.$broadcast('alertAdded',{message : "You are not authorized to do that", type : "error"});
 	    	  		state.go('pmAuth');
 	    	  	}
 	    	  
@@ -45,5 +46,5 @@
 	
 	angular
 		.module('zfgc.forum')
-		.service('InterceptorService', ['$q','$injector',InterceptorService])
+		.service('InterceptorService', ['$rootScope','$q','$injector',InterceptorService])
 })();

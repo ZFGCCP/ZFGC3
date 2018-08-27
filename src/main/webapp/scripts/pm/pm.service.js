@@ -64,7 +64,8 @@
 			
 			result.$promise.then(function(data){
 				params.modal.close();
-				$state.go('convoBox');
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('You have left the conversation','Success'));
+				$state.go('convoBox',{reload:true});
 			});
 		};
 		
@@ -176,7 +177,7 @@
 			
 			result.$promise.then(function(data){
 				$state.go('convo',{conversationId : data.pmConversationId},{reload : true});
-				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('PM Successfully Sent','Success'));
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('PM Successfully Sent','success'));
 			});
 		};
 		

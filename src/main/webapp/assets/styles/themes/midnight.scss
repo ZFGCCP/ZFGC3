@@ -158,12 +158,18 @@ a:hover{
 }
 
 .toast-wrapper{
-    background-color: $midnight-btn-confirm;
-    
+	&.toast-success {
+		background-color: $midnight-btn-confirm;
+	}
+	
+	&.toast-error {
+		background-color: $midnight-btn-danger;
+	}
+
     .toast-icon{
 	    background-color: $midnight-color;
 	    
-	    .fa-check-circle {
+	    .fa-check-circle, .fa-times-circle {
     		color: $midnight-section-body-bg-color;
     	}
     }
@@ -174,3 +180,5 @@ a:hover{
 	    font-size: 14px;
     }
 }
+
+

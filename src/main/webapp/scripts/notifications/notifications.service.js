@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function NotificationsService($resource){
+	function NotificationsService($rootScope,$resource){
 		var notificationsService = {};
 		
 		notificationsService.resource = $resource('/forum/subscriptions/',
@@ -21,6 +21,10 @@
 			return notificationsService.resource.getThreadSubs({'userId' : userId, 'pageNo' : pageNo, 'itemsPerPage' : itemsPerPage});
 		};
 		
+		notificationsService.addAlert = function(message,type){
+			$rootScope.$broadcast('alertAdded',notificationsService.createAlert(message,type));
+		};
+		
 		notificationsService.createAlert = function(message,type){
 			var alert = {
 				'message' : message,
@@ -34,5 +38,5 @@
 	}
 	
 	angular.module('zfgc.notifications')
-	       .service('NotificationsService',['$resource',NotificationsService]);
+	       .service('NotificationsService',['$rootScope','$resource',NotificationsService]);
 })();

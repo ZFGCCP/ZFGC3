@@ -45,9 +45,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
@@ -193,9 +193,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html"
 	    
 	],
 

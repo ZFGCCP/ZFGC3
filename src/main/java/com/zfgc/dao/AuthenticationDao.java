@@ -6,7 +6,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.mysql.jdbc.exceptions.jdbc4.MySQLIntegrityConstraintViolationException;
 import com.zfgc.dbobj.AuthTokenDbObj;
 import com.zfgc.dbobj.AuthTokenDbObjExample;
 import com.zfgc.dbobj.EmailAddressDbObj;
