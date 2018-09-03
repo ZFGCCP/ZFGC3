@@ -518,7 +518,11 @@ public class PmService extends AbstractService {
 			convo.setSentDt(archived.getSentDt());
 			convo.setReceiverId(archived.getReceiverId());
 			convo.setSenderId(archived.getSenderId());
+			convo.setSenderName(archived.getSenderName());
 			convo.setArchived(true);
+			convo.setInitiatorId(archived.getInitiatorId());
+			convo.setInitiatorName(archived.getInitiatorName());
+			convo.setStartDt(archived.getStartDt());
 			
 			archiveBox.getConversations().add(convo);
 		}

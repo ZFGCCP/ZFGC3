@@ -80,7 +80,7 @@ public class PmConversationView extends BaseZfgcModel{
 	}
 
 	public String getSentDtAsString(){
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(getUserTimeZone());
 		
 		if(sentDt == null){
 			return "";
@@ -99,7 +99,7 @@ public class PmConversationView extends BaseZfgcModel{
 
 	public String getStartDtAsString(){
 		
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(getUserTimeZone());
 		
 		if(startDt == null){
 			return "";
