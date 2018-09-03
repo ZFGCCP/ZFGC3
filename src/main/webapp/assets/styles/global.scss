@@ -12,7 +12,7 @@
 	position:absolute;
 
 	.toast-wrapper{
-		width: 300px;
+		min-width: 300px;
 	    height: 40px;
 	    position: fixed;
 	    border: 1px solid;
@@ -37,8 +37,7 @@
 	    }
 	    .toast-text{
 		    display: inline-block;
-		    padding-top: 14px;
-		    padding-left: 10px;
+		    padding: 14px 10px 0 10px;
 		    font-size: 14px;
 	    }
 	}
