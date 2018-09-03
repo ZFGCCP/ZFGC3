@@ -161,9 +161,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
-	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
