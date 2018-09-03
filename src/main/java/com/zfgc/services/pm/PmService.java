@@ -394,6 +394,10 @@ public class PmService extends AbstractService {
 			
 			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), convo.getArchiveDt(), user));
 			
+			for(PersonalMessage pm : convo.getMessages()){
+				pm.setMessage(bbCodeService.parseText(pm.getMessage()));
+			}
+			
 			convo.setParticipants(usersService.getUsersByConversation(convoId));
 			
 			if(convo.getMessages().size() == 0) {
