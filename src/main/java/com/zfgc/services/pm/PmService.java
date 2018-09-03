@@ -440,6 +440,11 @@ public class PmService extends AbstractService {
 			throw new ZfgcUnauthorizedException();
 		}
 		
+		//also verify that the user is not trying to remove themselves
+		if(zfgcUser.getUsersId() == remove.getUsersId()){
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		pmConversationDataProvider.deleteConversationFromBox(convo, remove);
 	}
 	

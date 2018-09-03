@@ -64,7 +64,7 @@
 			
 			result.$promise.then(function(data){
 				params.modal.close();
-				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('You have left the conversation','Success'));
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('You have left the conversation','success'));
 				$state.go('convoBox',{reload:true});
 			});
 		};
