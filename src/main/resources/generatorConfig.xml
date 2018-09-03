@@ -151,11 +151,11 @@
     </table>
     
     <table schema="Zfgc3" tableName="BR_PM_CONVERSATION_USER_INVITE" domainObjectName="BrPmConversationUserInviteDbObj">
-    </table>-->
+    </table>
     
     <table schema="Zfgc3" tableName="BR_USER_CONVERSATION" domainObjectName="BrUserConversationDbObj">
     	<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>
+    </table>-->
     
     <!-- views -->
     
@@ -224,9 +224,12 @@
     </table>
     
     <table schema="zfgc3" tableName="PM_ARCHIVE_BOX_VIEW" domainObjectName="PmArchiveBoxViewDbObj">
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="PM_CONVERSATION_BOX_VIEW" domainObjectName="PmConversationBoxViewDbObj">
+    </table>-->
+    
+    <table schema="zfgc3" tableName="PM_ARCHIVE_BOX_VIEW" domainObjectName="PmArchiveBoxViewDbObj">
     </table>
     
   </context>

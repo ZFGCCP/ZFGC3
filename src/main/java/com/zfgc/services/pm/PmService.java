@@ -510,14 +510,7 @@ public class PmService extends AbstractService {
 		archiveBox.setConversations(new ArrayList<>());
 		
 		for(PmArchiveBoxView archived : archive){
-			PmConversationView convo = new PmConversationView();
-			convo.setMessage(archived.getMessage());
-			convo.setSubject(archived.getSubject());
-			convo.setPmConversationId(archived.getPmConversationId());
-			convo.setPersonalMessageId(archived.getPersonalMessageId());
-			convo.setSentDt(archived.getSentDt());
-			convo.setReceiverId(archived.getReceiverId());
-			convo.setSenderId(archived.getSenderId());
+			PmConversationView convo = mapper.map(archived, PmConversationView.class);
 			convo.setArchived(true);
 			
 			archiveBox.getConversations().add(convo);
