@@ -29,8 +29,14 @@
 			ConvoBoxService.deleteConversations(vm);
 		};
 		
-		vm.getConversations = function(){
+		vm.getConversations = function(sort){
 			vm.convoBox = ConvoBoxService.getConvoBox(vm);
+			
+			if(sort === true){
+				vm.convoBox.$promise.then(function(data){
+					vm.sortConversations();
+				});
+			}
 		};
 		
 		vm.prune = function(){
@@ -41,7 +47,7 @@
 			PmService.sortMessages(vm);
 		};
 		
-		vm.getConversations();
+		vm.getConversations(true);
 	}
 	
 	angular.module('zfgc.pm')

@@ -4,11 +4,11 @@
 		var service = {};
 		
 		service.compareByLastSentTime = function(a,b){
-			if(a.sentDt < b.sentDt){
+			if(a.sentDt > b.sentDt){
 				return -1;
 			}
 			
-			if(a.sentDt > b.sentDt){
+			if(a.sentDt < b.sentDt){
 				return 1;
 			}
 			
@@ -16,11 +16,11 @@
 		};
 		
 		service.compareByStartedDt = function(a,b){
-			if(a.startDt < b.startDt){
+			if(a.startDt > b.startDt){
 				return -1;
 			}
 			
-			if(a.startDt > b.startDt){
+			if(a.startDt < b.startDt){
 				return 1;
 			}
 			
@@ -32,7 +32,7 @@
 				return -1;
 			}
 			
-			if(a.iniatorName > b.initatorName){
+			if(a.initiatorName > b.initiatorName){
 				return 1;
 			}
 			
