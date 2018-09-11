@@ -1,342 +1,341 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mappings PUBLIC "-//DOZER//DTD MAPPINGS//EN"
+   "http://dozer.sourceforge.net/dtd/dozerbeanmapping.dtd">
 
-<mappings xmlns="http://dozer.sourceforge.net"
-          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://dozer.sourceforge.net http://dozer.sourceforge.net/schema/beanmapping.xsd">
-
-	<mapping>
-	    <class-a>com.zfgc.dbobj.UserProfileViewDbObj</class-a>
-	    <class-b>com.zfgc.model.users.Users</class-b>
-    	
-    	<field>
-    		<a>steam</a>
-    		<b>contactInfo.steam</b>
-    	</field>
-    	
-    	<field>
-    		<a>gtalk</a>
-    		<b>contactInfo.gtalk</b>
-    	</field>
-    	
-    	<field>
-    		<a>aim</a>
-    		<b>contactInfo.aim</b>
-    	</field>
-    	
-    	<field>
-    		<a>yim</a>
-    		<b>contactInfo.yim</b>
-    	</field>
-    	
-    	<field>
-    		<a>nnid</a>
-    		<b>contactInfo.nnid</b>
-    	</field>
-    	
-    	<field>
-    		<a>psn</a>
-    		<b>contactInfo.psn</b>
-    	</field>
-    	
-    	<field>
-    		<a>xboxLive</a>
-    		<b>contactInfo.xboxLive</b>
-    	</field>
-    	
-    	<field>
-    		<a>skype</a>
-    		<b>contactInfo.skype</b>
-    	</field>
-    	
-    	<field>
-    		<a>emailAddress</a>
-    		<b>emailAddress.emailAddress</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideSteamFlag</a>
-    		<b>contactInfo.hideSteamFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideGtalkFlag</a>
-    		<b>contactInfo.hideGtalkFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideAimFlag</a>
-    		<b>contactInfo.hideAimFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideYimFlag</a>
-    		<b>contactInfo.hideYimFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideNnidFlag</a>
-    		<b>contactInfo.hideNnidFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hidePsnFlag</a>
-    		<b>contactInfo.hidePsnFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideXboxLiveFlag</a>
-    		<b>contactInfo.hideXboxLiveFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideSkypeFlag</a>
-    		<b>contactInfo.hideSkypeFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideGenderFlag</a>
-    		<b>securityInfo.hideGenderFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideBirthDateFlag</a>
-    		<b>securityInfo.hideBirthDateFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>avatarId</a>
-    		<b>avatar.avatarId</b>
-    	</field>
-    	
-		<field>
-			<a>avatarGalleryId</a>
-			<b>avatar.avatarGalleryId</b>
-		</field>
-		
-		<field>
-			<a>avatarTypeId</a>
-			<b>avatar.avatarTypeId</b>
-		</field>
-		
-		<!--  notification settings -->
-    	<field>
-    		<a>notificationSettingsId</a>
-    		<b>notificationSettings.notificationSettingsId</b>
-    	</field>
-    	
-    	<field>
-    		<a>autoSubscribeFlag</a>
-    		<b>notificationSettings.autoSubscribeFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>sendPostInEmailFlag</a>
-    		<b>notificationSettings.sendPostInEmailFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>instantFlag</a>
-    		<b>notificationSettings.instantFlag</b>
-    	</field>
-    	
-		<field>
-			<a>frequencyId</a>
-			<b>notificationSettings.frequencyId</b>
-		</field>
-    	
-    	<field>
-    		<a>onlyFirstFlag</a>
-    		<b>notificationSettings.onlyFirstFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>karmaEmailFlag</a>
-    		<b>notificationSettings.karmaEmailFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>karmaPmFlag</a>
-    		<b>notificationSettings.karmaPmFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>taggedEmailFlag</a>
-    		<b>notificationSettings.taggedEmailFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>taggedPmFlag</a>
-    		<b>notificationSettings.taggedPmFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>pmEmailFlag</a>
-    		<b>notificationSettings.pmEmailFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>moderationFlag</a>
-    		<b>notificationSettings.moderationFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>onlyMeFlag</a>
-    		<b>notificationSettings.onlyMeFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>repliesFlag</a>
-    		<b>notificationSettings.repliesFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>repliesToMeFlag</a>
-    		<b>notificationSettings.repliesToMeFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>postedInFlag</a>
-    		<b>notificationSettings.postedInFlag</b>
-    	</field>
-    	
-    	<!-- personal messaging settings -->
-    	<field>
-    		<a>personalMessagingSettingsId</a>
-    		<b>personalMessagingSettings.personalMessagingSettingsId</b>
-    	</field>
-    	
-    	
-    	<field>
-    		<a>displaySettingId</a>
-    		<b>personalMessagingSettings.displaySettingId</b>
-    	</field>
-    	
-    	<field>
-    		<a>recentAtTopFlag</a>
-    		<b>personalMessagingSettings.recentAtTopFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>receiveFromId</a>
-    		<b>personalMessagingSettings.receiveFromId</b>
-    	</field>
-    	
-    	<field>
-    		<a>notifyFrequencyId</a>
-    		<b>personalMessagingSettings.notifyFrequencyId</b>
-    	</field>
-    	
-    	<field>
-    		<a>saveToSentFlag</a>
-    		<b>personalMessagingSettings.saveToSentFlag</b>
-    	</field>
-  	</mapping>
-
-
-	<mapping>
-	    <class-a>com.zfgc.dbobj.UsersDbObj</class-a>
-	    <class-b>com.zfgc.model.users.Users</class-b>
-    	
-    	<field>
-    		<a>genderId</a>
-    		<b>gender</b>
-    	</field>
-    	
-    	<field>
-    		<a>steam</a>
-    		<b>contactInfo.steam</b>
-    	</field>
-    	
-    	<field>
-    		<a>gtalk</a>
-    		<b>contactInfo.gtalk</b>
-    	</field>
-    	
-    	<field>
-    		<a>aim</a>
-    		<b>contactInfo.aim</b>
-    	</field>
-    	
-    	<field>
-    		<a>yim</a>
-    		<b>contactInfo.yim</b>
-    	</field>
-    	
-    	<field>
-    		<a>nnid</a>
-    		<b>contactInfo.nnid</b>
-    	</field>
-    	
-    	<field>
-    		<a>psn</a>
-    		<b>contactInfo.psn</b>
-    	</field>
-    	
-    	<field>
-    		<a>xboxLive</a>
-    		<b>contactInfo.xboxLive</b>
-    	</field>
-    	
-    	<field>
-    		<a>skype</a>
-    		<b>contactInfo.skype</b>
-    	</field>
-    	
-    	<field>
-    		<a>emailAddress</a>
-    		<b>emailAddress.emailAddress</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideSteamFlag</a>
-    		<b>contactInfo.hideSteamFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideGtalkFlag</a>
-    		<b>contactInfo.hideGtalkFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideAimFlag</a>
-    		<b>contactInfo.hideAimFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideYimFlag</a>
-    		<b>contactInfo.hideYimFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideNnidFlag</a>
-    		<b>contactInfo.hideNnidFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hidePsnFlag</a>
-    		<b>contactInfo.hidePsnFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideXboxLiveFlag</a>
-    		<b>contactInfo.hideXboxLiveFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideSkypeFlag</a>
-    		<b>contactInfo.hideSkypeFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideGenderFlag</a>
-    		<b>securityInfo.hideGenderFlag</b>
-    	</field>
-    	
-    	<field>
-    		<a>hideBirthDateFlag</a>
-    		<b>securityInfo.hideBirthDateFlag</b>
-    	</field>
-
-  	</mapping>
+	<mappings>
+		<mapping>
+		    <class-a>com.zfgc.dbobj.UserProfileViewDbObj</class-a>
+		    <class-b>com.zfgc.model.users.Users</class-b>
+	    	
+	    	<field>
+	    		<a>steam</a>
+	    		<b>contactInfo.steam</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>gtalk</a>
+	    		<b>contactInfo.gtalk</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>aim</a>
+	    		<b>contactInfo.aim</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>yim</a>
+	    		<b>contactInfo.yim</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>nnid</a>
+	    		<b>contactInfo.nnid</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>psn</a>
+	    		<b>contactInfo.psn</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>xboxLive</a>
+	    		<b>contactInfo.xboxLive</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>skype</a>
+	    		<b>contactInfo.skype</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>emailAddress</a>
+	    		<b>emailAddress.emailAddress</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideSteamFlag</a>
+	    		<b>contactInfo.hideSteamFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideGtalkFlag</a>
+	    		<b>contactInfo.hideGtalkFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideAimFlag</a>
+	    		<b>contactInfo.hideAimFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideYimFlag</a>
+	    		<b>contactInfo.hideYimFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideNnidFlag</a>
+	    		<b>contactInfo.hideNnidFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hidePsnFlag</a>
+	    		<b>contactInfo.hidePsnFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideXboxLiveFlag</a>
+	    		<b>contactInfo.hideXboxLiveFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideSkypeFlag</a>
+	    		<b>contactInfo.hideSkypeFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideGenderFlag</a>
+	    		<b>securityInfo.hideGenderFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideBirthDateFlag</a>
+	    		<b>securityInfo.hideBirthDateFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>avatarId</a>
+	    		<b>avatar.avatarId</b>
+	    	</field>
+	    	
+			<field>
+				<a>avatarGalleryId</a>
+				<b>avatar.avatarGalleryId</b>
+			</field>
+			
+			<field>
+				<a>avatarTypeId</a>
+				<b>avatar.avatarTypeId</b>
+			</field>
+			
+			<!--  notification settings -->
+	    	<field>
+	    		<a>notificationSettingsId</a>
+	    		<b>notificationSettings.notificationSettingsId</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>autoSubscribeFlag</a>
+	    		<b>notificationSettings.autoSubscribeFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>sendPostInEmailFlag</a>
+	    		<b>notificationSettings.sendPostInEmailFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>instantFlag</a>
+	    		<b>notificationSettings.instantFlag</b>
+	    	</field>
+	    	
+			<field>
+				<a>frequencyId</a>
+				<b>notificationSettings.frequencyId</b>
+			</field>
+	    	
+	    	<field>
+	    		<a>onlyFirstFlag</a>
+	    		<b>notificationSettings.onlyFirstFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>karmaEmailFlag</a>
+	    		<b>notificationSettings.karmaEmailFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>karmaPmFlag</a>
+	    		<b>notificationSettings.karmaPmFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>taggedEmailFlag</a>
+	    		<b>notificationSettings.taggedEmailFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>taggedPmFlag</a>
+	    		<b>notificationSettings.taggedPmFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>pmEmailFlag</a>
+	    		<b>notificationSettings.pmEmailFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>moderationFlag</a>
+	    		<b>notificationSettings.moderationFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>onlyMeFlag</a>
+	    		<b>notificationSettings.onlyMeFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>repliesFlag</a>
+	    		<b>notificationSettings.repliesFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>repliesToMeFlag</a>
+	    		<b>notificationSettings.repliesToMeFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>postedInFlag</a>
+	    		<b>notificationSettings.postedInFlag</b>
+	    	</field>
+	    	
+	    	<!-- personal messaging settings -->
+	    	<field>
+	    		<a>personalMessagingSettingsId</a>
+	    		<b>personalMessagingSettings.personalMessagingSettingsId</b>
+	    	</field>
+	    	
+	    	
+	    	<field>
+	    		<a>displaySettingId</a>
+	    		<b>personalMessagingSettings.displaySettingId</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>recentAtTopFlag</a>
+	    		<b>personalMessagingSettings.recentAtTopFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>receiveFromId</a>
+	    		<b>personalMessagingSettings.receiveFromId</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>notifyFrequencyId</a>
+	    		<b>personalMessagingSettings.notifyFrequencyId</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>saveToSentFlag</a>
+	    		<b>personalMessagingSettings.saveToSentFlag</b>
+	    	</field>
+	  	</mapping>
+	
+	
+		<mapping>
+		    <class-a>com.zfgc.dbobj.UsersDbObj</class-a>
+		    <class-b>com.zfgc.model.users.Users</class-b>
+	    	
+	    	<field>
+	    		<a>genderId</a>
+	    		<b>gender</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>steam</a>
+	    		<b>contactInfo.steam</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>gtalk</a>
+	    		<b>contactInfo.gtalk</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>aim</a>
+	    		<b>contactInfo.aim</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>yim</a>
+	    		<b>contactInfo.yim</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>nnid</a>
+	    		<b>contactInfo.nnid</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>psn</a>
+	    		<b>contactInfo.psn</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>xboxLive</a>
+	    		<b>contactInfo.xboxLive</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>skype</a>
+	    		<b>contactInfo.skype</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>emailAddress</a>
+	    		<b>emailAddress.emailAddress</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideSteamFlag</a>
+	    		<b>contactInfo.hideSteamFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideGtalkFlag</a>
+	    		<b>contactInfo.hideGtalkFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideAimFlag</a>
+	    		<b>contactInfo.hideAimFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideYimFlag</a>
+	    		<b>contactInfo.hideYimFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideNnidFlag</a>
+	    		<b>contactInfo.hideNnidFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hidePsnFlag</a>
+	    		<b>contactInfo.hidePsnFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideXboxLiveFlag</a>
+	    		<b>contactInfo.hideXboxLiveFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideSkypeFlag</a>
+	    		<b>contactInfo.hideSkypeFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideGenderFlag</a>
+	    		<b>securityInfo.hideGenderFlag</b>
+	    	</field>
+	    	
+	    	<field>
+	    		<a>hideBirthDateFlag</a>
+	    		<b>securityInfo.hideBirthDateFlag</b>
+	    	</field>
+	
+	  	</mapping>
 
 </mappings>
