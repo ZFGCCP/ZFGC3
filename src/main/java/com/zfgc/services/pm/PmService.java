@@ -394,6 +394,10 @@ public class PmService extends AbstractService {
 			
 			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), convo.getArchiveDt(), user));
 			
+			for(PersonalMessage pm : convo.getMessages()){
+				pm.setMessage(bbCodeService.parseText(pm.getMessage()));
+			}
+			
 			convo.setParticipants(usersService.getUsersByConversation(convoId));
 			
 			if(convo.getMessages().size() == 0) {
@@ -433,6 +437,11 @@ public class PmService extends AbstractService {
 		
 		//verify that this user is the starting user
 		if(convo.getInitiatorId() != zfgcUser.getUsersId()){
+			throw new ZfgcUnauthorizedException();
+		}
+		
+		//also verify that the user is not trying to remove themselves
+		if(zfgcUser.getUsersId() == remove.getUsersId()){
 			throw new ZfgcUnauthorizedException();
 		}
 		
@@ -506,14 +515,7 @@ public class PmService extends AbstractService {
 		archiveBox.setConversations(new ArrayList<>());
 		
 		for(PmArchiveBoxView archived : archive){
-			PmConversationView convo = new PmConversationView();
-			convo.setMessage(archived.getMessage());
-			convo.setSubject(archived.getSubject());
-			convo.setPmConversationId(archived.getPmConversationId());
-			convo.setPersonalMessageId(archived.getPersonalMessageId());
-			convo.setSentDt(archived.getSentDt());
-			convo.setReceiverId(archived.getReceiverId());
-			convo.setSenderId(archived.getSenderId());
+			PmConversationView convo = mapper.map(archived, PmConversationView.class);
 			convo.setArchived(true);
 			
 			archiveBox.getConversations().add(convo);

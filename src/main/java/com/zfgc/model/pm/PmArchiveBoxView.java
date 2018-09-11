@@ -1,21 +1,29 @@
 package com.zfgc.model.pm;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.constants.pm.PmConstants;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class PmArchiveBoxView extends BaseZfgcModel{
 
 	private Integer pmConversationId;
     private Integer personalMessageId;
     private Integer senderId;
+    private String senderName;
     private Integer receiverId;
+    private Integer initiatorId;
+    private String initiatorName;
     private Date sentDt;
     private Boolean sendCopyFlag;
     private Boolean readFlag;
     private String message;
     private String subject;
+    private Date startDt;
     private PmConstants.BoxType boxType = PmConstants.BoxType.ARCHIVE;
 
 	public PmConstants.BoxType getBoxType() {
@@ -98,6 +106,62 @@ public class PmArchiveBoxView extends BaseZfgcModel{
 
 	public void setSubject(String subject) {
 		this.subject = subject;
+	}
+
+	public String getInitiatorName() {
+		return initiatorName;
+	}
+
+	public void setInitiatorName(String initiatorName) {
+		this.initiatorName = initiatorName;
+	}
+
+	public Integer getInitiatorId() {
+		return initiatorId;
+	}
+
+	public void setInitiatorId(Integer initiatorId) {
+		this.initiatorId = initiatorId;
+	}
+
+	public String getSenderName() {
+		return senderName;
+	}
+
+	public void setSenderName(String senderName) {
+		this.senderName = senderName;
+	}
+
+	@JsonIgnore
+	public Date getStartDt() {
+		return startDt;
+	}
+
+	@JsonIgnore
+	public void setStartDt(Date startDt) {
+		this.startDt = startDt;
+	}
+	
+	public String getStartDtAsString(){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(getUserTimeZone());
+		
+		return sdf.format(startDt);
+	}
+	
+	public void setStartDtAsString(String startDtAsString){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		
+		if(startDtAsString == null || startDtAsString.equals("")){
+			sentDt = null;
+		}
+		else{
+			try {
+				sentDt = sdf.parse(startDtAsString);
+			} catch (ParseException e) {
+				sentDt = null;
+				e.printStackTrace();
+			}
+		}
 	}
 	
 }

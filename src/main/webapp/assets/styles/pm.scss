@@ -12,8 +12,14 @@
 	padding:10px;
 	
 	textarea{
-		resize:none;
+	    resize: none;
+    	display: inline-block;
+    	margin-top: 12px;
 	}
+}
+
+.conversation-participants-wrapper{
+	margin-left: 10px;
 }
 
 .conversation-participants-label{

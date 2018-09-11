@@ -11,6 +11,7 @@
     		},
     		link: function(scope, element, attrs) {
     			scope.user = UserService.resource.loggedInUser();
+    			UserService.loggedInUser = scope.user;
     		}
     	}
     }
