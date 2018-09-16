@@ -53,13 +53,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
+	"./src/main/webapp/scripts/users/users.module.js",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
+	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pm-two-factor.controller.js",
-	    
-	"./src/main/webapp/scripts/pm/convobox/convoBox.service.js",
-	    
-	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/conversation/remove-user-modal.controller.js",
 	    
@@ -69,7 +69,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
-	"./src/main/webapp/scripts/users/users.module.js",
+	"./src/main/webapp/scripts/pm/convobox/convoBox.service.js",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
@@ -79,15 +81,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
+	"./src/main/webapp/scripts/searches/userSearches.service.js",
+	    
+	"./src/main/webapp/scripts/searches/searches.controller.js",
+	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
-	    
-	"./src/main/webapp/scripts/searches/userSearches.service.js",
-	    
-	"./src/main/webapp/scripts/searches/searches.controller.js",
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
@@ -103,13 +105,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
-	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
@@ -117,11 +117,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum-post.service.js",
 	    
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
+	"./src/main/webapp/scripts/error/error.module.js",
+	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
-	    
-	"./src/main/webapp/scripts/error/error.module.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -143,9 +145,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.html",
-	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
@@ -163,11 +165,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
-	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
 	    
@@ -186,6 +188,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
 	    

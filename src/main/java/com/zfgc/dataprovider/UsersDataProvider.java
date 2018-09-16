@@ -241,8 +241,11 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return usersDao.getDisplayName(usersId);
 	}
 	
-	public List<MemberListingView> getMemberListing() throws Exception{
+	public List<MemberListingView> getMemberListing(Integer pageIndex, Integer usersPerPage) throws Exception{
 		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
+		ex.setLimitStart(pageIndex * usersPerPage);
+		ex.setLimitRange(usersPerPage);
+		
 		List<MemberListingViewDbObj> dbObj = memberListingViewDao.get(ex);
 		
 		Map<Integer, MemberListingView> mapping = new HashMap<>();

@@ -11,13 +11,13 @@
     				password="${mbg.jdbc.password}"
     				userId="${mbg.jdbc.username}"/>
     				
-    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="ZFGC3">
+    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="forum">
     	<property name="enableSubPackages" value="true" />
     </javaModelGenerator>
-    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3">
+    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="forum">
     	<property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="forum" type="XMLMAPPER" />
     
     <!-- tables -->
     
@@ -227,9 +227,12 @@
     </table>
     
     <table schema="zfgc3" tableName="PM_CONVERSATION_BOX_VIEW" domainObjectName="PmConversationBoxViewDbObj">
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="PM_ARCHIVE_BOX_VIEW" domainObjectName="PmArchiveBoxViewDbObj">
+    </table>-->
+    
+    <table schema="zfgc3" tableName="MEMBER_LISTING_VIEW" domainObjectName="MemberListingViewDbObj">
     </table>
     
   </context>

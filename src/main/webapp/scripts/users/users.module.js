@@ -13,6 +13,11 @@ angular.module('zfgc.users',['zfgc.config'])
 			.state('registration', {
 				url: '/registration',
 				templateUrl: basePath + '/registration.html'
-			})
-			;
+			});
+		
+		$stateProvider
+			.state('members', {
+				url : '/members',
+				templateUrl: basePath + '/member-search/member-listing.html'
+			});
 }]);

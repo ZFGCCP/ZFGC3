@@ -46,6 +46,11 @@
 			getUserDisplayName : {
 				url : '/forum/users/displayName/:userId',
 				method : 'GET'
+			},
+			getMemberListing : {
+				url : '/forum/users/member-list',
+				method : 'GET',
+				isArray : true
 			}
 		});
 		UserService.register = function(user){
@@ -128,6 +133,10 @@
 			}
 			
 			return null;
+		};
+		
+		UserService.getMemberListing = function(vm, pageNumber, range){
+			vm.memberList = UserService.resource.getMemberListing({'pageNo' : pageNumber, 'usersPerPage' : range});
 		};
 		
 		return UserService;
