@@ -2,7 +2,9 @@ package com.zfgc.dataprovider;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.dozer.DozerBeanMapper;
@@ -10,12 +12,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dao.MemberListViewDao;
 import com.zfgc.dao.UsersDao;
+import com.zfgc.dbobj.MemberListingViewDbObj;
+import com.zfgc.dbobj.MemberListingViewDbObjExample;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
+import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.Users;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
@@ -36,6 +42,9 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	@Autowired
 	private AvatarDataProvider avatarDataProvider;
+	
+	@Autowired
+	private MemberListViewDao memberListingViewDao;
 	
 	Logger LOGGER = Logger.getLogger(UsersDataProvider.class);
 	
@@ -230,5 +239,23 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	public String getDisplayName(Integer usersId){
 		return usersDao.getDisplayName(usersId);
+	}
+	
+	public List<MemberListingView> getMemberListing() throws Exception{
+		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
+		List<MemberListingViewDbObj> dbObj = memberListingViewDao.get(ex);
+		
+		Map<Integer, MemberListingView> mapping = new HashMap<>();
+		
+		for(MemberListingViewDbObj obj : dbObj) {
+			if(!mapping.containsKey(obj.getUsersId())) {
+				mapping.put(obj.getUsersId(), new MemberListingView());
+			}
+			
+			mapping.get(obj.getUsersId()).getMemberGroups().add(obj.getGroupName());
+		}
+		
+		return new ArrayList<>(mapping.values());
+		
 	}
 }
