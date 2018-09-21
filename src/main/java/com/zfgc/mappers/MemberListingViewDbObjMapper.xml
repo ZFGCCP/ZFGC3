@@ -112,7 +112,7 @@
       order by ${orderByClause}
     </if>
     <if test="limitClause != null">
-    	limit ${limitClause}
+    	${limitClause}
     </if>
   </select>
   <delete id="deleteByExample" parameterType="com.zfgc.dbobj.MemberListingViewDbObjExample">

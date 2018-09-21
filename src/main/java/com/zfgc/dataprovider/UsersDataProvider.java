@@ -252,7 +252,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		
 		for(MemberListingViewDbObj obj : dbObj) {
 			if(!mapping.containsKey(obj.getUsersId())) {
-				mapping.put(obj.getUsersId(), new MemberListingView());
+				mapping.put(obj.getUsersId(), mapper.map(obj, MemberListingView.class));
 			}
 			
 			mapping.get(obj.getUsersId()).getMemberGroups().add(obj.getGroupName());

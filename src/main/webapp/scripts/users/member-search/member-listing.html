@@ -1,22 +1,44 @@
 <div ng-controller="MemberListingCtrl as vm">
 	<div class="section-container">
-		<div class="section-title-wrapper">
-			<div class="section-title">Members</div>
+		<div class="section-header">
+			<div class="section-title-wrapper">
+				<div class="section-title">Members</div>
+			</div>
 		</div>
-	</div>
-	
-	<div class="section-body">
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="responsive-table member-listing-table">
-					<div class="responsive-table-header">
-					
+		
+		<div class="section-body">
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="responsive-table member-listing-table">
+						<div class="responsive-table-header">
+							<span class="responsive-table-cell">PM</span>
+							<span class="responsive-table-cell">Email</span>
+							<span class="responsive-table-cell">Username</span>
+							<span class="responsive-table-cell">Position</span>
+							<span class="responsive-table-cell">Last Active</span>
+							<span class="responsive-table-cell">Date Registered</span>
+							<span class="responsive-table-cell">Post Count</span>
+						</div>
+						<div class="responsive-table-body">
+							<div class="responsive-table-row" ng-repeat="member in vm.memberList">
+								<span class="responsive-table-cell"><i class="fas fa-comment"></i></span>
+								<span class="responsive-table-cell"><i class="fas fa-envelope"></i></span>
+								<span class="responsive-table-cell">{{member.displayName}}</span>
+								<span class="responsive-table-cell">{{member.memberGroups[0]}}<span ng-if="member.memberGroups.length > 1"><i class="fas fa-plus-circle"></i></span></span>
+								<span class="responsive-table-cell">{{member.lastLoginAsString}}</span>
+								<span class="responsive-table-cell">{{member.dateRegisteredAsString}}</span>
+								<span class="responsive-table-cell"></span>
+							</div>
+						</div>
 					</div>
-					<div class="responsive-table-body">
-					
+					<div class="paginator-wrapper">
+						<span><i class="fas fa-caret-left"></i></span>
+						<span>Page <input type="text" class="form-control current-page"/> of 6</span>
+						<span><i class="fas fa-caret-right"></i></span>
 					</div>
 				</div>
 			</div>
 		</div>
+		
 	</div>
 </div>

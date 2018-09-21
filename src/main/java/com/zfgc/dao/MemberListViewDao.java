@@ -19,7 +19,13 @@ public class MemberListViewDao extends AbstractDao<MemberListingViewDbObjExample
 	
 	@Override
 	public List<MemberListingViewDbObj> get(MemberListingViewDbObjExample ex) throws Exception {
-		return memberListingViewDbObjMapper.selectByExample(ex);
+		try{
+			return memberListingViewDbObjMapper.selectByExample(ex);
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

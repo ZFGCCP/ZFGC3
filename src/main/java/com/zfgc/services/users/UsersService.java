@@ -269,7 +269,7 @@ public class UsersService extends AbstractService {
 	
 	public List<MemberListingView> getMemberListingView(Users user, Integer pageNumber, Integer range) throws Exception{
 		//todo: add permission check
-		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber, range);
+		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range);
 		
 		return result;
 	}
