@@ -45,11 +45,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -77,6 +77,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
@@ -87,11 +89,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
+	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
-	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
@@ -111,17 +113,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
-	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
 	"./src/main/webapp/scripts/forum/forum-post.service.js",
 	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
+	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
@@ -195,11 +197,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
-	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html"
 	    
 	],
 
