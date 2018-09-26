@@ -71,25 +71,53 @@ table.widget-table{
 }
 
 .responsive-table{
+	@media(max-width:767px){
+		display:block;
+	}
+
 	display:table;
 	width:100%;
 
 	.responsive-table-header{
+		@media(max-width:767px){
+			display:none;
+		}
+	
 		display:table-header-group;
 		
 		.responsive-table-cell{
+			@media(max-width:767px){
+				display:block;
+			}
+		
 			display: table-cell;
     		padding: 15px;
 		}
 	}
 	
 	.responsive-table-body{
+		@media(max-width:767px){
+			display:block;
+		}
+	
 		display:table-row-group;
 	
 		.responsive-table-row{
+			@media(max-width:767px){
+				display:block;
+			}
+		
 			display:table-row;
 		
 			.responsive-table-cell{
+				@media(max-width:767px){
+					&.hidden-cell{
+						display:none;
+					}
+				
+					display:block;
+				}
+			
 				display:table-cell;
 				padding: 15px;
 				border-right-style:solid;

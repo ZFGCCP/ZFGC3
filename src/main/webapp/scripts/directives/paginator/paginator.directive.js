@@ -15,7 +15,7 @@
 			$scope.service = $resource($scope.loadUrl,{},{isArray : true, method : 'GET'});
 			
 			$scope.reloadData = function(){
-				$scope.resultsModel = $scope.service.get({pageNo : $scope.pageNumber, usersPerPage : $scope.resultsPerPage});
+				$scope.resultsModel = $scope.service.query({pageNo : $scope.pageNumber, usersPerPage : $scope.resultsPerPage});
 			}
 			
 			$scope.forward = function(){
@@ -26,10 +26,12 @@
 			
 			$scope.back = function(){
 				if($scope.pageNumber > 1){
-					$scope.pageNumer -=1 ;
+					$scope.pageNumber -=1 ;
 					$scope.reloadData();
 				}
 			}
+			
+			$scope.reloadData();
 		}
 		
 		return directive;
