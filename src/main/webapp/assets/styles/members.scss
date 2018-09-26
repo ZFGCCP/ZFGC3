@@ -1,0 +1,26 @@
+.member-listing-table-wrapper{
+	@media(max-width:767px){
+		max-height:300px;
+		overflow-y:scroll;
+	}
+
+	.responsive-table-cell{
+		@media(max-width:767px){
+			
+			&.member-last-login-col::before{
+				content: 'Last Login: ';
+				font-weight:bold;
+			}
+			
+			&.member-date-reg-col::before{
+				content: 'Date Registered: ';
+				font-weight:bold;
+			}
+			
+			&.member-post-count-col::before{
+				content: 'Post Count: ';
+				font-weight:bold;
+			}
+		}
+	}
+}

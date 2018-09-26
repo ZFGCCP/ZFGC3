@@ -53,6 +53,10 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
+	"./src/main/webapp/scripts/users/users.module.js",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
+	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pm-two-factor.controller.js",
@@ -69,11 +73,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
-	"./src/main/webapp/scripts/users/users.module.js",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -103,11 +107,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -170,6 +174,10 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
+	    
+	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    

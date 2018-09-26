@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
@@ -197,5 +198,18 @@ class UsersController extends BaseController{
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(navTabs);
+	}
+	
+	@RequestMapping(value="/member-list", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getMemberList(@RequestParam Integer pageNo, @RequestParam Integer usersPerPage) {
+		List<MemberListingView> userList = null;
+		try {
+			userList = usersService.getMemberListingView(zfgcUser(), pageNo, usersPerPage);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occured. Please contact a system administrator.");
+		}
+		
+		return ResponseEntity.ok(userList);
 	}
 }
