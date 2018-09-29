@@ -22,5 +22,13 @@
 				font-weight:bold;
 			}
 		}
+		
+		@media(min-width:768px){
+			&.user-name-cell{
+				span{
+					display:none;
+				}
+			}
+		}
 	}
 }
