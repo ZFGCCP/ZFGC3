@@ -364,55 +364,50 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException {
+	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception {
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
 		aesKey.setUsersId(user.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
 		}
 		
-		try {
-			PmConversation convo = pmConversationDataProvider.getConversation(convoId);
+		PmConversation convo = pmConversationDataProvider.getConversation(convoId);
 			
-			if(convo == null) {
-				return null;
-			}
-			convo.setIsArchived(pmConversationDataProvider.isConvoArchived(convoId, user.getUsersId()));
-			//make sure user belongs to this convo.  If not, check if they have an invite.
-			if(!pmConversationDataProvider.isUserPartOfConvo(convoId, user.getUsersId()) && !convo.getIsArchived()){
-				BrPmConversationUserInvite inviteCode = pmConversationDataProvider.getConvoInvite(convoId, user.getUsersId());
-				if(inviteCode == null){
-					throw new ZfgcNotFoundException("conversation Id" + convoId);
-				}
-				
-				addUserToConvo(convoId, user, aesKey);
-			}
-			
-			if(convo.getIsArchived()) {
-				convo.setArchiveDt(pmConversationDataProvider.getArchivalDate(convoId, user.getUsersId()));
-			}
-			
-			convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), convo.getArchiveDt(), user));
-			
-			for(PersonalMessage pm : convo.getMessages()){
-				pm.setMessage(bbCodeService.parseText(pm.getMessage()));
-			}
-			
-			convo.setParticipants(usersService.getUsersByConversation(convoId));
-			
-			if(convo.getMessages().size() == 0) {
-				return null;
-			}
-			
-			//set the convo to read
-			pmConversationDataProvider.setConvoToRead(convoId, user.getUsersId());
-			
-			return convo;
-		}
-		catch(Exception ex) {
-			ex.printStackTrace();
+		if(convo == null) {
 			return null;
 		}
+		convo.setIsArchived(pmConversationDataProvider.isConvoArchived(convoId, user.getUsersId()));
+		//make sure user belongs to this convo.  If not, check if they have an invite.
+		if(!pmConversationDataProvider.isUserPartOfConvo(convoId, user.getUsersId()) && !convo.getIsArchived()){
+			BrPmConversationUserInvite inviteCode = pmConversationDataProvider.getConvoInvite(convoId, user.getUsersId());
+			if(inviteCode == null){
+				throw new ZfgcNotFoundException("conversation Id" + convoId);
+			}
+			
+			addUserToConvo(convoId, user, aesKey);
+		}
+		
+		if(convo.getIsArchived()) {
+			convo.setArchiveDt(pmConversationDataProvider.getArchivalDate(convoId, user.getUsersId()));
+		}
+		
+		convo.setMessages(pmDataProvider.getMessagesByConversation(convo.getPmConversationId(), convo.getArchiveDt(), user));
+		
+		for(PersonalMessage pm : convo.getMessages()){
+			pm.setMessage(bbCodeService.parseText(pm.getMessage()));
+		}
+		
+		convo.setParticipants(usersService.getUsersByConversation(convoId));
+		
+		if(convo.getMessages().size() == 0) {
+			return null;
+		}
+		
+		//set the convo to read
+		pmConversationDataProvider.setConvoToRead(convoId, user.getUsersId());
+		
+		return convo;
+		
 	}
 	
 	public void removeConvoFromInbox(TwoFactorKey aesKey, PmConversation convo, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{

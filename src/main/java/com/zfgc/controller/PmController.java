@@ -156,6 +156,12 @@ public class PmController extends BaseController {
 		catch (ZfgcInvalidAesKeyException e) {
 	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
 	    }
+		catch(ZfgcNotFoundException e){
+			return ResponseEntity.notFound().build();
+		}
+		catch(Exception e){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}/delete",method=RequestMethod.POST, produces="application/json")
