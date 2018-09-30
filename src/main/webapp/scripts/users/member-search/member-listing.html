@@ -24,8 +24,16 @@
 								<div class="responsive-table-row" ng-repeat="member in vm.memberList">
 									<span class="responsive-table-cell hidden-cell"><i class="fas fa-comment"></i></span>
 									<span class="responsive-table-cell hidden-cell"><i class="fas fa-envelope"></i></span>
-									<span class="responsive-table-cell"><a ui-sref="user-profile({userId : member.usersId})">{{member.displayName}}</a></span>
-									<span class="responsive-table-cell">
+									<span class="responsive-table-cell user-name-cell">
+										<a ui-sref="user-profile({userId : member.usersId})">
+											{{member.displayName}}
+										</a>
+										<span>
+											<span><i class="fas fa-comment"></i></span>
+											<span><i class="fas fa-envelope"></i></span>
+										</span>
+									</span>
+									<span class="responsive-table-cell hidden-cell">
 										{{member.memberGroups[0]}}
 										<span ng-if="member.memberGroups.length > 1" uib-popover-template="'scripts/popover/templates/popoverMemberGroups.html'" 
 																					 popover-title="Additional Groups"
@@ -33,9 +41,9 @@
 											<i class="fas fa-plus-circle"></i>
 										</span>
 									</span>
-									<span class="responsive-table-cell member-last-login-col">{{member.lastLoginAsString}}</span>
-									<span class="responsive-table-cell member-date-reg-col">{{member.dateRegisteredAsString}}</span>
-									<span class="responsive-table-cell member-post-count-col"></span>
+									<span class="responsive-table-cell member-last-login-col hidden-cell">{{member.lastLoginAsString}}</span>
+									<span class="responsive-table-cell member-date-reg-col hidden-cell">{{member.dateRegisteredAsString}}</span>
+									<span class="responsive-table-cell member-post-count-col hidden-cell"></span>
 								</div>
 							</div>
 						</div>
