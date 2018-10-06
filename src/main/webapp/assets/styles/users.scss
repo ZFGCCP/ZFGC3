@@ -1,58 +1,147 @@
-.user-left-panel-wrap{
-	margin-left: 20px !important;
-	
-	.user-avatar{
-		border: 1px solid black;
-	    margin-bottom: 20px;
+.user-panel-row{
+	@media(max-width:767px){
+		background-color: #0f1527;
+		z-index: 9;
+		position: sticky;
+		top: 0;
+    	height: 75px;
+    	margin-bottom: 20px;
+	}
+
+	.user-left-panel-wrap{
+		margin-left: 20px !important;
+		
+		.user-avatar-wrap{
+			.user-avatar{
+				border: 1px solid black;
+			    margin-bottom: 20px;
+			    
+			    @media(max-width:767px){
+		    	    margin-bottom: 0;
+	    			width: 50px;
+	    			border-radius: 50px;
+			    }
+			}
+			
+			@media(max-width:767px){
+				display: inline-block;
+				float: left;
+			}
+		}
+		
+		.user-displayname{
+			font-size:14px;
+			font-weight:600;
+			
+			.username-ellipses{
+				display:inline-block;
+				padding-left:7px;
+				font-size:30px;
+				position:relative;
+				top:7px;
+				
+				@media(min-width:768px){
+					display:none;
+				}
+			}
+			
+			@media(max-width:767px){
+				display: inline-block;
+			    position: relative;
+			    top: 10px;
+			    padding-left: 10px;
+			}
+		}
+		
+		.user-usertext{
+			margin-bottom:10px;
+			
+			@media(max-width:767px){
+				display:none;
+			}
+		}
+		
+		.user-customtitle{
+			@media(max-width:767px){
+				display:none;
+			}
+		}
+		
+		.bottom-section-wrap{
+			margin-top:30px;
+			margin-bottom:20px;
+		}
+		
+		.user-details-wrapper{
+			@media(max-width:767px){
+				display:none;
+			}
+		}
+		
+		.small-screen-profile-nav{
+			width: 100%;
+			height: 15px;
+			background-color: #d5dffb;
+			position: absolute;
+			left: 0;
+			top: 60px;
+		
+			.profile-nav-arrow{
+				color:red;
+			    width: 35px;
+				margin-left: auto;
+				margin-right: auto;
+				font-size: 20px;
+				position: relative;
+				top: -3px;
+			}
+			
+			::hover{
+				background-color:white;
+			}
+		
+			@media(min-width:768px){
+				display:none;
+			}
+		}
 	}
 	
-	.user-displayname{
-		font-size:14px;
-		font-weight:600;
-	}
+	.user-details-wrapper{
+		.avatar-wrapper{
+			.user-details-contact-wrapper{
+			    padding-top: 1px;
+	    		padding-bottom: 5px;
+	    		font-size: 17px;
+	    	}
+		}
 	
-	.user-usertext{
-		margin-bottom:10px;
-	}
-	
-	.bottom-section-wrap{
-		margin-top:30px;
-		margin-bottom:20px;
+		.user-name-wrapper{
+			font-weight: bold;
+	    	font-size: 13px;
+	    	padding-bottom: 12px;
+	    	padding-top: 12px;
+	    	
+	    	.user-online{
+				font-weight:normal;
+				font-size: 17px;
+	    		position: relative;
+	    		top: 3px;
+			}
+	    	
+	    	.user-karma{
+	    		font-size: 10px;
+	    		font-weight: normal;
+	    	}
+		}
+		
+		
 	}
 }
 
 .signature-preview{
 	margin-right:12px;
-	overflow:auto;
-}
 
-.user-details-wrapper{
-	.avatar-wrapper{
-		.user-details-contact-wrapper{
-		    padding-top: 1px;
-    		padding-bottom: 5px;
-    		font-size: 17px;
-    	}
+	.user-signature{
+		overflow-x:scroll;
 	}
-
-	.user-name-wrapper{
-		font-weight: bold;
-    	font-size: 13px;
-    	padding-bottom: 12px;
-    	padding-top: 12px;
-    	
-    	.user-online{
-			font-weight:normal;
-			font-size: 17px;
-    		position: relative;
-    		top: 3px;
-		}
-    	
-    	.user-karma{
-    		font-size: 10px;
-    		font-weight: normal;
-    	}
-	}
-	
-	
 }

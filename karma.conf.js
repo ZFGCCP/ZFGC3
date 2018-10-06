@@ -73,8 +73,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
@@ -82,6 +80,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -143,6 +143,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
@@ -150,8 +152,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
-	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
@@ -175,9 +175,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
 	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.html",
-	    
 	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
+	    
+	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    

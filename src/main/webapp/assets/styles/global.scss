@@ -1,7 +1,21 @@
+.container{
+	@media (min-width: 768px){
+	    width: 90%;
+   		margin-left: auto;
+    	padding: 0;
+    	margin-right: 0;
+	}
+
+	@media(max-width:767px){
+		padding:0 !important;
+	}
+}
+
 .main-wrapper{
-	width: 70%;
+	width: 100%;
     margin: 0 auto;
     display: block;
+    
     
     .left-nav-panel{
     	float:left;
@@ -47,6 +61,10 @@
 	border:1px solid;
     margin: 0 auto 20px auto;
 	
+	@media(max-width:767px){
+		margin: 0;
+	}
+	
 	.section-header{
 		border-bottom:1px solid;	
 		padding-left:20px;
@@ -82,16 +100,22 @@
 .widget-container{
    width:90%;
    margin:0 auto;
-   border:1px solid;
    margin-bottom:12px;
+   box-shadow: 5px 5px 5px black;
    
    .widget-header{
    		border-bottom:1px solid;
    		min-height:30px;
-   		padding-left:20px;
+   		padding-left:10px;
+   		border: 1px solid;
+    	border-radius: 7px 7px 0 0;
    		
    		.widget-control{
-   			padding-top:6px;
+   			padding-top: 4px;
+   			
+   			.expand-collapse{
+   				font-size:20px;
+   			}
    		}
    		
 	    .widget-title{
@@ -103,6 +127,10 @@
    
    .widget-body{
     	font-size:11px;
+	    border: 1px solid;
+    	border-top: 0;
+    	border-radius: 0 0 7px 7px;
+    	
    		.column-data{
    			margin-left:12px;
    			padding-top:12px;
@@ -125,8 +153,8 @@
 .title{font-size:14px;margin-top:20px;}
 
 .row{
-	margin-right: -10px;
-    margin-left: -10px;
+	margin-left:0;
+	margin-right:0;
 }
     
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, 
