@@ -66,6 +66,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
 	private Avatar avatar;
+	private Date lastLogin;
 	
 	private String authToken;
 	private Boolean fromDb = true;
@@ -422,5 +423,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setUnreadPmCount(Integer unreadPmCount) {
 		this.unreadPmCount = unreadPmCount;
+	}
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
 	}
 }

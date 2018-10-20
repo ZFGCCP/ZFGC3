@@ -132,12 +132,20 @@
 				}
 			}
 			
-			return null;
+			return "assets/images/avatar/avatar-none.png";
 		};
 		
 		UserService.getMemberListing = function(vm, pageNumber, range){
 			vm.memberList = UserService.resource.getMemberListing({'pageNo' : pageNumber, 'usersPerPage' : range});
 		};
+		
+		UserService.canEditRestrictedProfileField = function(userProfileId){
+			if(UserService.loggedInUser && UserService.loggedInUser.usersId !== null && UserService.loggedInUser.usersId === userProfileId){
+				return true;
+			}
+			
+			return false;
+		}
 		
 		return UserService;
 	}

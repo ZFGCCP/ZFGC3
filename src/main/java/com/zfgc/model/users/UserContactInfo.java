@@ -5,24 +5,22 @@ import com.zfgc.model.BaseZfgcModel;
 public class UserContactInfo extends BaseZfgcModel{
 
 	private String skype;
-	private String aim;
 	private String gtalk;
 	private String facebook;
 	private String psn;
 	private String xboxLive;
 	private String steam;
 	private String nnid;
-	private String yim;
 	
 	private Boolean hideSkypeFlag;
-	private Boolean hideAimFlag;
 	private Boolean hideGtalkFlag;
 	private Boolean hideFacebookFlag;
 	private Boolean hidePsnFlag;
 	private Boolean hideXboxLiveFlag;
 	private Boolean hideSteamFlag;
 	private Boolean hideNnidFlag;
-	private Boolean hideYimFlag;
+	
+	private EmailAddress email;
 	
 	public String getSkype() {
 		return skype;
@@ -30,14 +28,6 @@ public class UserContactInfo extends BaseZfgcModel{
 
 	public void setSkype(String skype) {
 		this.skype = skype;
-	}
-
-	public String getAim() {
-		return aim;
-	}
-
-	public void setAim(String aim) {
-		this.aim = aim;
 	}
 
 	public String getGtalk() {
@@ -88,28 +78,12 @@ public class UserContactInfo extends BaseZfgcModel{
 		this.nnid = nnid;
 	}
 
-	public String getYim() {
-		return yim;
-	}
-
-	public void setYim(String yim) {
-		this.yim = yim;
-	}
-
 	public Boolean getHideSkypeFlag() {
 		return hideSkypeFlag;
 	}
 
 	public void setHideSkypeFlag(Boolean hideSkypeFlag) {
 		this.hideSkypeFlag = hideSkypeFlag;
-	}
-
-	public Boolean getHideAimFlag() {
-		return hideAimFlag;
-	}
-
-	public void setHideAimFlag(Boolean hideAimFlag) {
-		this.hideAimFlag = hideAimFlag;
 	}
 
 	public Boolean getHideGtalkFlag() {
@@ -160,14 +134,6 @@ public class UserContactInfo extends BaseZfgcModel{
 		this.hideNnidFlag = hideNnidFlag;
 	}
 
-	public Boolean getHideYimFlag() {
-		return hideYimFlag;
-	}
-
-	public void setHideYimFlag(Boolean hideYimFlag) {
-		this.hideYimFlag = hideYimFlag;
-	}
-
 	@Override
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
@@ -178,6 +144,14 @@ public class UserContactInfo extends BaseZfgcModel{
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public EmailAddress getEmail() {
+		return email;
+	}
+
+	public void setEmail(EmailAddress email) {
+		this.email = email;
 	}
 	
 }

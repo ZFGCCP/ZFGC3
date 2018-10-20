@@ -11,13 +11,13 @@
     				password="${mbg.jdbc.password}"
     				userId="${mbg.jdbc.username}"/>
     				
-    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="forum">
+    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="ZFGC3">
     	<property name="enableSubPackages" value="true" />
     </javaModelGenerator>
-    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="forum">
+    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3">
     	<property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="forum" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3" type="XMLMAPPER" />
     
     <!-- tables -->
     
@@ -159,39 +159,14 @@
     
     <!-- views -->
     
-    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="HIDE_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_GENDER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_AGE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_BIRTH_DATE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	
-    	<columnOverride column="HIDE_YIM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="HIDE_AIM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="HIDE_SKYPE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="HIDE_STEAM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="HIDE_XBOX_LIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="HIDE_PSN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="HIDE_NNID_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	
-    	<columnOverride column="AUTO_SUBSCRIBE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="SEND_POST_IN_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="INSTANT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="ONLY_FIRST_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="REPLIES_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="MODERATION_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="ONLY_ME_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="KARMA_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="KARMA_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="TAGGED_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="TAGGED_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="PM_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="REPLIES_TO_ME_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="POSTED_IN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="RECENT_AT_TOP_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="SAVE_TO_SENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    <!--<table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
@@ -230,10 +205,10 @@
     </table>
     
     <table schema="zfgc3" tableName="PM_ARCHIVE_BOX_VIEW" domainObjectName="PmArchiveBoxViewDbObj">
-    </table>-->
+    </table>
     
     <table schema="zfgc3" tableName="MEMBER_LISTING_VIEW" domainObjectName="MemberListingViewDbObj">
-    </table>
+    </table>-->
     
   </context>
 </generatorConfiguration>

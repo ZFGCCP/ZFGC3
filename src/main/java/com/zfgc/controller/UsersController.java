@@ -111,7 +111,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){
 		try {
-			Users user = userProfileService.getProfile(userId, zfgcUser());
+			UserProfileView user = userProfileService.getProfile(userId, zfgcUser());
 			
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} 

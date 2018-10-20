@@ -33,12 +33,27 @@
 					<label>Avatar Gallery</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<select class="form-control small-input" ng-model="vm.profile.avatar.avatarGalleryId" ng-options="avatarGallery.id as avatarGallery.value for avatarGallery in vm.lookups.AVATAR_GALLERY"></select>
+
 				</div>
 			</div>
 		
 			<div class="row padded-row">
-				<img ng-src="http://localhost:8080/forum/contentstream/avatar/1"/>
+				<!--<img ng-src="http://localhost:8080/forum/contentstream/avatar/1"/>-->
+				<div class="avatar-gallery-wrapper">
+					<div>
+						<i class="fas fa-caret-left"></i>
+					</div>
+					<div>
+						<div>
+							<div ng-repeat="($index,gallery) in vm.lookups.AVATAR_GALLERY track by $index">
+								<img ng-src="{{gallery.value}}"/>
+							</div>
+						</div>
+					</div>
+					<div>
+						<i class="fas fa-caret-right"></i>
+					</div>
+				</div>
 			</div>
 		
 			<div class="row padded-row">
@@ -123,7 +138,7 @@
 	</collapsible-widget>
 	
 	<div class="xl-button-wrapper">
-			<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveForumProfile()">Save</button>
+			<button type="button" class="btn btn-confirm col-xs-12" ng-click="vm.saveForumProfile()">Save</button>
 	</div>
 	
 	

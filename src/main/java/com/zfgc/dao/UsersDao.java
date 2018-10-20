@@ -480,8 +480,8 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 
 	@Override
 	public void updateByExample(Users obj, UsersDbObjExample ex) {
-		// TODO Auto-generated method stub
-		
+		UsersDbObj dbObj = mapper.map(obj, UsersDbObj.class);
+		usersDbObjMapper.updateByExampleSelective(dbObj, ex);
 	}
 
 	@Override

@@ -100,6 +100,15 @@ public class UsersDataProvider extends AbstractDataProvider {
 		}
 	}
 	
+	@Transactional
+	public void setLogintime(Date loginTime,Users user){
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(user.getUsersId());
+		
+		Users update = new Users();
+		update.setLastLogin(loginTime);
+	}
+	
 	private void logIpAddress(IpAddress ipAddress, Boolean newUser){
 		try{
 			authenticationDataProvider.logIpAddress(ipAddress);
