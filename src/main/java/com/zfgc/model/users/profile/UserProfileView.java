@@ -19,6 +19,7 @@ public class UserProfileView extends BaseZfgcModel {
 	
 	private ProfileSummary profileSummary = new ProfileSummary();
 	private UserContactInfo userContactInfo = new UserContactInfo();
+	private PersonalInfo personalInfo = new PersonalInfo();
 	private Avatar avatar = new Avatar();
 	
 	@JsonIgnore
@@ -94,6 +95,12 @@ public class UserProfileView extends BaseZfgcModel {
 	}
 	public void setAvatar(Avatar avatar) {
 		this.avatar = avatar;
+	}
+	public PersonalInfo getPersonalInfo() {
+		return personalInfo;
+	}
+	public void setPersonalInfo(PersonalInfo personalInfo) {
+		this.personalInfo = personalInfo;
 	}
 	
 }

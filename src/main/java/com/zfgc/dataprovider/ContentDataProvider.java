@@ -41,4 +41,19 @@ public class ContentDataProvider extends AbstractDataProvider{
 		
 		return wrapper;
 	}
+	
+	public InputStreamWrapper getFileHandler(String fileName) throws FileNotFoundException {
+		InputStream stream = null;
+		try {
+			stream = new FileInputStream(fileName);
+		} catch (FileNotFoundException e) {
+			throw new FileNotFoundException(e.getMessage());
+		}
+
+		InputStreamWrapper wrapper = new InputStreamWrapper();
+		wrapper.setFileName(fileName);
+		wrapper.setIs(stream);
+		
+		return wrapper;
+	}
 }

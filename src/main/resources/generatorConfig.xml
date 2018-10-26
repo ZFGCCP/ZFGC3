@@ -157,16 +157,19 @@
     	<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>-->
     
+    <table schema="Zfgc3" tableName="AVATAR_GALLERY" domainObjectName="AvatarGalleryDbObj">
+    </table>
+    
     <!-- views -->
     
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="HIDE_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_GENDER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_AGE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDE_BIRTH_DATE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <!--<table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     

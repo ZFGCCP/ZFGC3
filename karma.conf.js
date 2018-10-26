@@ -47,9 +47,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -73,6 +73,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
@@ -81,7 +83,7 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -143,7 +145,7 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
@@ -153,7 +155,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
+	    
+	"./src/main/webapp/scripts/modal/templates/modalAvatarGallery.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalConfirm.html",
 	    
@@ -201,9 +207,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
 	    

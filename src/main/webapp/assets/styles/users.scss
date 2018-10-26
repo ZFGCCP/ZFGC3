@@ -147,3 +147,48 @@
 		overflow-x:scroll;
 	}
 }
+
+.gallery-scroll{
+	overflow-x: auto;
+
+	.gallery-wrapper{
+		@media(max-width:767px){
+			width:100%;
+		}
+	
+	    min-width: 400px;
+	    width: max-content;
+	
+		.gallery-image-carousel{
+			@media(min-width:768px){
+				display:none;
+			}
+			
+			height:150px;
+			
+			img{
+				width:150px;
+				height:150px;
+			}
+		}
+	
+		.gallery-image-wrapper{
+			@media(max-width:767px){
+				display:none;
+			}
+		
+		    display: inline-block;
+		    border: 1px solid black;
+		    margin: 0 2px 0 2px;
+		
+			.avatar-gallery-image{
+				&.selected{
+					border: 1px solid red;
+				}
+			
+			    width: 150px;
+    			height: 150px;
+			}
+		}
+	}
+}

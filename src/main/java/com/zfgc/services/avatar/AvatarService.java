@@ -25,4 +25,8 @@ public class AvatarService extends AbstractService {
 			return null;
 		}
 	}
+	
+	public String getAvatarGallery(Integer galleryId) throws ZfgcNotFoundException, Exception{
+		return avatarDataProvider.getAvatarGallery(galleryId).getFilePath();
+	}
 }

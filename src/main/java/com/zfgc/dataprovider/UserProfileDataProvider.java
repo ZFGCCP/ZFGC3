@@ -10,6 +10,7 @@ import com.zfgc.model.users.profile.Avatar;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
@@ -40,6 +41,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		result.setUserContactInfo(mapper.map(userProfileViewDbObj,UserContactInfo.class));
 		result.getUserContactInfo().setEmail(mapper.map(userProfileViewDbObj, EmailAddress.class));
 		result.setAvatar(mapper.map(userProfileViewDbObj, Avatar.class));
+		result.setPersonalInfo(mapper.map(userProfileViewDbObj, PersonalInfo.class));
 		//transformProfileAvatarData(user, userProfileViewDbObj);
 
 		return result;
