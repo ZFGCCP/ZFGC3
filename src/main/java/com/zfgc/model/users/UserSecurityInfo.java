@@ -4,6 +4,7 @@ import com.zfgc.model.BaseZfgcModel;
 
 public class UserSecurityInfo extends BaseZfgcModel{
 
+	private Integer userSecuritySettingsId;
 	private String confirmNewPassword;
 	private String newPassword;
 	private Boolean hideBirthDateFlag;
@@ -51,6 +52,14 @@ public class UserSecurityInfo extends BaseZfgcModel{
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Integer getUserSecuritySettingsId() {
+		return userSecuritySettingsId;
+	}
+
+	public void setUserSecuritySettingsId(Integer userSecuritySettingsId) {
+		this.userSecuritySettingsId = userSecuritySettingsId;
 	}
 	
 }

@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.UserContactSettingsDao;
 import com.zfgc.dao.UserProfileDao;
+import com.zfgc.dao.UserSecuritySettingsDao;
 import com.zfgc.dbobj.UserProfileViewDbObj;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.profile.Avatar;
@@ -31,6 +32,9 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	@Autowired
 	UserContactSettingsDao userContactSettingsDao;
 	
+	@Autowired
+	UserSecuritySettingsDao userSecuritySettingsDao;
+	
 	public UserProfileView getUserProfile(Integer userId) throws Exception{
 		UserProfileViewDbObj userProfileViewDbObj = null;
 		try{
@@ -43,7 +47,6 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		UserProfileView result = mapper.map(userProfileViewDbObj, UserProfileView.class);
 		result.setProfileSummary(mapper.map(userProfileViewDbObj, ProfileSummary.class));
 		result.setUserContactInfo(mapper.map(userProfileViewDbObj,UserContactInfo.class));
-		result.getUserContactInfo().setEmail(mapper.map(userProfileViewDbObj, EmailAddress.class));
 		result.setAvatar(mapper.map(userProfileViewDbObj, Avatar.class));
 		result.setPersonalInfo(mapper.map(userProfileViewDbObj, PersonalInfo.class));
 		//transformProfileAvatarData(user, userProfileViewDbObj);
@@ -56,8 +59,9 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	}
 	
 	public void saveAccountSettings(Users accountSettings) throws Exception {
-		authenticationService.logEmailAddress(accountSettings.getEmailAddress());
-		userContactSettingsDao.updateOrInsert(accountSettings.getContactInfo());
+		//authenticationService.logEmailAddress(accountSettings.getEmailAddress());
+		userContactSettingsDao.updateOrInsert(accountSettings.getUserContactInfo());
+		userSecuritySettingsDao.updateOrInsert(accountSettings.getUserSecurityInfo());
 	}
 	
 	public void savePmSettings(Users pmSettings) throws Exception{

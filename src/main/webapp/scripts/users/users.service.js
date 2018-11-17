@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($resource, $window, NotificationsService){
+	function UserService($rootScope, $resource, $window, NotificationsService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
@@ -94,7 +94,9 @@
 		};
 
 		UserService.saveAccountSettings = function(vm){
-			UserService.resource.saveAccountSettings(vm.profile);
+			UserService.resource.saveAccountSettings(vm.profile).$promise.then(function(data){
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Account Settings successfully saved.','success'));
+			});
 		};
 		
 		UserService.saveForumProfile = function(vm){
@@ -152,5 +154,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$resource','$window','NotificationsService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','NotificationsService',UserService])
 })();

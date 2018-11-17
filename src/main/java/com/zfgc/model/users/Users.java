@@ -61,8 +61,8 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String signature;
 	private String signaturePreview;
 	
-	private UserContactInfo contactInfo = new UserContactInfo();
-	private UserSecurityInfo securityInfo = new UserSecurityInfo();
+	private UserContactInfo userContactInfo = new UserContactInfo();
+	private UserSecurityInfo userSecurityInfo = new UserSecurityInfo();
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
 	private Avatar avatar;
@@ -287,18 +287,6 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public UserContactInfo getContactInfo() {
-		return contactInfo;
-	}
-	public void setContactInfo(UserContactInfo contactInfo) {
-		this.contactInfo = contactInfo;
-	}
-	public UserSecurityInfo getSecurityInfo() {
-		return securityInfo;
-	}
-	public void setSecurityInfo(UserSecurityInfo securityInfo) {
-		this.securityInfo = securityInfo;
-	}
 	public Boolean getHideEmailFlag() {
 		return hideEmailFlag;
 	}
@@ -429,5 +417,17 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setLastLogin(Date lastLogin) {
 		this.lastLogin = lastLogin;
+	}
+	public UserSecurityInfo getUserSecurityInfo() {
+		return userSecurityInfo;
+	}
+	public void setUserSecurityInfo(UserSecurityInfo userSecurityInfo) {
+		this.userSecurityInfo = userSecurityInfo;
+	}
+	public UserContactInfo getUserContactInfo() {
+		return userContactInfo;
+	}
+	public void setUserContactInfo(UserContactInfo userContactInfo) {
+		this.userContactInfo = userContactInfo;
 	}
 }

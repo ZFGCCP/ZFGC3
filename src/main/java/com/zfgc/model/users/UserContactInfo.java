@@ -4,6 +4,9 @@ import com.zfgc.model.BaseZfgcModel;
 
 public class UserContactInfo extends BaseZfgcModel{
 
+	private Integer userContactSettingsId;
+	private Integer usersId;
+	
 	private String skype;
 	private String gtalk;
 	private String facebook;
@@ -20,7 +23,7 @@ public class UserContactInfo extends BaseZfgcModel{
 	private Boolean hideSteamFlag;
 	private Boolean hideNnidFlag;
 	
-	private EmailAddress email;
+	private String emailAddress;
 	
 	public String getSkype() {
 		return skype;
@@ -146,12 +149,28 @@ public class UserContactInfo extends BaseZfgcModel{
 		return null;
 	}
 
-	public EmailAddress getEmail() {
-		return email;
+	public Integer getUserContactSettingsId() {
+		return userContactSettingsId;
 	}
 
-	public void setEmail(EmailAddress email) {
-		this.email = email;
+	public void setUserContactSettingsId(Integer userContactSettingsId) {
+		this.userContactSettingsId = userContactSettingsId;
+	}
+
+	public String getEmailAddress() {
+		return emailAddress;
+	}
+
+	public void setEmailAddress(String emailAddress) {
+		this.emailAddress = emailAddress;
+	}
+
+	public Integer getUsersId() {
+		return usersId;
+	}
+
+	public void setUsersId(Integer usersId) {
+		this.usersId = usersId;
 	}
 	
 }

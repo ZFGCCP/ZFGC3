@@ -68,7 +68,7 @@
 					<label>Email Address</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.userContactInfo.email.emailAddress" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
+					<input ng-model="vm.profile.userContactInfo.emailAddress" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
 				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
 					<input ng-model="vm.profile.userContactInfo.hideEmailFlag" value="true" type="checkbox"/>
@@ -157,7 +157,7 @@
 					<label>New password</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input ng-model="vm.profile.security.newPassword" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userSecurityInfo.newPassword" type="text" class="form-control small-input"/>
 				</div>
 			</div>
 			
@@ -166,19 +166,19 @@
 					<label>Confirm password</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input ng-model="vm.profile.security.confirmNewPassword" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userSecurityInfo.confirmNewPassword" type="text" class="form-control small-input"/>
 				</div>
 			</div>
 			
 			<div class="row padded-row">
 				<div class="col-xs-12">
-					<input ng-model="vm.profile.securityInfo.hideBirthDateFlag" value="true" type="checkbox"/>Hide Birthdate
+					<input ng-model="vm.profile.userSecurityInfo.hideBirthDateFlag" value="true" type="checkbox"/>Hide Birthdate
 				</div>
 			</div>
 			
 			<div class="row padded-row">
 				<div class="col-xs-12">
-					<input ng-model="vm.profile.securityInfo.hideGenderFlag" value="true" type="checkbox"/>Hide Gender
+					<input ng-model="vm.profile.userSecurityInfo.hideGenderFlag" value="true" type="checkbox"/>Hide Gender
 				</div>
 			</div>
 		</div>
