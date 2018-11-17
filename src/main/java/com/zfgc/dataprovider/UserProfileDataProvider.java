@@ -3,6 +3,7 @@ package com.zfgc.dataprovider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dao.UserContactSettingsDao;
 import com.zfgc.dao.UserProfileDao;
 import com.zfgc.dbobj.UserProfileViewDbObj;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -27,6 +28,9 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	@Autowired
 	NotificationsService notificationsService;
 	
+	@Autowired
+	UserContactSettingsDao userContactSettingsDao;
+	
 	public UserProfileView getUserProfile(Integer userId) throws Exception{
 		UserProfileViewDbObj userProfileViewDbObj = null;
 		try{
@@ -46,14 +50,14 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 
 		return result;
 	}
-
+	
 	public void saveNotificationSettings(Users notificationSettings) throws Exception{
 		notificationsService.saveNotificationSettings(notificationSettings.getNotificationSettings());
 	}
 	
 	public void saveAccountSettings(Users accountSettings) throws Exception {
 		authenticationService.logEmailAddress(accountSettings.getEmailAddress());
-		userProfileDao.saveAccountSettings(accountSettings);
+		userContactSettingsDao.updateOrInsert(accountSettings.getContactInfo());
 	}
 	
 	public void savePmSettings(Users pmSettings) throws Exception{
