@@ -68,7 +68,7 @@
 					<label>Email Address</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.userContactInfo.emailAddress" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
+					<input ng-model="vm.profile.userContactInfo.email.emailAddress" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
 				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
 					<input ng-model="vm.profile.userContactInfo.hideEmailFlag" value="true" type="checkbox"/>

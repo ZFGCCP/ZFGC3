@@ -223,7 +223,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public List<Users> simpleUserSearch(String displayNameQuery, Integer start, Integer length){
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andDisplayNameLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true);
-		ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true));
+		//ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true));
 		
 		List<UsersDbObj> db = usersDao.get(ex);
 		List<Users> result = new ArrayList<>();

@@ -23,7 +23,7 @@ public class UserContactInfo extends BaseZfgcModel{
 	private Boolean hideSteamFlag;
 	private Boolean hideNnidFlag;
 	
-	private String emailAddress;
+	private EmailAddress email;
 	
 	public String getSkype() {
 		return skype;
@@ -157,20 +157,20 @@ public class UserContactInfo extends BaseZfgcModel{
 		this.userContactSettingsId = userContactSettingsId;
 	}
 
-	public String getEmailAddress() {
-		return emailAddress;
-	}
-
-	public void setEmailAddress(String emailAddress) {
-		this.emailAddress = emailAddress;
-	}
-
 	public Integer getUsersId() {
 		return usersId;
 	}
 
 	public void setUsersId(Integer usersId) {
 		this.usersId = usersId;
+	}
+
+	public EmailAddress getEmail() {
+		return email;
+	}
+
+	public void setEmail(EmailAddress email) {
+		this.email = email;
 	}
 	
 }

@@ -91,7 +91,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		usersDbObj.setPassword(user.getUserHashInfo().getPassword());
 		usersDbObj.setPassSalt(user.getUserHashInfo().getPassSalt());
 		usersDbObj.setPrimaryIp(user.getPrimaryIpAddress().getIpAddress());
-		usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
+		//usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
 		try{
 			usersDbObjMapper.insertSelective(usersDbObj);
 			usersDbObjMapper.createSha2HashForUser(usersDbObj);

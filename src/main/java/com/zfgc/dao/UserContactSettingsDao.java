@@ -31,6 +31,7 @@ public class UserContactSettingsDao extends AbstractDao<UserContactSettingsDbObj
 	@Override
 	public void updateOrInsert(UserContactInfo obj) {
 		UserContactSettingsDbObj data = mapper.map(obj, UserContactSettingsDbObj.class);
+		data.setEmailAddressId(obj.getEmail().getEmailAddressId());
 		userContactSettingsDbObjMapper.updateByPrimaryKey(data);
 	}
 
