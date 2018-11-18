@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
+import com.zfgc.requiredfields.users.AccountSettingsRequiredFieldsChecker;
 import com.zfgc.rules.users.AccountSettingsRuleChecker;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.bbcode.BbcodeService;
@@ -29,6 +31,9 @@ public class UserProfileService extends AbstractService{
 	
 	@Autowired
 	AccountSettingsRuleChecker accountSettingsRuleChecker;
+	
+	@Autowired
+	AccountSettingsRequiredFieldsChecker accountSettingsRequiredFieldsChecker;
 	
 	@Autowired
 	BuddyService buddyService;
@@ -112,6 +117,12 @@ public class UserProfileService extends AbstractService{
 	}
 
 	public Users saveAccountSettings(Users accountSettings,Users zfgcUser) throws Exception {
+		//check required fields
+		accountSettingsRequiredFieldsChecker.requiredFieldsCheck(accountSettings);
+		if(accountSettings.getErrors().hasErrors()) {
+			throw new ZfgcValidationException("Users");
+		}
+		
 		userProfileDataProvider.saveAccountSettings(accountSettings);
 		return accountSettings;
 	}

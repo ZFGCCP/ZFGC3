@@ -3,6 +3,8 @@ package com.zfgc.requiredfields;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.BaseZfgcModel;
 
@@ -29,6 +31,15 @@ public abstract class AbstractRequiredFieldsChecker<T extends BaseZfgcModel> {
 		}
 		
 		return null;
+	}
+	
+	protected void checkRequiredFieldString(String field, String fieldName, String errorMessage, List<RequiredField> errors ){
+		if(StringUtils.isEmpty(field)){
+			RequiredField requiredField = new RequiredField();
+			requiredField.setErrorMessage(errorMessage);
+			requiredField.setFieldName(fieldName);
+			errors.add(requiredField);
+		}
 	}
 	
 	protected void checkRequiredFieldBoolean(Boolean field, String fieldName, String errorMessage, List<RequiredField> errors ){

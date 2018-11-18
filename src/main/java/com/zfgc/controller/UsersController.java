@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
@@ -128,6 +129,8 @@ class UsersController extends BaseController{
 	public ResponseEntity saveAccountSettings(@RequestBody Users accountSettings){
 		try {
 			userProfileService.saveAccountSettings(accountSettings,zfgcUser());
+		} catch (ZfgcValidationException ex) {
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(accountSettings.getErrors());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
