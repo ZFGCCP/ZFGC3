@@ -69,27 +69,27 @@ public class UserProfileService extends AbstractService{
 			user.setPrimaryIpAddress(null);
 			
 			//hide contact fields with the hidden flag
-			if(user.getUserContactInfo().getHideSkypeFlag()){
+			if(user.getUserSecurityInfo().getHideSkypeFlag()){
 				user.getUserContactInfo().setSkype(null);
 			}
 			
-			if(user.getUserContactInfo().getHideSteamFlag()){
+			if(user.getUserSecurityInfo().getHideSteamFlag()){
 				user.getUserContactInfo().setSteam(null);
 			}
 			
-			if(user.getUserContactInfo().getHideXboxLiveFlag()){
+			if(user.getUserSecurityInfo().getHideXboxLiveFlag()){
 				user.getUserContactInfo().setXboxLive(null);
 			}
 			
-			if(user.getUserContactInfo().getHideNnidFlag()){
+			if(user.getUserSecurityInfo().getHideNnidFlag()){
 				user.getUserContactInfo().setNnid(null);
 			}
 			
-			if(user.getUserContactInfo().getHidePsnFlag()){
+			if(user.getUserSecurityInfo().getHidePsnFlag()){
 				user.getUserContactInfo().setPsn(null);
 			}
 			
-			if(user.getUserContactInfo().getHideGtalkFlag()){
+			if(user.getUserSecurityInfo().getHideGtalkFlag()){
 				user.getUserContactInfo().setGtalk(null);
 			}
 			
@@ -192,12 +192,12 @@ public class UserProfileService extends AbstractService{
 		user.getUserContactInfo().setSteam(profileView.getProfileSummary().getSteam());
 		user.getUserContactInfo().setXboxLive(profileView.getProfileSummary().getXboxLive());
 		
-		user.getUserContactInfo().setHideGtalkFlag(profileView.getProfileSummary().getHideGtalkFlag());
-		user.getUserContactInfo().setHideNnidFlag(profileView.getProfileSummary().getHideNnidFlag());
-		user.getUserContactInfo().setHidePsnFlag(profileView.getProfileSummary().getHidePsnFlag());
-		user.getUserContactInfo().setHideSkypeFlag(profileView.getProfileSummary().getHideSkypeFlag());
-		user.getUserContactInfo().setHideSteamFlag(profileView.getProfileSummary().getHideSteamFlag());
-		user.getUserContactInfo().setHideXboxLiveFlag(profileView.getProfileSummary().getHideXboxLiveFlag());
+		user.getUserSecurityInfo().setHideGtalkFlag(profileView.getProfileSummary().getHideGtalkFlag());
+		user.getUserSecurityInfo().setHideNnidFlag(profileView.getProfileSummary().getHideNnidFlag());
+		user.getUserSecurityInfo().setHidePsnFlag(profileView.getProfileSummary().getHidePsnFlag());
+		user.getUserSecurityInfo().setHideSkypeFlag(profileView.getProfileSummary().getHideSkypeFlag());
+		user.getUserSecurityInfo().setHideSteamFlag(profileView.getProfileSummary().getHideSteamFlag());
+		user.getUserSecurityInfo().setHideXboxLiveFlag(profileView.getProfileSummary().getHideXboxLiveFlag());
 		
 		user.getUserSecurityInfo().setHideBirthDateFlag(profileView.getProfileSummary().getHideBirthDateFlag());
 		

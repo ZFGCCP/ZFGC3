@@ -19,6 +19,9 @@
     </sqlMapGenerator>
     <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="forum" type="XMLMAPPER" />
     
+    <table schema="zfgc3" tableName="USER_SECURITY_SETTINGS" domainObjectName="UserSecuritySettingsDbObj">
+    	<generatedKey column="USER_SECURITY_SETTINGS_ID" sqlStatement="SELECT MAX(USER_SECURITY_SETTINGS_ID) + 1 FROM USER_SECURITY_SETTINGS"/>
+    </table>
     <!-- tables -->
     
     <!--<table schema="zfgc3" tableName="USER_SECURITY_SETTINGS" domainObjectName="UserSecuritySettingsDbObj">
@@ -170,10 +173,10 @@
     
     <!-- views -->
     
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     </table>
     
-    <!--<table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     

@@ -7,6 +7,7 @@ import java.util.Date;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class UserProfileView extends BaseZfgcModel {
@@ -19,6 +20,7 @@ public class UserProfileView extends BaseZfgcModel {
 	
 	private ProfileSummary profileSummary = new ProfileSummary();
 	private UserContactInfo userContactInfo = new UserContactInfo();
+	private UserSecurityInfo userSecurityInfo = new UserSecurityInfo();
 	private PersonalInfo personalInfo = new PersonalInfo();
 	private Avatar avatar = new Avatar();
 	
@@ -101,6 +103,12 @@ public class UserProfileView extends BaseZfgcModel {
 	}
 	public void setPersonalInfo(PersonalInfo personalInfo) {
 		this.personalInfo = personalInfo;
+	}
+	public UserSecurityInfo getUserSecurityInfo() {
+		return userSecurityInfo;
+	}
+	public void setUserSecurityInfo(UserSecurityInfo userSecurityInfo) {
+		this.userSecurityInfo = userSecurityInfo;
 	}
 	
 }

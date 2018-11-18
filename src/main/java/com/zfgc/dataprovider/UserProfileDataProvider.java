@@ -12,6 +12,7 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.profile.Avatar;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.model.users.profile.ProfileSummary;
@@ -52,6 +53,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		result.setProfileSummary(mapper.map(userProfileViewDbObj, ProfileSummary.class));
 		result.setUserContactInfo(mapper.map(userProfileViewDbObj,UserContactInfo.class));
 		result.getUserContactInfo().setEmail(mapper.map(userProfileViewDbObj, EmailAddress.class));
+		result.setUserSecurityInfo(mapper.map(userProfileViewDbObj, UserSecurityInfo.class));
 		result.setAvatar(mapper.map(userProfileViewDbObj, Avatar.class));
 		result.setPersonalInfo(mapper.map(userProfileViewDbObj, PersonalInfo.class));
 		//transformProfileAvatarData(user, userProfileViewDbObj);
