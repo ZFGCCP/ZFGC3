@@ -1,27 +1,42 @@
 package com.zfgc.rules.users;
 
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.rules.AbstractRulesChecker;
 import com.zfgc.rules.Rule;
 
 @Component
-public class AccountSettingsRuleChecker extends AbstractRulesChecker<UserProfileView>{
+public class AccountSettingsRuleChecker extends AbstractRulesChecker<Users>{
 
+	@Autowired
+	UsersDataProvider usersDataProvider;
+	
 	@Override
-	public void rulesCheck(UserProfileView model, Users user) throws Exception {
+	public void rulesCheck(Users model, Users user) throws Exception {
 		
-		if(user.getPrimaryMemberGroupId() != 2){
+		/*if(user.getPrimaryMemberGroupId() != 2){
 			if(user.getUsersId() != model.getUsersId()){
 				checkProfileChanged(model);
 			}
 			loginNameChanged(model);
+		}*/
+		
+		if(!StringUtils.isEmpty(model.getUserSecurityInfo().getCurrentPassword())){
+			if(!usersDataProvider.checkUserPassword(model.getUsersId(), model.getUserSecurityInfo().getCurrentPassword())){
+				Rule wrongPassword = new Rule();
+				wrongPassword.setRuleName("WRONG_PASSWORD");
+				wrongPassword.setErrorMessage("The password you entered is invalid.");
+				model.getErrors().getRuleErrors().add(wrongPassword);
+			}
 		}
 	}
 	
-	private void loginNameChanged(UserProfileView model){
+	/*private void loginNameChanged(Users model){
 		if(!model.getProfileSummary().getLoginName().equals(model.getSavedProfile().getProfileSummary().getLoginName())){
 			Rule loginNameChanged = new Rule();
 			loginNameChanged.setRuleName("LOGIN_NAME_CHANGED");
@@ -30,7 +45,7 @@ public class AccountSettingsRuleChecker extends AbstractRulesChecker<UserProfile
 		}
 	}
 	
-	private void checkProfileChanged(UserProfileView model){
+	private void checkProfileChanged(Users model){
 		UserProfileView saved = model.getSavedProfile();
 		
 		if(!model.getProfileSummary().getDisplayName().equals(saved.getProfileSummary().getDisplayName()) ||
@@ -43,5 +58,5 @@ public class AccountSettingsRuleChecker extends AbstractRulesChecker<UserProfile
 			   profileChanged.setErrorMessage("You do not have permission to modify this profile.");
 			   model.getErrors().getRuleErrors().add(profileChanged);
 		   }
-	}
+	}*/
 }

@@ -33,12 +33,14 @@
 					<label>Avatar Gallery</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<select class="form-control small-input" ng-model="vm.profile.avatar.avatarGalleryId" ng-options="avatarGallery.id as avatarGallery.value for avatarGallery in vm.lookups.AVATAR_GALLERY"></select>
+
 				</div>
 			</div>
 		
-			<div class="row padded-row">
-				<img ng-src="http://localhost:8080/forum/contentstream/avatar/1"/>
+			<div class="row padded-row" ng-if="vm.profile.avatar.avatarTypeId === 4">
+				<div class="avatar-gallery-wrapper">
+					<avatar-gallery avatar-list="vm.lookups.AVATAR_GALLERY"></avatar-gallery>
+				</div>
 			</div>
 		
 			<div class="row padded-row">
@@ -62,7 +64,7 @@
 					<label>Birthday</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" ng-model="vm.profile.birthDateAsString" class="form-control small-input"/>
+					<input type="text" ng-model="vm.profile.personalInfo.birthDateAsString" class="form-control small-input"/>
 				</div>
 			</div>
 			
@@ -71,7 +73,7 @@
 					<label>Custom Title</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input" ng-model="vm.profile.customTitle"/>
+					<input type="text" class="form-control small-input" ng-model="vm.profile.personalInfo.customTitle"/>
 				</div>
 			</div>
 			
@@ -80,7 +82,7 @@
 					<label>Personal Text</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input" ng-model="vm.profile.personalText"/>
+					<input type="text" class="form-control small-input" ng-model="vm.profile.personalInfo.personalText"/>
 				</div>
 			</div>
 			
@@ -89,7 +91,7 @@
 					<label>Gender</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<select ng-model="vm.profile.gender" class="form-control small-input" ng-options="gender.id as gender.value for gender in vm.lookups.GENDER"></select>
+					<select ng-model="vm.profile.personalInfo.genderId" class="form-control small-input" ng-options="gender.id as gender.value for gender in vm.lookups.GENDER"></select>
 				</div>
 			</div>
 			
@@ -98,7 +100,7 @@
 					<label>Location</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input" ng-model="vm.profile.location"/>
+					<input type="text" class="form-control small-input" ng-model="vm.profile.personalInfo.location"/>
 				</div>
 			</div>
 			
@@ -107,7 +109,7 @@
 					<label>Website Title</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input" ng-model="vm.profile.websiteTitle"/>
+					<input type="text" class="form-control small-input" ng-model="vm.profile.personalInfo.websiteTitle"/>
 				</div>
 			</div>
 			
@@ -116,14 +118,14 @@
 					<label>Website Url</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input" ng-model="vm.profile.websiteUrl"/>
+					<input type="text" class="form-control small-input" ng-model="vm.profile.personalInfo.websiteUrl"/>
 				</div>
 			</div>
 		</div>
 	</collapsible-widget>
 	
 	<div class="xl-button-wrapper">
-			<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveForumProfile()">Save</button>
+			<button type="button" class="btn btn-confirm col-xs-12" ng-click="vm.saveForumProfile()">Save</button>
 	</div>
 	
 	

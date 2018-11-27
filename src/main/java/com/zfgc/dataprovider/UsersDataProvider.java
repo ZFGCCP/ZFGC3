@@ -100,6 +100,15 @@ public class UsersDataProvider extends AbstractDataProvider {
 		}
 	}
 	
+	@Transactional
+	public void setLogintime(Date loginTime,Users user){
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(user.getUsersId());
+		
+		Users update = new Users();
+		update.setLastLogin(loginTime);
+	}
+	
 	private void logIpAddress(IpAddress ipAddress, Boolean newUser){
 		try{
 			authenticationDataProvider.logIpAddress(ipAddress);
@@ -214,7 +223,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public List<Users> simpleUserSearch(String displayNameQuery, Integer start, Integer length){
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andDisplayNameLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true);
-		ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true));
+		//ex.or(ex.createCriteria().andEmailAddressLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true));
 		
 		List<UsersDbObj> db = usersDao.get(ex);
 		List<Users> result = new ArrayList<>();
@@ -260,5 +269,9 @@ public class UsersDataProvider extends AbstractDataProvider {
 		
 		return new ArrayList<>(mapping.values());
 		
+	}
+	
+	public Boolean checkUserPassword(Integer usersId, String password) throws Exception{
+		return usersDao.checkUserPassword(usersId, password) > 0;
 	}
 }

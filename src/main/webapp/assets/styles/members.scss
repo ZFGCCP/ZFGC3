@@ -21,6 +21,18 @@
 				content: 'Post Count: ';
 				font-weight:bold;
 			}
+			
+			&.user-name-cell{
+				a{
+					display:inline-block;
+					font-size:17px;
+				}
+			
+				span{
+					display:inline-block;
+					font-size:20px;
+				}
+			}
 		}
 		
 		@media(min-width:768px){

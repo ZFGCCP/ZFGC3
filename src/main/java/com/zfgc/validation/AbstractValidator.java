@@ -54,8 +54,8 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 
 	protected void checkEmailFormat(Users model){
 		if(model.getEmailAddress() != null &&
-		   !Pattern.matches(GENERAL_STRING_FORMAT, model.getEmailAddress().getEmailAddress()) ||
-		   !Pattern.matches(EMAIL_FORMAT, model.getEmailAddress().getEmailAddress())){
+		   !Pattern.matches(GENERAL_STRING_FORMAT, model.getUserContactInfo().getEmail().getEmailAddress()) ||
+		   !Pattern.matches(EMAIL_FORMAT, model.getUserContactInfo().getEmail().getEmailAddress())){
 			
 			Rule emailFormatRule = new Rule();
 			emailFormatRule.setRuleName("INVALID_EMAIL_FORMAT");

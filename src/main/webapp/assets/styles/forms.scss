@@ -4,6 +4,13 @@ form{
 		font-size:12px;
 	}
 	
+	input[type="checkbox"]{
+		@media(max-width:767px){
+			zoom:2;
+			margin-top:1px;
+		}
+	}
+	
 	 input[type="checkbox"]:checked + label::after {
 	 	color:red;
 	 }

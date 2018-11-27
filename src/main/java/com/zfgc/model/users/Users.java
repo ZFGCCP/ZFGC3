@@ -25,6 +25,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.users.profile.NotificationSettings;
 import com.zfgc.model.users.profile.PersonalMessagingSettings;
+import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
@@ -61,11 +62,12 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String signature;
 	private String signaturePreview;
 	
-	private UserContactInfo contactInfo = new UserContactInfo();
-	private UserSecurityInfo securityInfo = new UserSecurityInfo();
+	private UserContactInfo userContactInfo = new UserContactInfo();
+	private UserSecurityInfo userSecurityInfo = new UserSecurityInfo();
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
 	private Avatar avatar;
+	private Date lastLogin;
 	
 	private String authToken;
 	private Boolean fromDb = true;
@@ -78,7 +80,15 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@JsonIgnore
 	private UserHashInfo userHashInfo = new UserHashInfo();
 	
+	@JsonIgnore
+	private UserProfileView savedProfile;
 	
+	public UserProfileView getSavedProfile() {
+		return savedProfile;
+	}
+	public void setSavedProfile(UserProfileView savedProfile) {
+		this.savedProfile = savedProfile;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -286,18 +296,6 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	public UserContactInfo getContactInfo() {
-		return contactInfo;
-	}
-	public void setContactInfo(UserContactInfo contactInfo) {
-		this.contactInfo = contactInfo;
-	}
-	public UserSecurityInfo getSecurityInfo() {
-		return securityInfo;
-	}
-	public void setSecurityInfo(UserSecurityInfo securityInfo) {
-		this.securityInfo = securityInfo;
-	}
 	public Boolean getHideEmailFlag() {
 		return hideEmailFlag;
 	}
@@ -422,5 +420,23 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setUnreadPmCount(Integer unreadPmCount) {
 		this.unreadPmCount = unreadPmCount;
+	}
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+	public UserSecurityInfo getUserSecurityInfo() {
+		return userSecurityInfo;
+	}
+	public void setUserSecurityInfo(UserSecurityInfo userSecurityInfo) {
+		this.userSecurityInfo = userSecurityInfo;
+	}
+	public UserContactInfo getUserContactInfo() {
+		return userContactInfo;
+	}
+	public void setUserContactInfo(UserContactInfo userContactInfo) {
+		this.userContactInfo = userContactInfo;
 	}
 }

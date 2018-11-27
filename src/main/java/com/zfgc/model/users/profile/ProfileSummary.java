@@ -48,6 +48,8 @@ public class ProfileSummary extends BaseZfgcModel {
 	private Boolean hideNnidFlag;
 	private Boolean hideYimFlag;
 	
+	private String signature;
+	private String signaturePreview;
 	
 	public Boolean getHideSkypeFlag() {
 		return hideSkypeFlag;
@@ -302,5 +304,17 @@ public class ProfileSummary extends BaseZfgcModel {
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public String getSignature() {
+		return signature;
+	}
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+	public String getSignaturePreview() {
+		return signaturePreview;
+	}
+	public void setSignaturePreview(String signaturePreview) {
+		this.signaturePreview = signaturePreview;
 	}
 }

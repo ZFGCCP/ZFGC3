@@ -63,7 +63,8 @@ public class AuthenticationDao extends AbstractDao{
 	
 	public EmailAddressDbObj getEmailAddress(String emailAddress) throws Exception{
 		try{
-			return emailAddressDbObjMapper.selectByPrimaryKey(emailAddress);
+			//return emailAddressDbObjMapper.selectByPrimaryKey(emailAddress);
+			return null;
 		}
 		catch(Exception ex){
 			LOGGER.error("Unable to obtain Email Address " + emailAddress);

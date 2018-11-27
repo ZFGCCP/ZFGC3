@@ -50,4 +50,27 @@ public class FileController extends BaseController{
 				             .contentType(MediaType.TEXT_PLAIN)
 				             .body(new InputStreamResource(is.getIs()));
 	}
+	
+	@RequestMapping(value="/avatar/gallery/{galleryId}", method=RequestMethod.GET)
+	public ResponseEntity getGalleryAvatar(@PathVariable("galleryId") Integer galleryId, HttpServletResponse response){
+		InputStreamWrapper is = null;
+		
+		try{
+			is = contentService.getAvatarGalleryHandle(galleryId);
+		}
+		catch(FileNotFoundException  e){
+			e.printStackTrace();
+			return (ResponseEntity) ResponseEntity.status(HttpStatus.NOT_FOUND);
+		} catch (ZfgcNotFoundException e) {
+			e.printStackTrace();
+			return (ResponseEntity) ResponseEntity.status(HttpStatus.NOT_FOUND);
+		} catch (Exception e) {
+			return (ResponseEntity) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+
+		return ResponseEntity.status(HttpStatus.OK)
+				             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + galleryId)
+				             .contentType(MediaType.TEXT_PLAIN)
+				             .body(new InputStreamResource(is.getIs()));
+	}
 }

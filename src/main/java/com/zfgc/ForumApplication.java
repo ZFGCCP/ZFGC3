@@ -1,8 +1,15 @@
 package com.zfgc;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +37,9 @@ import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 @EnableConfigurationProperties(ZfgcSamlConfig.class)
 public class ForumApplication extends SpringBootServletInitializer {
 	
+	@Autowired
+	AuthSuccessHandler authSuccessHandler;
+	
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args);
     }
@@ -55,6 +65,12 @@ public class ForumApplication extends SpringBootServletInitializer {
     @Bean
     SAMLConfigurerBean saml() {
         return new SAMLConfigurerBean();
+    }
+    
+    @Bean
+    public AuthSuccessHandler successRedirectHandler() {
+        AuthSuccessHandler successRedirectHandler = new AuthSuccessHandler();
+        return successRedirectHandler;
     }
     
     /*@Configuration

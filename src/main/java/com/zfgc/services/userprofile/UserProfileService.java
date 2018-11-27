@@ -2,22 +2,27 @@ package com.zfgc.services.userprofile;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
+import com.zfgc.requiredfields.users.AccountSettingsRequiredFieldsChecker;
 import com.zfgc.rules.users.AccountSettingsRuleChecker;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.sanitization.SanitizationService;
+import com.zfgc.validation.uservalidation.AccountSettingsValidator;
 
 @Component
 public class UserProfileService extends AbstractService{
@@ -31,6 +36,12 @@ public class UserProfileService extends AbstractService{
 	AccountSettingsRuleChecker accountSettingsRuleChecker;
 	
 	@Autowired
+	AccountSettingsRequiredFieldsChecker accountSettingsRequiredFieldsChecker;
+	
+	@Autowired
+	AccountSettingsValidator accountSettingsValidator;
+	
+	@Autowired
 	BuddyService buddyService;
 	
 	@Autowired
@@ -39,26 +50,29 @@ public class UserProfileService extends AbstractService{
 	@Autowired
 	BbcodeService bbCodeService;
 	
+	@Autowired
+	RuleRunService<Users> ruleRunner;
+	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
 	}
 	
-	public Users getProfile(Integer userId, Users zfgcUser) throws Exception{
+	public UserProfileView getProfile(Integer userId, Users zfgcUser) throws Exception{
 		UserProfileView profileView = null;
 		Users user = null;
 		try{
-			user = userProfileDataProvider.getUserProfile(userId);
+			profileView = userProfileDataProvider.getUserProfile(userId);
 		}
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
 
 		//get buddy and ignore list
-		user.getPersonalMessagingSettings().setBuddyList(buddyService.getBuddies(userId));
-		user.getPersonalMessagingSettings().setIgnoreList(buddyService.getIgnores(userId));
+		//user.getPersonalMessagingSettings().setBuddyList(buddyService.getBuddies(userId));
+		//user.getPersonalMessagingSettings().setIgnoreList(buddyService.getIgnores(userId));
 		
 		Integer currentUserId = zfgcUser.getUsersId();
-		user.setTimeOffsetLkup(lookupService.getLkupValue(lookupService.TIMEZONE, user.getTimeOffset()));
+		//user.setTimeOffsetLkup(lookupService.getLkupValue(lookupService.TIMEZONE, user.getTimeOffset()));
 		
 		//permissions
 		
@@ -69,39 +83,31 @@ public class UserProfileService extends AbstractService{
 			user.setPrimaryIpAddress(null);
 			
 			//hide contact fields with the hidden flag
-			if(user.getContactInfo().getHideAimFlag()){
-				user.getContactInfo().setAim(null);
+			if(user.getUserSecurityInfo().getHideSkypeFlag()){
+				user.getUserContactInfo().setSkype(null);
 			}
 			
-			if(user.getContactInfo().getHideYimFlag()){
-				user.getContactInfo().setYim(null);
+			if(user.getUserSecurityInfo().getHideSteamFlag()){
+				user.getUserContactInfo().setSteam(null);
 			}
 			
-			if(user.getContactInfo().getHideSkypeFlag()){
-				user.getContactInfo().setSkype(null);
+			if(user.getUserSecurityInfo().getHideXboxLiveFlag()){
+				user.getUserContactInfo().setXboxLive(null);
 			}
 			
-			if(user.getContactInfo().getHideSteamFlag()){
-				user.getContactInfo().setSteam(null);
+			if(user.getUserSecurityInfo().getHideNnidFlag()){
+				user.getUserContactInfo().setNnid(null);
 			}
 			
-			if(user.getContactInfo().getHideXboxLiveFlag()){
-				user.getContactInfo().setXboxLive(null);
+			if(user.getUserSecurityInfo().getHidePsnFlag()){
+				user.getUserContactInfo().setPsn(null);
 			}
 			
-			if(user.getContactInfo().getHideNnidFlag()){
-				user.getContactInfo().setNnid(null);
+			if(user.getUserSecurityInfo().getHideGtalkFlag()){
+				user.getUserContactInfo().setGtalk(null);
 			}
 			
-			if(user.getContactInfo().getHidePsnFlag()){
-				user.getContactInfo().setPsn(null);
-			}
-			
-			if(user.getContactInfo().getHideGtalkFlag()){
-				user.getContactInfo().setGtalk(null);
-			}
-			
-			if(user.getSecurityInfo().getHideBirthDateFlag()){
+			if(user.getUserSecurityInfo().getHideBirthDateFlag()){
 				user.setBirthDate(null);
 			}
 			
@@ -110,30 +116,23 @@ public class UserProfileService extends AbstractService{
 			}
 		}
 		
-		if(user.getSignature() != null){
-			user.setSignaturePreview(bbCodeService.parseText(user.getSignature()));
-			user.setSignature(sanitizationService.reverseSanitizeMessage(user.getSignature()));
+		if(profileView.getProfileSummary().getSignature() != null){
+			profileView.getProfileSummary().setSignaturePreview(bbCodeService.parseText(profileView.getProfileSummary().getSignature()));
+			profileView.getProfileSummary().setSignature(sanitizationService.reverseSanitizeMessage(profileView.getProfileSummary().getSignature()));
 		}
 		
-		return user;
+		return profileView;
 		
 	}
 
 	public Users saveAccountSettings(Users accountSettings,Users zfgcUser) throws Exception {
-		try{
-			Users savedProfile = userProfileDataProvider.getUserProfile(accountSettings.getUsersId());
-
-			if(!accountSettings.getErrors().hasErrors()){
-				userProfileDataProvider.saveAccountSettings(accountSettings);
-			}
-		}
-		catch(ZfgcNotFoundException ex){
-			throw new ZfgcNotFoundException(ex.getMessage());
-		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
-		}
+		ruleRunner.runRules(accountSettingsValidator, accountSettingsRequiredFieldsChecker, accountSettingsRuleChecker, accountSettings, zfgcUser);
 		
+		userProfileDataProvider.saveAccountSettings(accountSettings);
+		
+		if(!StringUtils.isEmpty(accountSettings.getUserSecurityInfo().getNewPassword())){
+			userProfileDataProvider.updateUserPassword(zfgcUser, accountSettings.getUserSecurityInfo().getNewPassword());
+		}
 		return accountSettings;
 	}
 	
@@ -173,7 +172,7 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
-		try{
+		/*try{
 			Users savedProfile = userProfileDataProvider.getUserProfile(forumProfile.getUsersId());
 			forumProfile.setSignature(sanitizationService.sanitizeMessage(forumProfile.getSignature()));
 			
@@ -186,7 +185,7 @@ public class UserProfileService extends AbstractService{
 		}
 		catch(Exception ex){
 			throw new Exception(ex.getMessage());
-		}
+		}*/
 		
 		return forumProfile;
 	}
@@ -206,25 +205,21 @@ public class UserProfileService extends AbstractService{
 		
 		user.setTimeOffset(profileView.getProfileSummary().getTimeOffset());
 		
-		user.getContactInfo().setAim(profileView.getProfileSummary().getAim());
-		user.getContactInfo().setGtalk(profileView.getProfileSummary().getGtalk());
-		user.getContactInfo().setNnid(profileView.getProfileSummary().getNnid());
-		user.getContactInfo().setPsn(profileView.getProfileSummary().getPsn());
-		user.getContactInfo().setSkype(profileView.getProfileSummary().getSkype());
-		user.getContactInfo().setSteam(profileView.getProfileSummary().getSteam());
-		user.getContactInfo().setXboxLive(profileView.getProfileSummary().getXboxLive());
-		user.getContactInfo().setYim(profileView.getProfileSummary().getYim());
+		user.getUserContactInfo().setGtalk(profileView.getProfileSummary().getGtalk());
+		user.getUserContactInfo().setNnid(profileView.getProfileSummary().getNnid());
+		user.getUserContactInfo().setPsn(profileView.getProfileSummary().getPsn());
+		user.getUserContactInfo().setSkype(profileView.getProfileSummary().getSkype());
+		user.getUserContactInfo().setSteam(profileView.getProfileSummary().getSteam());
+		user.getUserContactInfo().setXboxLive(profileView.getProfileSummary().getXboxLive());
 		
-		user.getContactInfo().setHideAimFlag(profileView.getProfileSummary().getHideAimFlag());
-		user.getContactInfo().setHideGtalkFlag(profileView.getProfileSummary().getHideGtalkFlag());
-		user.getContactInfo().setHideNnidFlag(profileView.getProfileSummary().getHideNnidFlag());
-		user.getContactInfo().setHidePsnFlag(profileView.getProfileSummary().getHidePsnFlag());
-		user.getContactInfo().setHideSkypeFlag(profileView.getProfileSummary().getHideSkypeFlag());
-		user.getContactInfo().setHideSteamFlag(profileView.getProfileSummary().getHideSteamFlag());
-		user.getContactInfo().setHideXboxLiveFlag(profileView.getProfileSummary().getHideXboxLiveFlag());
-		user.getContactInfo().setHideYimFlag(profileView.getProfileSummary().getHideYimFlag());
+		user.getUserSecurityInfo().setHideGtalkFlag(profileView.getProfileSummary().getHideGtalkFlag());
+		user.getUserSecurityInfo().setHideNnidFlag(profileView.getProfileSummary().getHideNnidFlag());
+		user.getUserSecurityInfo().setHidePsnFlag(profileView.getProfileSummary().getHidePsnFlag());
+		user.getUserSecurityInfo().setHideSkypeFlag(profileView.getProfileSummary().getHideSkypeFlag());
+		user.getUserSecurityInfo().setHideSteamFlag(profileView.getProfileSummary().getHideSteamFlag());
+		user.getUserSecurityInfo().setHideXboxLiveFlag(profileView.getProfileSummary().getHideXboxLiveFlag());
 		
-		user.getSecurityInfo().setHideBirthDateFlag(profileView.getProfileSummary().getHideBirthDateFlag());
+		user.getUserSecurityInfo().setHideBirthDateFlag(profileView.getProfileSummary().getHideBirthDateFlag());
 		
 		return user;
 	}

@@ -1,6 +1,11 @@
 <div class="user-left-panel-wrap row">
 	<div class="col-xs-12 col-sm-4 col-md-12">
-		<div class="user-displayname padded-row">{{vm.profile.displayName}}</div>
+		<div class="user-displayname padded-row">{{vm.profile.displayName}}
+			<span class="username-ellipses" uib-popover-template="'scripts/popover/templates/popoverUserDetails.html'"
+											popover-title="user"
+											popover-trigger="'outsideClick'"
+											popover-placement="bottom-left"><i class="fas fa-ellipsis-v"></i></span>
+		</div>
 		<div class="user-customtitle">Some dumbass from NY</div>
 		<div class="user-avatar-wrap">
 		   <!--<img class="user-avatar" src="http://zfgc.com/forum/index.php?action=dlattach;attach=12126;type=avatar"/>-->
@@ -9,11 +14,16 @@
 		<div class="user-membergroup-badge">{{}}</div>
 		<div class="user-usertext">{{vm.profile.personalText}}</div>
 	</div>
-	<div class="bottom-section-wrap col-xs-12 col-sm-8 col-md-12">
-		<div class="padded-row send-pm-icon"><a ng-href="/forum/sendPm?senderId={{vm.profile.usersId}}"><i class="fa fa-envelope"></i></a></div>
-		<div class="user-reputation padded-row">Reputation:{{}}</div>
-		<div class="user-gender padded-row">Gender:{{}}</div>
-		<div class="user-age padded-row">Age: {{vm.profile.age}}</div>
-		<div class="user-birthdate padded-row">Birthdate: {{vm.profile.birthDateAsString}}</div>
+	<div class="user-details-wrapper" ng-include="'scripts/popover/templates/popoverUserDetails.html'"></div>
+	<div uib-accordion>
+		<div uib-accordion-group class="small-screen-profile-nav">
+			<uib-accordion-heading><div class="profile-nav-arrow"><i class="fas fa-caret-down"></i></div></uib-accordion-heading>
+			<div>
+				<ul>
+					<li>Test</li>
+					<li>Test2</li>
+				</ul>
+			</div>
+		</div>
 	</div>
 </div>

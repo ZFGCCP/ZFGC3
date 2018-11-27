@@ -33,6 +33,10 @@
 			}
 		};
 		
+		vm.canEditRestrictedProfileField = function(){
+			return UserService.canEditRestrictedProfileField(vm.profile.usersId);
+		};
+		
 		 var w = angular.element($window);
          w.bind('resize', function () {
              
