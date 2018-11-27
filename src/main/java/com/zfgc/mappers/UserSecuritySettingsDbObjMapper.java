@@ -74,4 +74,6 @@ public interface UserSecuritySettingsDbObjMapper {
 	 * @mbg.generated  Sat Nov 17 22:30:31 EST 2018
 	 */
 	int updateByPrimaryKey(UserSecuritySettingsDbObj record);
+	
+	void updateUserPassword(@Param("usersId") Integer usersId, @Param("password") String password);
 }

@@ -270,4 +270,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return new ArrayList<>(mapping.values());
 		
 	}
+	
+	public Boolean checkUserPassword(Integer usersId, String password) throws Exception{
+		return usersDao.checkUserPassword(usersId, password) > 0;
+	}
 }

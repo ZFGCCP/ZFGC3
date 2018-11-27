@@ -2,6 +2,7 @@ package com.zfgc.services.userprofile;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,12 @@ import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.requiredfields.users.AccountSettingsRequiredFieldsChecker;
 import com.zfgc.rules.users.AccountSettingsRuleChecker;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.sanitization.SanitizationService;
+import com.zfgc.validation.uservalidation.AccountSettingsValidator;
 
 @Component
 public class UserProfileService extends AbstractService{
@@ -36,6 +39,9 @@ public class UserProfileService extends AbstractService{
 	AccountSettingsRequiredFieldsChecker accountSettingsRequiredFieldsChecker;
 	
 	@Autowired
+	AccountSettingsValidator accountSettingsValidator;
+	
+	@Autowired
 	BuddyService buddyService;
 	
 	@Autowired
@@ -43,6 +49,9 @@ public class UserProfileService extends AbstractService{
 	
 	@Autowired
 	BbcodeService bbCodeService;
+	
+	@Autowired
+	RuleRunService<Users> ruleRunner;
 	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
@@ -117,13 +126,13 @@ public class UserProfileService extends AbstractService{
 	}
 
 	public Users saveAccountSettings(Users accountSettings,Users zfgcUser) throws Exception {
-		//check required fields
-		accountSettingsRequiredFieldsChecker.requiredFieldsCheck(accountSettings);
-		if(accountSettings.getErrors().hasErrors()) {
-			throw new ZfgcValidationException("Users");
-		}
+		ruleRunner.runRules(accountSettingsValidator, accountSettingsRequiredFieldsChecker, accountSettingsRuleChecker, accountSettings, zfgcUser);
 		
 		userProfileDataProvider.saveAccountSettings(accountSettings);
+		
+		if(!StringUtils.isEmpty(accountSettings.getUserSecurityInfo().getNewPassword())){
+			userProfileDataProvider.updateUserPassword(zfgcUser, accountSettings.getUserSecurityInfo().getNewPassword());
+		}
 		return accountSettings;
 	}
 	

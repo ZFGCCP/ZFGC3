@@ -7,6 +7,7 @@ public class UserSecurityInfo extends BaseZfgcModel{
 	private Integer userSecuritySettingsId;
 	private String confirmNewPassword;
 	private String newPassword;
+	private String currentPassword;
 	private Boolean hideBirthDateFlag;
 	private Boolean hideGenderFlag;
 	private Boolean hideSkypeFlag;
@@ -141,6 +142,14 @@ public class UserSecurityInfo extends BaseZfgcModel{
 
 	public void setUsersId(Integer usersId) {
 		this.usersId = usersId;
+	}
+
+	public String getCurrentPassword() {
+		return currentPassword;
+	}
+
+	public void setCurrentPassword(String currentPassword) {
+		this.currentPassword = currentPassword;
 	}
 	
 }

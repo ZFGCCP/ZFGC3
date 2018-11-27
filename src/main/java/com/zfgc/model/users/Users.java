@@ -25,6 +25,7 @@ import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.users.profile.NotificationSettings;
 import com.zfgc.model.users.profile.PersonalMessagingSettings;
+import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
@@ -79,7 +80,15 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@JsonIgnore
 	private UserHashInfo userHashInfo = new UserHashInfo();
 	
+	@JsonIgnore
+	private UserProfileView savedProfile;
 	
+	public UserProfileView getSavedProfile() {
+		return savedProfile;
+	}
+	public void setSavedProfile(UserProfileView savedProfile) {
+		this.savedProfile = savedProfile;
+	}
 	public String getPassword() {
 		return password;
 	}

@@ -171,6 +171,15 @@
 			</div>
 			
 			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Current password</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input ng-model="vm.profile.userSecurityInfo.currentPassword" type="text" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
 				<div class="col-xs-12">
 					<input ng-model="vm.profile.userSecurityInfo.hideBirthDateFlag" value="true" type="checkbox"/>Hide Birthdate
 				</div>

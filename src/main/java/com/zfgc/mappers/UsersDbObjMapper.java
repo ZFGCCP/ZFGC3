@@ -67,4 +67,5 @@ public interface UsersDbObjMapper {
 	List<String> getRoleNames(Integer usersId);
 	String getDisplayName(Integer usersId);
 	List<UsersDbObj> getUsersByConversation(Integer conversationId);
+	Integer validateUserPassword(@Param("usersId") Integer usersId, @Param("password") String password);
 }

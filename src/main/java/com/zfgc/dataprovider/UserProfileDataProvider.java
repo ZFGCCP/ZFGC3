@@ -86,6 +86,10 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		userProfileDao.saveAccountSettings(forumProfile);
 	}
 	
+	public void updateUserPassword(Users user, String password) throws Exception{
+		userSecuritySettingsDao.updateUserPassword(user.getUsersId(), password);
+	}
+	
 	private void transformProfileAvatarData(Users user, UserProfileViewDbObj profile){
 		//todo: add constants for urls
 		//if they have a gallery avatar, use that as the filename

@@ -383,4 +383,10 @@
       HIDE_EMAIL_FLAG = #{hideEmailFlag,jdbcType=BIT}
     where USER_SECURITY_SETTINGS_ID = #{userSecuritySettingsId,jdbcType=INTEGER}
   </update>
+  
+  <update id="updateUserPassword" parameterType="map">
+  	UPDATE users U
+  	SET U.PASSWORD = SHA2(CONCAT(U.PASS_SALT, #{password,jdbcType=VARCHAR}),256)
+  	WHERE U.USERS_ID =  #{usersId,jdbcType=INTEGER}
+  </update>
 </mapper>

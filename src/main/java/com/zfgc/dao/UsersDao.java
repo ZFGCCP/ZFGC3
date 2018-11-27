@@ -498,4 +498,8 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		return null;
 	}
 	
+	public Integer checkUserPassword(Integer usersId, String password) throws Exception{
+		return usersDbObjMapper.validateUserPassword(usersId, password);
+	}
+	
 }

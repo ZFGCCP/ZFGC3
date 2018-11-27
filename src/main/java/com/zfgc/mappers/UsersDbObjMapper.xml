@@ -692,4 +692,12 @@
   	JOIN BR_USER_CONVERSATION C ON C.USERS_ID = U.USERS_ID
   	WHERE C.PM_CONVERSATION_ID = #{conversationId,jdbcType=INTEGER}
   </select>
+  
+  <select id="validateUserPassword" parameterType="map" resultType="java.lang.Integer">
+  	SELECT COUNT(*)
+  	FROM users U
+  	WHERE U.USERS_ID = #{usersId,jdbcType=INTEGER} AND
+  		  U.PASSWORD = SHA2(CONCAT((SELECT P.PASS_SALT FROM users P WHERE P.USERS_ID = #{usersId,jdbcType=INTEGER}), #{password,jdbcType=VARCHAR}),
+                                          256)
+  </select>
 </mapper>

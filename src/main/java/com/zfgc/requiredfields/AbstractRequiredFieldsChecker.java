@@ -42,6 +42,17 @@ public abstract class AbstractRequiredFieldsChecker<T extends BaseZfgcModel> {
 		}
 	}
 	
+	protected RequiredField checkRequiredFieldStringOr(String field, String fieldName, String errorMessage, List<RequiredField> errors ){
+		if(StringUtils.isEmpty(field)){
+			RequiredField requiredField = new RequiredField();
+			requiredField.setErrorMessage(errorMessage);
+			requiredField.setFieldName(fieldName);
+			return requiredField;
+		}
+		
+		return null;
+	}
+	
 	protected void checkRequiredFieldBoolean(Boolean field, String fieldName, String errorMessage, List<RequiredField> errors ){
 		if(field == false){
 			RequiredField requiredField = new RequiredField();
@@ -72,6 +83,35 @@ public abstract class AbstractRequiredFieldsChecker<T extends BaseZfgcModel> {
 		}
 		
 		errors.addAll(missedFields);
+	}
+	
+	protected void and(List<RequiredField> errors, RequiredField... fields){
+		List<RequiredField> missedFields = new ArrayList<>();
+		for(RequiredField field : fields){
+			if(field != null){
+				missedFields.add(field);
+			}
+		}
+		
+		errors.addAll(missedFields);
+	}
+	
+	protected void xor(List<RequiredField> errors, RequiredField... fields){
+		int fieldSize = fields.length;
+		int numberOfFieldsChanged = 0;
+		List<RequiredField> missedFields = new ArrayList<>();
+		for(RequiredField field : fields){
+			if(field == null){
+				numberOfFieldsChanged += 1;
+			}
+			else{
+				missedFields.add(field);
+			}
+		}
+		
+		if(numberOfFieldsChanged > 0 && numberOfFieldsChanged < fieldSize){
+			errors.addAll(missedFields);
+		}
 	}
 	
 	protected void checkErrorsFound(String typeName, T model) throws ZfgcValidationException{
