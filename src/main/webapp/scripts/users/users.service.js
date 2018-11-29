@@ -100,7 +100,9 @@
 		};
 		
 		UserService.saveForumProfile = function(vm){
-			UserService.resource.saveForumProfile(vm.profile);
+			UserService.resource.saveForumProfile(vm.profile).$promise.then(function(data){
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Forum Profile successfully saved.','success'));
+			});
 		};
 		
 		UserService.saveNotificationSettings = function(vm){

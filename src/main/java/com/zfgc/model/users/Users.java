@@ -24,6 +24,7 @@ import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.users.profile.NotificationSettings;
+import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.model.users.profile.PersonalMessagingSettings;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.util.time.ZfgcTimeUtils;
@@ -66,6 +67,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private UserSecurityInfo userSecurityInfo = new UserSecurityInfo();
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
+	private PersonalInfo personalInfo = new PersonalInfo();
 	private Avatar avatar;
 	private Date lastLogin;
 	
@@ -250,7 +252,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		Date today = ZfgcTimeUtils.getToday(timeOffsetLkup);
 		
 		if(birthDate != null){
-			age = ZfgcTimeUtils.getYearsBetween(birthDate, today);
+			age = ZfgcTimeUtils.getYearsBetween(personalInfo.getBirthDate(), today);
 		}
 
 		return age;
@@ -438,5 +440,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setUserContactInfo(UserContactInfo userContactInfo) {
 		this.userContactInfo = userContactInfo;
+	}
+	public PersonalInfo getPersonalInfo() {
+		return personalInfo;
+	}
+	public void setPersonalInfo(PersonalInfo personalInfo) {
+		this.personalInfo = personalInfo;
 	}
 }

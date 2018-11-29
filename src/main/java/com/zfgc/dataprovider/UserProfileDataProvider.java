@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.EmailAddressDao;
 import com.zfgc.dao.UserContactSettingsDao;
+import com.zfgc.dao.UserPersonalInfoDao;
 import com.zfgc.dao.UserProfileDao;
 import com.zfgc.dao.UserSecuritySettingsDao;
 import com.zfgc.dbobj.UserProfileViewDbObj;
@@ -36,6 +37,9 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	
 	@Autowired
 	UserSecuritySettingsDao userSecuritySettingsDao;
+	
+	@Autowired
+	UserPersonalInfoDao userPersonalInfoDao;
 	
 	@Autowired
 	EmailAddressDao emailAddressDao;
@@ -83,7 +87,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	}
 	
 	public void saveForumProfile(Users forumProfile) throws Exception{
-		userProfileDao.saveAccountSettings(forumProfile);
+		userPersonalInfoDao.updateOrInsert(forumProfile.getPersonalInfo());
 	}
 	
 	public void updateUserPassword(Users user, String password) throws Exception{

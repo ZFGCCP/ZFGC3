@@ -48,7 +48,7 @@
 					<label>Signature</label>
 				</div>
 				<div class="col-xs-12">
-					<textarea ng-model="vm.profile.signature" class="form-control" rows="10" cols="20"></textarea>
+					<textarea ng-model="vm.profile.personalInfo.signature" class="form-control" rows="10" cols="20"></textarea>
 				</div>
 			</div>
 			
@@ -64,7 +64,9 @@
 					<label>Birthday</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
+					<datepicker>
 					<input type="text" ng-model="vm.profile.personalInfo.birthDateAsString" class="form-control small-input"/>
+					</datepicker>
 				</div>
 			</div>
 			

@@ -18,6 +18,10 @@ public class PersonalInfo extends BaseZfgcModel {
 	private String location;
 	private String websiteTitle;
 	private String websiteUrl;
+	private String signature;
+	private String signaturePreview;
+	private Integer userPersonalInfoId;
+	private Integer usersId;
 	
 	public Date getBirthDate() {
 		return birthDate;
@@ -102,6 +106,38 @@ public class PersonalInfo extends BaseZfgcModel {
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getSignature() {
+		return signature;
+	}
+
+	public void setSignature(String signature) {
+		this.signature = signature;
+	}
+
+	public String getSignaturePreview() {
+		return signaturePreview;
+	}
+
+	public void setSignaturePreview(String signaturePreview) {
+		this.signaturePreview = signaturePreview;
+	}
+
+	public Integer getUserPersonalInfoId() {
+		return userPersonalInfoId;
+	}
+
+	public void setUserPersonalInfoId(Integer userPersonalInfoId) {
+		this.userPersonalInfoId = userPersonalInfoId;
+	}
+
+	public Integer getUsersId() {
+		return usersId;
+	}
+
+	public void setUsersId(Integer usersId) {
+		this.usersId = usersId;
 	}
 	
 }

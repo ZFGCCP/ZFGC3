@@ -15,7 +15,9 @@ import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.requiredfields.users.AccountSettingsRequiredFieldsChecker;
+import com.zfgc.requiredfields.users.ProfileRequiredFieldsChecker;
 import com.zfgc.rules.users.AccountSettingsRuleChecker;
+import com.zfgc.rules.users.ProfileRuleChecker;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.RuleRunService;
 import com.zfgc.services.bbcode.BbcodeService;
@@ -23,6 +25,7 @@ import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.sanitization.SanitizationService;
 import com.zfgc.validation.uservalidation.AccountSettingsValidator;
+import com.zfgc.validation.uservalidation.ProfileValidator;
 
 @Component
 public class UserProfileService extends AbstractService{
@@ -49,6 +52,15 @@ public class UserProfileService extends AbstractService{
 	
 	@Autowired
 	BbcodeService bbCodeService;
+	
+	@Autowired
+	ProfileValidator profileValidator;
+	
+	@Autowired
+	ProfileRequiredFieldsChecker profileRequiredFieldsChecker;
+	
+	@Autowired
+	ProfileRuleChecker profileRuleChecker;
 	
 	@Autowired
 	RuleRunService<Users> ruleRunner;
@@ -117,8 +129,8 @@ public class UserProfileService extends AbstractService{
 		}
 		
 		if(profileView.getProfileSummary().getSignature() != null){
-			profileView.getProfileSummary().setSignaturePreview(bbCodeService.parseText(profileView.getProfileSummary().getSignature()));
-			profileView.getProfileSummary().setSignature(sanitizationService.reverseSanitizeMessage(profileView.getProfileSummary().getSignature()));
+			profileView.getProfileSummary().setSignaturePreview(bbCodeService.parseText(profileView.getPersonalInfo().getSignature()));
+			profileView.getPersonalInfo().setSignature(sanitizationService.reverseSanitizeMessage(profileView.getPersonalInfo().getSignature()));
 		}
 		
 		return profileView;
@@ -172,20 +184,10 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
-		/*try{
-			Users savedProfile = userProfileDataProvider.getUserProfile(forumProfile.getUsersId());
-			forumProfile.setSignature(sanitizationService.sanitizeMessage(forumProfile.getSignature()));
-			
-			if(!forumProfile.getErrors().hasErrors()){
-				userProfileDataProvider.saveForumProfile(forumProfile);
-			}
-		}
-		catch(ZfgcNotFoundException ex){
-			throw new ZfgcNotFoundException(ex.getMessage());
-		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
-		}*/
+		ruleRunner.runRules(profileValidator, profileRequiredFieldsChecker, profileRuleChecker, forumProfile, zfgcUser);
+		forumProfile.getPersonalInfo().setSignature(sanitizationService.sanitizeMessage(forumProfile.getPersonalInfo().getSignature()));
+		
+		userProfileDataProvider.saveForumProfile(forumProfile);
 		
 		return forumProfile;
 	}

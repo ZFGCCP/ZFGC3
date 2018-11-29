@@ -132,8 +132,8 @@ class UsersController extends BaseController{
 		} catch (ZfgcValidationException ex) {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(accountSettings.getErrors());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(accountSettings);
@@ -144,9 +144,14 @@ class UsersController extends BaseController{
 	public ResponseEntity saveForumProfile(@RequestBody Users forumProfile){
 		try {
 			userProfileService.saveForumProfile(forumProfile,zfgcUser());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} 
+		catch(ZfgcValidationException e){
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(forumProfile.getErrors());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(forumProfile);
