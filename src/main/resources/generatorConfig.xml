@@ -21,6 +21,9 @@
     
 
     <!-- tables -->
+    <table schema="zfgc3" tableName="FILE_UPLOAD_TEMP" domainObjectName="FileUploadTempDbObj">
+    </table>
+    
     <!--<table schema="zfgc3" tableName="USER_PERSONAL_INFO" domainObjectName="UserPersonalInfoDbObj">
     	<generatedKey column="USER_PERSONAL_INFO_ID" sqlStatement="SELECT MAX(USER_PERSONAL_INFO_ID) + 1 FROM USER_PERSONAL_INFO"/>
     </table>
@@ -179,10 +182,10 @@
     
     <!-- views -->
     
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     </table>
     
-    <!--<table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
