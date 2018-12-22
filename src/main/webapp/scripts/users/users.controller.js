@@ -5,7 +5,7 @@
 		var vm = this;
 		UserService.loadProfile($location.search().userId,vm);
 		
-		vm.lookups = LookupsService.getLookupsList("MEMBER_GROUP,AVATAR_TYPE,AVATAR_GALLERY,GENDER,NOTIFICATION_FREQUENCY,LKUP_RECEIVE_MESSAGES");
+		vm.lookups = LookupsService.getLookupsList("MEMBER_GROUP,AVATAR_TYPE,AVATAR_GALLERY,GENDER,NOTIFICATION_FREQUENCY,LKUP_RECEIVE_MESSAGES,LKUP_PM_NOTIF");
 		
 		vm.tabClick = function(tab, subTab){
 			UserService.setTabActive(vm,tab, subTab);

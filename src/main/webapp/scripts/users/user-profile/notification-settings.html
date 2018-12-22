@@ -8,15 +8,6 @@
 					<div>
 						<select ng-model="vm.profile.notificationSettings.frequencyId" class="form-control small-input" ng-options="freq.id as freq.value for freq in vm.lookups.NOTIFICATION_FREQUENCY">
 						</select>
-						<!--<span class="col-xs-12 col-sm-3"><input type="radio" ng-model="vm.profile.notificationSettings.frequencyId" value="0"/><label>Never</label></span>
-						<span class="col-xs-12 col-sm-3"><input type="radio" ng-model="vm.profile.notificationSettings.frequencyId" value="1"/><label>Daily</label></span>
-						<span class="col-xs-12 col-sm-3"><input type="radio" ng-model="vm.profile.notificationSettings.frequencyId" value="2"/><label>Weekly</label></span>
-						<span class="col-xs-12 col-sm-3"><input type="radio" ng-model="vm.profile.notificationSettings.frequencyId" value="3"/><label>Monthly</label></span>-->
-					</div>
-					<div>
-						<span class="col-xs-12 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.onlyMeFlag" value="true"/><label>For threads I started</label></span>
-						<span class="col-xs-12 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.postedInFlag" value="true"/><label>For threads I posted in</label></span>
-						<span class="col-xs-12 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.repliesToMeFlag" value="true"/><label>For posts that are replies to me</label></span>
 					</div>
 				</div>
 			</div>

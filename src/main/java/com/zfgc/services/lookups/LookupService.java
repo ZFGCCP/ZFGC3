@@ -34,6 +34,7 @@ public class LookupService{
 	public static final String GENDER = "GENDER";
 	public static final String NOTIFICATION_FREQUENCY = "NOTIFICATION_FREQUENCY";
 	public static final String RECEIVE_MESSAGES = "LKUP_RECEIVE_MESSAGES";
+	public static final String PM_NOTIF = "LKUP_PM_NOTIF";
 	
 	
 	@PostConstruct
@@ -53,6 +54,7 @@ public class LookupService{
 			lookups.put(BBCODE, lookupDao.getLookup(BBCODE));
 			lookups.put(NOTIFICATION_FREQUENCY, lookupDao.getLookup(NOTIFICATION_FREQUENCY));
 			lookups.put(RECEIVE_MESSAGES, lookupDao.getLookup(RECEIVE_MESSAGES));			
+			lookups.put(PM_NOTIF, lookupDao.getLookup(PM_NOTIF));
 			LOGGER.info("Finished loading lookups.");
 		} catch (Exception e) {
 			LOGGER.error("Failed to load lookups due to exception.");

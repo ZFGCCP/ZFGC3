@@ -15,10 +15,7 @@
 				<div class="unit-content">
 					<h4>Notify me of personal messages by email</h5>
 					<div>
-						<select class="form-control small-input"></select>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="0" ng-model="vm.profile.personalMessagingSettings.notifyFrequencyId"/><label>Never</label></span>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="1" ng-model="vm.profile.personalMessagingSettings.notifyFrequencyId"/><label>Always</label></span>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="2" ng-model="vm.profile.personalMessagingSettings.notifyFrequencyId"/><label>From buddies only</label></span>
+						<select ng-model="vm.profile.personalMessagingSettings.notifyId" class="form-control small-input" ng-options="notif.id as notif.value for notif in vm.lookups.LKUP_PM_NOTIF"></select>
 					</div>
 				</div>
 			</div>
