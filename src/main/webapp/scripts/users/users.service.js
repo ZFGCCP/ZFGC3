@@ -100,7 +100,9 @@
 		};
 		
 		UserService.saveForumProfile = function(vm){
-			UserService.resource.saveForumProfile(vm.profile);
+			UserService.resource.saveForumProfile(vm.profile).$promise.then(function(data){
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Forum Profile successfully saved.','success'));
+			});
 		};
 		
 		UserService.saveNotificationSettings = function(vm){
@@ -123,18 +125,19 @@
 			if(avatar && avatar !== null && avatar.avatarTypeId && avatar.avatarTypeId !== null){
 			
 				switch(avatar.avatarTypeId){
+					case 1:
 					case 2:
 					case 4:
 						return "http://localhost:8080/forum/contentstream/avatar/" + avatar.avatarId;
 						break;
 						
 					case 3:
-						return avatar.fileName;
+						return avatar.avatarUrl;
 						break;
 				}
 			}
 			
-			return "assets/images/avatar/avatar-none.png";
+			return null;
 		};
 		
 		UserService.getMemberListing = function(vm, pageNumber, range){

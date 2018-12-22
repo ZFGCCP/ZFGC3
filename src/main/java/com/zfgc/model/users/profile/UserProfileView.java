@@ -22,6 +22,8 @@ public class UserProfileView extends BaseZfgcModel {
 	private UserContactInfo userContactInfo = new UserContactInfo();
 	private UserSecurityInfo userSecurityInfo = new UserSecurityInfo();
 	private PersonalInfo personalInfo = new PersonalInfo();
+	private NotificationSettings notificationSettings = new NotificationSettings();
+	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
 	private Avatar avatar = new Avatar();
 	
 	@JsonIgnore
@@ -109,6 +111,18 @@ public class UserProfileView extends BaseZfgcModel {
 	}
 	public void setUserSecurityInfo(UserSecurityInfo userSecurityInfo) {
 		this.userSecurityInfo = userSecurityInfo;
+	}
+	public NotificationSettings getNotificationSettings() {
+		return notificationSettings;
+	}
+	public void setNotificationSettings(NotificationSettings notificationSettings) {
+		this.notificationSettings = notificationSettings;
+	}
+	public PersonalMessagingSettings getPersonalMessagingSettings() {
+		return personalMessagingSettings;
+	}
+	public void setPersonalMessagingSettings(PersonalMessagingSettings personalMessagingSettings) {
+		this.personalMessagingSettings = personalMessagingSettings;
 	}
 	
 }

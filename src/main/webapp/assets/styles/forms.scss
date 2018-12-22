@@ -16,8 +16,9 @@ form{
 	 }
 	
 	.labeled-checkbox{
-		label{
-			padding-bottom:2px;
+		@media(max-width:767px){
+			display:flex;
+			align-items:center;
 		}
 	}
 	

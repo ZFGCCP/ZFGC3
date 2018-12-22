@@ -1,46 +1,21 @@
 <form>
 	<collapsible-widget widget-title="PM Settings">
 		<div class="unit-wrapper">
+			
 			<div class="col-lg-12 col-sm-6 col-xs-12 unit">
 				<div class="unit-content">
-					<h4>General Settings</h4>
+					<h5>Receive personal messages from</h5>
 					<div>
-						<span class="col-lg-6 col-xs-12"><input type="checkbox" value="true" ng-model="vm.profile.personalMessagingSettings.recentAtTopFlag"/><label>Show most recent PM at top</label></span>
-						<span class="col-lg-6 col-xs-12"><input type="checkbox" value="true" ng-model="vm.profile.personalMessagingSettings.saveToSentFlag"/><label>Save sent PMs to my sent box</label></span>
-					</div>
-				</div>
-			</div>
-		
-			<div class="col-lg-12 col-sm-6 col-xs-12 unit">
-				<div class="unit-content">
-					<h4>Display my personal messages</h5>
-					<div>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="0" ng-model="vm.profile.personalMessagingSettings.displaySettingId"><label>All at once</label></span>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="1" ng-model="vm.profile.personalMessagingSettings.displaySettingId"/><label>One at a time</label></span>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="2" ng-model="vm.profile.personalMessagingSettings.displaySettingId"/><label>As a conversation</label></span>
+						<select ng-model="vm.profile.personalMessagingSettings.receiveFromId" ng-options="receive.id as receive.value for receive in vm.lookups.LKUP_RECEIVE_MESSAGES" class="form-control small-input"></select>
 					</div>
 				</div>
 			</div>
 			
 			<div class="col-lg-12 col-sm-6 col-xs-12 unit">
 				<div class="unit-content">
-					<h4>Receive personal messages from</h5>
+					<h5>Notify me of personal messages by email</h5>
 					<div>
-						<span class="col-lg-6 col-xs-12"><input type="radio" value="0" ng-model="vm.profile.personalMessagingSettings.receiveFromId"/><label>All members</label></span>
-						<span class="col-lg-6 col-xs-12"><input type="radio" value="1" ng-model="vm.profile.personalMessagingSettings.receiveFromId"/><label>All members, excluding my ignore list</label></span>
-						<span class="col-lg-6 col-xs-12"><input type="radio" value="2" ng-model="vm.profile.personalMessagingSettings.receiveFromId"/><label>Buddies and staff only</label></span>
-						<span class="col-lg-6 col-xs-12"><input type="radio" value="3" ng-model="vm.profile.personalMessagingSettings.receiveFromId"/><label>Staff only</label></span>
-					</div>
-				</div>
-			</div>
-			
-			<div class="col-lg-12 col-sm-6 col-xs-12 unit">
-				<div class="unit-content">
-					<h4>Notify me of personal messages by email</h5>
-					<div>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="0" ng-model="vm.profile.personalMessagingSettings.notifyFrequencyId"/><label>Never</label></span>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="1" ng-model="vm.profile.personalMessagingSettings.notifyFrequencyId"/><label>Always</label></span>
-						<span class="col-lg-4 col-xs-12"><input type="radio" value="2" ng-model="vm.profile.personalMessagingSettings.notifyFrequencyId"/><label>From buddies only</label></span>
+						<select ng-model="vm.profile.personalMessagingSettings.notifyFrequencyId" class="form-control small-input" ng-options="notif.id as notif.value for notif in vm.lookups.LKUP_PM_NOTIF"></select>
 					</div>
 				</div>
 			</div>
