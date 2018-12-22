@@ -5,21 +5,12 @@ import com.zfgc.model.BaseZfgcModel;
 public class NotificationSettings extends BaseZfgcModel{
 
 	private Integer notificationSettingsId;
-    private Boolean autoSubscribeFlag;
-    private Boolean sendPostInEmailFlag;
-    private Boolean instantFlag;
-    private Boolean onlyFirstFlag;
-    private Boolean repliesFlag;
-    private Boolean moderationFlag;
-    private Boolean onlyMeFlag;
-    private Boolean repliesToMeFlag;
-    private Boolean postedInFlag;
     private Boolean karmaEmailFlag;
     private Boolean karmaPmFlag;
     private Boolean taggedEmailFlag;
     private Boolean taggedPmFlag;
-    private Boolean pmEmailFlag;
     private Integer frequencyId;
+    private Integer usersId;
 	
 	public Integer getNotificationSettingsId() {
 		return notificationSettingsId;
@@ -27,62 +18,6 @@ public class NotificationSettings extends BaseZfgcModel{
 
 	public void setNotificationSettingsId(Integer notificationSettingsId) {
 		this.notificationSettingsId = notificationSettingsId;
-	}
-
-	public Boolean getAutoSubscribeFlag() {
-		return autoSubscribeFlag;
-	}
-
-	public void setAutoSubscribeFlag(Boolean autoSubscribeFlag) {
-		this.autoSubscribeFlag = autoSubscribeFlag;
-	}
-
-	public Boolean getSendPostInEmailFlag() {
-		return sendPostInEmailFlag;
-	}
-
-	public void setSendPostInEmailFlag(Boolean sendPostInEmailFlag) {
-		this.sendPostInEmailFlag = sendPostInEmailFlag;
-	}
-
-	public Boolean getInstantFlag() {
-		return instantFlag;
-	}
-
-	public void setInstantFlag(Boolean instantFlag) {
-		this.instantFlag = instantFlag;
-	}
-
-	public Boolean getOnlyFirstFlag() {
-		return onlyFirstFlag;
-	}
-
-	public void setOnlyFirstFlag(Boolean onlyFirstFlag) {
-		this.onlyFirstFlag = onlyFirstFlag;
-	}
-
-	public Boolean getRepliesFlag() {
-		return repliesFlag;
-	}
-
-	public void setRepliesFlag(Boolean repliesFlag) {
-		this.repliesFlag = repliesFlag;
-	}
-
-	public Boolean getModerationFlag() {
-		return moderationFlag;
-	}
-
-	public void setModerationFlag(Boolean moderationFlag) {
-		this.moderationFlag = moderationFlag;
-	}
-
-	public Boolean getOnlyMeFlag() {
-		return onlyMeFlag;
-	}
-
-	public void setOnlyMeFlag(Boolean onlyMeFlag) {
-		this.onlyMeFlag = onlyMeFlag;
 	}
 
 	public Boolean getKarmaEmailFlag() {
@@ -117,14 +52,6 @@ public class NotificationSettings extends BaseZfgcModel{
 		this.taggedPmFlag = taggedPmFlag;
 	}
 
-	public Boolean getPmEmailFlag() {
-		return pmEmailFlag;
-	}
-
-	public void setPmEmailFlag(Boolean pmEmailFlag) {
-		this.pmEmailFlag = pmEmailFlag;
-	}
-
 	@Override
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
@@ -139,26 +66,18 @@ public class NotificationSettings extends BaseZfgcModel{
 		this.frequencyId = frequencyId;
 	}
 
-	public Boolean getRepliesToMeFlag() {
-		return repliesToMeFlag;
-	}
-
-	public void setRepliesToMeFlag(Boolean repliesToMeFlag) {
-		this.repliesToMeFlag = repliesToMeFlag;
-	}
-
-	public Boolean getPostedInFlag() {
-		return postedInFlag;
-	}
-
-	public void setPostedInFlag(Boolean postedInFlag) {
-		this.postedInFlag = postedInFlag;
-	}
-
 	@Override
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Integer getUsersId() {
+		return usersId;
+	}
+
+	public void setUsersId(Integer usersId) {
+		this.usersId = usersId;
 	}
 	
 }

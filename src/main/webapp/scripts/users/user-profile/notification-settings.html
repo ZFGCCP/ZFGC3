@@ -2,9 +2,9 @@
 	<collapsible-widget widget-title="Notification Info">
 		<div class="unit-wrapper">
 			<div class="col-xs-12 unit">
-				<h4>Post Settings</h4>
+				<h5>Post Settings</h5>
 				<div class="unit-content">
-					<h5>For forums/threads I am subscribed to, notify me:</h5>
+					<h6>For forums/threads I am subscribed to, notify me:</h6>
 					<div>
 						<select ng-model="vm.profile.notificationSettings.frequencyId" class="form-control small-input" ng-options="freq.id as freq.value for freq in vm.lookups.NOTIFICATION_FREQUENCY">
 						</select>
@@ -13,9 +13,9 @@
 			</div>
 		
 			<div class="col-sm-6 col-xs-12 unit">
-				<h4>Karma Settings</h4>
+				<h5>Karma Settings</h5>
 				<div class="unit-content">
-					<h5>Notify when my karma changes:</h5> 
+					<h6>Notify when my karma changes:</h6> 
 					<div>
 						<span class="col-xs-12 col-sm-6 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.karmaPmFlag" value="true"/><label>By PM</label></span>
 						<span class="col-xs-12 col-sm-6 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.karmaEmailFlag" value="true"/><label>By E-mail</label></span>
@@ -24,9 +24,9 @@
 			</div>
 			
 			<div class="col-sm-6 col-xs-12 unit">
-				<h4>Tagging settings</h4>
+				<h5>Tagging settings</h5>
 				<div class="unit-content">
-					<h5>Notify when someone has tagged me in a post:</h5>
+					<h6>Notify when someone has tagged me in a post:</h6>
 					<div>
 						<span class="col-xs-12 col-sm-6 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.taggedPmFlag" value="true"/><label>By PM</label></span>
 						<span class="col-xs-12 col-sm-6 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.taggedEmailFlag" value="true"/><label>By E-mail</label></span>
