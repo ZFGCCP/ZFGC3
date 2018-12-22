@@ -6,7 +6,9 @@ import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.avatar.Avatar;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class PersonalInfo extends BaseZfgcModel {
@@ -22,6 +24,17 @@ public class PersonalInfo extends BaseZfgcModel {
 	private String signaturePreview;
 	private Integer userPersonalInfoId;
 	private Integer usersId;
+	
+	private Avatar avatar;
+	
+	@JsonIgnore
+	public Integer getAvatarId(){
+		if(avatar == null){
+			return null;
+		}
+		
+		return avatar.getAvatarId();
+	}
 	
 	public Date getBirthDate() {
 		return birthDate;
@@ -138,6 +151,14 @@ public class PersonalInfo extends BaseZfgcModel {
 
 	public void setUsersId(Integer usersId) {
 		this.usersId = usersId;
+	}
+
+	public Avatar getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(Avatar avatar) {
+		this.avatar = avatar;
 	}
 	
 }

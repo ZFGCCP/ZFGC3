@@ -21,10 +21,13 @@
     
 
     <!-- tables -->
-    <table schema="zfgc3" tableName="FILE_UPLOAD_TEMP" domainObjectName="FileUploadTempDbObj">
+    <table schema="Zfgc3" tableName="AVATAR" domainObjectName="AvatarDbObj">
+    	<generatedKey column="AVATAR_ID" sqlStatement="SELECT MAX(AVATAR_ID) + 1 FROM AVATAR"/>
+    </table>
+    <!--<table schema="zfgc3" tableName="FILE_UPLOAD_TEMP" domainObjectName="FileUploadTempDbObj">
     </table>
     
-    <!--<table schema="zfgc3" tableName="USER_PERSONAL_INFO" domainObjectName="UserPersonalInfoDbObj">
+    <table schema="zfgc3" tableName="USER_PERSONAL_INFO" domainObjectName="UserPersonalInfoDbObj">
     	<generatedKey column="USER_PERSONAL_INFO_ID" sqlStatement="SELECT MAX(USER_PERSONAL_INFO_ID) + 1 FROM USER_PERSONAL_INFO"/>
     </table>
     
@@ -109,7 +112,7 @@
     </table>
     
     <table schema="Zfgc3" tableName="AVATAR" domainObjectName="AvatarDbObj">
-    	<generatedKey column="AVATAR_ID" sqlStatement="SELECT COALSESCE(MAX(AVATAR_ID) + 1,0) FROM AVATAR"/>
+    	<generatedKey column="AVATAR_ID" sqlStatement="SELECT MAX(AVATAR_ID) + 1 FROM AVATAR"/>
     </table>
 
 	<table schema="Zfgc3" tableName="AVATAR_GALLERY" domainObjectName="AvatarGalleryDbObj">

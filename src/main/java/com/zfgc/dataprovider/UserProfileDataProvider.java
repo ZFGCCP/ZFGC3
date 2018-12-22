@@ -10,7 +10,7 @@ import com.zfgc.dao.UserProfileDao;
 import com.zfgc.dao.UserSecuritySettingsDao;
 import com.zfgc.dbobj.UserProfileViewDbObj;
 import com.zfgc.exception.ZfgcNotFoundException;
-import com.zfgc.model.users.profile.Avatar;
+import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
@@ -58,8 +58,8 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		result.setUserContactInfo(mapper.map(userProfileViewDbObj,UserContactInfo.class));
 		result.getUserContactInfo().setEmail(mapper.map(userProfileViewDbObj, EmailAddress.class));
 		result.setUserSecurityInfo(mapper.map(userProfileViewDbObj, UserSecurityInfo.class));
-		result.setAvatar(mapper.map(userProfileViewDbObj, Avatar.class));
 		result.setPersonalInfo(mapper.map(userProfileViewDbObj, PersonalInfo.class));
+		result.getPersonalInfo().setAvatar(mapper.map(userProfileViewDbObj, Avatar.class));
 		//transformProfileAvatarData(user, userProfileViewDbObj);
 
 		return result;

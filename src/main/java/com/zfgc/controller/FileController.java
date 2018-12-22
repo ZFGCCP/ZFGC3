@@ -50,7 +50,7 @@ public class FileController extends BaseController{
 		}
 
 		return ResponseEntity.status(HttpStatus.OK)
-				             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + is.getFileName().substring(is.getFileName().lastIndexOf("/")))
+				             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=avatar" + avatarId)
 				             .contentType(MediaType.TEXT_PLAIN)
 				             .body(new InputStreamResource(is.getIs()));
 	}

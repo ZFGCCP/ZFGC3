@@ -6,20 +6,20 @@
 					<label>Avatar Type</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<select class="form-control small-input" ng-model="vm.profile.avatar.avatarTypeId" ng-options="avatarType.id as avatarType.value for avatarType in vm.lookups.AVATAR_TYPE"></select>
+					<select class="form-control small-input" ng-model="vm.profile.personalInfo.avatar.avatarTypeId" ng-options="avatarType.id as avatarType.value for avatarType in vm.lookups.AVATAR_TYPE"></select>
 				</div>
 			</div>
 			
-			<div class="row padded-row" ng-if="vm.profile.avatar.avatarTypeId === 3">
+			<div class="row padded-row" ng-if="vm.profile.personalInfo.avatar.avatarTypeId === 3">
 				<div class="col-xs-12 col-sm-4">
 					<label>Avatar Url</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.personalInfo.avatar.avatarUrl" type="text" class="form-control small-input"/>
 				</div>
 			</div>
 			
-			<div class="row padded-row" ng-if="vm.profile.avatar.avatarTypeId === 2">
+			<div class="row padded-row" ng-if="vm.profile.personalInfo.avatar.avatarTypeId === 2">
 				<div class="col-xs-12 col-sm-4">
 					<label>Select a file</label>
 				</div>
@@ -28,7 +28,7 @@
 				</div>
 			</div>
 			
-			<div class="row padded-row" ng-if="vm.profile.avatar.avatarTypeId === 4">
+			<div class="row padded-row" ng-if="vm.profile.personalInfo.avatar.avatarTypeId === 4">
 				<div class="col-xs-12 col-sm-4">
 					<label>Avatar Gallery</label>
 				</div>
@@ -37,9 +37,9 @@
 				</div>
 			</div>
 		
-			<div class="row padded-row" ng-if="vm.profile.avatar.avatarTypeId === 4">
+			<div class="row padded-row" ng-if="vm.profile.personalInfo.avatar.avatarTypeId === 4">
 				<div class="avatar-gallery-wrapper">
-					<avatar-gallery avatar-list="vm.lookups.AVATAR_GALLERY"></avatar-gallery>
+					<avatar-gallery avatar-list="vm.lookups.AVATAR_GALLERY" avatar-gallery-id="vm.profile.personalInfo.avatar.avatarGalleryId"></avatar-gallery>
 				</div>
 			</div>
 		

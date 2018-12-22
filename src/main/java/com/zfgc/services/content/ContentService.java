@@ -56,7 +56,7 @@ public class ContentService extends AbstractService{
 		String extension = StringUtils.substring(file.getOriginalFilename(), StringUtils.lastIndexOf(file.getOriginalFilename(), '.'),file.getOriginalFilename().length() - 1);
 		byte[] bytes = file.getBytes();
 		
-		String newFileName = ZfgcSecurityUtils.generateMd5(file.getOriginalFilename()) + "-" + zfgcUser.getUsersId() + extension;
+		String newFileName = ZfgcSecurityUtils.generateCryptoString(16) + "-" + zfgcUser.getUsersId() + extension;
 		stream = new FileOutputStream("/assets/images/avatar/" + newFileName);
 		
 		stream.write(bytes);

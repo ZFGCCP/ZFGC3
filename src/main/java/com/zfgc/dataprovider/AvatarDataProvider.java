@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dao.AvatarDao;
 import com.zfgc.dao.AvatarGalleryDao;
 import com.zfgc.dbobj.AvatarDbObj;
+import com.zfgc.dbobj.AvatarDbObjExample;
 import com.zfgc.dbobj.AvatarGalleryDbObj;
 import com.zfgc.dbobj.AvatarGalleryDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -21,7 +22,7 @@ public class AvatarDataProvider extends AbstractDataProvider  {
 	
 	@Autowired
 	private AvatarGalleryDao avatarGalleryDao;
-	
+
 	public AvatarGallery getAvatarGallery(Integer galleryId) throws ZfgcNotFoundException, Exception{
 		AvatarGalleryDbObjExample ex = avatarGalleryDao.getExample();
 		ex.createCriteria().andAvatarGalleryIdEqualTo(galleryId);
@@ -41,6 +42,17 @@ public class AvatarDataProvider extends AbstractDataProvider  {
 	public String getAvatarFileName(Integer avatarId) throws Exception{
 		String fileName = avatarDao.getAvatarFileLocation(avatarId);
 		return fileName;
+	}
+	
+	public void deleteAvatarRecord(Integer avatarId) throws Exception{
+		AvatarDbObjExample ex = avatarDao.getExample();
+		ex.createCriteria().andAvatarIdEqualTo(avatarId);
+		avatarDao.deleteByExample(null, ex);
+	}
+	
+	public Avatar createAvatarRecord(Avatar avatar) throws Exception {
+		avatarDao.updateOrInsert(avatar);
+		return avatar;
 	}
 		
 }

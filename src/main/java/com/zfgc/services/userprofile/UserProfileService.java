@@ -5,7 +5,9 @@ import java.util.List;
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -20,6 +22,7 @@ import com.zfgc.rules.users.AccountSettingsRuleChecker;
 import com.zfgc.rules.users.ProfileRuleChecker;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.RuleRunService;
+import com.zfgc.services.avatar.AvatarService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
@@ -46,6 +49,9 @@ public class UserProfileService extends AbstractService{
 	
 	@Autowired
 	BuddyService buddyService;
+	
+	@Autowired
+	AvatarService avatarService;
 	
 	@Autowired
 	SanitizationService sanitizationService;
@@ -183,9 +189,13 @@ public class UserProfileService extends AbstractService{
 		return pmSettings;
 	}
 	
+	@Transactional
 	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
 		ruleRunner.runRules(profileValidator, profileRequiredFieldsChecker, profileRuleChecker, forumProfile, zfgcUser);
 		forumProfile.getPersonalInfo().setSignature(sanitizationService.sanitizeMessage(forumProfile.getPersonalInfo().getSignature()));
+		
+		//avatar logic
+		avatarService.createAvatarRecordFromExternal(forumProfile.getPersonalInfo().getAvatar());
 		
 		userProfileDataProvider.saveForumProfile(forumProfile);
 		
