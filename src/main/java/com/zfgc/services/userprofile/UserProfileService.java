@@ -133,6 +133,10 @@ public class UserProfileService extends AbstractService{
 				user.getEmailAddress().setEmailAddress(null);
 			}
 		}
+		else {
+			//get buddy and ignore list
+			user.getPersonalMessagingSettings().setBuddyList(buddyService.getBuddies(userId));
+		}
 		
 		if(profileView.getProfileSummary().getSignature() != null){
 			profileView.getProfileSummary().setSignaturePreview(bbCodeService.parseText(profileView.getPersonalInfo().getSignature()));

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dao.BuddyDao;
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dbobj.UsersDbObj;
+import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.Buddy;
 
 @Component
@@ -33,7 +34,7 @@ public class BuddyDataProvider extends AbstractDataProvider{
 				buddy.setUserAId(usersId);
 				buddy.setOnlineFlag(true);
 				buddy.setUserName(dbObj.getDisplayName());
-				
+				buddy.setUser(mapper.map(dbObj, Users.class));
 				results.add(buddy);
 			}
 		}
