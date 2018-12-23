@@ -79,15 +79,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.controller.js",
+	    
+	"./src/main/webapp/scripts/users/user-title-card.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
@@ -97,17 +99,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
-	"./src/main/webapp/scripts/pm/pmSend.controller.js",
-	    
-	"./src/main/webapp/scripts/pm/pmComparator.service.js",
-	    
-	"./src/main/webapp/scripts/pm/pm.service.js",
-	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.service.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/pmSend.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/pmComparator.service.js",
+	    
+	"./src/main/webapp/scripts/pm/pm.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
@@ -147,9 +149,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
+	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
@@ -169,9 +171,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalRemoveUserFromConvo.html",
 	    
-	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	"./src/main/webapp/scripts/modal/templates/modalUserTitleCard.html",
 	    
-	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
+	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
@@ -180,6 +182,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
+	    
+	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
 	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
 	    

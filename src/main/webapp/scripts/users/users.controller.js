@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window){
+	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService){
 		var vm = this;
 		UserService.loadProfile($location.search().userId,vm);
 		
@@ -37,6 +37,10 @@
 			return UserService.canEditRestrictedProfileField(vm.profile.usersId);
 		};
 		
+		vm.openUserTitleCard = function(user){
+			ModalService.createTemplatedPopup('UserTitleCardCtrl','scripts/modal/templates/modalUserTitleCard.html', 'user-title-card-modal',{user : user});
+		};
+		
 		 var w = angular.element($window);
          w.bind('resize', function () {
              
@@ -62,5 +66,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', UsersCtrl])
+		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', UsersCtrl])
 })();

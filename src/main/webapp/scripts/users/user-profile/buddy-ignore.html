@@ -1,25 +1,23 @@
 <form>
 	<collapsible-widget widget-title="Buddy List">
 		<div class="scrollable-table">
-			<table class="widget-table">
-				<thead>
-					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.buddyList track by $index">
-						<th colspan="2">
-							<a ng-href="#/userprofile?userId={{user.userBId}}">{{user.userName}} {{user.onlineFlag}}</a>
-							<span>
-								Trash
-								PM
-							</span>
-						</th>
-					</tr>
-				</thead>
-				<tbody>
-					<tr ng-repeat="($index,user) in vm.profile.personalMessagingSettings.buddyList track by $index">
-						<th class="row-label"><label>Last Online:</label></th>
-						<td>{{user.lastOnline}}</td>
-					</tr>
-				</tbody>
-			</table>
+			<div class="responsive-table">
+				<div class="responsive-table-body">
+					<div class="responsive-table-row user-title-card">
+						<div class="responsive-table-cell" ng-click="vm.openUserTitleCard()">
+							<div class="avatar"><img src="http://zfgc.com/forum/index.php?action=dlattach;attach=12126;type=avatar"/></div>
+							<div class="user-details">
+								<div>Test</div>
+								<div class="actions">
+									<span><i class="fas fa-envelope"></i></span>
+									<span><i class="fas fa-at"></i></span>
+									<span><i class="fas fa-trash"></i></span>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
 	</collapsible-widget>
 	

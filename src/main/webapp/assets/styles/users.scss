@@ -192,3 +192,23 @@
 		}
 	}
 }
+
+.user-title-card{
+	.avatar{
+		display: inline-block;
+		
+		img{
+			margin-bottom: 0;
+	    	width: 50px;
+	    	border-radius: 50px;
+	    }
+	}
+	
+	.user-details{
+		display:inline-block;
+		
+		.actions{
+			font-size:15px;
+		}
+	}
+}
