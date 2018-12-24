@@ -1,17 +1,22 @@
 <form>
 	<collapsible-widget widget-title="Buddy List">
+		<div class="buddy-search">
+			<user-search ng-model="vm.tempUserSearch" on-select="vm.selectBuddy"></user-search>
+		</div>
 		<div class="scrollable-table">
 			<div class="responsive-table">
 				<div class="responsive-table-body">
-					<div class="responsive-table-row user-title-card">
-						<div class="responsive-table-cell" ng-click="vm.openUserTitleCard()">
-							<div class="avatar"><img src="http://zfgc.com/forum/index.php?action=dlattach;attach=12126;type=avatar"/></div>
-							<div class="user-details">
-								<div>Test</div>
-								<div class="actions">
-									<span><i class="fas fa-envelope"></i></span>
-									<span><i class="fas fa-at"></i></span>
-									<span><i class="fas fa-trash"></i></span>
+					<div class="responsive-table-row user-title-card" ng-repeat="($index,buddy) in vm.profile.buddyList track by $index">
+						<div class="responsive-table-cell" ng-click="vm.openUserTitleCard(buddy.user)">
+							<div class="center-align">
+								<div class="avatar"><img ng-src="{{vm.getAvatarUrlByUser(buddy.user)}}"/></div>
+								<div class="user-details">
+									<div class="user-name"><a ui-sref="user-profile({userId : buddy.user.usersId})" ng-click="$event.stopPropagation()">{{buddy.userName}}</a></div>
+									<div class="actions">
+										<span ng-click="$event.stopPropagation()"><a ng-href="/forum/sendPm?senderId={{buddy.user.usersId}}"><i class="fa fa-envelope"></i></a></span>
+										<span ng-click="$event.stopPropagation()"><a ng-href="mailto:{{buddy.user.userContactInfo.email.emailAddress}}" target="_blank"><i class="fas fa-at"></i></a></span>
+										<span ng-click="$event.stopPropagation()"><a ng-click="vm.deleteBuddy($index)"><i class="fas fa-trash"></i></a></span>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -40,8 +45,11 @@
 						<td>{{user.lastOnline}}</td>
 					</tr>
 				</tbody>
-			</table>dy>
 			</table>
 		</div>
 	</collapsible-widget>
+	
+	<div class="xl-button-wrapper">
+		<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveBuddyList()">Save</button>
+	</div>
 </form>

@@ -63,8 +63,7 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 
 	@Override
 	public List<UserProfileViewDbObj> get(UserProfileViewDbObjExample ex) {
-		// TODO Auto-generated method stub
-		return null;
+		return userProfileViewDbObjMapper.selectByExample(ex);
 	}
 
 	@Override

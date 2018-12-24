@@ -27,6 +27,16 @@
 			UserService.savePmSettings(vm);
 		};
 		
+		vm.saveBuddyList = function(){
+			UserService.saveBuddyList(vm);
+		};
+		
+		vm.getAvatarUrlByUser = function(user){
+			if(user && user !== null){
+				return UserService.getAvatarUrl(user.personalInfo.avatar);
+			}
+		}
+		
 		vm.getAvatarUrl = function(){
 			if(vm.profile && vm.profile !== null){
 				return UserService.getAvatarUrl(vm.profile.personalInfo.avatar);
@@ -39,6 +49,14 @@
 		
 		vm.openUserTitleCard = function(user){
 			ModalService.createTemplatedPopup('UserTitleCardCtrl','scripts/modal/templates/modalUserTitleCard.html', 'user-title-card-modal',{user : user});
+		};
+		
+		vm.deleteBuddy = function(index){
+			UserService.deleteBuddy(vm,index);
+		};
+		
+		vm.selectBuddy = function(buddy){
+			UserService.addBuddy(vm,buddy);
 		};
 		
 		 var w = angular.element($window);

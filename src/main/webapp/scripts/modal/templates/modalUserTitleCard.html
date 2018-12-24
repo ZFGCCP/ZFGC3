@@ -1,9 +1,30 @@
 <div class="modal-wrapper">
 	<div class="modal-header">
-		<h2>User Details</h2>
+		<h2>{{vm.user.displayName}}</h2>
 	</div>
 	<div class="modal-body">
-
+		<div class="column-data">
+   	   		<div class="row padded-row">
+		   		<span class="col-xs-12 col-sm-3 row-label">
+		      		<label>Post Count:</label> 
+		   		</span>
+		   		<span class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.postCount}}</span>
+	   		</div>
+	   		
+	   		<div class="row padded-row">
+		   		<span class="col-xs-12 col-sm-3 row-label">
+		      		<label>Last Active:</label> 
+		   		</span>
+		   		<span class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.postCount}}</span>
+	   		</div>
+	   		
+	   		<div class="row padded-row">
+		   		<span class="col-xs-12 col-sm-3 row-label">
+		      		<label>Date Registered:</label> 
+		   		</span>
+		   		<span class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.postCount}}</span>
+	   		</div>
+	   	</div>
 	</div>
 	<div class="modal-footer">
 		<span class="modal-button-wrapper">

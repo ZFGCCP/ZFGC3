@@ -30,7 +30,7 @@ public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddy
 		for(BrBuddyIgnoreListDbObj obj : buddies){
 			result.add(obj.getUserBId());
 		}
-		
+
 		return result;
 	}
 	
@@ -64,12 +64,7 @@ public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddy
 	@Override
 	public void updateOrInsert(Buddy obj) {
 		BrBuddyIgnoreListDbObj dbObj = mapper.map(obj, BrBuddyIgnoreListDbObj.class);
-		if(obj.getAdd()){
-			brBuddyIgnoreListDbObjMapper.insert(dbObj);
-		}
-		else{
-			brBuddyIgnoreListDbObjMapper.updateByPrimaryKey(dbObj);
-		}
+		brBuddyIgnoreListDbObjMapper.insert(dbObj);
 	}
 
 	@Override
@@ -80,9 +75,7 @@ public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddy
 
 	@Override
 	public Integer deleteByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex) {
-		return null;
-		// TODO Auto-generated method stub
-		
+		return brBuddyIgnoreListDbObjMapper.deleteByExample(ex);
 	}
 
 	@Override

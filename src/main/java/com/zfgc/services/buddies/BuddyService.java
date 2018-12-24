@@ -38,19 +38,17 @@ public class BuddyService extends AbstractService {
 		}
 	}
 	
+	public void deleteBuddies(Integer usersId){
+		buddyDataProvider.deletBuddiesByUser(usersId);
+	}
+	
 	public void saveBuddies(Integer userId, List<Buddy> buddies){
-		List<Buddy> currentDb = getBuddies(userId);
-		
-		for(Buddy buddy : currentDb){
-			if(!buddies.contains(buddy)){
-				buddyDataProvider.deleteBuddy(buddy);
-			}
-		}
-		
 		for(Buddy buddy : buddies){
-			if(buddy.getAdd()){
-				buddyDataProvider.insertOrUpdateBuddy(buddy);
-			}
+			buddyDataProvider.insertOrUpdateBuddy(buddy);
 		}
+	}
+	
+	public Buddy getBuddyTemplate(Integer usersA, Integer usersB){
+		return buddyDataProvider.getBuddyTemplate(usersA, usersB);
 	}
 }

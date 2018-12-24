@@ -60,6 +60,13 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
 		
+		UserProfileView result = mapUserProfile(userProfileViewDbObj);
+		//transformProfileAvatarData(user, userProfileViewDbObj);
+
+		return result;
+	}
+	
+	public UserProfileView mapUserProfile(UserProfileViewDbObj userProfileViewDbObj){
 		UserProfileView result = mapper.map(userProfileViewDbObj, UserProfileView.class);
 		result.setProfileSummary(mapper.map(userProfileViewDbObj, ProfileSummary.class));
 		result.setUserContactInfo(mapper.map(userProfileViewDbObj,UserContactInfo.class));
@@ -69,8 +76,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		result.getPersonalInfo().setAvatar(mapper.map(userProfileViewDbObj, Avatar.class));
 		result.setNotificationSettings(mapper.map(userProfileViewDbObj,NotificationSettings.class));
 		result.setPersonalMessagingSettings(mapper.map(userProfileViewDbObj, PersonalMessagingSettings.class));
-		//transformProfileAvatarData(user, userProfileViewDbObj);
-
+		
 		return result;
 	}
 	

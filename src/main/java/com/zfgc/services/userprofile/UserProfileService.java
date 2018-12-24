@@ -135,7 +135,7 @@ public class UserProfileService extends AbstractService{
 		}
 		else {
 			//get buddy and ignore list
-			user.getPersonalMessagingSettings().setBuddyList(buddyService.getBuddies(userId));
+			profileView.setBuddyList(buddyService.getBuddies(userId));
 		}
 		
 		if(profileView.getProfileSummary().getSignature() != null){
@@ -147,6 +147,7 @@ public class UserProfileService extends AbstractService{
 		
 	}
 
+	@Transactional
 	public Users saveAccountSettings(Users accountSettings,Users zfgcUser) throws Exception {
 		ruleRunner.runRules(accountSettingsValidator, accountSettingsRequiredFieldsChecker, accountSettingsRuleChecker, accountSettings, zfgcUser);
 		
@@ -158,6 +159,7 @@ public class UserProfileService extends AbstractService{
 		return accountSettings;
 	}
 	
+	@Transactional
 	public Users saveNotificationSettings(Users notificationSettings, Users zfgcUser) throws Exception{
 		try{
 			userProfileDataProvider.saveNotificationSettings(notificationSettings);
@@ -172,13 +174,7 @@ public class UserProfileService extends AbstractService{
 		return notificationSettings;
 	}
 	
-	public Users saveBuddyIgnoreList(Users buddyIgnore, Users zfgcUser) throws Exception{
-		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getPersonalMessagingSettings().getBuddyList());
-		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getPersonalMessagingSettings().getIgnoreList());
-		
-		return buddyIgnore;
-	}
-	
+	@Transactional
 	public Users savePmSettings(Users pmSettings, Users zfgcUser) throws Exception{
 		try{
 			userProfileDataProvider.savePmSettings(pmSettings);
@@ -194,6 +190,15 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	@Transactional
+	public Users saveBuddyIgnoreList(Users buddyIgnore, Users zfgcUser) throws Exception{
+		//save buddy and ignore list
+		buddyService.deleteBuddies(buddyIgnore.getUsersId());
+		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getBuddyList());
+		
+		return buddyIgnore;
+	}
+	
+	@Transactional
 	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
 		ruleRunner.runRules(profileValidator, profileRequiredFieldsChecker, profileRuleChecker, forumProfile, zfgcUser);
 		forumProfile.getPersonalInfo().setSignature(sanitizationService.sanitizeMessage(forumProfile.getPersonalInfo().getSignature()));
@@ -204,39 +209,5 @@ public class UserProfileService extends AbstractService{
 		userProfileDataProvider.saveForumProfile(forumProfile);
 		
 		return forumProfile;
-	}
-	
-	private Users mapProfileViewToUser(UserProfileView profileView){
-		Users user = new Users();
-		
-		user.setUsersId(profileView.getUsersId());
-		user.setLoginName(profileView.getProfileSummary().getLoginName());
-		user.setDisplayName(profileView.getProfileSummary().getDisplayName());
-		user.setBirthDate(profileView.getProfileSummary().getBirthDate());
-		user.setDateRegistered(profileView.getProfileSummary().getDateRegistered());
-		user.setPrimaryMemberGroupId(profileView.getProfileSummary().getPrimaryMemberGroupId());
-		EmailAddress email = new EmailAddress();
-		email.setEmailAddress(profileView.getProfileSummary().getEmailAddress());
-		user.setEmailAddress(email);
-		
-		user.setTimeOffset(profileView.getProfileSummary().getTimeOffset());
-		
-		user.getUserContactInfo().setGtalk(profileView.getProfileSummary().getGtalk());
-		user.getUserContactInfo().setNnid(profileView.getProfileSummary().getNnid());
-		user.getUserContactInfo().setPsn(profileView.getProfileSummary().getPsn());
-		user.getUserContactInfo().setSkype(profileView.getProfileSummary().getSkype());
-		user.getUserContactInfo().setSteam(profileView.getProfileSummary().getSteam());
-		user.getUserContactInfo().setXboxLive(profileView.getProfileSummary().getXboxLive());
-		
-		user.getUserSecurityInfo().setHideGtalkFlag(profileView.getProfileSummary().getHideGtalkFlag());
-		user.getUserSecurityInfo().setHideNnidFlag(profileView.getProfileSummary().getHideNnidFlag());
-		user.getUserSecurityInfo().setHidePsnFlag(profileView.getProfileSummary().getHidePsnFlag());
-		user.getUserSecurityInfo().setHideSkypeFlag(profileView.getProfileSummary().getHideSkypeFlag());
-		user.getUserSecurityInfo().setHideSteamFlag(profileView.getProfileSummary().getHideSteamFlag());
-		user.getUserSecurityInfo().setHideXboxLiveFlag(profileView.getProfileSummary().getHideXboxLiveFlag());
-		
-		user.getUserSecurityInfo().setHideBirthDateFlag(profileView.getProfileSummary().getHideBirthDateFlag());
-		
-		return user;
 	}
 }

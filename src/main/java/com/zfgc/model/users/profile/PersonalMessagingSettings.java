@@ -11,7 +11,6 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
     private Integer receiveFromId;
     private Integer notifyFrequencyId;
 	
-    private List<Buddy> buddyList;
     private List<Buddy> ignoreList;
     
 	public Integer getPersonalMessagingSettingsId() {
@@ -59,15 +58,6 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
 	public void setIgnoreList(List<Buddy> ignoreList) {
 		this.ignoreList = ignoreList;
 	}
-
-	public List<Buddy> getBuddyList() {
-		return buddyList;
-	}
-
-	public void setBuddyList(List<Buddy> buddyList) {
-		this.buddyList = buddyList;
-	}
-
 	@Override
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub

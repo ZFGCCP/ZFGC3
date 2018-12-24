@@ -75,9 +75,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -153,9 +153,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
+	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    

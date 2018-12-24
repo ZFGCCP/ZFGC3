@@ -2,7 +2,9 @@ package com.zfgc.model.users.profile;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
@@ -24,6 +26,7 @@ public class UserProfileView extends BaseZfgcModel {
 	private PersonalInfo personalInfo = new PersonalInfo();
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
+	private List<Buddy> buddyList = new ArrayList<>();
 	private Avatar avatar = new Avatar();
 	
 	@JsonIgnore
@@ -123,6 +126,12 @@ public class UserProfileView extends BaseZfgcModel {
 	}
 	public void setPersonalMessagingSettings(PersonalMessagingSettings personalMessagingSettings) {
 		this.personalMessagingSettings = personalMessagingSettings;
+	}
+	public List<Buddy> getBuddyList() {
+		return buddyList;
+	}
+	public void setBuddyList(List<Buddy> buddyList) {
+		this.buddyList = buddyList;
 	}
 	
 }

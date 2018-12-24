@@ -22,6 +22,7 @@ import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.subscription.SubscriptionService;
 import com.zfgc.services.userprofile.UserProfileService;
 import com.zfgc.services.users.UsersService;
@@ -35,6 +36,9 @@ class UsersController extends BaseController{
 
 	@Autowired
 	UserProfileService userProfileService;
+	
+	@Autowired
+	BuddyService buddyService;
 
 	@RequestMapping(value="/displayName/{usersId}", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
@@ -189,8 +193,8 @@ class UsersController extends BaseController{
 		try {
 			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(buddyList);
@@ -219,5 +223,17 @@ class UsersController extends BaseController{
 		}
 		
 		return ResponseEntity.ok(userList);
+	}
+	
+	@RequestMapping(value="/buddy", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getBuddyTemplate(@RequestParam Integer userAId, @RequestParam Integer userBId){
+		try{
+			return ResponseEntity.status(HttpStatus.OK).body(buddyService.getBuddyTemplate(userAId, userBId));
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occured. Please contact a system administrator.");
+		}
 	}
 }

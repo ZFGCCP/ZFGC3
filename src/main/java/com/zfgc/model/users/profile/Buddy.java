@@ -18,7 +18,7 @@ public class Buddy extends BaseZfgcModel {
 	private Boolean ignoreFlag;
 	private Boolean add = false;
 
-	private Users user;
+	private UserProfileView user;
 	
 	public String getUserName() {
 		return userName;
@@ -119,12 +119,11 @@ public class Buddy extends BaseZfgcModel {
 		return null;
 	}
 
-	public Users getUser() {
+	public UserProfileView getUser() {
 		return user;
 	}
 
-	public void setUser(Users user) {
+	public void setUser(UserProfileView user) {
 		this.user = user;
 	}
-
 }
