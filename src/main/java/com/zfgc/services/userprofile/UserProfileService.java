@@ -11,6 +11,7 @@ import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
+import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
@@ -27,6 +28,7 @@ import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.sanitization.SanitizationService;
+import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.validation.uservalidation.AccountSettingsValidator;
 import com.zfgc.validation.uservalidation.ProfileValidator;
 
@@ -149,6 +151,10 @@ public class UserProfileService extends AbstractService{
 
 	@Transactional
 	public Users saveAccountSettings(Users accountSettings,Users zfgcUser) throws Exception {
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(accountSettings.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		ruleRunner.runRules(accountSettingsValidator, accountSettingsRequiredFieldsChecker, accountSettingsRuleChecker, accountSettings, zfgcUser);
 		
 		userProfileDataProvider.saveAccountSettings(accountSettings);
@@ -161,6 +167,10 @@ public class UserProfileService extends AbstractService{
 	
 	@Transactional
 	public Users saveNotificationSettings(Users notificationSettings, Users zfgcUser) throws Exception{
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(notificationSettings.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		try{
 			userProfileDataProvider.saveNotificationSettings(notificationSettings);
 		}
@@ -176,6 +186,9 @@ public class UserProfileService extends AbstractService{
 	
 	@Transactional
 	public Users savePmSettings(Users pmSettings, Users zfgcUser) throws Exception{
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(pmSettings.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
 		try{
 			userProfileDataProvider.savePmSettings(pmSettings);
 		}
@@ -191,15 +204,23 @@ public class UserProfileService extends AbstractService{
 	
 	@Transactional
 	public Users saveBuddyIgnoreList(Users buddyIgnore, Users zfgcUser) throws Exception{
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(buddyIgnore.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		//save buddy and ignore list
 		buddyService.deleteBuddies(buddyIgnore.getUsersId());
-		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getBuddyList());
+		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getBuddyList(), zfgcUser);
 		
 		return buddyIgnore;
 	}
 	
 	@Transactional
 	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(forumProfile.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		ruleRunner.runRules(profileValidator, profileRequiredFieldsChecker, profileRuleChecker, forumProfile, zfgcUser);
 		forumProfile.getPersonalInfo().setSignature(sanitizationService.sanitizeMessage(forumProfile.getPersonalInfo().getSignature()));
 		

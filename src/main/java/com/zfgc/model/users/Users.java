@@ -455,4 +455,12 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	public void setBuddyList(List<Buddy> buddyList) {
 		this.buddyList = buddyList;
 	}
+	public boolean getIsManager(){
+		return primaryMemberGroupId == 1 || memberGroups.containsKey(1);
+	}
+	@JsonIgnore
+	public boolean getHasRoles(String ... roles){
+		//todo: add role checks
+		return true;
+	}
 }

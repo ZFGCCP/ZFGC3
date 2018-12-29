@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
+import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
@@ -133,6 +134,9 @@ class UsersController extends BaseController{
 	public ResponseEntity saveAccountSettings(@RequestBody Users accountSettings){
 		try {
 			userProfileService.saveAccountSettings(accountSettings,zfgcUser());
+		} 
+		catch(ZfgcUnauthorizedException ex){
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
 		} catch (ZfgcValidationException ex) {
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(accountSettings.getErrors());
 		} catch (Exception e) {
@@ -192,6 +196,10 @@ class UsersController extends BaseController{
 	public ResponseEntity saveBuddyListSettings(@RequestBody Users buddyList){
 		try {
 			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser());
+		}
+		catch(ZfgcValidationException ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getErrors());
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
@@ -229,7 +237,15 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getBuddyTemplate(@RequestParam Integer userAId, @RequestParam Integer userBId){
 		try{
-			return ResponseEntity.status(HttpStatus.OK).body(buddyService.getBuddyTemplate(userAId, userBId));
+			return ResponseEntity.status(HttpStatus.OK).body(buddyService.getBuddyTemplate(userAId, userBId, zfgcUser()));
+		}
+		catch(ZfgcNotFoundException ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+		catch(ZfgcValidationException ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getErrors());
 		}
 		catch(Exception ex){
 			ex.printStackTrace();

@@ -62,8 +62,14 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 	}
 
 	@Override
-	public List<UserProfileViewDbObj> get(UserProfileViewDbObjExample ex) {
-		return userProfileViewDbObjMapper.selectByExample(ex);
+	public List<UserProfileViewDbObj> get(UserProfileViewDbObjExample ex) throws ZfgcNotFoundException {
+		List<UserProfileViewDbObj> db = userProfileViewDbObjMapper.selectByExample(ex);
+		
+		if(db.size() == 0){
+			throw new ZfgcNotFoundException("User profile could not be found");
+		}
+		
+		return db;
 	}
 
 	@Override
