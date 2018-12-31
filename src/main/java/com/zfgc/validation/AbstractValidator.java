@@ -2,9 +2,9 @@ package com.zfgc.validation;
 
 import java.util.regex.Pattern;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.mysql.jdbc.StringUtils;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
@@ -66,7 +66,7 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 	}
 	
 	protected void checkUrlFormat(BaseZfgcModel model, String url, Boolean allowBlank){
-		if(!StringUtils.isNullOrEmpty(url) && !Pattern.matches(URL_FORMAT, url) || !Pattern.matches(allowBlank ? GENERAL_STRING_FORMAT_ALLOW_BLANK : GENERAL_STRING_FORMAT, url)){
+		if(!StringUtils.isEmpty(url) && !Pattern.matches(URL_FORMAT, url) || !Pattern.matches(allowBlank ? GENERAL_STRING_FORMAT_ALLOW_BLANK : GENERAL_STRING_FORMAT, url)){
 			Rule urlFormatRule = new Rule();
 			urlFormatRule.setRuleName("INVALID_URL_FORMAT");
 			urlFormatRule.setErrorMessage("Url was not in the correct format.");
