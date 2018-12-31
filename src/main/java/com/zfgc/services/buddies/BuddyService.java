@@ -4,17 +4,28 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dataprovider.BuddyDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.ZfgcValidationException;
+import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.Buddy;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
+import com.zfgc.validation.uservalidation.BuddyListValidator;
 
 
 @Component
 public class BuddyService extends AbstractService {
 	@Autowired
 	BuddyDataProvider buddyDataProvider;
+	
+	@Autowired
+	BuddyListValidator buddyListValidator;
+	
+	@Autowired
+	RuleRunService<Buddy> ruleRunner;
 	
 	public List<Buddy> getBuddies(Integer userId){
 		try {
@@ -38,19 +49,24 @@ public class BuddyService extends AbstractService {
 		}
 	}
 	
-	public void saveBuddies(Integer userId, List<Buddy> buddies){
-		List<Buddy> currentDb = getBuddies(userId);
-		
-		for(Buddy buddy : currentDb){
-			if(!buddies.contains(buddy)){
-				buddyDataProvider.deleteBuddy(buddy);
-			}
-		}
+	public void deleteBuddies(Integer usersId){
+		buddyDataProvider.deletBuddiesByUser(usersId);
+	}
+	
+	@Transactional
+	public void saveBuddies(Integer userId, List<Buddy> buddies, Users zfgcUser) throws Exception{
+		List<Buddy> savedBuddies = getBuddies(userId);
 		
 		for(Buddy buddy : buddies){
-			if(buddy.getAdd()){
-				buddyDataProvider.insertOrUpdateBuddy(buddy);
-			}
+			ruleRunner.runRules(buddyListValidator, null, null, buddy, zfgcUser);
+			buddyDataProvider.insertOrUpdateBuddy(buddy);
 		}
+	}
+	
+	public Buddy getBuddyTemplate(Integer usersA, Integer usersB, Users zfgcUser) throws Exception{
+		Buddy buddy = buddyDataProvider.getBuddyTemplate(usersA, usersB);
+		ruleRunner.runRules(buddyListValidator, null, null, buddy, zfgcUser);
+		
+		return buddy;
 	}
 }

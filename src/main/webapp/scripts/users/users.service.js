@@ -51,6 +51,10 @@
 				url : '/forum/users/member-list',
 				method : 'GET',
 				isArray : true
+			},
+			getBuddyTemplate : {
+				url : '/forum/users/buddy',
+				method : 'GET'
 			}
 		});
 		UserService.register = function(user){
@@ -113,6 +117,10 @@
 			UserService.resource.savePmSettings(vm.profile);
 		};
 		
+		UserService.saveBuddyList = function(vm){
+			UserService.resource.saveBuddyList(vm.profile);
+		};
+		
 		UserService.isUserAdmin = function(user){
 			return user.getPrimaryMemberGroupId === 2;
 		};
@@ -150,7 +158,19 @@
 			}
 			
 			return false;
-		}
+		};
+		
+		UserService.deleteBuddy = function(vm, index){
+			vm.profile.buddyList.splice(index,1);
+		};
+		
+		UserService.addBuddy = function(vm,buddy){
+			var newBuddy = UserService.resource.getBuddyTemplate({userAId : vm.profile.usersId, userBId : buddy.usersId});
+			
+			newBuddy.$promise.then(function(data){
+				vm.profile.buddyList.push(data);
+			});
+		};
 		
 		return UserService;
 	}

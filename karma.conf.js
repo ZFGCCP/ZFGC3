@@ -75,19 +75,21 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.controller.js",
+	    
+	"./src/main/webapp/scripts/users/user-title-card.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
@@ -147,13 +149,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.html",
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
@@ -168,6 +170,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/modal/templates/modalGeneralError.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalRemoveUserFromConvo.html",
+	    
+	"./src/main/webapp/scripts/modal/templates/modalUserTitleCard.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    

@@ -8,6 +8,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
 import org.dozer.DozerBeanMapper;
@@ -89,8 +90,7 @@ public class ForumApplication extends SpringBootServletInitializer {
         @Override
         protected void configure(HttpSecurity http) throws Exception
         {
-        	http
-        		.antMatcher("/**").anonymous();
+        	
         		
         		//.authenticated().anyRequest().permitAll();
             //.authorizeRequests()
@@ -118,7 +118,6 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .entityBaseURL(zfgcSamlConfig.getEntityBaseUrl())
                 .requestSigned(false)
                 .metadataURL(zfgcSamlConfig.getMetadataUrl())
-                
             .and()
                 .sso()
                 .defaultSuccessURL(zfgcSamlConfig.getDefaultSuccessUrl())
@@ -154,6 +153,9 @@ public class ForumApplication extends SpringBootServletInitializer {
 	            .serverName(zfgcSamlConfig.getServerName())
 	            .serverPort(zfgcSamlConfig.getServerPort())
 	            .includeServerPortInRequestURL(true);
+	        /*.and()
+	        	.http()
+	        	.authorizeRequests().antMatchers("/**").permitAll();*/
 
         }
     }

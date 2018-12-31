@@ -13,22 +13,29 @@ import com.zfgc.validation.AbstractValidator;
 public class RuleRunService<M extends BaseZfgcModel> {
 
 	public void runRules(AbstractValidator<M> validator, AbstractRequiredFieldsChecker<M> reqFields, AbstractRulesChecker<M> rules, M model, Users user) throws ZfgcValidationException, Exception{
-		reqFields.requiredFieldsCheck(model);
 		
-		if(model.getErrors().getRequiredFieldsErrors().size() > 0){
-			throw new ZfgcValidationException(model.getClass().getName());
+		if(reqFields != null){
+			reqFields.requiredFieldsCheck(model);
+			
+			if(model.getErrors().getRequiredFieldsErrors().size() > 0){
+				throw new ZfgcValidationException(model.getClass().getName());
+			}
 		}
 		
-		validator.validator(model);
-		
-		if(model.getErrors().getValidationErrors().size() > 0){
-			throw new ZfgcValidationException(model.getClass().getName());
+		if(validator != null){
+			validator.validator(model);
+			
+			if(model.getErrors().getValidationErrors().size() > 0){
+				throw new ZfgcValidationException(model.getClass().getName());
+			}
 		}
 		
-		rules.rulesCheck(model, user);
-		
-		if(model.getErrors().getRuleErrors().size() > 0){
-			throw new ZfgcValidationException(model.getClass().getName());
+		if(rules != null){
+			rules.rulesCheck(model, user);
+			
+			if(model.getErrors().getRuleErrors().size() > 0){
+				throw new ZfgcValidationException(model.getClass().getName());
+			}
 		}
 	}
 }

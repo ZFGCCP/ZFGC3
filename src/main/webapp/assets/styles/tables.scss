@@ -58,6 +58,15 @@ table.widget-table{
 	}
 }
 
+.scrollable-table{
+	max-height: 200px;
+    overflow-y: auto;
+    
+    @media(min-width:769px){
+    	max-height:300px;
+    }
+}
+
 .scrollable-table-wrapper{
 	overflow-x:auto;
 	

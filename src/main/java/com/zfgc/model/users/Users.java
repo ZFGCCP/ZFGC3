@@ -23,6 +23,7 @@ import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.avatar.Avatar;
+import com.zfgc.model.users.profile.Buddy;
 import com.zfgc.model.users.profile.NotificationSettings;
 import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.model.users.profile.PersonalMessagingSettings;
@@ -68,6 +69,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
 	private PersonalInfo personalInfo = new PersonalInfo();
+	private List<Buddy> buddyList = new ArrayList<>();
 	private Avatar avatar;
 	private Date lastLogin;
 	
@@ -446,5 +448,19 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setPersonalInfo(PersonalInfo personalInfo) {
 		this.personalInfo = personalInfo;
+	}
+	public List<Buddy> getBuddyList() {
+		return buddyList;
+	}
+	public void setBuddyList(List<Buddy> buddyList) {
+		this.buddyList = buddyList;
+	}
+	public boolean getIsManager(){
+		return primaryMemberGroupId == 1 || memberGroups.containsKey(1);
+	}
+	@JsonIgnore
+	public boolean getHasRoles(String ... roles){
+		//todo: add role checks
+		return true;
 	}
 }

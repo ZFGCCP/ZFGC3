@@ -11,6 +11,7 @@ import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
+import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
@@ -27,6 +28,7 @@ import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.sanitization.SanitizationService;
+import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.validation.uservalidation.AccountSettingsValidator;
 import com.zfgc.validation.uservalidation.ProfileValidator;
 
@@ -133,6 +135,10 @@ public class UserProfileService extends AbstractService{
 				user.getEmailAddress().setEmailAddress(null);
 			}
 		}
+		else {
+			//get buddy and ignore list
+			profileView.setBuddyList(buddyService.getBuddies(userId));
+		}
 		
 		if(profileView.getProfileSummary().getSignature() != null){
 			profileView.getProfileSummary().setSignaturePreview(bbCodeService.parseText(profileView.getPersonalInfo().getSignature()));
@@ -143,7 +149,12 @@ public class UserProfileService extends AbstractService{
 		
 	}
 
+	@Transactional
 	public Users saveAccountSettings(Users accountSettings,Users zfgcUser) throws Exception {
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(accountSettings.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		ruleRunner.runRules(accountSettingsValidator, accountSettingsRequiredFieldsChecker, accountSettingsRuleChecker, accountSettings, zfgcUser);
 		
 		userProfileDataProvider.saveAccountSettings(accountSettings);
@@ -154,7 +165,12 @@ public class UserProfileService extends AbstractService{
 		return accountSettings;
 	}
 	
+	@Transactional
 	public Users saveNotificationSettings(Users notificationSettings, Users zfgcUser) throws Exception{
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(notificationSettings.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		try{
 			userProfileDataProvider.saveNotificationSettings(notificationSettings);
 		}
@@ -168,14 +184,11 @@ public class UserProfileService extends AbstractService{
 		return notificationSettings;
 	}
 	
-	public Users saveBuddyIgnoreList(Users buddyIgnore, Users zfgcUser) throws Exception{
-		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getPersonalMessagingSettings().getBuddyList());
-		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getPersonalMessagingSettings().getIgnoreList());
-		
-		return buddyIgnore;
-	}
-	
+	@Transactional
 	public Users savePmSettings(Users pmSettings, Users zfgcUser) throws Exception{
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(pmSettings.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
 		try{
 			userProfileDataProvider.savePmSettings(pmSettings);
 		}
@@ -190,7 +203,24 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	@Transactional
+	public Users saveBuddyIgnoreList(Users buddyIgnore, Users zfgcUser) throws Exception{
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(buddyIgnore.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
+		
+		//save buddy and ignore list
+		buddyService.deleteBuddies(buddyIgnore.getUsersId());
+		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getBuddyList(), zfgcUser);
+		
+		return buddyIgnore;
+	}
+	
+	@Transactional
 	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
+		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(forumProfile.getUsersId(), zfgcUser)){
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		ruleRunner.runRules(profileValidator, profileRequiredFieldsChecker, profileRuleChecker, forumProfile, zfgcUser);
 		forumProfile.getPersonalInfo().setSignature(sanitizationService.sanitizeMessage(forumProfile.getPersonalInfo().getSignature()));
 		
@@ -200,39 +230,5 @@ public class UserProfileService extends AbstractService{
 		userProfileDataProvider.saveForumProfile(forumProfile);
 		
 		return forumProfile;
-	}
-	
-	private Users mapProfileViewToUser(UserProfileView profileView){
-		Users user = new Users();
-		
-		user.setUsersId(profileView.getUsersId());
-		user.setLoginName(profileView.getProfileSummary().getLoginName());
-		user.setDisplayName(profileView.getProfileSummary().getDisplayName());
-		user.setBirthDate(profileView.getProfileSummary().getBirthDate());
-		user.setDateRegistered(profileView.getProfileSummary().getDateRegistered());
-		user.setPrimaryMemberGroupId(profileView.getProfileSummary().getPrimaryMemberGroupId());
-		EmailAddress email = new EmailAddress();
-		email.setEmailAddress(profileView.getProfileSummary().getEmailAddress());
-		user.setEmailAddress(email);
-		
-		user.setTimeOffset(profileView.getProfileSummary().getTimeOffset());
-		
-		user.getUserContactInfo().setGtalk(profileView.getProfileSummary().getGtalk());
-		user.getUserContactInfo().setNnid(profileView.getProfileSummary().getNnid());
-		user.getUserContactInfo().setPsn(profileView.getProfileSummary().getPsn());
-		user.getUserContactInfo().setSkype(profileView.getProfileSummary().getSkype());
-		user.getUserContactInfo().setSteam(profileView.getProfileSummary().getSteam());
-		user.getUserContactInfo().setXboxLive(profileView.getProfileSummary().getXboxLive());
-		
-		user.getUserSecurityInfo().setHideGtalkFlag(profileView.getProfileSummary().getHideGtalkFlag());
-		user.getUserSecurityInfo().setHideNnidFlag(profileView.getProfileSummary().getHideNnidFlag());
-		user.getUserSecurityInfo().setHidePsnFlag(profileView.getProfileSummary().getHidePsnFlag());
-		user.getUserSecurityInfo().setHideSkypeFlag(profileView.getProfileSummary().getHideSkypeFlag());
-		user.getUserSecurityInfo().setHideSteamFlag(profileView.getProfileSummary().getHideSteamFlag());
-		user.getUserSecurityInfo().setHideXboxLiveFlag(profileView.getProfileSummary().getHideXboxLiveFlag());
-		
-		user.getUserSecurityInfo().setHideBirthDateFlag(profileView.getProfileSummary().getHideBirthDateFlag());
-		
-		return user;
 	}
 }

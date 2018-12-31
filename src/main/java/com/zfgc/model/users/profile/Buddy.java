@@ -5,6 +5,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.users.Users;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class Buddy extends BaseZfgcModel {
@@ -17,6 +18,8 @@ public class Buddy extends BaseZfgcModel {
 	private Boolean ignoreFlag;
 	private Boolean add = false;
 
+	private UserProfileView user;
+	
 	public String getUserName() {
 		return userName;
 	}
@@ -116,4 +119,11 @@ public class Buddy extends BaseZfgcModel {
 		return null;
 	}
 
+	public UserProfileView getUser() {
+		return user;
+	}
+
+	public void setUser(UserProfileView user) {
+		this.user = user;
+	}
 }
