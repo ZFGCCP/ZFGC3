@@ -17,6 +17,7 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.IpAddress;
+import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
 import com.zfgc.rules.users.UsersRuleChecker;
@@ -50,6 +51,7 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	PmService pmService;
+
 	
 	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
 		List<Users> result = null;
@@ -264,5 +266,12 @@ public class UsersService extends AbstractService {
 		user.setUsersId(usersId);
 		user.setDisplayName(usersDataProvider.getDisplayName(usersId));
 		return user;
+	}
+	
+	public List<MemberListingView> getMemberListingView(Users user, Integer pageNumber, Integer range) throws Exception{
+		//todo: add permission check
+		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range);
+		
+		return result;
 	}
 }

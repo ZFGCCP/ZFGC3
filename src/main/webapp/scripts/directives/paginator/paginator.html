@@ -1,9 +1,5 @@
-<ul class="zfgc-paginator">
-	<li class="prev">
-	
-	</li>
-	
-	<li class="next">
-	
-	</li>
-</ul>
+<div class="paginator-wrapper">
+	<span class="change-page-wrapper" ng-click="back()"><i class="fas fa-caret-left"></i></span>
+	<span class="page-selector-wrapper">Page <input ng-model="pageNumber" type="text" class="form-control current-page"/> of 6</span>
+	<span class="change-page-wrapper" ng-click="forward()"><i class="fas fa-caret-right"></i></span>
+</div>

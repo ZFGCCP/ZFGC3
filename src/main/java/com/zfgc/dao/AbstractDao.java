@@ -31,7 +31,7 @@ public abstract class AbstractDao<Example, DbObj, Model>{
 	
 	public abstract List<DbObj> get(Example ex) throws Exception;
 	public abstract void hardDelete(Model obj);
-	public abstract void updateOrInsert(Model obj);
+	public abstract void updateOrInsert(Model obj) throws Exception;
 	public abstract void updateByExample(Model obj, Example ex) throws Exception;
 	public abstract Integer deleteByExample(Model obj, Example ex) throws Exception;
 	public abstract Integer countByExample(Model obj, Example ex) throws Exception;

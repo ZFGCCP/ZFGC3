@@ -1,0 +1,57 @@
+<div ng-controller="MemberListingCtrl as vm">
+	<div class="section-container">
+		<div class="section-header">
+			<div class="section-title-wrapper">
+				<div class="section-title">Members</div>
+			</div>
+		</div>
+		
+		<div class="section-body">
+			<div class="row">
+				<div class="col-xs-12 no-padding">
+					<div class="member-listing-table-wrapper">
+						<div class="responsive-table member-listing-table">
+							<div class="responsive-table-header">
+								<span class="responsive-table-cell">PM</span>
+								<span class="responsive-table-cell">Email</span>
+								<span class="responsive-table-cell">Username</span>
+								<span class="responsive-table-cell">Position</span>
+								<span class="responsive-table-cell">Last Active</span>
+								<span class="responsive-table-cell">Date Registered</span>
+								<span class="responsive-table-cell">Post Count</span>
+							</div>
+							<div class="responsive-table-body">
+								<div class="responsive-table-row" ng-repeat="member in vm.memberList">
+									<span class="responsive-table-cell hidden-cell"><i class="fas fa-comment"></i></span>
+									<span class="responsive-table-cell hidden-cell"><i class="fas fa-envelope"></i></span>
+									<span class="responsive-table-cell user-name-cell">
+										<a ui-sref="user-profile({userId : member.usersId})">
+											{{member.displayName}}
+										</a>
+										<span>
+											<span><i class="fas fa-comment"></i></span>
+											<span><i class="fas fa-envelope"></i></span>
+										</span>
+									</span>
+									<span class="responsive-table-cell hidden-cell">
+										{{member.memberGroups[0]}}
+										<span ng-if="member.memberGroups.length > 1" uib-popover-template="'scripts/popover/templates/popoverMemberGroups.html'" 
+																					 popover-title="Additional Groups"
+																					 popover-trigger="'outsideClick'">
+											<i class="fas fa-plus-circle"></i>
+										</span>
+									</span>
+									<span class="responsive-table-cell member-last-login-col hidden-cell">{{member.lastLoginAsString}}</span>
+									<span class="responsive-table-cell member-date-reg-col hidden-cell">{{member.dateRegisteredAsString}}</span>
+									<span class="responsive-table-cell member-post-count-col hidden-cell"></span>
+								</div>
+							</div>
+						</div>
+					</div>
+					<paginator load-url="/forum/users/member-list" results-model="vm.memberList"></paginator>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</div>

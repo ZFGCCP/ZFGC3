@@ -1,0 +1,33 @@
+<div class="modal-wrapper">
+	<div class="modal-header">
+		<h2>Avatar Gallery</h2>
+	</div>
+	<div class="modal-body">
+		<div class="avatar-view">
+			<div class="button-left">
+				<i class="fas fa-caret-left"></i>
+			</div>
+			<div class="avatar">
+				<span>
+					<img ng-src="vm.currentImage"/>
+				</span>
+			</div>
+			<div class="button-right">
+				<i class="fas fa-caret-right"></i>
+			</div>
+		</div>
+		<div class="avatar-thumbs">
+			<span>
+				<div class="avatar-thumb" ng-repeat="($index,thumb) in vm.thumbs track by $index">
+					<img ng-src="thumb.imgUrl"/>
+				</div>
+			</span>
+		</div>
+	</div>
+	<div class="modal-footer">
+		<span class="modal-button-wrapper">
+			<button class="btn btn-confirm" ng-click="vm.addUsers()">Select</button>
+			<button class="btn btn-def" ng-click="$dismiss()">Cancel</button>
+		</span>
+	</div>
+</div>

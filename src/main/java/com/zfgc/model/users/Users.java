@@ -23,8 +23,11 @@ import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.avatar.Avatar;
+import com.zfgc.model.users.profile.Buddy;
 import com.zfgc.model.users.profile.NotificationSettings;
+import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.model.users.profile.PersonalMessagingSettings;
+import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
@@ -61,11 +64,14 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String signature;
 	private String signaturePreview;
 	
-	private UserContactInfo contactInfo = new UserContactInfo();
-	private UserSecurityInfo securityInfo = new UserSecurityInfo();
+	private UserContactInfo userContactInfo = new UserContactInfo();
+	private UserSecurityInfo userSecurityInfo = new UserSecurityInfo();
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
+	private PersonalInfo personalInfo = new PersonalInfo();
+	private List<Buddy> buddyList = new ArrayList<>();
 	private Avatar avatar;
+	private Date lastLogin;
 	
 	private String authToken;
 	private Boolean fromDb = true;
@@ -78,7 +84,15 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@JsonIgnore
 	private UserHashInfo userHashInfo = new UserHashInfo();
 	
+	@JsonIgnore
+	private UserProfileView savedProfile;
 	
+	public UserProfileView getSavedProfile() {
+		return savedProfile;
+	}
+	public void setSavedProfile(UserProfileView savedProfile) {
+		this.savedProfile = savedProfile;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -240,7 +254,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		Date today = ZfgcTimeUtils.getToday(timeOffsetLkup);
 		
 		if(birthDate != null){
-			age = ZfgcTimeUtils.getYearsBetween(birthDate, today);
+			age = ZfgcTimeUtils.getYearsBetween(personalInfo.getBirthDate(), today);
 		}
 
 		return age;
@@ -285,18 +299,6 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
-	}
-	public UserContactInfo getContactInfo() {
-		return contactInfo;
-	}
-	public void setContactInfo(UserContactInfo contactInfo) {
-		this.contactInfo = contactInfo;
-	}
-	public UserSecurityInfo getSecurityInfo() {
-		return securityInfo;
-	}
-	public void setSecurityInfo(UserSecurityInfo securityInfo) {
-		this.securityInfo = securityInfo;
 	}
 	public Boolean getHideEmailFlag() {
 		return hideEmailFlag;
@@ -422,5 +424,43 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setUnreadPmCount(Integer unreadPmCount) {
 		this.unreadPmCount = unreadPmCount;
+	}
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+	public UserSecurityInfo getUserSecurityInfo() {
+		return userSecurityInfo;
+	}
+	public void setUserSecurityInfo(UserSecurityInfo userSecurityInfo) {
+		this.userSecurityInfo = userSecurityInfo;
+	}
+	public UserContactInfo getUserContactInfo() {
+		return userContactInfo;
+	}
+	public void setUserContactInfo(UserContactInfo userContactInfo) {
+		this.userContactInfo = userContactInfo;
+	}
+	public PersonalInfo getPersonalInfo() {
+		return personalInfo;
+	}
+	public void setPersonalInfo(PersonalInfo personalInfo) {
+		this.personalInfo = personalInfo;
+	}
+	public List<Buddy> getBuddyList() {
+		return buddyList;
+	}
+	public void setBuddyList(List<Buddy> buddyList) {
+		this.buddyList = buddyList;
+	}
+	public boolean getIsManager(){
+		return primaryMemberGroupId == 1 || memberGroups.containsKey(1);
+	}
+	@JsonIgnore
+	public boolean getHasRoles(String ... roles){
+		//todo: add role checks
+		return true;
 	}
 }

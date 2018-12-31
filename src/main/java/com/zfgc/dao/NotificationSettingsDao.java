@@ -57,8 +57,14 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbO
 
 	@Override
 	public void updateOrInsert(NotificationSettings obj) {
-		// TODO Auto-generated method stub
-		
+		NotificationSettingsDbObj dbObj = mapper.map(obj, NotificationSettingsDbObj.class);
+		if(dbObj.getNotificationSettingsId() == -1){
+			notificationSettingsDbObjMapper.insert(dbObj);
+			obj.setNotificationSettingsId(dbObj.getNotificationSettingsId());
+		}
+		else{
+			notificationSettingsDbObjMapper.updateByPrimaryKey(dbObj);
+		}
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.zfgc.services.saml;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,7 +20,7 @@ import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
 
-@Service
+@Component
 public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 
 	@Autowired

@@ -19,6 +19,8 @@ import javax.crypto.spec.SecretKeySpec;
 
 import org.apache.tomcat.util.codec.binary.Base64;
 
+import com.zfgc.model.users.Users;
+
 public class ZfgcSecurityUtils {
 
 	public static RsaKeyPair generateRsaPair(){
@@ -177,5 +179,9 @@ public class ZfgcSecurityUtils {
 		byte[] salt = new byte[unencodedLength];
 		cryptoRand.nextBytes(salt);
 		return Base64.encodeBase64URLSafeString(salt);
+	}
+	
+	public static boolean checkUserAuthorizationProfileEditor(Integer usersId, Users zfgcUser){
+		return zfgcUser.getHasRoles("ROLE_ZFGC_PROFILE_EDITOR") || usersId == zfgcUser.getUsersId();
 	}
 }

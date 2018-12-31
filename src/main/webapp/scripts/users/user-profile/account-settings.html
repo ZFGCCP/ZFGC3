@@ -68,35 +68,11 @@
 					<label>Email Address</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.emailAddress.emailAddress" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userContactInfo.email.emailAddress" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.hideEmailFlag" value="true" type="checkbox"/>
+				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
+					<input ng-model="vm.profile.userSecurityInfo.hideEmailFlag" value="true" type="checkbox"/>
 					<span>Hide</span>
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>AIM</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.aim" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideAimFlag" value="true" type="checkbox"/>Hide
-				</span>
-			</div>
-			
-			<div class="row padded-row">
-				<div class="col-xs-12 col-sm-4">
-					<label>YIM</label>
-				</div>
-				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.yim" type="text" class="form-control small-input"/>
-				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideYimFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -105,10 +81,10 @@
 					<label>Hangouts</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.gtalk" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userContactInfo.gtalk" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideGtalkFlag" value="true" type="checkbox"/>Hide
+				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
+					<input ng-model="vm.profile.userSecurityInfo.hideGtalkFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -117,10 +93,10 @@
 					<label>Skype</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.skype" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userContactInfo.skype" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideSkypeFlag" value="true" type="checkbox"/>Hide
+				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
+					<input ng-model="vm.profile.userSecurityInfo.hideSkypeFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -129,10 +105,10 @@
 					<label>Steam</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.steam" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userContactInfo.steam" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideSteamFlag" value="true" type="checkbox"/>Hide
+				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
+					<input ng-model="vm.profile.userSecurityInfo.hideSteamFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -141,10 +117,10 @@
 					<label>XBox Live</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.xboxLive" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userContactInfo.xboxLive" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideXboxLiveFlag" value="true" type="checkbox"/>Hide
+				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
+					<input ng-model="vm.profile.userSecurityInfo.hideXboxLiveFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -153,10 +129,10 @@
 					<label>Playstation Network</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.psn" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userContactInfo.psn" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hidePsnFlag" value="true" type="checkbox"/>Hide
+				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
+					<input ng-model="vm.profile.userSecurityInfo.hidePsnFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 			
@@ -165,10 +141,10 @@
 					<label>Nintendo Network ID</label>
 				</div>
 				<div class="col-xs-8 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.nnid" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userContactInfo.nnid" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
 				</div>
-				<span class="col-xs-4 col-sm-4">
-					<input ng-model="vm.profile.contactInfo.hideNnidFlag" value="true" type="checkbox"/>Hide
+				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
+					<input ng-model="vm.profile.userSecurityInfo.hideNnidFlag" value="true" type="checkbox"/>Hide
 				</span>
 			</div>
 		</div>
@@ -181,7 +157,7 @@
 					<label>New password</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input ng-model="vm.profile.security.newPassword" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userSecurityInfo.newPassword" type="text" class="form-control small-input"/>
 				</div>
 			</div>
 			
@@ -190,19 +166,28 @@
 					<label>Confirm password</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input ng-model="vm.profile.security.confirmNewPassword" type="text" class="form-control small-input"/>
+					<input ng-model="vm.profile.userSecurityInfo.confirmNewPassword" type="text" class="form-control small-input"/>
+				</div>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Current password</label>
+				</div>
+				<div class="col-xs-12 col-sm-4">
+					<input ng-model="vm.profile.userSecurityInfo.currentPassword" type="text" class="form-control small-input"/>
 				</div>
 			</div>
 			
 			<div class="row padded-row">
 				<div class="col-xs-12">
-					<input ng-model="vm.profile.securityInfo.hideBirthDateFlag" value="true" type="checkbox"/>Hide Birthdate
+					<input ng-model="vm.profile.userSecurityInfo.hideBirthDateFlag" value="true" type="checkbox"/>Hide Birthdate
 				</div>
 			</div>
 			
 			<div class="row padded-row">
 				<div class="col-xs-12">
-					<input ng-model="vm.profile.securityInfo.hideGenderFlag" value="true" type="checkbox"/>Hide Gender
+					<input ng-model="vm.profile.userSecurityInfo.hideGenderFlag" value="true" type="checkbox"/>Hide Gender
 				</div>
 			</div>
 		</div>

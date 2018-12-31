@@ -5,6 +5,7 @@ import com.zfgc.model.BaseZfgcModel;
 public class EmailAddress extends BaseZfgcModel{
 	private String emailAddress;
 	private Boolean isSpammerFlag = true;
+	private Integer emailAddressId;
 	
 	public String getEmailAddress() {
 		return emailAddress;
@@ -27,6 +28,12 @@ public class EmailAddress extends BaseZfgcModel{
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Integer getEmailAddressId() {
+		return emailAddressId;
+	}
+	public void setEmailAddressId(Integer emailAddressId) {
+		this.emailAddressId = emailAddressId;
 	}
 	
 	

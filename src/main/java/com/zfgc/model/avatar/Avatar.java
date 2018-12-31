@@ -6,6 +6,7 @@ public class Avatar extends BaseZfgcModel {
 	
 	private Integer avatarId;
 	private String avatarFileName;
+	private String avatarUrl;
 	private Integer avatarGalleryId;
 	private Integer avatarTypeId;
 	
@@ -52,6 +53,14 @@ public class Avatar extends BaseZfgcModel {
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getAvatarUrl() {
+		return avatarUrl;
+	}
+
+	public void setAvatarUrl(String avatarUrl) {
+		this.avatarUrl = avatarUrl;
 	}
 	
 }

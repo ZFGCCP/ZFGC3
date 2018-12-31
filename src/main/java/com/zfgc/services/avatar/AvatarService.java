@@ -5,6 +5,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dataprovider.AvatarDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.avatar.Avatar;
 import com.zfgc.services.AbstractService;
 
 @Component
@@ -14,6 +15,11 @@ public class AvatarService extends AbstractService {
 	
 	public String getAvatarFileName(Integer avatarId) throws ZfgcNotFoundException{
 		try{
+			Avatar av = avatarDataProvider.getAvatar(avatarId);
+			if(av.getAvatarTypeId() == 4){
+				return avatarDataProvider.getAvatarGallery(av.getAvatarGalleryId()).getFilePath();
+			}
+			
 			return avatarDataProvider.getAvatarFileName(avatarId);
 		}
 		catch(ZfgcNotFoundException ex){
@@ -24,5 +30,18 @@ public class AvatarService extends AbstractService {
 			ex.printStackTrace();
 			return null;
 		}
+	}
+	
+	public String getAvatarGallery(Integer galleryId) throws ZfgcNotFoundException, Exception{
+		return avatarDataProvider.getAvatarGallery(galleryId).getFilePath();
+	}
+	
+	public void deleteAvatarRecord(Integer avatarId) throws Exception{
+		avatarDataProvider.deleteAvatarRecord(avatarId);
+	}
+	
+	public Avatar createAvatarRecordFromExternal(Avatar avatar) throws Exception{
+		Avatar av = avatarDataProvider.createAvatarRecord(avatar);
+		return av;
 	}
 }
