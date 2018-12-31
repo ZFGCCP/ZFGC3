@@ -1,0 +1,13 @@
+.paginator-wrapper{
+
+	padding : 5px 0 5px 3px;
+
+	@media(max-width : 991px){
+		width:100%;		
+	}
+
+	input.current-page{
+		width:40px;
+		display:inline-block;
+	}
+}

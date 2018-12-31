@@ -1,8 +1,16 @@
 package com.zfgc;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.Authentication;
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +37,9 @@ import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 @MapperScan("com.zfgc.mappers")
 @EnableConfigurationProperties(ZfgcSamlConfig.class)
 public class ForumApplication extends SpringBootServletInitializer {
+	
+	@Autowired
+	AuthSuccessHandler authSuccessHandler;
 	
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args);
@@ -57,6 +68,12 @@ public class ForumApplication extends SpringBootServletInitializer {
         return new SAMLConfigurerBean();
     }
     
+    @Bean
+    public AuthSuccessHandler successRedirectHandler() {
+        AuthSuccessHandler successRedirectHandler = new AuthSuccessHandler();
+        return successRedirectHandler;
+    }
+    
     /*@Configuration
     //@Order(102)
     public class testConfig extends WebSecurityConfigurerAdapter{
@@ -73,8 +90,7 @@ public class ForumApplication extends SpringBootServletInitializer {
         @Override
         protected void configure(HttpSecurity http) throws Exception
         {
-        	http
-        		.antMatcher("/**").anonymous();
+        	
         		
         		//.authenticated().anyRequest().permitAll();
             //.authorizeRequests()
@@ -102,7 +118,6 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .entityBaseURL(zfgcSamlConfig.getEntityBaseUrl())
                 .requestSigned(false)
                 .metadataURL(zfgcSamlConfig.getMetadataUrl())
-                
             .and()
                 .sso()
                 .defaultSuccessURL(zfgcSamlConfig.getDefaultSuccessUrl())
@@ -138,6 +153,9 @@ public class ForumApplication extends SpringBootServletInitializer {
 	            .serverName(zfgcSamlConfig.getServerName())
 	            .serverPort(zfgcSamlConfig.getServerPort())
 	            .includeServerPortInRequestURL(true);
+	        /*.and()
+	        	.http()
+	        	.authorizeRequests().antMatchers("/**").permitAll();*/
 
         }
     }

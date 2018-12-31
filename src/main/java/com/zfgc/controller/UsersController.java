@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.ZfgcValidationException;
+import com.zfgc.exception.security.ZfgcUnauthorizedException;
+import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.subscription.SubscriptionService;
 import com.zfgc.services.userprofile.UserProfileService;
 import com.zfgc.services.users.UsersService;
@@ -33,6 +37,9 @@ class UsersController extends BaseController{
 
 	@Autowired
 	UserProfileService userProfileService;
+	
+	@Autowired
+	BuddyService buddyService;
 
 	@RequestMapping(value="/displayName/{usersId}", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
@@ -110,7 +117,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){
 		try {
-			Users user = userProfileService.getProfile(userId, zfgcUser());
+			UserProfileView user = userProfileService.getProfile(userId, zfgcUser());
 			
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} 
@@ -118,7 +125,7 @@ class UsersController extends BaseController{
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested resource could not be found.");
 		}
 		catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
 		}
 	}
 	
@@ -127,9 +134,14 @@ class UsersController extends BaseController{
 	public ResponseEntity saveAccountSettings(@RequestBody Users accountSettings){
 		try {
 			userProfileService.saveAccountSettings(accountSettings,zfgcUser());
+		} 
+		catch(ZfgcUnauthorizedException ex){
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
+		} catch (ZfgcValidationException ex) {
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(accountSettings.getErrors());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(accountSettings);
@@ -140,9 +152,14 @@ class UsersController extends BaseController{
 	public ResponseEntity saveForumProfile(@RequestBody Users forumProfile){
 		try {
 			userProfileService.saveForumProfile(forumProfile,zfgcUser());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
+		} 
+		catch(ZfgcValidationException e){
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(forumProfile.getErrors());
+		}
+		catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(forumProfile);
@@ -179,9 +196,13 @@ class UsersController extends BaseController{
 	public ResponseEntity saveBuddyListSettings(@RequestBody Users buddyList){
 		try {
 			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser());
+		}
+		catch(ZfgcValidationException ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getErrors());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(buddyList);
@@ -197,5 +218,38 @@ class UsersController extends BaseController{
 		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(navTabs);
+	}
+	
+	@RequestMapping(value="/member-list", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getMemberList(@RequestParam Integer pageNo, @RequestParam Integer usersPerPage) {
+		List<MemberListingView> userList = null;
+		try {
+			userList = usersService.getMemberListingView(zfgcUser(), pageNo, usersPerPage);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occured. Please contact a system administrator.");
+		}
+		
+		return ResponseEntity.ok(userList);
+	}
+	
+	@RequestMapping(value="/buddy", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getBuddyTemplate(@RequestParam Integer userAId, @RequestParam Integer userBId){
+		try{
+			return ResponseEntity.status(HttpStatus.OK).body(buddyService.getBuddyTemplate(userAId, userBId, zfgcUser()));
+		}
+		catch(ZfgcNotFoundException ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
+		}
+		catch(ZfgcValidationException ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getErrors());
+		}
+		catch(Exception ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occured. Please contact a system administrator.");
+		}
 	}
 }

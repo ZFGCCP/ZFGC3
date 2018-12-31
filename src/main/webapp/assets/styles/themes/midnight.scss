@@ -181,4 +181,18 @@ a:hover{
     }
 }
 
-
+.popover{
+	.arrow:after{
+		border-top-color:$midnight-modal-background-color !important;
+	}
+	
+	.popover-inner{
+		.popover-title{
+			background-color:$midnight-modal-header-background-color !important;
+		}
+	
+		.popover-content{
+			background-color:$midnight-modal-background-color !important;
+		}
+	}
+}

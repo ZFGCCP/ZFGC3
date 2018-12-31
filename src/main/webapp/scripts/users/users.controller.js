@@ -1,11 +1,11 @@
 (function(){
 	'use strict';
 	
-	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window){
+	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService){
 		var vm = this;
 		UserService.loadProfile($location.search().userId,vm);
 		
-		vm.lookups = LookupsService.getLookupsList("MEMBER_GROUP,AVATAR_TYPE,AVATAR_GALLERY,GENDER");
+		vm.lookups = LookupsService.getLookupsList("MEMBER_GROUP,AVATAR_TYPE,AVATAR_GALLERY,GENDER,NOTIFICATION_FREQUENCY,LKUP_RECEIVE_MESSAGES,LKUP_PM_NOTIF");
 		
 		vm.tabClick = function(tab, subTab){
 			UserService.setTabActive(vm,tab, subTab);
@@ -27,10 +27,36 @@
 			UserService.savePmSettings(vm);
 		};
 		
+		vm.saveBuddyList = function(){
+			UserService.saveBuddyList(vm);
+		};
+		
+		vm.getAvatarUrlByUser = function(user){
+			if(user && user !== null){
+				return UserService.getAvatarUrl(user.personalInfo.avatar);
+			}
+		}
+		
 		vm.getAvatarUrl = function(){
 			if(vm.profile && vm.profile !== null){
-				return UserService.getAvatarUrl(vm.profile.avatar);
+				return UserService.getAvatarUrl(vm.profile.personalInfo.avatar);
 			}
+		};
+		
+		vm.canEditRestrictedProfileField = function(){
+			return UserService.canEditRestrictedProfileField(vm.profile.usersId);
+		};
+		
+		vm.openUserTitleCard = function(user){
+			ModalService.createTemplatedPopup('UserTitleCardCtrl','scripts/modal/templates/modalUserTitleCard.html', 'user-title-card-modal',{user : user});
+		};
+		
+		vm.deleteBuddy = function(index){
+			UserService.deleteBuddy(vm,index);
+		};
+		
+		vm.selectBuddy = function(buddy){
+			UserService.addBuddy(vm,buddy);
 		};
 		
 		 var w = angular.element($window);
@@ -58,5 +84,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', UsersCtrl])
+		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', UsersCtrl])
 })();

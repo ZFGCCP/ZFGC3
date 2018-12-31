@@ -8,13 +8,9 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
 
 	private Integer personalMessagingSettingsId;
     private Integer usersId;
-    private Integer displaySettingId;
-    private Boolean recentAtTopFlag;
     private Integer receiveFromId;
     private Integer notifyFrequencyId;
-    private Boolean saveToSentFlag;
 	
-    private List<Buddy> buddyList;
     private List<Buddy> ignoreList;
     
 	public Integer getPersonalMessagingSettingsId() {
@@ -33,22 +29,6 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
 		this.usersId = usersId;
 	}
 
-	public Integer getDisplaySettingId() {
-		return displaySettingId;
-	}
-
-	public void setDisplaySettingId(Integer displaySettingId) {
-		this.displaySettingId = displaySettingId;
-	}
-
-	public Boolean getRecentAtTopFlag() {
-		return recentAtTopFlag;
-	}
-
-	public void setRecentAtTopFlag(Boolean recentAtTopFlag) {
-		this.recentAtTopFlag = recentAtTopFlag;
-	}
-
 	public Integer getReceiveFromId() {
 		return receiveFromId;
 	}
@@ -65,14 +45,6 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
 		this.notifyFrequencyId = notifyFrequencyId;
 	}
 
-	public Boolean getSaveToSentFlag() {
-		return saveToSentFlag;
-	}
-
-	public void setSaveToSentFlag(Boolean saveToSentFlag) {
-		this.saveToSentFlag = saveToSentFlag;
-	}
-
 	@Override
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
@@ -86,15 +58,6 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
 	public void setIgnoreList(List<Buddy> ignoreList) {
 		this.ignoreList = ignoreList;
 	}
-
-	public List<Buddy> getBuddyList() {
-		return buddyList;
-	}
-
-	public void setBuddyList(List<Buddy> buddyList) {
-		this.buddyList = buddyList;
-	}
-
 	@Override
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub

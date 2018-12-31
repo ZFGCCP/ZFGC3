@@ -1,0 +1,21 @@
+.paginator-wrapper{
+	margin: 5px 0 5px 10px;
+	
+	.change-page-wrapper {
+		display: inline-block;
+    	font-size: 30px;
+    	vertical-align: middle;
+    	cursor : pointer;
+	}
+	
+	.page-selector-wrapper{
+		display:inline-block;
+		
+		input {
+			width: 45px;
+    		height: 20px;
+    		font-size: 12px;
+    		display: inline-block;
+		}
+	}
+}

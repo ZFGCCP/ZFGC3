@@ -37,7 +37,7 @@
 	    	  		state.go('pmAuth');
 	    	  	}
 	    	  
-	    	  	return resE;
+	    	  	return $q.reject(resE);
 	      }
 		
 		return InterceptorService;

@@ -58,8 +58,15 @@ public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj, Avat
 
 	@Override
 	public void updateOrInsert(Avatar obj) {
-		// TODO Auto-generated method stub
+		AvatarDbObj dbObj = mapper.map(obj, AvatarDbObj.class);
+		if(obj.getAvatarId() == null || obj.getAvatarId() == -1){
+			avatarDbObjMapper.insert(dbObj);
+		}
+		else{
+			avatarDbObjMapper.updateByPrimaryKey(dbObj);
+		}
 		
+		obj.setAvatarId(dbObj.getAvatarId());
 	}
 
 	@Override
@@ -70,9 +77,7 @@ public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj, Avat
 
 	@Override
 	public Integer deleteByExample(Avatar obj, AvatarDbObjExample ex) {
-		return null;
-		// TODO Auto-generated method stub
-		
+		return avatarDbObjMapper.deleteByExample(ex);
 	}
 
 	@Override

@@ -91,7 +91,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		usersDbObj.setPassword(user.getUserHashInfo().getPassword());
 		usersDbObj.setPassSalt(user.getUserHashInfo().getPassSalt());
 		usersDbObj.setPrimaryIp(user.getPrimaryIpAddress().getIpAddress());
-		usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
+		//usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
 		try{
 			usersDbObjMapper.insertSelective(usersDbObj);
 			usersDbObjMapper.createSha2HashForUser(usersDbObj);
@@ -480,8 +480,8 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 
 	@Override
 	public void updateByExample(Users obj, UsersDbObjExample ex) {
-		// TODO Auto-generated method stub
-		
+		UsersDbObj dbObj = mapper.map(obj, UsersDbObj.class);
+		usersDbObjMapper.updateByExampleSelective(dbObj, ex);
 	}
 
 	@Override
@@ -496,6 +496,10 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 			throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public Integer checkUserPassword(Integer usersId, String password) throws Exception{
+		return usersDbObjMapper.validateUserPassword(usersId, password);
 	}
 	
 }

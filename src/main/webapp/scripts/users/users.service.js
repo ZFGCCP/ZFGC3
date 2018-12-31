@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($resource, $window, NotificationsService){
+	function UserService($rootScope, $resource, $window, NotificationsService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
@@ -46,6 +46,15 @@
 			getUserDisplayName : {
 				url : '/forum/users/displayName/:userId',
 				method : 'GET'
+			},
+			getMemberListing : {
+				url : '/forum/users/member-list',
+				method : 'GET',
+				isArray : true
+			},
+			getBuddyTemplate : {
+				url : '/forum/users/buddy',
+				method : 'GET'
 			}
 		});
 		UserService.register = function(user){
@@ -89,11 +98,15 @@
 		};
 
 		UserService.saveAccountSettings = function(vm){
-			UserService.resource.saveAccountSettings(vm.profile);
+			UserService.resource.saveAccountSettings(vm.profile).$promise.then(function(data){
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Account Settings successfully saved.','success'));
+			});
 		};
 		
 		UserService.saveForumProfile = function(vm){
-			UserService.resource.saveForumProfile(vm.profile);
+			UserService.resource.saveForumProfile(vm.profile).$promise.then(function(data){
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Forum Profile successfully saved.','success'));
+			});
 		};
 		
 		UserService.saveNotificationSettings = function(vm){
@@ -102,6 +115,10 @@
 		
 		UserService.savePmSettings = function(vm){
 			UserService.resource.savePmSettings(vm.profile);
+		};
+		
+		UserService.saveBuddyList = function(vm){
+			UserService.resource.saveBuddyList(vm.profile);
 		};
 		
 		UserService.isUserAdmin = function(user){
@@ -116,13 +133,14 @@
 			if(avatar && avatar !== null && avatar.avatarTypeId && avatar.avatarTypeId !== null){
 			
 				switch(avatar.avatarTypeId){
+					case 1:
 					case 2:
 					case 4:
 						return "http://localhost:8080/forum/contentstream/avatar/" + avatar.avatarId;
 						break;
 						
 					case 3:
-						return avatar.fileName;
+						return avatar.avatarUrl;
 						break;
 				}
 			}
@@ -130,10 +148,34 @@
 			return null;
 		};
 		
+		UserService.getMemberListing = function(vm, pageNumber, range){
+			vm.memberList = UserService.resource.getMemberListing({'pageNo' : pageNumber, 'usersPerPage' : range});
+		};
+		
+		UserService.canEditRestrictedProfileField = function(userProfileId){
+			if(UserService.loggedInUser && UserService.loggedInUser.usersId !== null && UserService.loggedInUser.usersId === userProfileId){
+				return true;
+			}
+			
+			return false;
+		};
+		
+		UserService.deleteBuddy = function(vm, index){
+			vm.profile.buddyList.splice(index,1);
+		};
+		
+		UserService.addBuddy = function(vm,buddy){
+			var newBuddy = UserService.resource.getBuddyTemplate({userAId : vm.profile.usersId, userBId : buddy.usersId});
+			
+			newBuddy.$promise.then(function(data){
+				vm.profile.buddyList.push(data);
+			});
+		};
+		
 		return UserService;
 	}
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$resource','$window','NotificationsService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','NotificationsService',UserService])
 })();
