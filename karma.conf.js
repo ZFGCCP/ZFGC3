@@ -13,41 +13,35 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
 	    
-	"./src/main/webapp/bower_components/angular/angular.js",
+	"./src/main/webapp/node_modules/angular/angular.js",
 	    
-	"./src/main/webapp/bower_components/jquery/dist/jquery.js",
+	"./src/main/webapp/node_modules/angular-animate/angular-animate.js",
 	    
-	"./src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js",
+	"./src/main/webapp/node_modules/angular-datepicker/dist/index.js",
 	    
-	"./src/main/webapp/bower_components/angular-resource/angular-resource.js",
+	"./src/main/webapp/node_modules/angular-local-storage/dist/angular-local-storage.js",
 	    
-	"./src/main/webapp/bower_components/tether/dist/js/tether.js",
+	"./src/main/webapp/node_modules/angular-resource/angular-resource.js",
 	    
-	"./src/main/webapp/bower_components/moment/moment.js",
+	"./src/main/webapp/node_modules/angular-sanitize/angular-sanitize.js",
 	    
-	"./src/main/webapp/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
+	"./src/main/webapp/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
 	    
-	"./src/main/webapp/bower_components/ng-dialog/js/ngDialog.js",
+	"./src/main/webapp/node_modules/angular-ui-router/release/angular-ui-router.js",
 	    
-	"./src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+	"./src/main/webapp/node_modules/jquery/dist/jquery.js",
 	    
-	"./src/main/webapp/bower_components/angular-animate/angular-animate.js",
+	"./src/main/webapp/node_modules/ng-dialog/js/ngDialog.js",
 	    
-	"./src/main/webapp/bower_components/angular-sanitize/angular-sanitize.js",
+	"./src/main/webapp/node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js",
 	    
-	"./src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js",
-	    
-	"./src/main/webapp/bower_components/angular-local-storage/dist/angular-local-storage.js",
-	    
-	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
-	    
-	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
+	"./src/main/webapp/node_modules/tether/dist/js/tether.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
@@ -75,9 +69,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -125,11 +119,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum-post.service.js",
 	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
-	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
 	"./src/main/webapp/scripts/error/error.module.js",
+	    
+	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -153,9 +149,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
+	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
@@ -213,9 +209,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html"
 	    
 	],
 
