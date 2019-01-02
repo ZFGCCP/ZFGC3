@@ -5,11 +5,15 @@ It's a secret to everyone.
 ## Installation
 Install Node 6.11.0
 Install Python
+Install Yarn 1.12.3 https://yarnpkg.com/en/docs/install#windows-stable
 
 `npm install .`  
 `npm install -g bower gulp-cli`
+`cd src/main/webapp`
+`yarn install`
 
 ## Development Tools
+
 Gulp is used to compile sass and inject CSS/JS files into the index.html.  
 `gulp`
 
