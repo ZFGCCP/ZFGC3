@@ -11,6 +11,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
+import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
+import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
 import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBean;
@@ -100,6 +104,24 @@ public class ForumApplication extends SpringBootServletInitializer {
         }
     }*/
 
+    @Configuration
+    @EnableWebSocketMessageBroker
+    public static class websocketConfig extends AbstractWebSocketMessageBrokerConfigurer{
+
+    	@Override
+    	public void configureMessageBroker(MessageBrokerRegistry config) {
+    		config.enableSimpleBroker("UserSocketS");
+    		config.setApplicationDestinationPrefixes("forum");
+    	}
+    	
+		@Override
+		public void registerStompEndpoints(StompEndpointRegistry registry) {
+			registry.addEndpoint("/gs-guide-websocket").withSockJS();
+			
+		}
+    	
+    }
+    
     @Configuration
     public static class MyServiceProviderConfig extends ServiceProviderConfigurerAdapter {
 

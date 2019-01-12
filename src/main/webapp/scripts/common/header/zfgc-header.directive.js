@@ -10,6 +10,14 @@
     			//
     		},
     		link: function(scope, element, attrs) {
+    			scope.socket = {
+    					client: null,
+    					stomp: null
+    			};
+    			
+    			scope.socket.client = new SockJS("/forum/UserSocketS/init");
+    			scope.socket.stomp = Stomp.over(socket.client);
+    			
     			scope.user = UserService.resource.loggedInUser();
     			UserService.loggedInUser = scope.user;
     		}
