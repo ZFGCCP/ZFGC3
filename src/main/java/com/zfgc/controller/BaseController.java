@@ -1,5 +1,7 @@
 package com.zfgc.controller;
 
+import java.security.Principal;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,5 +15,9 @@ public abstract class BaseController {
 	
 	protected Users zfgcUser(){
 		return (Users) ((Authentication) request.getUserPrincipal()).getPrincipal();
+	}
+	
+	protected Users zfgcUser(Principal principal){
+		return (Users) ((Authentication) principal).getPrincipal();
 	}
 }

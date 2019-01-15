@@ -31,10 +31,12 @@
       "dependencies": null
     },
     "sockjs-client": {
-      "main": "./dist/sockjs.min.js"
+      "main": "./dist/sockjs.min.js",
+      "dependencies" : null
     },
     "stomp-websocket" : {
-      "main" : "./lib/stomp.min.js"
+      "main" : "./lib/stomp.min.js",
+      "dependencies" : null
     }
   }
 }

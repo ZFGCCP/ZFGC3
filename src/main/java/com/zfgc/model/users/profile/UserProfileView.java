@@ -29,8 +29,20 @@ public class UserProfileView extends BaseZfgcModel {
 	private List<Buddy> buddyList = new ArrayList<>();
 	private Avatar avatar = new Avatar();
 	
+	private Date lastLogin;
+	private Boolean isOnlineFlag;
+	
 	@JsonIgnore
 	private UserProfileView savedProfile;
+	
+	public String getLastLoginAsString(){
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(super.getUserTimeZone());
+		if(lastLogin == null){
+			return "";
+		}
+		
+		return sdf.format(lastLogin);
+	}
 	
 	public UserProfileView getSavedProfile() {
 		return savedProfile;
@@ -132,6 +144,20 @@ public class UserProfileView extends BaseZfgcModel {
 	}
 	public void setBuddyList(List<Buddy> buddyList) {
 		this.buddyList = buddyList;
+	}
+	public Date getLastLogin() {
+		return lastLogin;
+	}
+	public void setLastLogin(Date lastLogin) {
+		this.lastLogin = lastLogin;
+	}
+
+	public Boolean getIsOnlineFlag() {
+		return isOnlineFlag;
+	}
+
+	public void setIsOnlineFlag(Boolean isOnlineFlag) {
+		this.isOnlineFlag = isOnlineFlag;
 	}
 	
 }

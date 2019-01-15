@@ -274,4 +274,12 @@ public class UsersService extends AbstractService {
 		
 		return result;
 	}
+	
+	public void setUserOnline(Users user) throws Exception{
+		usersDataProvider.setUserOnline(user);
+	}
+	
+	public void setUserOffline(Users user) throws Exception{
+		usersDataProvider.setUserOffline(user);
+	}
 }

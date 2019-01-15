@@ -65,7 +65,7 @@ public class ZfgcTimeUtils extends DateUtils {
 	}
 	
 	public static Date getToday(){
-		Calendar cal = getCalendar();
+		Calendar cal = getCalendar("GMT");
 		return cal.getTime();
 	}
 	

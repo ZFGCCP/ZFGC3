@@ -110,13 +110,13 @@ public class ForumApplication extends SpringBootServletInitializer {
 
     	@Override
     	public void configureMessageBroker(MessageBrokerRegistry config) {
-    		config.enableSimpleBroker("UserSocketS");
-    		config.setApplicationDestinationPrefixes("forum");
+    		config.enableSimpleBroker("/UserSocketC");
+    		config.setApplicationDestinationPrefixes("/forum");
     	}
     	
 		@Override
 		public void registerStompEndpoints(StompEndpointRegistry registry) {
-			registry.addEndpoint("/gs-guide-websocket").withSockJS();
+			registry.addEndpoint("/ws").withSockJS();
 			
 		}
     	
