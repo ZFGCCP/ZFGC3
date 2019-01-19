@@ -50,7 +50,7 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         
         user.setUsersId(Integer.parseInt(usersId));
         user.setDisplayName(displayName);
-        user.setLoginName(displayName);
+        user.setLoginName(loginName);
         user.setFromDb(false);
         //user.setActiveFlag(activeFlag != null && activeFlag.equals("1") ? true : false);
         user.setPrimaryIpAddress(ip);

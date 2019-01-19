@@ -7,8 +7,10 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import com.zfgc.model.online.WhosOnlineList;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.users.UsersService;
+import com.zfgc.services.whosOnline.WhosOnlineService;
 
 @Component
 public class WebSocketEventListener {
@@ -16,12 +18,18 @@ public class WebSocketEventListener {
 	@Autowired
 	UsersService usersService;
 	
+	@Autowired
+	WhosOnlineService whosOnlineService;
+	
 	@EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
 		Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
 		
 		try {
-			usersService.setUserOnline(user);
+			//usersService.setUserOnline(user);
+			
+			//WhosOnlineList online = whosOnlineService.getWhosOnline();
+			//whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -33,6 +41,9 @@ public class WebSocketEventListener {
 		
 		try {
 			usersService.setUserOffline(user);
+			
+			WhosOnlineList online = whosOnlineService.getWhosOnline();
+			whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

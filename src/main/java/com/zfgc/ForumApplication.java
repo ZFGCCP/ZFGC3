@@ -110,7 +110,7 @@ public class ForumApplication extends SpringBootServletInitializer {
 
     	@Override
     	public void configureMessageBroker(MessageBrokerRegistry config) {
-    		config.enableSimpleBroker("/UserSocketC");
+    		config.enableSimpleBroker("/socket");
     		config.setApplicationDestinationPrefixes("/forum");
     	}
     	

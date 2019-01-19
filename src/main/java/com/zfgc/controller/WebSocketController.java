@@ -12,7 +12,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.zfgc.model.online.WhosOnlineList;
 import com.zfgc.services.users.UsersService;
+import com.zfgc.services.whosOnline.WhosOnlineService;
 
 @Controller
 public class WebSocketController extends BaseController{
@@ -20,17 +22,22 @@ public class WebSocketController extends BaseController{
 	@Autowired
 	UsersService usersService;
 	
-	@RequestMapping (method= RequestMethod.POST, value = "/UserSocketS/Init")
-	@MessageMapping("/UserSocketS/Init")
-	@SendTo("/UserSocketC/Active")
+	@Autowired
+	WhosOnlineService whosOnlineService;
+	
+	@RequestMapping (method= RequestMethod.POST, value = "/userSocketS/init")
+	@MessageMapping("/usersocket/init")
+	@SendTo("/socket/whosonline")
 	public ResponseEntity createUserSession(Principal auth) {
-		/*try {
+		try {
 			usersService.setUserOnline(zfgcUser(auth));
+			WhosOnlineList online = whosOnlineService.getWhosOnline();
+			
+			return ResponseEntity.ok(online);
 		} catch (Exception e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error with the user handshake.");
-		}*/
-		return ResponseEntity.ok().body("Ok");
+		}
 	}
 	
 }

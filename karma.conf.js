@@ -79,9 +79,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -90,6 +90,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/user-title-card.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
+	    
+	"./src/main/webapp/scripts/sockets/web-socket.service.js",
 	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
@@ -147,9 +149,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
-	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	    
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
@@ -175,9 +177,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
-	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
