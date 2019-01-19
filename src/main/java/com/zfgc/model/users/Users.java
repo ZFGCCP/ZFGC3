@@ -55,6 +55,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String websiteTitle;
 	private String websiteUrl;
 	private String timeZone;
+	private Boolean isOnlineFlag;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -462,5 +463,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	public boolean getHasRoles(String ... roles){
 		//todo: add role checks
 		return true;
+	}
+	public Boolean getIsOnlineFlag() {
+		return isOnlineFlag;
+	}
+	public void setIsOnlineFlag(Boolean isOnlineFlag) {
+		this.isOnlineFlag = isOnlineFlag;
 	}
 }

@@ -274,4 +274,23 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public Boolean checkUserPassword(Integer usersId, String password) throws Exception{
 		return usersDao.checkUserPassword(usersId, password) > 0;
 	}
+	
+	public void setUserOnline(Users user) throws Exception{
+		UsersDbObjExample userEx = usersDao.getExample();
+		userEx.createCriteria().andUsersIdEqualTo(user.getUsersId());
+		
+		user.setLastLogin(ZfgcTimeUtils.getToday());
+		user.setIsOnlineFlag(true);
+		
+		usersDao.updateByExample(user, userEx);
+	}
+	
+	public void setUserOffline(Users user) throws Exception{
+		UsersDbObjExample userEx = usersDao.getExample();
+		userEx.createCriteria().andUsersIdEqualTo(user.getUsersId());
+		
+		user.setIsOnlineFlag(false);
+		
+		usersDao.updateByExample(user, userEx);
+	}
 }
