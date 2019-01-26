@@ -15,7 +15,7 @@
 		    	if(!angular.isUndefined(window.localStorage["zfgc-auth-token"])){
 		    		res.headers.authorization = window.localStorage["zfgc-auth-token"];
 		    	}  
-		    	
+
 		    	return req;
 	      },
 	      

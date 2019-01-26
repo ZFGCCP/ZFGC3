@@ -56,7 +56,7 @@
 								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
 									<span class="responsive-col-del responsive-table-cell"><input type="checkbox" ng-model="convo.isSelected" value="true" ng-change="vm.checkForCheckedBoxes()"/></span>
 									<span class="responsive-col-title responsive-table-cell">
-										<a ng-href="mailBox/conversation?conversationId={{convo.pmConversationId}}">
+										<a ui-sref="convo({conversationId:convo.pmConversationId})">
 											<span><i ng-class="{'fas fa-archive' : convo.boxType === 'ARCHIVE', 'fas fa-inbox' : convo.boxType === 'INBOX', 'fas fa-share-square' : convo.boxType === 'OUTBOX'}"></i></span>
 											<span class="convo-box-subject" ng-bind-html="convo.subject"></span>
 											<span class="convo-box-subject"> - Last Message By: {{convo.senderName}} On : {{convo.sentDtAsString}}</span>

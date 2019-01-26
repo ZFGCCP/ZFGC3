@@ -8,10 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 public class ForwardController{
-
-	//ignore paths starting with /ws - websockets should not pass through here
-    @RequestMapping(value = "/{^(ws)**}/{[path:[^\\.]*}")
-    public String redirect() {
+	
+    @RequestMapping(value = "/zfgcui/**/{path:[^\\.]*}")
+    public String redirect(@PathVariable("path") String path) {
         // Forward to home page so that route is preserved.
         return "forward:/";
     }

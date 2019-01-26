@@ -15,10 +15,19 @@ public abstract class BaseController {
 	HttpServletRequest request;
 	
 	protected Users zfgcUser(){
-		return (Users) ((Authentication) request.getUserPrincipal()).getPrincipal();
+		Principal userPrincipal = request.getUserPrincipal();
+		return zfgcUser(userPrincipal);
 	}
 	
 	protected Users zfgcUser(Principal principal){
+		if(principal == null){
+			Users guest = new Users();
+			guest.setUsersId(-1);
+			guest.setDisplayName("Guest");
+			
+			return guest;
+		}
+		
 		return (Users) ((Authentication) principal).getPrincipal();
 	}
 }

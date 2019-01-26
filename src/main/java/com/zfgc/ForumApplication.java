@@ -1,6 +1,7 @@
 package com.zfgc;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,9 +12,11 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
+import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,10 +24,11 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
+import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
 
 import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLSSO;
@@ -32,6 +36,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBea
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
 import com.zfgc.config.ZfgcSamlConfig;
+import com.zfgc.services.saml.SamlHandshakeHandler;
 import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 
 @Configuration
@@ -41,9 +46,6 @@ import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 @MapperScan("com.zfgc.mappers")
 @EnableConfigurationProperties(ZfgcSamlConfig.class)
 public class ForumApplication extends SpringBootServletInitializer {
-	
-	@Autowired
-	AuthSuccessHandler authSuccessHandler;
 	
     public static void main(String[] args) {
         SpringApplication.run(applicationClass, args);
@@ -67,16 +69,10 @@ public class ForumApplication extends SpringBootServletInitializer {
       return dozerBean;
     }
     
-    @Bean
+    /*@Bean
     SAMLConfigurerBean saml() {
         return new SAMLConfigurerBean();
-    }
-    
-    @Bean
-    public AuthSuccessHandler successRedirectHandler() {
-        AuthSuccessHandler successRedirectHandler = new AuthSuccessHandler();
-        return successRedirectHandler;
-    }
+    }*/
     
     /*@Configuration
     //@Order(102)
@@ -87,27 +83,24 @@ public class ForumApplication extends SpringBootServletInitializer {
     	}
     }
     
-    //@Order(101)
+    //@Order(101)*/
    @Configuration
     public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
         @Override
         protected void configure(HttpSecurity http) throws Exception
         {
-        	
-        		
-        		//.authenticated().anyRequest().permitAll();
-            //.authorizeRequests()
-            //.requestMatchers(saml().endpointsMatcher())
-            //.permitAll();
-        		
+        	//http.anonymous().and().authorizeRequests().antMatchers("/forum**").permitAll();	
         }
-    }*/
+    }
 
     @Configuration
     @EnableWebSocketMessageBroker
     public static class websocketConfig extends AbstractWebSocketMessageBrokerConfigurer{
 
+    	@Autowired
+    	SamlHandshakeHandler samlHandshakeHandler;
+    	
     	@Override
     	public void configureMessageBroker(MessageBrokerRegistry config) {
     		config.enableSimpleBroker("/socket");
@@ -116,24 +109,28 @@ public class ForumApplication extends SpringBootServletInitializer {
     	
 		@Override
 		public void registerStompEndpoints(StompEndpointRegistry registry) {
-			registry.addEndpoint("/ws").withSockJS();
+			registry.addEndpoint("/ws").setHandshakeHandler(samlHandshakeHandler).withSockJS();
 			
 		}
     	
     }
-    
+
     @Configuration
     public static class MyServiceProviderConfig extends ServiceProviderConfigurerAdapter {
 
     	@Autowired
     	public ZfgcSamlConfig zfgcSamlConfig;
     	
+    	@Autowired
+    	public SamlUsersDetailsServiceImpl samlUserDetailsService;
+    	
+    	
         @Override
         public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
 
             serviceProvider
             .authenticationProvider()
-            	.userDetailsService(new SamlUsersDetailsServiceImpl())
+            	.userDetailsService(samlUserDetailsService)
             .and()
                 .metadataGenerator()
                 .entityId(zfgcSamlConfig.getEntityId())
@@ -174,10 +171,14 @@ public class ForumApplication extends SpringBootServletInitializer {
 	            .contextPath(zfgcSamlConfig.getContextPath())
 	            .serverName(zfgcSamlConfig.getServerName())
 	            .serverPort(zfgcSamlConfig.getServerPort())
-	            .includeServerPortInRequestURL(true);
-	        /*.and()
+	            .includeServerPortInRequestURL(true)
+	        .and()
 	        	.http()
-	        	.authorizeRequests().antMatchers("/**").permitAll();*/
+	        	.authorizeRequests().antMatchers("/ws").permitAll();
+	        	//.authorizeRequests().antMatchers("/scripts/**","/assets/**","/node_modules/**","/images/**","/users/**","/ws/**","/lookups/**","/userprofile").permitAll();
+	        	//.authorizeRequests().antMatchers("/pm/**").fullyAuthenticated()
+	        	//.antMatchers("/**").permitAll();*/
+	        		                
 
         }
     }

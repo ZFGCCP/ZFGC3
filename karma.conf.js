@@ -51,6 +51,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
+	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
+	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
@@ -70,6 +72,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
+	    
+	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
@@ -160,6 +164,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    

@@ -43,8 +43,10 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Date birthDate;
 	private Integer gender;
 
+	@JsonIgnore
 	private Date lockedUntil;
-	private Date loginFailedAttempts;
+	@JsonIgnore
+	private Integer loginFailedAttempts;
 	private Integer timeOffset;
 	private String location;
 	private Boolean agreeToTermsFlag = false;
@@ -55,6 +57,8 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String websiteTitle;
 	private String websiteUrl;
 	private String timeZone;
+	@JsonIgnore
+	private Integer activeConnections;
 	private Boolean isOnlineFlag;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
@@ -196,12 +200,6 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
 		return sdf.format(dateRegistered);
-	}
-	public Date getLoginFailedAttempts() {
-		return loginFailedAttempts;
-	}
-	public void setLoginFailedAttempts(Date loginFailedAttempts) {
-		this.loginFailedAttempts = loginFailedAttempts;
 	}
 	public Date getLockedUntil() {
 		return lockedUntil;
@@ -469,5 +467,17 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setIsOnlineFlag(Boolean isOnlineFlag) {
 		this.isOnlineFlag = isOnlineFlag;
+	}
+	public Integer getActiveConnections() {
+		return activeConnections;
+	}
+	public void setActiveConnections(Integer activeConnections) {
+		this.activeConnections = activeConnections;
+	}
+	public Integer getLoginFailedAttempts() {
+		return loginFailedAttempts;
+	}
+	public void setLoginFailedAttempts(Integer loginFailedAttempts) {
+		this.loginFailedAttempts = loginFailedAttempts;
 	}
 }
