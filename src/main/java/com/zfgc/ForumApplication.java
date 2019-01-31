@@ -35,6 +35,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.annotation.EnableSAMLS
 import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBean;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
+import com.zfgc.config.XhrSamlEntryPoint;
 import com.zfgc.config.ZfgcSamlConfig;
 import com.zfgc.services.saml.SamlHandshakeHandler;
 import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
@@ -124,7 +125,6 @@ public class ForumApplication extends SpringBootServletInitializer {
     	@Autowired
     	public SamlUsersDetailsServiceImpl samlUserDetailsService;
     	
-    	
         @Override
         public void configure(ServiceProviderBuilder serviceProvider) throws Exception {
 
@@ -139,9 +139,11 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .metadataURL(zfgcSamlConfig.getMetadataUrl())
             .and()
                 .sso()
+                .samlEntryPoint(new XhrSamlEntryPoint())
                 .defaultSuccessURL(zfgcSamlConfig.getDefaultSuccessUrl())
                 .defaultFailureURL(zfgcSamlConfig.getDefaultFailureUrl())
                 .idpSelectionPageURL(zfgcSamlConfig.getIdpSelectionPageUrl())
+                
                 
                 //.ssoProcessingURL("/forum/SSO")
                 
@@ -173,8 +175,20 @@ public class ForumApplication extends SpringBootServletInitializer {
 	            .serverPort(zfgcSamlConfig.getServerPort())
 	            .includeServerPortInRequestURL(true)
 	        .and()
-	        	.http()
-	        	.authorizeRequests().antMatchers("/ws").permitAll();
+	        	.http().httpBasic()
+                .disable()
+                .csrf()
+                .disable()
+                .anonymous()
+                .and()
+	        	.authorizeRequests().antMatchers("/ws/**","/**/*.css", "/**/*.js",
+	        									 "/**/*.html",
+	        									 "/**/*.map", 
+	        									 "/forum/index", 
+	        									 //"/zfgcui/**", 
+	        									 "/zfgcui/bbs/index",
+	        									 "/socket/whosonline",
+	        									 "/users/loggedInUser").permitAll();
 	        	//.authorizeRequests().antMatchers("/scripts/**","/assets/**","/node_modules/**","/images/**","/users/**","/ws/**","/lookups/**","/userprofile").permitAll();
 	        	//.authorizeRequests().antMatchers("/pm/**").fullyAuthenticated()
 	        	//.antMatchers("/**").permitAll();*/

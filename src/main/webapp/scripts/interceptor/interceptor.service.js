@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function InterceptorService($rootScope,$q,$injector){
+	function InterceptorService($rootScope,$q,$injector,$window){
 		var InterceptorService = {};
 		InterceptorService.response = function(res) {
 	        /* This is the code that transforms the response. `res.data` is the
@@ -31,10 +31,17 @@
 	    	  	else if(resE.status === 500){
 	    	  		modalService.createGeneralErrorPopup();
 	    	  	}
-	    	  	else if(resE.status === 401){
+	    	  	else if(resE.status === 403){
 	    	  		//unauthorized pm box access
 	    	  		$rootScope.$broadcast('alertAdded',{message : "You are not authorized to do that", type : "error"});
-	    	  		state.go('pmAuth');
+	    	  		
+	    	  		//if we got this from the pm module, redirect to pm auth
+	    	  		if(resE.config.url.indexOf('/forum/pm') >= 0){
+	    	  			state.go('pmAuth');
+	    	  		}
+	    	  	}
+	    	  	else if(resE.status === 401){
+	    	  		$window.location.reload();
 	    	  	}
 	    	  
 	    	  	return $q.reject(resE);
@@ -46,5 +53,5 @@
 	
 	angular
 		.module('zfgc.forum')
-		.service('InterceptorService', ['$rootScope','$q','$injector',InterceptorService])
+		.service('InterceptorService', ['$rootScope','$q','$injector','$window',InterceptorService])
 })();

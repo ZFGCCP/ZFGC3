@@ -77,14 +77,14 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/auth", method=RequestMethod.POST, produces="application/json")
 	public ResponseEntity authenticatePmKey(@RequestBody TwoFactorKey aes){
 		if (aes.getKey() == null){
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		
 		try {
 			Boolean result = authenticationService.isValidAesKey(aes);
 			
 			if(result == false){
-				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 			}
 		} catch (ZfgcInvalidAesKeyException e) {
 			e.printStackTrace();
@@ -124,7 +124,7 @@ public class PmController extends BaseController {
 			return ResponseEntity.ok(convos);
 		}
 	    catch (ZfgcInvalidAesKeyException e) {
-	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	    	return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	    } catch (ZfgcNotFoundException e) {
 	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 	    } catch (Exception e) {
@@ -154,7 +154,7 @@ public class PmController extends BaseController {
 			return ResponseEntity.ok(convo);
 		}
 		catch (ZfgcInvalidAesKeyException e) {
-	    	return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+	    	return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	    }
 	}
 	
@@ -166,7 +166,7 @@ public class PmController extends BaseController {
 		try {
 			pmService.removeConvoFromInbox(aesKey, convo, zfgcUser());
 		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (Exception e) {
@@ -199,7 +199,7 @@ public class PmController extends BaseController {
 		try{
 			pmService.removeMultiConvoFromInbox(conversations, zfgcUser());
 		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (Exception e) {
@@ -215,7 +215,7 @@ public class PmController extends BaseController {
 		try{
 			pmService.moveConversationToArchive(aesKey, convoId, zfgcUser());
 		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (Exception e) {
@@ -231,7 +231,7 @@ public class PmController extends BaseController {
 		try{
 			pmService.moveMultiConversationToArchive(conversations, zfgcUser());
 		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch (Exception e) {
@@ -259,7 +259,7 @@ public class PmController extends BaseController {
 		try{
 			pmService.pruneConversations(prune, zfgcUser());
 		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		} catch (ZfgcNotFoundException e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		} catch(ZfgcValidationException e){

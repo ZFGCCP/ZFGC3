@@ -10,6 +10,7 @@ angular.module('zfgc.pm',['zfgc.config'])
 		
 		$stateProvider
 			.state('convoBox',{
+					cache: false,
 					url: baseRouter + '/mailBox',
 					templateUrl: basePath + '/convobox/convoBox.html'
 			})
