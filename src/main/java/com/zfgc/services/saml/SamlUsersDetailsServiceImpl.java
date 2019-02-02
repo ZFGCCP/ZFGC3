@@ -20,7 +20,7 @@ import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
 
-@Component
+@Service
 public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 
 	@Autowired
@@ -45,12 +45,17 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 		String primaryMemberGroupId =  credential.getAttributeAsString("PRIMARY_MEMBER_GROUP_ID");
 
         Users user = new Users();
+        Integer id = Integer.parseInt(usersId);
+        try {
+			user = usersDataProvider.getUser(id);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         IpAddress ip = new IpAddress();
         ip.setIpAddress(primaryIpAddress);
-        
+        ;
         user.setUsersId(Integer.parseInt(usersId));
-        user.setDisplayName(displayName);
-        user.setLoginName(loginName);
         user.setFromDb(false);
         //user.setActiveFlag(activeFlag != null && activeFlag.equals("1") ? true : false);
         user.setPrimaryIpAddress(ip);

@@ -276,10 +276,18 @@ public class UsersService extends AbstractService {
 	}
 	
 	public void setUserOnline(Users user) throws Exception{
+		user.setActiveConnections(user.getActiveConnections() + 1);
+		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOnline(user);
 	}
 	
 	public void setUserOffline(Users user) throws Exception{
+		user.setActiveConnections(user.getActiveConnections() - 1);
+		
+		if(user.getActiveConnections() < 0){
+			user.setActiveConnections(0);
+		}
+		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOffline(user);
 	}
 }

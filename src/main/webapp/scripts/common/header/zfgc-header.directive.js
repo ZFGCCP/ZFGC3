@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function zfgcHeader(UserService, $q, $window, WebsocketService) {
+	function zfgcHeader($rootScope, UserService, $q, $window, WebsocketService, WhosOnlineService) {
     	return {
     		restrict: 'E',
     		transclude: true,
@@ -16,10 +16,7 @@
     			};
 
     			scope.startListener = function() {
-    			  WebsocketService.subscribe("/socket/whosonline", function(data) {
-			        console.log(data);
-			      });
-    			  WebsocketService.send("/forum/usersocket/init",{},{});
+    				$rootScope.$broadcast("WebsocketConnected");
 			    };
     			
 			    WebsocketService.openWebsocket("/forum/ws", scope.startListener);
@@ -37,5 +34,5 @@
 	
 	angular
 	    .module("zfgc.forum")
-	    .directive("zfgcHeader", ['UserService', '$q', '$window', 'WebsocketService', zfgcHeader]);
+	    .directive("zfgcHeader", ['$rootScope','UserService', '$q', '$window', 'WebsocketService', 'WhosOnlineService', zfgcHeader]);
 })();

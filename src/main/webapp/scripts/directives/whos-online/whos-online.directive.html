@@ -1,0 +1,12 @@
+<div class="section-container">
+	<div class="section-header">
+		<div class="section-title-wrapper">
+			<div class="section-title"><i class="fas fa-users"></i> Who's Online</div>
+		</div>
+	</div>
+	<div class="section-body">
+		<span ng-repeat="($index, user) in users.onlineUsers track by $index">
+			{{user.displayName}}
+		</span>
+	</div>
+</div>

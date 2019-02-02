@@ -48,6 +48,14 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	Logger LOGGER = Logger.getLogger(UsersDataProvider.class);
 	
+	public Users getUser(Integer usersId) throws Exception{
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId);
+		
+		return mapper.map(usersDao.get(ex).get(0), Users.class);
+		
+	}
+	
 	public Users getUserByToken(String token) throws Exception{
 		try{
 			UsersDbObj dbObj = usersDao.getUserByToken(token);
@@ -278,18 +286,13 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public void setUserOnline(Users user) throws Exception{
 		UsersDbObjExample userEx = usersDao.getExample();
 		userEx.createCriteria().andUsersIdEqualTo(user.getUsersId());
-		
-		user.setLastLogin(ZfgcTimeUtils.getToday());
-		user.setIsOnlineFlag(true);
-		
+
 		usersDao.updateByExample(user, userEx);
 	}
 	
 	public void setUserOffline(Users user) throws Exception{
 		UsersDbObjExample userEx = usersDao.getExample();
 		userEx.createCriteria().andUsersIdEqualTo(user.getUsersId());
-		
-		user.setIsOnlineFlag(false);
 		
 		usersDao.updateByExample(user, userEx);
 	}

@@ -23,7 +23,7 @@ public class WebSocketEventListener {
 	
 	@EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-		Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
+		//Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
 		
 		try {
 			//usersService.setUserOnline(user);
@@ -37,10 +37,13 @@ public class WebSocketEventListener {
 	
 	@EventListener
     public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
-		Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
+		
 		
 		try {
-			usersService.setUserOffline(user);
+			if(event.getUser() != null){
+				Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
+				usersService.setUserOffline(user);
+			}
 			
 			WhosOnlineList online = whosOnlineService.getWhosOnline();
 			whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
