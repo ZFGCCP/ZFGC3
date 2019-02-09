@@ -1,5 +1,11 @@
 package com.zfgc.services.users;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -71,8 +77,9 @@ public class UsersService extends AbstractService {
 		return result;
 	}
 	
-	public Users createNewUser(Users user, HttpServletRequest requestHeader){
-
+	
+	public Users createNewUser(Users user, HttpServletRequest requestHeader) throws Exception{
+		
 		
 		try {
 			requiredFieldsChecker.requiredFieldsCheck(user);
@@ -81,11 +88,12 @@ public class UsersService extends AbstractService {
 			ruleChecker.rulesCheck(user, null);
 		} 
 		catch(ZfgcValidationException ex){
-			
+			ex.printStackTrace();
+			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			return null;
+			throw ex;
 		}
 		
 		if(!user.getErrors().hasErrors()){

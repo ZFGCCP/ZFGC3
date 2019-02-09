@@ -12,15 +12,15 @@ angular-animate@1.7.0:
   resolved "https://registry.yarnpkg.com/angular-animate/-/angular-animate-1.7.0.tgz#c04293068ee0986dc00ba154626d74bf51f25576"
   integrity sha512-508uYJLhcX85cKqOlp3stzv1WEnlEtKPGC2J1ljn8sxhwUhENWte2lGI8DJev26Lsk5dHpinBSJC/J0f7jj53w==
 
-angular-datepicker@1.0.5:
-  version "1.0.5"
-  resolved "https://registry.yarnpkg.com/angular-datepicker/-/angular-datepicker-1.0.5.tgz#15ac3013f8ed2354fa1446d00a9cc928059e53b2"
-  integrity sha1-FawwE/jtI1T6FEbQCpzJKAWeU7I=
-
 angular-local-storage@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/angular-local-storage/-/angular-local-storage-0.7.1.tgz#fbd2730763c29fa9af5725e0186c780621e8cdd2"
   integrity sha1-+9JzB2PCn6mvVyXgGGx4BiHozdI=
+
+angular-recaptcha@^4.2.0:
+  version "4.2.0"
+  resolved "https://registry.yarnpkg.com/angular-recaptcha/-/angular-recaptcha-4.2.0.tgz#3533802ae0d43ac9fedd5f6104e9dbf3c10588a7"
+  integrity sha512-PZ4VsUiNKNqaGqCpTAEwyAWUNF0w7xFulMf3ajJVym7bidxPEi5py1jQdxj4LFIWUxoA7XPan4sJMK4UeB8Srg==
 
 angular-resource@1.7.0:
   version "1.7.0"
@@ -48,6 +48,11 @@ angular@1.7.0:
   version "1.7.0"
   resolved "https://registry.yarnpkg.com/angular/-/angular-1.7.0.tgz#e45d679fc8d81040a4894c7ccc16a4e1ad0a9ca6"
   integrity sha512-3LboCLjrOuC7dWh953O0+dI3dJ7PexYRSCIrfqoN5qoHyja/wak3eWoxPKb2Sl2qwiPbrUV5KJXwgpUQ48McBQ==
+
+angularjs-datepicker@^2.1.23:
+  version "2.1.23"
+  resolved "https://registry.yarnpkg.com/angularjs-datepicker/-/angularjs-datepicker-2.1.23.tgz#649ab8be2cf77692b0fc812e2a9db180221c24e5"
+  integrity sha1-ZJq4viz3dpKw/IEuKp2xgCIcJOU=
 
 debug@^2.2.0:
   version "2.6.9"

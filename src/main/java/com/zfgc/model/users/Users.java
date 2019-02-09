@@ -83,6 +83,8 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	
 	private Integer unreadPmCount = 0;
 	
+	private String gResponseToken;
+	
 	@JsonIgnore
 	private String timeOffsetLkup;
 	
@@ -479,5 +481,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setLoginFailedAttempts(Integer loginFailedAttempts) {
 		this.loginFailedAttempts = loginFailedAttempts;
+	}
+	public String getgResponseToken() {
+		return gResponseToken;
+	}
+	public void setgResponseToken(String gResponseToken) {
+		this.gResponseToken = gResponseToken;
 	}
 }

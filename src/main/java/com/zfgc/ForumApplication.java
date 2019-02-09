@@ -187,8 +187,11 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 "/forum/index", 
 	        									 //"/zfgcui/**", 
 	        									 "/zfgcui/bbs/index",
+	        									 "/zfgcui/registration",
 	        									 "/socket/whosonline",
-	        									 "/users/loggedInUser").permitAll();
+	        									 "/lookups/**",
+	        									 "/users/loggedInUser",
+	        									 "/users/newuser").permitAll();
 	        	//.authorizeRequests().antMatchers("/scripts/**","/assets/**","/node_modules/**","/images/**","/users/**","/ws/**","/lookups/**","/userprofile").permitAll();
 	        	//.authorizeRequests().antMatchers("/pm/**").fullyAuthenticated()
 	        	//.antMatchers("/**").permitAll();*/

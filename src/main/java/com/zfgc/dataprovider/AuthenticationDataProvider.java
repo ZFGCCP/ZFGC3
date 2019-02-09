@@ -95,6 +95,8 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 			br.readLine();
 			String output = br.readLine();
 
+			br.close();
+			
 			return !output.contains("no");
 
 		} catch (IOException ex) {

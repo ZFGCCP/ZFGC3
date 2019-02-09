@@ -67,14 +67,14 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
-		user = usersService.createNewUser(user, request);
-		
-		if(user == null){
+		try {
+			user = usersService.createNewUser(user, request);
+		} catch(ZfgcValidationException ex){
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
-		else if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
-		}
+		
 		return ResponseEntity.status(HttpStatus.OK).body(new String[]{"Created user successfully."});
 	}
 	

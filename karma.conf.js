@@ -17,9 +17,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/node_modules/angular-animate/angular-animate.js",
 	    
-	"./src/main/webapp/node_modules/angular-datepicker/dist/index.js",
-	    
 	"./src/main/webapp/node_modules/angular-local-storage/dist/angular-local-storage.js",
+	    
+	"./src/main/webapp/node_modules/angular-recaptcha/release/angular-recaptcha.js",
 	    
 	"./src/main/webapp/node_modules/angular-resource/angular-resource.js",
 	    
@@ -28,6 +28,8 @@ module.exports = function(config) {
 	"./src/main/webapp/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/node_modules/angular-ui-router/release/angular-ui-router.js",
+	    
+	"./src/main/webapp/node_modules/angularjs-datepicker/dist/angular-datepicker.js",
 	    
 	"./src/main/webapp/node_modules/jquery/dist/jquery.js",
 	    
@@ -75,17 +77,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
-	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -97,11 +99,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/sockets/web-socket.service.js",
 	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
+	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
-	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
@@ -153,17 +155,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.html",
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    
@@ -183,9 +185,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
-	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
-	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	    
+	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
