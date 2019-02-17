@@ -41,6 +41,8 @@ import com.zfgc.config.ZfgcSamlConfig;
 import com.zfgc.services.saml.SamlHandshakeHandler;
 import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 
+import it.ozimov.springboot.mail.configuration.EnableEmailTools;
+
 @Configuration
 @ComponentScan
 @SpringBootApplication
@@ -48,6 +50,7 @@ import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 @MapperScan("com.zfgc.mappers")
 @EnableConfigurationProperties(ZfgcSamlConfig.class)
 @EnableTransactionManagement
+@EnableEmailTools
 public class ForumApplication extends SpringBootServletInitializer {
 	
     public static void main(String[] args) {
