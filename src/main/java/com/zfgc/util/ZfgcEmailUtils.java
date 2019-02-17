@@ -7,6 +7,8 @@ import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.mail.internet.InternetAddress;
 
+import org.apache.commons.collections.CollectionUtils;
+import org.assertj.core.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -19,11 +21,6 @@ import it.ozimov.springboot.mail.service.EmailService;
 public class ZfgcEmailUtils{
 	@Autowired
 	private EmailService emailService;
-	
-	@PostConstruct
-	public void testThis() throws UnsupportedEncodingException {
-		testSendEmail();
-	}
 	
 	@Value("${spring.mail.username}") String fromEmail;
 	public void testSendEmail() throws UnsupportedEncodingException { 
@@ -39,4 +36,18 @@ public class ZfgcEmailUtils{
             .encoding("UTF-8").build();
         emailService.send(email); 
     }
+	
+	public void sendEmail(String subject, String body, InternetAddress ... to) throws UnsupportedEncodingException{
+		List<InternetAddress> toList = new ArrayList<>();
+		CollectionUtils.addAll(toList, to);
+		InternetAddress from = new InternetAddress(fromEmail, "ZFGC");
+		
+		final Email email = DefaultEmail.builder() 
+	            .from(from)
+	            .to(toList) 
+	            .subject("Testing email")
+	            .body("Testing body ...")
+	            .encoding("UTF-8").build();
+	        emailService.send(email); 
+	}
 }

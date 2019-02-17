@@ -22,16 +22,16 @@
     
 
     <!-- tables -->
-    <table schema="zfgc3" tableName="EMAIL_ADDRESS" domainObjectName="EmailAddressDbObj">
-    <generatedKey column="email_address_id" sqlStatement="SELECT MAX(EMAIL_ADDRESS_ID) + 1 FROM EMAIL_ADDRESS"/>
-    	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>
-    
-    <!--<table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
+    <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
+        <property name="virtualKeyColumns" value="USERS_ID" />
     	<generatedKey column="users_id" sqlStatement="SELECT MAX(USERS_ID) + 1 FROM users"/>
     	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="PM_EMAIL_NOTIF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <!--<table schema="zfgc3" tableName="EMAIL_ADDRESS" domainObjectName="EmailAddressDbObj">
+    <generatedKey column="email_address_id" sqlStatement="SELECT MAX(EMAIL_ADDRESS_ID) + 1 FROM EMAIL_ADDRESS"/>
+    	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
     	<table schema="Zfgc3" tableName="PERSONAL_MESSAGING_SETTINGS" domainObjectName="PersonalMessagingSettingsDbObj">

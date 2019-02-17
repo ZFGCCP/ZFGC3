@@ -81,6 +81,9 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String authToken;
 	private Boolean fromDb = true;
 	
+	@JsonIgnore
+	private String emailActivationCode;
+	
 	private Integer unreadPmCount = 0;
 	
 	private String gResponseToken;
@@ -487,5 +490,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setgResponseToken(String gResponseToken) {
 		this.gResponseToken = gResponseToken;
+	}
+	public String getEmailActivationCode() {
+		return emailActivationCode;
+	}
+	public void setEmailActivationCode(String emailActivationCode) {
+		this.emailActivationCode = emailActivationCode;
 	}
 }

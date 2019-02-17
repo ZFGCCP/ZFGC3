@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.time.DateUtils;
@@ -39,6 +40,8 @@ import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.pm.PmService;
+import com.zfgc.util.ZfgcEmailUtils;
+import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
 
@@ -55,6 +58,9 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	EmailAddressDataProvider emailAddressDataProvider;
+	
+	@Autowired
+	private ZfgcEmailUtils zfgcEmailUtils;
 	
 	@Autowired 
 	UsersRequiredFieldsChecker requiredFieldsChecker;
@@ -110,16 +116,9 @@ public class UsersService extends AbstractService {
 		if(!user.getErrors().hasErrors()){
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
 			
-			try{
-				//user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
-			}
-			catch(Exception ex){
-				ex.printStackTrace();
-				return null;
-			}
-			
 			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
 			user.setActiveFlag(false);
+			generateUniqueActivationCode(user);
 			
 			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
 			
@@ -129,6 +128,16 @@ public class UsersService extends AbstractService {
 				user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
 				user = usersDataProvider.createUser(user);
 				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
+				
+				if(!user.getUserContactInfo().getEmail().getIsSpammerFlag()) {
+					String subject = "New Account Activation For ZFGC";
+					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
+								  "If you think you have received this email in error, please ignore it.<br><br>" +
+								  "http://localhost:8080/forum/users/activation?activationCode=" + user.getEmailActivationCode();
+					
+					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
+					zfgcEmailUtils.sendEmail(subject, body, to);
+				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				throw ex;
@@ -322,5 +331,9 @@ public class UsersService extends AbstractService {
 		user.setPersonalInfo(new PersonalInfo());
 		
 		return user;
+	}
+	
+	private void generateUniqueActivationCode(Users user) {
+		user.setEmailActivationCode(ZfgcSecurityUtils.generateCryptoString(32));
 	}
 }
