@@ -15,19 +15,26 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.AuthToken;
+import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
+import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
 import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.lookups.LookupService;
@@ -46,6 +53,9 @@ public class UsersService extends AbstractService {
 	@Autowired
 	IpAddressService ipAddressService;
 	
+	@Autowired
+	EmailAddressDataProvider emailAddressDataProvider;
+	
 	@Autowired 
 	UsersRequiredFieldsChecker requiredFieldsChecker;
 	
@@ -57,6 +67,9 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	PmService pmService;
+	
+	@Autowired
+	RuleRunService<Users> ruleRunner;
 
 	
 	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
@@ -77,15 +90,13 @@ public class UsersService extends AbstractService {
 		return result;
 	}
 	
-	
+	@Transactional
 	public Users createNewUser(Users user, HttpServletRequest requestHeader) throws Exception{
 		
 		
 		try {
-			requiredFieldsChecker.requiredFieldsCheck(user);
-			validator.validator(user);
 			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
-			ruleChecker.rulesCheck(user, null);
+			ruleRunner.runRules(validator, requiredFieldsChecker, ruleChecker, user, user);
 		} 
 		catch(ZfgcValidationException ex){
 			ex.printStackTrace();
@@ -114,11 +125,13 @@ public class UsersService extends AbstractService {
 			
 			try {
 				setUserIsSpammer(user);
+				
+				user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
 				user = usersDataProvider.createUser(user);
 				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				return null;
+				throw ex;
 			}
 		}
 		return user;
@@ -144,7 +157,7 @@ public class UsersService extends AbstractService {
 	
 	public void setUserIsSpammer(Users user) throws Exception{
 		user.getPrimaryIpAddress().setIsSpammerFlag(authenticationService.checkIpIsSpammer(user.getPrimaryIpAddress()));
-		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
+		user.getUserContactInfo().getEmail().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getUserContactInfo().getEmail()));
 	}
 	
 	public Users authenticateUserByToken(String token) throws Exception{
@@ -297,5 +310,17 @@ public class UsersService extends AbstractService {
 		}
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOffline(user);
+	}
+
+	public Users getNewUserTemplate() {
+		Users user = new Users();
+		
+		user.setActiveFlag(false);
+		user.setUserContactInfo(new UserContactInfo());
+		user.getUserContactInfo().setEmail(new EmailAddress());
+		user.setUserSecurityInfo(new UserSecurityInfo());
+		user.setPersonalInfo(new PersonalInfo());
+		
+		return user;
 	}
 }

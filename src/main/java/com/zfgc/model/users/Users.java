@@ -254,7 +254,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		
 		Date today = ZfgcTimeUtils.getToday(timeOffsetLkup);
 		
-		if(birthDate != null){
+		if(personalInfo.getBirthDate() != null){
 			age = ZfgcTimeUtils.getYearsBetween(personalInfo.getBirthDate(), today);
 		}
 

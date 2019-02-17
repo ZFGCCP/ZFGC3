@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -46,6 +47,7 @@ import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 @EnableSAMLSSO
 @MapperScan("com.zfgc.mappers")
 @EnableConfigurationProperties(ZfgcSamlConfig.class)
+@EnableTransactionManagement
 public class ForumApplication extends SpringBootServletInitializer {
 	
     public static void main(String[] args) {
@@ -191,7 +193,7 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 "/socket/whosonline",
 	        									 "/lookups/**",
 	        									 "/users/loggedInUser",
-	        									 "/users/newuser").permitAll();
+	        									 "/users/newuser/**").permitAll();
 	        	//.authorizeRequests().antMatchers("/scripts/**","/assets/**","/node_modules/**","/images/**","/users/**","/ws/**","/lookups/**","/userprofile").permitAll();
 	        	//.authorizeRequests().antMatchers("/pm/**").fullyAuthenticated()
 	        	//.antMatchers("/**").permitAll();*/

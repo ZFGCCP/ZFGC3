@@ -17,6 +17,12 @@
 		
 		console.log(vm.getCurrentTimeZone());
 		
+		vm.getUserTemplate = function(){
+			vm.user = UserService.getNewUserTemplate();
+		};
+		
+		vm.user = vm.getUserTemplate();
+		
 		vm.getCurrentTimeZoneId = function(){
 			var tz = vm.getCurrentTimeZone();
 			for(var i = 0; i < vm.lookups.TIMEZONE.length; i++){
@@ -31,7 +37,7 @@
 			var registered = UserService.register(vm.user);
 			
 			if(registered !== null){
-				UserService.register(vm.user).$promise.then(function(data){
+				registered.$promise.then(function(data){
 					
 				});
 			}

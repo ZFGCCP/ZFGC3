@@ -63,6 +63,12 @@ class UsersController extends BaseController{
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
 	
+	@RequestMapping(value="/newuser/template", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getNewUserTemplate() {
+		return ResponseEntity.status(HttpStatus.OK).body(usersService.getNewUserTemplate());
+	}
+	
 	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	
 	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){

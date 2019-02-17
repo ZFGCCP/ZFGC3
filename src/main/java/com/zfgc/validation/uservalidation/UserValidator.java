@@ -28,7 +28,7 @@ public class UserValidator extends AbstractValidator<Users> {
 		checkTimeZoneValid(model);
 		validateRecaptcha(model);
 		
-		super.checkErrorsFound("Users", model);
+		//super.checkErrorsFound("Users", model);
 	}
 	
 	private void validateRecaptcha(Users user) {
@@ -50,7 +50,7 @@ public class UserValidator extends AbstractValidator<Users> {
 			
 			br.close();
 
-			noError = output.contains("\"success\" : true");
+			noError = output.contains("\"success\": true");
 
 		} catch (IOException ex) {
 			ex.printStackTrace();

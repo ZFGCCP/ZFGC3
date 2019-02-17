@@ -75,19 +75,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -97,13 +97,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
-	"./src/main/webapp/scripts/sockets/web-socket.service.js",
-	    
-	"./src/main/webapp/scripts/potm/potm.module.js",
-	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
+	    
+	"./src/main/webapp/scripts/sockets/web-socket.service.js",
+	    
+	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
@@ -125,19 +125,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
 	    
 	"./src/main/webapp/scripts/forum/forum-post.service.js",
 	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
-	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
-	    
-	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -155,19 +153,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
-	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
-	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
@@ -185,9 +183,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
-	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    

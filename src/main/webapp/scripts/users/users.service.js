@@ -10,6 +10,10 @@
 			         url: '/forum/users/newuser',
 			         method: 'POST'
 			},
+			newUserTemplate: {
+				url : '/forum/users/newuser/template',
+				method : 'GET'
+			},
 			userProfile:{
 			         url: '/forum/users/profile/:userId',
 			         method: 'GET'
@@ -57,6 +61,11 @@
 				method : 'GET'
 			}
 		});
+		
+		UserService.getNewUserTemplate = function(){
+			return UserService.resource.newUserTemplate();
+		};
+		
 		UserService.register = function(user){
 			if(vcRecaptchaService.getResponse() === ""){ //if string is empty
                 return null;
