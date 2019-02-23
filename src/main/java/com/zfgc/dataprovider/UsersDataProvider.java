@@ -116,10 +116,10 @@ public class UsersDataProvider extends AbstractDataProvider {
 			createUserSecuritySettings(user);
 			
 			//log Ip Address
-			logIpAddress(user.getPrimaryIpAddress(),true);
+			//ogIpAddress(user.getPrimaryIpAddress(),true);
 			
 			//log email address
-			logEmailAddress(user.getUserContactInfo().getEmail());
+			//logEmailAddress(user.getUserContactInfo().getEmail());
 			
 			return user;
 		} catch (Exception ex) {
@@ -330,5 +330,16 @@ public class UsersDataProvider extends AbstractDataProvider {
 		user.getUserSecurityInfo().setUsersId(user.getUsersId());
 		userSecuritySettingsDao.updateOrInsert(user.getUserSecurityInfo());
 		userSecuritySettingsDao.updateUserPassword(user.getUserSecurityInfo().getUsersId(), user.getUserSecurityInfo().getNewPassword());
+	}
+	
+	public void activateUser(String activationCode) throws Exception{
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andEmailActivationCodeEqualTo(activationCode);
+		
+		Users user = new Users();
+		user.setEmailActivationCode(activationCode);
+		user.setActiveFlag(true);
+		
+		usersDao.updateByExample(user, ex);
 	}
 }

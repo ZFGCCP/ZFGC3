@@ -45,8 +45,8 @@ public class ZfgcEmailUtils{
 		final Email email = DefaultEmail.builder() 
 	            .from(from)
 	            .to(toList) 
-	            .subject("Testing email")
-	            .body("Testing body ...")
+	            .subject(subject)
+	            .body(body)
 	            .encoding("UTF-8").build();
 	        emailService.send(email); 
 	}

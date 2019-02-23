@@ -186,6 +186,7 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .disable()
                 .anonymous()
                 .and()
+                //todo: move this to a config file
 	        	.authorizeRequests().antMatchers("/ws/**","/**/*.css", "/**/*.js",
 	        									 "/**/*.html",
 	        									 "/**/*.map", 

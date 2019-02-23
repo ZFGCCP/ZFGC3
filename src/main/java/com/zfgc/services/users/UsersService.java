@@ -336,4 +336,8 @@ public class UsersService extends AbstractService {
 	private void generateUniqueActivationCode(Users user) {
 		user.setEmailActivationCode(ZfgcSecurityUtils.generateCryptoString(32));
 	}
+	
+	public void activateUserAccount(String activationCode){
+		UsersDbObjExample ex = usersDataProvider.
+	}
 }
