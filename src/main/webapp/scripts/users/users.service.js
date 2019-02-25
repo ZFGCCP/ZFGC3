@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($rootScope, $resource, $window, NotificationsService){
+	function UserService($rootScope, $resource, $window, NotificationsService, vcRecaptchaService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
@@ -9,6 +9,10 @@
 			newUser:{
 			         url: '/forum/users/newuser',
 			         method: 'POST'
+			},
+			newUserTemplate: {
+				url : '/forum/users/newuser/template',
+				method : 'GET'
 			},
 			userProfile:{
 			         url: '/forum/users/profile/:userId',
@@ -57,8 +61,18 @@
 				method : 'GET'
 			}
 		});
+		
+		UserService.getNewUserTemplate = function(){
+			return UserService.resource.newUserTemplate();
+		};
+		
 		UserService.register = function(user){
-		         return UserService.resource.newUser(user);                             
+			if(vcRecaptchaService.getResponse() === ""){ //if string is empty
+                return null;
+            }else {
+            	user.gResponseToken = vcRecaptchaService.getResponse();
+            	return UserService.resource.newUser(user);
+            }
 		                                      
 		};
 		UserService.loadProfile = function(userId,vm){
@@ -177,5 +191,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$rootScope','$resource','$window','NotificationsService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','NotificationsService','vcRecaptchaService',UserService])
 })();

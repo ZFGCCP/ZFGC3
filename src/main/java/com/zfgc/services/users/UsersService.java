@@ -1,31 +1,47 @@
 package com.zfgc.services.users;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.time.DateUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.AuthToken;
+import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
+import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
 import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.pm.PmService;
+import com.zfgc.util.ZfgcEmailUtils;
+import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
 
@@ -40,6 +56,12 @@ public class UsersService extends AbstractService {
 	@Autowired
 	IpAddressService ipAddressService;
 	
+	@Autowired
+	EmailAddressDataProvider emailAddressDataProvider;
+	
+	@Autowired
+	private ZfgcEmailUtils zfgcEmailUtils;
+	
 	@Autowired 
 	UsersRequiredFieldsChecker requiredFieldsChecker;
 	
@@ -51,6 +73,9 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	PmService pmService;
+	
+	@Autowired
+	RuleRunService<Users> ruleRunner;
 
 	
 	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
@@ -71,46 +96,51 @@ public class UsersService extends AbstractService {
 		return result;
 	}
 	
-	public Users createNewUser(Users user, HttpServletRequest requestHeader){
-
+	@Transactional
+	public Users createNewUser(Users user, HttpServletRequest requestHeader) throws Exception{
+		
 		
 		try {
-			requiredFieldsChecker.requiredFieldsCheck(user);
-			validator.validator(user);
 			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
-			ruleChecker.rulesCheck(user, null);
+			ruleRunner.runRules(validator, requiredFieldsChecker, ruleChecker, user, user);
 		} 
 		catch(ZfgcValidationException ex){
-			
+			ex.printStackTrace();
+			throw ex;
 		}
 		catch (Exception ex) {
 			ex.printStackTrace();
-			return null;
+			throw ex;
 		}
 		
 		if(!user.getErrors().hasErrors()){
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
 			
-			try{
-				//user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
-			}
-			catch(Exception ex){
-				ex.printStackTrace();
-				return null;
-			}
-			
 			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
 			user.setActiveFlag(false);
+			generateUniqueActivationCode(user);
 			
 			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
 			
 			try {
 				setUserIsSpammer(user);
+				
+				user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
 				user = usersDataProvider.createUser(user);
 				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
+				
+				if(!user.getUserContactInfo().getEmail().getIsSpammerFlag()) {
+					String subject = "New Account Activation For ZFGC";
+					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
+								  "If you think you have received this email in error, please ignore it.<br><br>" +
+								  "http://localhost:8080/forum/users/activation?activationCode=" + user.getEmailActivationCode();
+					
+					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
+					zfgcEmailUtils.sendEmail(subject, body, to);
+				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				return null;
+				throw ex;
 			}
 		}
 		return user;
@@ -136,7 +166,7 @@ public class UsersService extends AbstractService {
 	
 	public void setUserIsSpammer(Users user) throws Exception{
 		user.getPrimaryIpAddress().setIsSpammerFlag(authenticationService.checkIpIsSpammer(user.getPrimaryIpAddress()));
-		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
+		user.getUserContactInfo().getEmail().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getUserContactInfo().getEmail()));
 	}
 	
 	public Users authenticateUserByToken(String token) throws Exception{
@@ -289,5 +319,25 @@ public class UsersService extends AbstractService {
 		}
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOffline(user);
+	}
+
+	public Users getNewUserTemplate() {
+		Users user = new Users();
+		
+		user.setActiveFlag(false);
+		user.setUserContactInfo(new UserContactInfo());
+		user.getUserContactInfo().setEmail(new EmailAddress());
+		user.setUserSecurityInfo(new UserSecurityInfo());
+		user.setPersonalInfo(new PersonalInfo());
+		
+		return user;
+	}
+	
+	private void generateUniqueActivationCode(Users user) {
+		user.setEmailActivationCode(ZfgcSecurityUtils.generateCryptoString(32));
+	}
+	
+	public void activateUserAccount(String activationCode){
+		UsersDbObjExample ex = usersDataProvider.
 	}
 }

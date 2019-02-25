@@ -62,20 +62,32 @@ class UsersController extends BaseController{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
-	
+
 	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	
 	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
-		user = usersService.createNewUser(user, request);
-		
-		if(user == null){
+		try {
+			user = usersService.createNewUser(user, request);
+		} catch(ZfgcValidationException ex){
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
-		else if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
-		}
+		
 		return ResponseEntity.status(HttpStatus.OK).body(new String[]{"Created user successfully."});
+	}
+	
+	@RequestMapping(value="/newuser/template", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getNewUserTemplate() {
+		return ResponseEntity.status(HttpStatus.OK).body(usersService.getNewUserTemplate());
+	}
+	
+	@RequestMapping(value="/newuser/activation", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity activateUser() {
+		return ResponseEntity.status(HttpStatus.OK).body(usersService.getNewUserTemplate());
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")

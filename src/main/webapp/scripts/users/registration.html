@@ -1,41 +1,49 @@
 <div ng-controller="RegistrationCtrl as vm">
-	<div class="container">
-		<div class="row">
-		    <div class="col-md-4">
-				<form>
-				  <div class="form-group">
-				    <label for="username">Username</label>
-				    <input ng-model="vm.user.loginName" type="text" class="form-control" id="username">
-				  </div>
-				  <div class="form-group">
-				    <label for="displayname">Display Name</label>
-				    <input ng-model="vm.user.displayName" type="text" class="form-control" id="displayname">
-				  </div>
-				  <div class="form-group">
-				    <label for="pwd">Password:</label>
-				    <input ng-model="vm.user.password" type="password" class="form-control" id="pwd">
-				  </div>
-				  <div class="form-group">
-				    <label for="email">Email Address</label>
-				    <input ng-model="vm.user.emailAddress.emailAddress" type="text" class="form-control" id="email">
-				  </div>
-				  <div class="form-group">
-				    <label for="birthdate">Birthdate</label>
-				 	<div class="datepicker"
-				 	     date-format="MM/dd/yyyy">
-				    	<input ng-model="vm.user.birthDateAsString" type="text" class="form-control" id="birthdate">
-				  	</div>
-				  </div>
-				  <div class="form-group">
-				    <label for="timezone">Timezone</label>
-				    <select ng-model="vm.user.timeOffset" ng-options="timezone.id as timezone.value for timezone in vm.lookups.TIMEZONE" class="form-control" id="timezone">
-				    </select>
-				  </div>
-				  <div class="checkbox">
-				    <label><input ng-model="vm.user.agreeToTermsFlag" type="checkbox">I agree to the terms and am 13 years of age or older checkbox</label>
-				  </div>
-				  <button ng-click="vm.newUser()" type="button" class="btn btn-default">Submit</button>
-				</form>
+	<div class="section-container">
+		<div class="section-header">
+			<div class="section-title-wrapper">
+				<div class="section-title"><i class="fas fa-users-cog"></i>User Registration</div>
+			</div>
+		</div>
+		<div class="section-body">
+			<div class="row">
+			    <div class="col-md-4">
+					<form>
+					  <div class="form-group">
+					    <label for="username">Username</label>
+					    <input ng-model="vm.user.loginName" type="text" class="form-control" id="username">
+					  </div>
+					  <div class="form-group">
+					    <label for="displayname">Display Name</label>
+					    <input ng-model="vm.user.displayName" type="text" class="form-control" id="displayname">
+					  </div>
+					  <div class="form-group">
+					    <label for="pwd">Password:</label>
+					    <input ng-model="vm.user.userSecurityInfo.newPassword" type="password" class="form-control" id="pwd">
+					  </div>
+					  <div class="form-group">
+					    <label for="email">Email Address</label>
+					    <input ng-model="vm.user.userContactInfo.email.emailAddress" type="text" class="form-control" id="email">
+					  </div>
+					  <div class="form-group">
+					    <label for="birthdate">Birthdate</label>
+					 	<div class="datepicker"
+					 	     date-format="MM/dd/yyyy">
+					    	<input ng-model="vm.user.personalInfo.birthDateAsString" type="text" class="form-control" id="birthdate">
+					  	</div>
+					  </div>
+					  <div class="form-group">
+					    <label for="timezone">Timezone</label>
+					    <select ng-model="vm.user.timeOffset" ng-options="timezone.id as timezone.value for timezone in vm.lookups.TIMEZONE" class="form-control" id="timezone">
+					    </select>
+					  </div>
+					  <div class="checkbox">
+					    <label><input ng-model="vm.user.agreeToTermsFlag" type="checkbox">I agree to the terms and am 13 years of age or older</label>
+					  </div>
+					  <div vc-recaptcha key="vm.pubKey"></div>
+					  <button ng-click="vm.newUser()" type="button" class="btn btn-confirm">Submit</button>
+					</form>
+				</div>
 			</div>
 		</div>
 	</div>

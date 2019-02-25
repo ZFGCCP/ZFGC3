@@ -81,7 +81,12 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String authToken;
 	private Boolean fromDb = true;
 	
+	@JsonIgnore
+	private String emailActivationCode;
+	
 	private Integer unreadPmCount = 0;
+	
+	private String gResponseToken;
 	
 	@JsonIgnore
 	private String timeOffsetLkup;
@@ -252,7 +257,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		
 		Date today = ZfgcTimeUtils.getToday(timeOffsetLkup);
 		
-		if(birthDate != null){
+		if(personalInfo.getBirthDate() != null){
 			age = ZfgcTimeUtils.getYearsBetween(personalInfo.getBirthDate(), today);
 		}
 
@@ -479,5 +484,17 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setLoginFailedAttempts(Integer loginFailedAttempts) {
 		this.loginFailedAttempts = loginFailedAttempts;
+	}
+	public String getgResponseToken() {
+		return gResponseToken;
+	}
+	public void setgResponseToken(String gResponseToken) {
+		this.gResponseToken = gResponseToken;
+	}
+	public String getEmailActivationCode() {
+		return emailActivationCode;
+	}
+	public void setEmailActivationCode(String emailActivationCode) {
+		this.emailActivationCode = emailActivationCode;
 	}
 }

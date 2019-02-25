@@ -8,12 +8,20 @@
 		
 		vm.lookups = LookupsService.getLookupsList("TIMEZONE");
 		
+		vm.pubKey = "6Lde4o4UAAAAAI0Nkg5Gymqa6l3o9Is7g9-0OYOn";
+		
 		vm.getCurrentTimeZone = function(){
 			var tz = jstz.determine();
 		    return tz.name();
 		};
 		
 		console.log(vm.getCurrentTimeZone());
+		
+		vm.getUserTemplate = function(){
+			vm.user = UserService.getNewUserTemplate();
+		};
+		
+		vm.user = vm.getUserTemplate();
 		
 		vm.getCurrentTimeZoneId = function(){
 			var tz = vm.getCurrentTimeZone();
@@ -26,9 +34,13 @@
 		
 		vm.newUser= function(){
 			vm.setDisplayNameOnSubmit();
-			UserService.register(vm.user).$promise.then(function(data){
-				
-			});
+			var registered = UserService.register(vm.user);
+			
+			if(registered !== null){
+				registered.$promise.then(function(data){
+					
+				});
+			}
 		};
 		
 		vm.setDisplayNameOnSubmit = function(){

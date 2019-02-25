@@ -34,7 +34,14 @@ public class UserSecuritySettingsDao extends AbstractDao<UserSecuritySettingsDbO
 	@Override
 	public void updateOrInsert(UserSecurityInfo obj) {
 		UserSecuritySettingsDbObj dbObj = mapper.map(obj, UserSecuritySettingsDbObj.class);
-		userSecuritySettingsDbObjMapper.updateByPrimaryKey(dbObj);
+		
+		if(obj.getUserSecuritySettingsId() == null || obj.getUserSecuritySettingsId() == -1) {
+			userSecuritySettingsDbObjMapper.insert(dbObj);
+			obj.setUserSecuritySettingsId(dbObj.getUserSecuritySettingsId());
+		}
+		else {
+			userSecuritySettingsDbObjMapper.updateByPrimaryKey(dbObj);
+		}
 		
 	}
 

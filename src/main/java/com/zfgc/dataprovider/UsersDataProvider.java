@@ -13,6 +13,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dao.MemberListViewDao;
+import com.zfgc.dao.UserContactSettingsDao;
+import com.zfgc.dao.UserPersonalInfoDao;
+import com.zfgc.dao.UserSecuritySettingsDao;
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dbobj.MemberListingViewDbObj;
 import com.zfgc.dbobj.MemberListingViewDbObjExample;
@@ -22,7 +25,10 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
+import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
@@ -45,6 +51,15 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	@Autowired
 	private MemberListViewDao memberListingViewDao;
+	
+	@Autowired
+	private UserContactSettingsDao userContactSettingsDao;
+	
+	@Autowired
+	private UserSecuritySettingsDao userSecuritySettingsDao;
+	
+	@Autowired
+	private UserPersonalInfoDao userPersonalInfoDao;
 	
 	Logger LOGGER = Logger.getLogger(UsersDataProvider.class);
 	
@@ -93,14 +108,18 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public Users createUser(Users user) throws Exception{
 		
 		try {
-			//log Ip Address
-			logIpAddress(user.getPrimaryIpAddress(),true);
-			
-			//log email address
-			logEmailAddress(user.getEmailAddress());
-			
 			UsersDbObj usersDbObj = usersDao.createUser(user);
 			user.setUsersId(usersDbObj.getUsersId());
+			
+			createContactInfo(user);
+			createPersonalInfo(user);
+			createUserSecuritySettings(user);
+			
+			//log Ip Address
+			//ogIpAddress(user.getPrimaryIpAddress(),true);
+			
+			//log email address
+			//logEmailAddress(user.getUserContactInfo().getEmail());
 			
 			return user;
 		} catch (Exception ex) {
@@ -295,5 +314,32 @@ public class UsersDataProvider extends AbstractDataProvider {
 		userEx.createCriteria().andUsersIdEqualTo(user.getUsersId());
 		
 		usersDao.updateByExample(user, userEx);
+	}
+	
+	private void createContactInfo(Users user) throws Exception{
+		user.getUserContactInfo().setUsersId(user.getUsersId());
+		userContactSettingsDao.updateOrInsert(user.getUserContactInfo());
+	}
+	
+	private void createPersonalInfo(Users user) throws Exception{
+		user.getPersonalInfo().setUsersId(user.getUsersId());
+		userPersonalInfoDao.updateOrInsert(user.getPersonalInfo());
+	}
+	
+	private void createUserSecuritySettings(Users user) throws Exception{
+		user.getUserSecurityInfo().setUsersId(user.getUsersId());
+		userSecuritySettingsDao.updateOrInsert(user.getUserSecurityInfo());
+		userSecuritySettingsDao.updateUserPassword(user.getUserSecurityInfo().getUsersId(), user.getUserSecurityInfo().getNewPassword());
+	}
+	
+	public void activateUser(String activationCode) throws Exception{
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andEmailActivationCodeEqualTo(activationCode);
+		
+		Users user = new Users();
+		user.setEmailActivationCode(activationCode);
+		user.setActiveFlag(true);
+		
+		usersDao.updateByExample(user, ex);
 	}
 }

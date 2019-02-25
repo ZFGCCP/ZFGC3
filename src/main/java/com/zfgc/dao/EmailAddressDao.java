@@ -30,11 +30,14 @@ public class EmailAddressDao extends AbstractDao<EmailAddressDbObjExample, Email
 	@Override
 	public void updateOrInsert(EmailAddress obj) throws Exception {
 		EmailAddressDbObj dbObj = mapper.map(obj, EmailAddressDbObj.class);
-		if(obj.getEmailAddressId() == -1) {
+		if(obj.getEmailAddressId() == null || obj.getEmailAddressId() == -1) {
 			emailAddressDbObjMapper.insert(dbObj);
+			obj.setEmailAddressId(dbObj.getEmailAddressId());
 		}
 		else {
-			emailAddressDbObjMapper.updateByPrimaryKey(dbObj);
+			EmailAddressDbObjExample ex = new EmailAddressDbObjExample();
+			ex.createCriteria().andEmailAddressIdEqualTo(obj.getEmailAddressId());
+			emailAddressDbObjMapper.updateByExample(dbObj, ex);
 		}
 	}
 

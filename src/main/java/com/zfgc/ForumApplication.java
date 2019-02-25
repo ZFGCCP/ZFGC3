@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.Authentication;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -40,12 +41,16 @@ import com.zfgc.config.ZfgcSamlConfig;
 import com.zfgc.services.saml.SamlHandshakeHandler;
 import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 
+import it.ozimov.springboot.mail.configuration.EnableEmailTools;
+
 @Configuration
 @ComponentScan
 @SpringBootApplication
 @EnableSAMLSSO
 @MapperScan("com.zfgc.mappers")
 @EnableConfigurationProperties(ZfgcSamlConfig.class)
+@EnableTransactionManagement
+@EnableEmailTools
 public class ForumApplication extends SpringBootServletInitializer {
 	
     public static void main(String[] args) {
@@ -181,14 +186,18 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .disable()
                 .anonymous()
                 .and()
+                //todo: move this to a config file
 	        	.authorizeRequests().antMatchers("/ws/**","/**/*.css", "/**/*.js",
 	        									 "/**/*.html",
 	        									 "/**/*.map", 
 	        									 "/forum/index", 
 	        									 //"/zfgcui/**", 
 	        									 "/zfgcui/bbs/index",
+	        									 "/zfgcui/registration",
 	        									 "/socket/whosonline",
-	        									 "/users/loggedInUser").permitAll();
+	        									 "/lookups/**",
+	        									 "/users/loggedInUser",
+	        									 "/users/newuser/**").permitAll();
 	        	//.authorizeRequests().antMatchers("/scripts/**","/assets/**","/node_modules/**","/images/**","/users/**","/ws/**","/lookups/**","/userprofile").permitAll();
 	        	//.authorizeRequests().antMatchers("/pm/**").fullyAuthenticated()
 	        	//.antMatchers("/**").permitAll();*/
