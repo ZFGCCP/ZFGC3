@@ -53,14 +53,20 @@
 			    top: 10px;
 			    padding-left: 10px;
 			}
+			
+			.is-online{
+				padding-left:5px;
+				
+				@media(max-width:767px){
+					position: absolute;
+    				left: -17px;
+    				top: 25px;
+				}
+			}
 		}
 		
 		.user-usertext{
 			margin-bottom:10px;
-			
-			@media(max-width:767px){
-				display:none;
-			}
 		}
 		
 		.user-customtitle{
@@ -216,5 +222,39 @@
 		.actions{
 			font-size:15px;
 		}
+	}
+}
+
+.member-badge-manager{
+	width: 120px;
+    height: 24px;
+    background-color: #ae3232;
+    border: 2px outset #d9534f;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: -10px;
+    
+    @media(max-width:767px){
+    	display:none;
+    }
+}
+
+.member-badge-manager-sm{
+	width: 90px;
+    height: 24px;
+    background-color: #ae3232;
+    border: 2px outset #d9534f;
+    border-radius: 6px;
+    padding: 1px 10px;
+    margin: -10px 0 3px 0;
+
+	@media(min-width:768px){
+		display:none;
+	}
+}
+
+.bottom-section-wrap{
+	@media(max-width:767px){
+		float:none;
 	}
 }
