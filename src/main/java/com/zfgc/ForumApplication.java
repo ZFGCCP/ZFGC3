@@ -149,7 +149,6 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .defaultFailureURL(zfgcSamlConfig.getDefaultFailureUrl())
                 .idpSelectionPageURL(zfgcSamlConfig.getIdpSelectionPageUrl())
                 
-                
                 //.ssoProcessingURL("/forum/SSO")
                 
             .and()
@@ -194,8 +193,12 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 //"/zfgcui/**", 
 	        									 "/zfgcui/bbs/index",
 	        									 "/zfgcui/registration",
+	        									 "/zfgcui/userprofile",
 	        									 "/socket/whosonline",
 	        									 "/lookups/**",
+	        									 "/subscriptions/threads/**",
+	        									 "/users/profile/{{\\d+}}",
+	        									 "/users/navigation",
 	        									 "/users/loggedInUser",
 	        									 "/users/newuser/**").permitAll();
 	        	//.authorizeRequests().antMatchers("/scripts/**","/assets/**","/node_modules/**","/images/**","/users/**","/ws/**","/lookups/**","/userprofile").permitAll();

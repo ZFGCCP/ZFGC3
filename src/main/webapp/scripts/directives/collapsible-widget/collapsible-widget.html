@@ -1,7 +1,7 @@
 <div class="widget-container">
    <div class="widget-header">
    		<div class="widget-control">
-   			<span class="expand-collapse" ng-click="toggle()"><i class="fas fa-plus-square"></i></span>
+   			<span class="expand-collapse" ng-click="toggle()"><i ng-class="{'fas fa-plus-square' : isCollapsed, 'fas fa-minus-square' : !isCollapsed}"></i></span>
    			<span class="widget-title">{{widgetTitle}}</span>
    		</div>
    </div>
