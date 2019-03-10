@@ -1,6 +1,8 @@
 <div class="user-left-panel-wrap row">
 	<div class="col-xs-12 col-sm-4 col-md-12">
-		<div class="user-displayname padded-row">{{vm.profile.displayName}}<i ng-if="vm.profile.isOnlineFlag === true" class="fas fa-user-circle is-online"></i>
+		<div class="user-displayname padded-row">{{vm.profile.displayName}}
+			<i ng-if="vm.profile.activeFlag && vm.profile.isOnlineFlag === true" class="fas fa-user-circle is-online"></i>
+			<i ng-click="vm.userActivation()" ng-if="vm.profile.activeFlag === false" class="fas fa-handshake"></i>
 			<span class="username-ellipses" uib-popover-template="'scripts/popover/templates/popoverUserDetails.html'"
 											popover-title="user"
 											popover-trigger="'outsideClick'"

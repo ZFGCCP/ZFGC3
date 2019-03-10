@@ -8,6 +8,10 @@
 		vm.lookups = LookupsService.getLookupsList("MEMBER_GROUP,AVATAR_TYPE,AVATAR_GALLERY,GENDER,NOTIFICATION_FREQUENCY,LKUP_RECEIVE_MESSAGES,LKUP_PM_NOTIF");
 		vm.getLkupValue = LookupsService.getLkupValue;
 		
+		vm.userActivation = function(){
+			UserService.adminUserActivate(vm.profile.usersId);
+		};
+		
 		vm.tabClick = function(tab, subTab){
 			UserService.setTabActive(vm,tab, subTab);
 		};
@@ -58,6 +62,10 @@
 		
 		vm.selectBuddy = function(buddy){
 			UserService.addBuddy(vm,buddy);
+		};
+		
+		vm.isUserAdmin = function(){
+			return UserService.loggedInUser.memberGroupNames.indexOf('Manager') > -1; 
 		};
 		
 		 var w = angular.element($window);

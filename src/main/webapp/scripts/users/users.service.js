@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($rootScope, $resource, $window, NotificationsService, vcRecaptchaService){
+	function UserService($rootScope, $resource, $window, $state, NotificationsService, vcRecaptchaService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
@@ -59,8 +59,18 @@
 			getBuddyTemplate : {
 				url : '/forum/users/buddy',
 				method : 'GET'
+			},
+			adminUserActivate : {
+				url : '/forum/users/:userId/activation',
+				method : 'POST'
 			}
 		});
+		
+		UserService.adminUserActivate = function(userId){
+			UserService.resource.adminUserActivate({userId : userId}).$promise.then(function(data){
+				$state.reload();
+			});
+		}
 		
 		UserService.getNewUserTemplate = function(){
 			return UserService.resource.newUserTemplate();
@@ -191,5 +201,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$rootScope','$resource','$window','NotificationsService','vcRecaptchaService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','$state','NotificationsService','vcRecaptchaService',UserService])
 })();

@@ -1,10 +1,16 @@
 <div class="forum-header">
 	<div class="user-header-wrapper">
-		<div>
-			Welcome, <a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
+		<div ng-if="user.usersId !== -1">
+			<div>
+				Welcome, <a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
+			</div>
+			<div>Logout | <a ui-sref="convoBox">Conversations ({{user.unreadPmCount}})</a></div>
 		</div>
-		<div>
-			Logout | <a ui-sref="convoBox">Conversations ({{user.unreadPmCount}})</a>
+		<div ng-if="user.usersId === -1">
+			<div>
+				Welcome, guest
+			</div>
+			<div><a ui-sref="registration">Sign Up</a> or Log in</div>
 		</div>
 	</div>
 	<div class="zfgc-logo">

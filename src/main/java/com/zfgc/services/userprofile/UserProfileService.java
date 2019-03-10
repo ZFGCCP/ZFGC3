@@ -79,7 +79,6 @@ public class UserProfileService extends AbstractService{
 	
 	public UserProfileView getProfile(Integer userId, Users zfgcUser) throws Exception{
 		UserProfileView profileView = null;
-		Users user = null;
 		try{
 			profileView = userProfileDataProvider.getUserProfile(userId);
 		}
@@ -100,39 +99,39 @@ public class UserProfileService extends AbstractService{
 		if(currentUserId == null || (!currentUserId.equals(userId) && 
 			!lookupService.getLkupValue(LookupService.MEMBER_GROUP,zfgcUser.getPrimaryMemberGroupId()).equals("Manager"))){
 			
-			user.setPrimaryIpAddress(null);
+			//profileView.getPersonalInfo()setPrimaryIpAddress(null);
 			
 			//hide contact fields with the hidden flag
-			if(user.getUserSecurityInfo().getHideSkypeFlag()){
-				user.getUserContactInfo().setSkype(null);
+			if(profileView.getUserSecurityInfo().getHideSkypeFlag()){
+				profileView.getUserContactInfo().setSkype(null);
 			}
 			
-			if(user.getUserSecurityInfo().getHideSteamFlag()){
-				user.getUserContactInfo().setSteam(null);
+			if(profileView.getUserSecurityInfo().getHideSteamFlag()){
+				profileView.getUserContactInfo().setSteam(null);
 			}
 			
-			if(user.getUserSecurityInfo().getHideXboxLiveFlag()){
-				user.getUserContactInfo().setXboxLive(null);
+			if(profileView.getUserSecurityInfo().getHideXboxLiveFlag()){
+				profileView.getUserContactInfo().setXboxLive(null);
 			}
 			
-			if(user.getUserSecurityInfo().getHideNnidFlag()){
-				user.getUserContactInfo().setNnid(null);
+			if(profileView.getUserSecurityInfo().getHideNnidFlag()){
+				profileView.getUserContactInfo().setNnid(null);
 			}
 			
-			if(user.getUserSecurityInfo().getHidePsnFlag()){
-				user.getUserContactInfo().setPsn(null);
+			if(profileView.getUserSecurityInfo().getHidePsnFlag()){
+				profileView.getUserContactInfo().setPsn(null);
 			}
 			
-			if(user.getUserSecurityInfo().getHideGtalkFlag()){
-				user.getUserContactInfo().setGtalk(null);
+			if(profileView.getUserSecurityInfo().getHideGtalkFlag()){
+				profileView.getUserContactInfo().setGtalk(null);
 			}
 			
-			if(user.getUserSecurityInfo().getHideBirthDateFlag()){
-				user.setBirthDate(null);
+			if(profileView.getUserSecurityInfo().getHideBirthDateFlag()){
+				profileView.getPersonalInfo().setBirthDate(null);
 			}
 			
-			if(user.getHideEmailFlag()){
-				user.getEmailAddress().setEmailAddress(null);
+			if(profileView.getUserSecurityInfo().getHideEmailFlag()){
+				profileView.getUserContactInfo().getEmail().setEmailAddress(null);
 			}
 		}
 		else {

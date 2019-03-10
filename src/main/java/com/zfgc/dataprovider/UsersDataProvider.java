@@ -342,4 +342,25 @@ public class UsersDataProvider extends AbstractDataProvider {
 		
 		usersDao.updateByExample(user, ex);
 	}
+	
+	public void activateUser(Integer usersId) throws Exception{
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId);
+		
+		Users user = new Users();
+		user.setActiveFlag(true);
+		
+		usersDao.updateByExample(user, ex);
+	}
+	
+	public void resetActiveConnectionCounts() throws Exception {
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andActiveConnectionsGreaterThan(0);
+		
+		Users user = new Users();
+		user.setPrimaryMemberGroupId(null);
+		user.setActiveConnections(0);
+		
+		usersDao.updateByExample(user, ex);
+	}
 }

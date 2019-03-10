@@ -31,6 +31,7 @@ public class UserProfileView extends BaseZfgcModel {
 	
 	private Date lastLogin;
 	private Boolean isOnlineFlag;
+	private Boolean activeFlag;
 	
 	@JsonIgnore
 	private UserProfileView savedProfile;
@@ -158,6 +159,14 @@ public class UserProfileView extends BaseZfgcModel {
 
 	public void setIsOnlineFlag(Boolean isOnlineFlag) {
 		this.isOnlineFlag = isOnlineFlag;
+	}
+
+	public Boolean getActiveFlag() {
+		return activeFlag;
+	}
+
+	public void setActiveFlag(Boolean activeFlag) {
+		this.activeFlag = activeFlag;
 	}
 	
 }

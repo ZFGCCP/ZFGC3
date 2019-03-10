@@ -11,15 +11,18 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -76,6 +79,8 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	RuleRunService<Users> ruleRunner;
+	
+	Logger LOGGER = Logger.getLogger(UsersService.class);
 
 	
 	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
@@ -337,7 +342,20 @@ public class UsersService extends AbstractService {
 		user.setEmailActivationCode(ZfgcSecurityUtils.generateCryptoString(32));
 	}
 	
-	public void activateUserAccount(String activationCode){
-		UsersDbObjExample ex = usersDataProvider.
+	public void activateUserAccount(String activationCode) throws Exception{
+		usersDataProvider.activateUser(activationCode);
+	}
+	
+	public void activateUserAccount(Integer usersId, Users zfgcUser) throws Exception{
+		//todo check the user role
+		usersDataProvider.activateUser(usersId);
+	}
+	
+	@PostConstruct
+	public void resetAllActiveConnections() throws Exception {
+		LOGGER.info("Resetting all active connection counts to 0...");
+		usersDataProvider.resetActiveConnectionCounts();
+		LOGGER.info("Finished resetting all active connection counts to 0.");
+		
 	}
 }
