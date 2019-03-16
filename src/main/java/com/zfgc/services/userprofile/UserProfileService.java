@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.constants.user.UserConstants;
+import com.zfgc.dataprovider.LkupMemberGroupDataProvider;
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -36,6 +37,9 @@ import com.zfgc.validation.uservalidation.ProfileValidator;
 public class UserProfileService extends AbstractService{
 	@Autowired
 	UserProfileDataProvider userProfileDataProvider;
+	
+	@Autowired
+	LkupMemberGroupDataProvider lkupMemberGroupDataProvider;
 	
 	@Autowired
 	NavTabService navTabService;
@@ -85,7 +89,7 @@ public class UserProfileService extends AbstractService{
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
-
+		
 		//get buddy and ignore list
 		//user.getPersonalMessagingSettings().setBuddyList(buddyService.getBuddies(userId));
 		//user.getPersonalMessagingSettings().setIgnoreList(buddyService.getIgnores(userId));

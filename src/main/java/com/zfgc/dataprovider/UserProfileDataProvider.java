@@ -13,7 +13,9 @@ import com.zfgc.dao.UserSecuritySettingsDao;
 import com.zfgc.dbobj.UserProfileViewDbObj;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.avatar.Avatar;
+import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
+import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
@@ -76,6 +78,8 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		result.getPersonalInfo().setAvatar(mapper.map(userProfileViewDbObj, Avatar.class));
 		result.setNotificationSettings(mapper.map(userProfileViewDbObj,NotificationSettings.class));
 		result.setPersonalMessagingSettings(mapper.map(userProfileViewDbObj, PersonalMessagingSettings.class));
+		result.setPrimaryMemberGroup(mapper.map(userProfileViewDbObj, LkupMemberGroup.class));
+		result.setPrimaryIpAddress(mapper.map(userProfileViewDbObj, IpAddress.class));
 		
 		return result;
 	}

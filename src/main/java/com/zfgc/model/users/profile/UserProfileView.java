@@ -8,6 +8,8 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.lkup.LkupMemberGroup;
+import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.util.time.ZfgcTimeUtils;
@@ -28,6 +30,8 @@ public class UserProfileView extends BaseZfgcModel {
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
 	private List<Buddy> buddyList = new ArrayList<>();
 	private Avatar avatar = new Avatar();
+	private LkupMemberGroup primaryMemberGroup;
+	private IpAddress primaryIpAddress;
 	
 	private Date lastLogin;
 	private Boolean isOnlineFlag;
@@ -167,6 +171,22 @@ public class UserProfileView extends BaseZfgcModel {
 
 	public void setActiveFlag(Boolean activeFlag) {
 		this.activeFlag = activeFlag;
+	}
+
+	public LkupMemberGroup getPrimaryMemberGroup() {
+		return primaryMemberGroup;
+	}
+
+	public void setPrimaryMemberGroup(LkupMemberGroup primaryMemberGroup) {
+		this.primaryMemberGroup = primaryMemberGroup;
+	}
+
+	public IpAddress getPrimaryIpAddress() {
+		return primaryIpAddress;
+	}
+
+	public void setPrimaryIpAddress(IpAddress primaryIpAddress) {
+		this.primaryIpAddress = primaryIpAddress;
 	}
 	
 }
