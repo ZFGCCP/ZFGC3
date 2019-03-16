@@ -46,7 +46,7 @@
 					<label>Primary Membergroup</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<select ng-disabled="true"
+					<select ng-disabled="!vm.isUserAdmin()"
 					        ng-model="vm.profile.primaryMemberGroupId" 
 					        ng-options="memberGroup.id as memberGroup.value for memberGroup in vm.lookups.MEMBER_GROUP" 
 					        class="form-control small-input">

@@ -6,6 +6,7 @@
 		top: 0;
     	height: 75px;
     	margin-bottom: 20px;
+    	box-shadow: 3px 10px 10px black;
 	}
 
 	.user-left-panel-wrap{
@@ -93,15 +94,17 @@
 			position: absolute;
 			left: 0;
 			top: 60px;
+			border-radius: 0;
 		
 			.profile-nav-arrow{
-				color:red;
-			    width: 35px;
-				margin-left: auto;
-				margin-right: auto;
-				font-size: 20px;
-				position: relative;
-				top: -3px;
+				color: red;
+			    width: 50px;
+			    margin-left: auto;
+			    margin-right: auto;
+			    font-size: 30px;
+			    position: absolute;
+			    top: -12px;
+			    left: 45%;
 			}
 			
 			::hover{
@@ -256,5 +259,16 @@
 .bottom-section-wrap{
 	@media(max-width:767px){
 		float:none;
+	}
+}
+
+.whos-online-wrapper{
+	label{
+		padding: 10px 0 0 10px;
+	}
+
+	.whos-online-user{
+		padding: 3px 0 10px 10px;
+		display: inline-block;
 	}
 }

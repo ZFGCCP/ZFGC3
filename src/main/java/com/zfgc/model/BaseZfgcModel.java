@@ -7,6 +7,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import com.mysql.cj.util.StringUtils;
 import com.zfgc.model.subscriptions.ThreadSubscription;
 import com.zfgc.model.users.Users;
 
@@ -26,8 +27,25 @@ public abstract class BaseZfgcModel implements Comparable{
 				((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 				.getRequest();
 		
-		Users user = (Users) ((Authentication) request.getUserPrincipal()).getPrincipal();
+		Users user = null;
+		
+		if(request.getUserPrincipal() != null){
+			user = (Users) ((Authentication) request.getUserPrincipal()).getPrincipal();
+		}
+		
+		if(user == null || StringUtils.isNullOrEmpty(user.getTimeZone())){
+			return "GMT";
+		}
+		
 		return user.getTimeZone();
+	}
+	
+	protected String getUserIp(){
+		HttpServletRequest request = 
+				((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+				.getRequest();
+		
+		return request.getRemoteAddr();
 	}
 	
 	protected Integer getUserId(){

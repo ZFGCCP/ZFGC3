@@ -1,5 +1,6 @@
 package com.zfgc.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dbobj.IpAddressDbObj;
 import com.zfgc.dbobj.IpAddressDbObjExample;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.IpAddressDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.IpAddress;
@@ -170,9 +172,14 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	}
 
 	@Override
-	public List<IpAddressDbObj> get(IpAddressDbObjExample ex) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<IpAddressDbObj> get(IpAddressDbObjExample ex) throws ZfgcNotFoundException {
+		List<IpAddressDbObj> dbObj = ipAddressDbObjMapper.selectByExample(ex);
+		
+		if(dbObj.size() > 0) {
+			return dbObj;
+		}
+		
+		throw new ZfgcNotFoundException("IP Address not found");
 	}
 
 	@Override
@@ -183,7 +190,14 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 
 	@Override
 	public void updateOrInsert(IpAddress obj) {
-		// TODO Auto-generated method stub
+		IpAddressDbObj dbObj = mapper.map(obj, IpAddressDbObj.class);
+		if(obj.getIpAddressId() == -1) {
+			ipAddressDbObjMapper.insert(dbObj);
+			obj.setIpAddressId(dbObj.getIpAddressId());
+		}
+		else {
+			ipAddressDbObjMapper.updateByPrimaryKey(dbObj);
+		}
 		
 	}
 

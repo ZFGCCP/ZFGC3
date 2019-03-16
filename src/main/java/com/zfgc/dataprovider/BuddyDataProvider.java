@@ -48,6 +48,7 @@ public class BuddyDataProvider extends AbstractDataProvider{
 				buddy.setUser(mapper.map(dbObj, UserProfileView.class));
 				buddy.setBuddyFlag(true);
 				buddy.setIgnoreFlag(false);
+				buddy.getUser().setBuddyList(null);
 				
 				buddy.getUser().getPersonalInfo().setAvatar(mapper.map(dbObj, Avatar.class));
 				buddy.getUser().getUserContactInfo().setEmail(mapper.map(dbObj, EmailAddress.class));

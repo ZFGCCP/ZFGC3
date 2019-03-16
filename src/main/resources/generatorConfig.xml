@@ -22,14 +22,34 @@
     
 
     <!-- tables -->
+    <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
+    	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
     <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
+    	<generatedKey column="users_id" sqlStatement="SELECT MAX(USERS_ID) + 1 FROM users"/>
+    	<columnOverride column="HIDE_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="PM_EMAIL_NOTIF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	
+    	<columnOverride column="HIDE_YIM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_AIM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_SKYPE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_STEAM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_XBOX_LIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_PSN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_NNID_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <!--<table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
         <property name="virtualKeyColumns" value="USERS_ID" />
     	<generatedKey column="users_id" sqlStatement="SELECT MAX(USERS_ID) + 1 FROM users"/>
     	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="PM_EMAIL_NOTIF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
-    <!--<table schema="zfgc3" tableName="EMAIL_ADDRESS" domainObjectName="EmailAddressDbObj">
+    <table schema="zfgc3" tableName="EMAIL_ADDRESS" domainObjectName="EmailAddressDbObj">
     <generatedKey column="email_address_id" sqlStatement="SELECT MAX(EMAIL_ADDRESS_ID) + 1 FROM EMAIL_ADDRESS"/>
     	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
@@ -185,9 +205,12 @@
     </table>-->
     
     <!-- views -->
-    <!--<table schema="zfgc3" tableName="WHOS_ONLINE_VIEW" domainObjectName="OnlineUserDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    
+    <table schema="zfgc3" tableName="WHOS_ONLINE_VIEW" domainObjectName="OnlineUserDbObj">
     </table>
 
     <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">

@@ -47,13 +47,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
-	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	    
+	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
@@ -125,6 +125,10 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
+	    
+	"./src/main/webapp/scripts/error/error.module.js",
+	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
@@ -133,19 +137,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
-	    
-	"./src/main/webapp/scripts/error/error.module.js",
-	    
 	"./src/main/webapp/scripts/app.js",
 	    
 	"./src/main/webapp/scripts/app.config.js",
 	    
+	"./src/main/webapp/scripts/forum/forum.html",
+	    
 	"./src/main/webapp/scripts/error/internalServerError.html",
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
-	    
-	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
@@ -219,9 +219,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
 	    

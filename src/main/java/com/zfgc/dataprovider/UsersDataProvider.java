@@ -84,6 +84,12 @@ public class UsersDataProvider extends AbstractDataProvider {
 		}
 	}
 	
+	public void saveUser(Users user) {
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(user.getUsersId());
+		usersDao.updateByExample(user, ex);
+	}
+	
 	public List<Users> getUsersByConversation(Integer conversationId) throws ZfgcNotFoundException, Exception{
 		try{
 			List<UsersDbObj> dbObj = usersDao.getUsersByConversation(conversationId);
@@ -108,6 +114,9 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public Users createUser(Users user) throws Exception{
 		
 		try {
+			//log Ip Address
+			ipDataProvider.saveIpAddress(user.getPrimaryIpAddress());
+			
 			UsersDbObj usersDbObj = usersDao.createUser(user);
 			user.setUsersId(usersDbObj.getUsersId());
 			
@@ -115,7 +124,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 			createPersonalInfo(user);
 			createUserSecuritySettings(user);
 			
-			//log Ip Address
 			//ogIpAddress(user.getPrimaryIpAddress(),true);
 			
 			//log email address
@@ -322,6 +330,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 	}
 	
 	private void createPersonalInfo(Users user) throws Exception{
+		avatarDataProvider.createAvatarRecord(user.getPersonalInfo().getAvatar());
+		
 		user.getPersonalInfo().setUsersId(user.getUsersId());
 		userPersonalInfoDao.updateOrInsert(user.getPersonalInfo());
 	}
@@ -339,6 +349,27 @@ public class UsersDataProvider extends AbstractDataProvider {
 		Users user = new Users();
 		user.setEmailActivationCode(activationCode);
 		user.setActiveFlag(true);
+		
+		usersDao.updateByExample(user, ex);
+	}
+	
+	public void activateUser(Integer usersId) throws Exception{
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId);
+		
+		Users user = new Users();
+		user.setActiveFlag(true);
+		
+		usersDao.updateByExample(user, ex);
+	}
+	
+	public void resetActiveConnectionCounts() throws Exception {
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andActiveConnectionsGreaterThan(0);
+		
+		Users user = new Users();
+		user.setPrimaryMemberGroupId(null);
+		user.setActiveConnections(0);
 		
 		usersDao.updateByExample(user, ex);
 	}

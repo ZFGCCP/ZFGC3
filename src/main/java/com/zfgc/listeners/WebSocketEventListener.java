@@ -23,13 +23,11 @@ public class WebSocketEventListener {
 	
 	@EventListener
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
-		//Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
+		
 		
 		try {
-			//usersService.setUserOnline(user);
-			
-			//WhosOnlineList online = whosOnlineService.getWhosOnline();
-			//whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
+			WhosOnlineList online = whosOnlineService.getWhosOnline();
+			whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

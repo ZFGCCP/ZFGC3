@@ -37,6 +37,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.bean.SAMLConfigurerBea
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderBuilder;
 import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProviderConfigurerAdapter;
 import com.zfgc.config.XhrSamlEntryPoint;
+import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.config.ZfgcSamlConfig;
 import com.zfgc.services.saml.SamlHandshakeHandler;
 import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
@@ -193,6 +194,7 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 //"/zfgcui/**", 
 	        									 "/zfgcui/bbs/index",
 	        									 "/zfgcui/registration",
+	        									 "/zfgcui/useractivation",
 	        									 "/zfgcui/userprofile",
 	        									 "/socket/whosonline",
 	        									 "/lookups/**",

@@ -90,7 +90,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		UsersDbObj usersDbObj = mapper.map(user, UsersDbObj.class);
 		usersDbObj.setPassword(user.getUserHashInfo().getPassword());
 		usersDbObj.setPassSalt(user.getUserHashInfo().getPassSalt());
-		usersDbObj.setPrimaryIp(user.getPrimaryIpAddress().getIpAddress());
+		usersDbObj.setPrimaryIp(user.getPrimaryIpAddress().getIpAddressId());
 		//usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
 		try{
 			usersDbObjMapper.insertSelective(usersDbObj);
@@ -316,7 +316,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		if(setPrimary){
 			UsersDbObj tempUser = new UsersDbObj();
 			tempUser.setUsersId(user.getUsersId());
-			tempUser.setPrimaryIp(ipAddress.getIpAddress());
+			tempUser.setPrimaryIp(ipAddress.getIpAddressId());
 			
 			try{
 				usersDbObjMapper.updateByPrimaryKeySelective(tempUser);

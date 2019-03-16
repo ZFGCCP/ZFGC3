@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -86,8 +87,28 @@ class UsersController extends BaseController{
 	
 	@RequestMapping(value="/newuser/activation", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
-	public ResponseEntity activateUser() {
-		return ResponseEntity.status(HttpStatus.OK).body(usersService.getNewUserTemplate());
+	public ResponseEntity activateUser(@RequestParam("activationCode") String activationCode) {
+		try {
+			usersService.activateUserAccount(activationCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	//admin only endpoint
+	@RequestMapping(value="/{usersId}/activation", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_MANAGER')")
+	public ResponseEntity activateExistingUser(@PathVariable("usersId") Integer usersId) {
+		try {
+			usersService.activateUserAccount(usersId, zfgcUser());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
@@ -134,9 +155,11 @@ class UsersController extends BaseController{
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} 
 		catch(ZfgcNotFoundException ex){
+			ex.printStackTrace();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested resource could not be found.");
 		}
 		catch (Exception e) {
+			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
 	}

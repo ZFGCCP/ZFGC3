@@ -11,16 +11,20 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
+import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -44,6 +48,7 @@ import com.zfgc.util.ZfgcEmailUtils;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
+import com.zfgc.model.avatar.Avatar;
 
 @Service
 public class UsersService extends AbstractService {
@@ -76,7 +81,15 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	RuleRunService<Users> ruleRunner;
+	
+	Logger LOGGER = Logger.getLogger(UsersService.class);
 
+	public Users getUser(Integer usersId) throws Exception{
+		Users user = usersDataProvider.getUser(usersId);
+		user.setPrimaryIpAddress(ipAddressService.getIpAddress(user.getPrimaryIp()));
+		
+		return user;
+	}
 	
 	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
 		List<Users> result = null;
@@ -120,12 +133,32 @@ public class UsersService extends AbstractService {
 			user.setActiveFlag(false);
 			generateUniqueActivationCode(user);
 			
-			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
+			IpAddress potentialIp = null;
+			//does the remote Ip exist?
+			try {
+				IpAddress ipCheck = ipAddressService.getIpAddress(requestHeader.getRemoteAddr());
+				potentialIp = ipCheck;
+			}
+			catch(ZfgcNotFoundException ex) {
+				potentialIp = ipAddressService.createIpAddress(requestHeader.getRemoteAddr());
+			}
+			catch(Exception ex) {
+				ex.printStackTrace();
+				throw ex;
+			}
+			
+			user.setPrimaryIpAddress(potentialIp);
+			user.setPrimaryIp(potentialIp.getIpAddressId());
 			
 			try {
 				setUserIsSpammer(user);
 				
 				user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
+				Avatar avatar = new Avatar();
+				avatar.setAvatarTypeId(1);
+				
+				user.getPersonalInfo().setAvatar(avatar);
+				
 				user = usersDataProvider.createUser(user);
 				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
 				
@@ -133,7 +166,7 @@ public class UsersService extends AbstractService {
 					String subject = "New Account Activation For ZFGC";
 					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
 								  "If you think you have received this email in error, please ignore it.<br><br>" +
-								  "http://localhost:8080/forum/users/activation?activationCode=" + user.getEmailActivationCode();
+								  "http://localhost:8080/forum/zfgcui/useractivation?activationCode=" + user.getEmailActivationCode();
 					
 					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
 					zfgcEmailUtils.sendEmail(subject, body, to);
@@ -337,7 +370,20 @@ public class UsersService extends AbstractService {
 		user.setEmailActivationCode(ZfgcSecurityUtils.generateCryptoString(32));
 	}
 	
-	public void activateUserAccount(String activationCode){
-		UsersDbObjExample ex = usersDataProvider.
+	public void activateUserAccount(String activationCode) throws Exception{
+		usersDataProvider.activateUser(activationCode);
+	}
+	
+	public void activateUserAccount(Integer usersId, Users zfgcUser) throws Exception{
+		//todo check the user role
+		usersDataProvider.activateUser(usersId);
+	}
+	
+	@PostConstruct
+	public void resetAllActiveConnections() throws Exception {
+		LOGGER.info("Resetting all active connection counts to 0...");
+		usersDataProvider.resetActiveConnectionCounts();
+		LOGGER.info("Finished resetting all active connection counts to 0.");
+		
 	}
 }

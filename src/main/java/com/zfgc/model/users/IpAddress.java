@@ -5,10 +5,14 @@ import java.util.Date;
 import com.zfgc.model.BaseZfgcModel;
 
 public class IpAddress extends BaseZfgcModel{
+	private Integer ipAddressId;
 	private String ipAddress;
 	private Integer version;
 	private Date lockedUntil;
 	private Boolean isSpammerFlag = true; //just assume everyone is a spammer by default, we'll have a proper check for this during registration
+	private Boolean isLockedFlag = false;
+	private Integer loginAttempts = 0;
+	
 	public String getIpAddress() {
 		return ipAddress;
 	}
@@ -42,6 +46,24 @@ public class IpAddress extends BaseZfgcModel{
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Integer getIpAddressId() {
+		return ipAddressId;
+	}
+	public void setIpAddressId(Integer ipAddressId) {
+		this.ipAddressId = ipAddressId;
+	}
+	public Boolean getIsLockedFlag() {
+		return isLockedFlag;
+	}
+	public void setIsLockedFlag(Boolean isLockedFlag) {
+		this.isLockedFlag = isLockedFlag;
+	}
+	public Integer getLoginAttempts() {
+		return loginAttempts;
+	}
+	public void setLoginAttempts(Integer loginAttempts) {
+		this.loginAttempts = loginAttempts;
 	}
 	
 	
