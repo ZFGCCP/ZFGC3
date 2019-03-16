@@ -84,6 +84,12 @@ public class UsersDataProvider extends AbstractDataProvider {
 		}
 	}
 	
+	public void saveUser(Users user) {
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(user.getUsersId());
+		usersDao.updateByExample(user, ex);
+	}
+	
 	public List<Users> getUsersByConversation(Integer conversationId) throws ZfgcNotFoundException, Exception{
 		try{
 			List<UsersDbObj> dbObj = usersDao.getUsersByConversation(conversationId);
@@ -108,6 +114,9 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public Users createUser(Users user) throws Exception{
 		
 		try {
+			//log Ip Address
+			ipDataProvider.saveIpAddress(user.getPrimaryIpAddress());
+			
 			UsersDbObj usersDbObj = usersDao.createUser(user);
 			user.setUsersId(usersDbObj.getUsersId());
 			
@@ -115,7 +124,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 			createPersonalInfo(user);
 			createUserSecuritySettings(user);
 			
-			//log Ip Address
 			//ogIpAddress(user.getPrimaryIpAddress(),true);
 			
 			//log email address

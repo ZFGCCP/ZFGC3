@@ -77,6 +77,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private List<Buddy> buddyList = new ArrayList<>();
 	private Avatar avatar;
 	private Date lastLogin;
+	private Integer primaryIp;
 	
 	private String authToken;
 	private Boolean fromDb = true;
@@ -496,5 +497,15 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setEmailActivationCode(String emailActivationCode) {
 		this.emailActivationCode = emailActivationCode;
+	}
+	public Integer getPrimaryIp() {
+		return primaryIp;
+	}
+	public void setPrimaryIp(Integer primaryIp) {
+		this.primaryIp = primaryIp;
+	}
+	@JsonIgnore
+	public String getCurrentIpAddress() {
+		return super.getUserIp();
 	}
 }

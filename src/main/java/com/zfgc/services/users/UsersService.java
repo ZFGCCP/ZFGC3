@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
+import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -83,6 +84,12 @@ public class UsersService extends AbstractService {
 	
 	Logger LOGGER = Logger.getLogger(UsersService.class);
 
+	public Users getUser(Integer usersId) throws Exception{
+		Users user = usersDataProvider.getUser(usersId);
+		user.setPrimaryIpAddress(ipAddressService.getIpAddress(user.getPrimaryIp()));
+		
+		return user;
+	}
 	
 	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
 		List<Users> result = null;
@@ -126,7 +133,22 @@ public class UsersService extends AbstractService {
 			user.setActiveFlag(false);
 			generateUniqueActivationCode(user);
 			
-			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
+			IpAddress potentialIp = null;
+			//does the remote Ip exist?
+			try {
+				IpAddress ipCheck = ipAddressService.getIpAddress(requestHeader.getRemoteAddr());
+				potentialIp = ipCheck;
+			}
+			catch(ZfgcNotFoundException ex) {
+				potentialIp = ipAddressService.createIpAddress(requestHeader.getRemoteAddr());
+			}
+			catch(Exception ex) {
+				ex.printStackTrace();
+				throw ex;
+			}
+			
+			user.setPrimaryIpAddress(potentialIp);
+			user.setPrimaryIp(potentialIp.getIpAddressId());
 			
 			try {
 				setUserIsSpammer(user);
@@ -134,6 +156,8 @@ public class UsersService extends AbstractService {
 				user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
 				Avatar avatar = new Avatar();
 				avatar.setAvatarTypeId(1);
+				
+				user.getPersonalInfo().setAvatar(avatar);
 				
 				user = usersDataProvider.createUser(user);
 				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());

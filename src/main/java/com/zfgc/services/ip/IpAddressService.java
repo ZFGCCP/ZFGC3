@@ -19,11 +19,22 @@ public class IpAddressService {
 	@Autowired
 	IpDataProvider ipDataProvider;
 	
+	public IpAddress getIpAddress(Integer ipAddressId) throws Exception {
+		IpAddress ip = ipDataProvider.getIpAddress(ipAddressId);
+		return ip;
+	}
+	
+	public IpAddress getIpAddress(String ipAddress) throws Exception{
+		IpAddress ip = ipDataProvider.getIpAddress(ipAddress);
+		return ip;
+	}
 	
 	public IpAddress createIpAddress(String ipAddressAsString){
 		IpAddress ipAddress = new IpAddress();
 		ipAddress.setIpAddress(ipAddressAsString);
 		ipAddress.setVersion(getIpVersion(ipAddressAsString));
+		ipAddress.setIpAddressId(-1);
+		ipAddress.setIsLockedFlag(false);
 		
 		return ipAddress;
 	}

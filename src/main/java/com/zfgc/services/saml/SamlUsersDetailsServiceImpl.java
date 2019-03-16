@@ -17,14 +17,23 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.zfgc.dataprovider.UsersDataProvider;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Users;
+import com.zfgc.services.ip.IpAddressService;
+import com.zfgc.services.users.UsersService;
 
 @Service
 public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 
 	@Autowired
 	UsersDataProvider usersDataProvider;
+	
+	@Autowired
+	UsersService usersService;
+	
+	@Autowired
+	IpAddressService ipService;
 	
 	private List<String> roles;
 	 
@@ -41,34 +50,55 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 		String[] groupIds = credential.getAttributeAsStringArray("GROUP_IDS");
 		String[] groupNames = credential.getAttributeAsStringArray("GROUPS");
 		//String activeFlag = credential.getAttributeAsString("ACTIVE_FLAG");
-		String primaryIpAddress =  credential.getAttributeAsString("PRIMARY_IP_ADDRESS");
 		String primaryMemberGroupId =  credential.getAttributeAsString("PRIMARY_MEMBER_GROUP_ID");
 
         Users user = new Users();
         Integer id = Integer.parseInt(usersId);
         try {
-			user = usersDataProvider.getUser(id);
+			user = usersService.getUser(id);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        IpAddress ip = new IpAddress();
-        ip.setIpAddress(primaryIpAddress);
-        ;
+        
+        //did the user's primary IP change since last log in?
+        IpAddress primaryIp = user.getPrimaryIpAddress();
+        if(!user.getCurrentIpAddress().equals(primaryIp.getIpAddress())) {
+        	//does this IP exist already?
+        	try {
+				IpAddress ipCheck = ipService.getIpAddress(user.getCurrentIpAddress());
+				
+				user.setPrimaryIp(ipCheck.getIpAddressId());
+				user.setPrimaryIpAddress(ipCheck);
+			} catch (ZfgcNotFoundException e) {
+				IpAddress newIp = ipService.createIpAddress(user.getCurrentIpAddress());
+	        	user.setPrimaryIpAddress(newIp);
+	        	user.setPrimaryIp(-1);
+	        	
+				e.printStackTrace();
+			}
+        	catch (Exception ex) {
+        		ex.printStackTrace();
+        	}
+        }
+        
         user.setUsersId(Integer.parseInt(usersId));
         user.setFromDb(false);
-        //user.setActiveFlag(activeFlag != null && activeFlag.equals("1") ? true : false);
-        user.setPrimaryIpAddress(ip);
+;
         user.setPrimaryMemberGroupId(Integer.parseInt(primaryMemberGroupId));
         user.setTimeZone(credential.getAttributeAsString("TIME_ZONE"));
         
         Map<Integer, String> groups = new HashMap<Integer, String>();
         
-        for(int i = 0; i < groupIds.length; i++){
-        	groups.put(Integer.parseInt(groupIds[i]), groupNames[i]);
+        if(groupIds != null) {
+	        for(int i = 0; i < groupIds.length; i++){
+	        	groups.put(Integer.parseInt(groupIds[i]), groupNames[i]);
+	        }
         }
         
         user.setMemberGroups(groups);
+        
+        usersDataProvider.saveUser(user);
         
         return user;
 	}
