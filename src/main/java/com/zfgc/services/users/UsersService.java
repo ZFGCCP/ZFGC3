@@ -47,6 +47,7 @@ import com.zfgc.util.ZfgcEmailUtils;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
+import com.zfgc.model.avatar.Avatar;
 
 @Service
 public class UsersService extends AbstractService {
@@ -131,6 +132,9 @@ public class UsersService extends AbstractService {
 				setUserIsSpammer(user);
 				
 				user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
+				Avatar avatar = new Avatar();
+				avatar.setAvatarTypeId(1);
+				
 				user = usersDataProvider.createUser(user);
 				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
 				
@@ -138,7 +142,7 @@ public class UsersService extends AbstractService {
 					String subject = "New Account Activation For ZFGC";
 					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
 								  "If you think you have received this email in error, please ignore it.<br><br>" +
-								  "http://localhost:8080/forum/users/activation?activationCode=" + user.getEmailActivationCode();
+								  "http://localhost:8080/forum/zfgcui/useractivation?activationCode=" + user.getEmailActivationCode();
 					
 					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
 					zfgcEmailUtils.sendEmail(subject, body, to);

@@ -27,7 +27,7 @@ public class PersonalInfo extends BaseZfgcModel {
 	private Integer usersId;
 	
 	private Avatar avatar;
-	
+
 	public Long getAge(){
 		if(birthDate == null){
 			return null;

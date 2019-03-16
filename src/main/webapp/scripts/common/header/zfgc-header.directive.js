@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function zfgcHeader($rootScope, UserService, $q, $window, WebsocketService, WhosOnlineService) {
+	function zfgcHeader($rootScope, UserService, $q, $window, $location, WebsocketService, WhosOnlineService) {
     	return {
     		restrict: 'E',
     		transclude: true,
@@ -15,6 +15,11 @@
     					stomp: null
     			};
 
+    			scope.goToIdp = function(){
+    				var returnTo = $location.absUrl();
+    				$window.location = "http://devidp.zfgc.com/saml2/idp/SSOService.php?spentityid=zfgc-sp-dev&target=" + returnTo;
+    			};
+    			
     			scope.startListener = function() {
     				$rootScope.$broadcast("WebsocketConnected");
 			    };
@@ -34,5 +39,5 @@
 	
 	angular
 	    .module("zfgc.forum")
-	    .directive("zfgcHeader", ['$rootScope','UserService', '$q', '$window', 'WebsocketService', 'WhosOnlineService', zfgcHeader]);
+	    .directive("zfgcHeader", ['$rootScope','UserService', '$q', '$window', '$location', 'WebsocketService', 'WhosOnlineService', zfgcHeader]);
 })();

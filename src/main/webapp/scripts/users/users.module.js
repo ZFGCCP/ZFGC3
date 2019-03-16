@@ -14,6 +14,10 @@ angular.module('zfgc.users',['zfgc.config'])
 			.state('registration', {
 				url: baseRouter + '/registration',
 				templateUrl: basePath + '/registration.html'
+			})
+			.state('activation', {
+				url: baseRouter + '/useractivation?:activationCode',
+				templateUrl: basePath + '/activation.html'
 			});
 		
 		$stateProvider

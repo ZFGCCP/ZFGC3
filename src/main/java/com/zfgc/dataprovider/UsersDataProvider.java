@@ -322,6 +322,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 	}
 	
 	private void createPersonalInfo(Users user) throws Exception{
+		avatarDataProvider.createAvatarRecord(user.getPersonalInfo().getAvatar());
+		
 		user.getPersonalInfo().setUsersId(user.getUsersId());
 		userPersonalInfoDao.updateOrInsert(user.getPersonalInfo());
 	}

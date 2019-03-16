@@ -47,9 +47,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -96,6 +96,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/user-title-card.controller.js",
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
+	    
+	"./src/main/webapp/scripts/users/activation.controller.js",
 	    
 	"./src/main/webapp/scripts/sockets/web-socket.service.js",
 	    
@@ -150,6 +152,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/forum/forum.html",
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
+	    
+	"./src/main/webapp/scripts/users/activation.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
@@ -221,9 +225,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
 	    

@@ -4,7 +4,7 @@
 	function UserService($rootScope, $resource, $window, $state, NotificationsService, vcRecaptchaService){
 		var UserService = {};
 		
-		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId'},
+		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId', 'activationCode' : '@activationCode'},
 		{
 			newUser:{
 			         url: '/forum/users/newuser',
@@ -62,6 +62,10 @@
 			},
 			adminUserActivate : {
 				url : '/forum/users/:userId/activation',
+				method : 'POST'
+			},
+			activate : {
+				url : '/forum/users/newuser/activation?activationCode=:activationCode',
 				method : 'POST'
 			}
 		});

@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -99,6 +100,7 @@ class UsersController extends BaseController{
 	//admin only endpoint
 	@RequestMapping(value="/{usersId}/activation", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_MANAGER')")
 	public ResponseEntity activateExistingUser(@PathVariable("usersId") Integer usersId) {
 		try {
 			usersService.activateUserAccount(usersId, zfgcUser());
