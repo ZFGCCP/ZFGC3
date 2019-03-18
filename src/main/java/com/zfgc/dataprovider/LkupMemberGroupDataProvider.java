@@ -15,7 +15,7 @@ public class LkupMemberGroupDataProvider extends AbstractDataProvider{
 	@Autowired
 	LkupMemberGroupDao lkupMemberGroupDao;
 	
-	public LkupMemberGroup getMemberGroup(Integer lkupMemberGroupId) throws Exception {
+	public LkupMemberGroup getMemberGroup(Integer lkupMemberGroupId) throws RuntimeException {
 		LkupMemberGroupDbObjExample ex = lkupMemberGroupDao.getExample();
 		ex.createCriteria().andMemberGroupIdEqualTo(lkupMemberGroupId);
 		

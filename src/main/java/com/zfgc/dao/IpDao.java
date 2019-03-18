@@ -172,7 +172,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	}
 
 	@Override
-	public List<IpAddressDbObj> get(IpAddressDbObjExample ex) throws ZfgcNotFoundException {
+	public List<IpAddressDbObj> get(IpAddressDbObjExample ex) throws ZfgcNotFoundException, RuntimeException {
 		List<IpAddressDbObj> dbObj = ipAddressDbObjMapper.selectByExample(ex);
 		
 		if(dbObj.size() > 0) {
@@ -183,13 +183,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	}
 
 	@Override
-	public void hardDelete(IpAddress obj) {
+	public void hardDelete(IpAddress obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(IpAddress obj) {
+	public void updateOrInsert(IpAddress obj) throws RuntimeException {
 		IpAddressDbObj dbObj = mapper.map(obj, IpAddressDbObj.class);
 		if(obj.getIpAddressId() == -1) {
 			ipAddressDbObjMapper.insert(dbObj);
@@ -202,13 +202,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	}
 
 	@Override
-	public void updateByExample(IpAddress obj, IpAddressDbObjExample ex) {
+	public void updateByExample(IpAddress obj, IpAddressDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(IpAddress obj, IpAddressDbObjExample ex) {
+	public Integer deleteByExample(IpAddress obj, IpAddressDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
@@ -216,7 +216,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 
 	@Override
 	public Integer countByExample(IpAddress obj, IpAddressDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -18,18 +18,18 @@ public class PmKeyDao extends AbstractDao<PmKeyDbObjExample, PmKeyDbObj, PmKey>{
 	PmKeyDbObjMapper pmKeyDbObjMapper;
 	
 	@Override
-	public List<PmKeyDbObj> get(PmKeyDbObjExample ex) {
+	public List<PmKeyDbObj> get(PmKeyDbObjExample ex) throws RuntimeException {
 		return pmKeyDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(PmKey obj) {
+	public void hardDelete(PmKey obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(PmKey obj) {
+	public void updateOrInsert(PmKey obj) throws RuntimeException {
 		PmKeyDbObj dbObj = mapper.map(obj, PmKeyDbObj.class);
 		
 		if(dbObj.getPmKeyId() == null || dbObj.getPmKeyId() == -1){
@@ -41,14 +41,14 @@ public class PmKeyDao extends AbstractDao<PmKeyDbObjExample, PmKeyDbObj, PmKey>{
 	}
 
 	@Override
-	public void updateByExample(PmKey obj, PmKeyDbObjExample ex) {
+	public void updateByExample(PmKey obj, PmKeyDbObjExample ex) throws RuntimeException {
 		PmKeyDbObj dbObj = mapper.map(obj, PmKeyDbObj.class);
 		pmKeyDbObjMapper.updateByExample(dbObj, ex);
 		
 	}
 
 	@Override
-	public Integer deleteByExample(PmKey obj, PmKeyDbObjExample ex) {
+	public Integer deleteByExample(PmKey obj, PmKeyDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
@@ -56,7 +56,7 @@ public class PmKeyDao extends AbstractDao<PmKeyDbObjExample, PmKeyDbObj, PmKey>{
 
 	@Override
 	public Integer countByExample(PmKey obj, PmKeyDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

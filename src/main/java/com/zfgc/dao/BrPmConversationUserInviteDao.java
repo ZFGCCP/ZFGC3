@@ -18,12 +18,12 @@ public class BrPmConversationUserInviteDao extends AbstractDao<BrPmConversationU
 	
 	@Override
 	public List<BrPmConversationUserInviteDbObj> get(
-			BrPmConversationUserInviteDbObjExample ex) throws Exception {
+			BrPmConversationUserInviteDbObjExample ex) throws RuntimeException {
 		return brPmConversationUserInviteDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(BrPmConversationUserInvite obj) {
+	public void hardDelete(BrPmConversationUserInvite obj) throws RuntimeException {
 		BrPmConversationUserInviteDbObjExample ex = getExample();
 		ex.createCriteria().andUsersIdEqualTo(obj.getUsersId()).andPmConversationIdEqualTo(obj.getPmConversationId());
 		
@@ -31,28 +31,28 @@ public class BrPmConversationUserInviteDao extends AbstractDao<BrPmConversationU
 	}
 
 	@Override
-	public void updateOrInsert(BrPmConversationUserInvite obj) {
+	public void updateOrInsert(BrPmConversationUserInvite obj) throws RuntimeException {
 		BrPmConversationUserInviteDbObj dbObj = mapper.map(obj, BrPmConversationUserInviteDbObj.class);
 		brPmConversationUserInviteDbObjMapper.insert(dbObj);
 	}
 
 	@Override
 	public void updateByExample(BrPmConversationUserInvite obj,
-			BrPmConversationUserInviteDbObjExample ex) {
+			BrPmConversationUserInviteDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(BrPmConversationUserInvite obj,
-			BrPmConversationUserInviteDbObjExample ex) throws Exception {
+			BrPmConversationUserInviteDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Integer countByExample(BrPmConversationUserInvite obj,
-			BrPmConversationUserInviteDbObjExample ex) throws Exception {
+			BrPmConversationUserInviteDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

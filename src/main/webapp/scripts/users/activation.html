@@ -1,0 +1,24 @@
+<div ng-controller="ActivationCtrl as vm">
+	<div class="section-container">
+		<div class="section-header">
+			<div class="section-title-wrapper">
+				<div class="section-title"><i class="fas fa-user-lock"></i>User Activation</div>
+			</div>
+		</div>
+		<div class="section-body no-padding">
+			<div class="row padded">
+				<div ng-if="vm.status === ACTIVATION_PENDING">
+					We are attempting to activate your account. Please wait a moment...
+				</div>
+				
+				<div class="success-text" ng-if="vm.status === ACTIVATION_APPROVED">
+					<i class="fas fa-check-circle"></i> Account successfully activated! You may now log in!
+				</div>
+				
+				<div class="error-text" ng-if="vm.status === ACTIVATION_DENIED">
+					<i class="fas fa-exclamation-triangle"></i> We're sorry, but there was a problem activating your account. Please contact a staff member for assistance.
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

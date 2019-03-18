@@ -17,18 +17,18 @@ public class LkupMemberGroupDao extends AbstractDao<LkupMemberGroupDbObjExample,
 	LkupMemberGroupDbObjMapper lkupMemberGroupDbObjMapper;
 	
 	@Override
-	public List<LkupMemberGroupDbObj> get(LkupMemberGroupDbObjExample ex) throws Exception {
+	public List<LkupMemberGroupDbObj> get(LkupMemberGroupDbObjExample ex) throws RuntimeException {
 		return lkupMemberGroupDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(LkupMemberGroup obj) {
+	public void hardDelete(LkupMemberGroup obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(LkupMemberGroup obj) throws Exception {
+	public void updateOrInsert(LkupMemberGroup obj) throws RuntimeException {
 		LkupMemberGroupDbObj dbObj = mapper.map(obj, LkupMemberGroupDbObj.class);
 		
 		if(dbObj.getMemberGroupId() == -1) {
@@ -42,19 +42,19 @@ public class LkupMemberGroupDao extends AbstractDao<LkupMemberGroupDbObjExample,
 	}
 
 	@Override
-	public void updateByExample(LkupMemberGroup obj, LkupMemberGroupDbObjExample ex) throws Exception {
+	public void updateByExample(LkupMemberGroup obj, LkupMemberGroupDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(LkupMemberGroup obj, LkupMemberGroupDbObjExample ex) throws Exception {
+	public Integer deleteByExample(LkupMemberGroup obj, LkupMemberGroupDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(LkupMemberGroup obj, LkupMemberGroupDbObjExample ex) throws Exception {
+	public Integer countByExample(LkupMemberGroup obj, LkupMemberGroupDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

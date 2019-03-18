@@ -54,33 +54,33 @@ public class ThreadSubscriptionDao extends AbstractDao<ThreadSubscriptionViewDbO
 	
 	@Override
 	public List<ThreadSubscriptionViewDbObj> get(
-			ThreadSubscriptionViewDbObjExample ex) {
+			ThreadSubscriptionViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(ThreadSubscription obj) {
+	public void hardDelete(ThreadSubscription obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(ThreadSubscription obj) {
+	public void updateOrInsert(ThreadSubscription obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateByExample(ThreadSubscription obj,
-			ThreadSubscriptionViewDbObjExample ex) {
+			ThreadSubscriptionViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(ThreadSubscription obj,
-			ThreadSubscriptionViewDbObjExample ex) {
+			ThreadSubscriptionViewDbObjExample ex) throws RuntimeException {
 				return null;
 		// TODO Auto-generated method stub
 		
@@ -88,7 +88,7 @@ public class ThreadSubscriptionDao extends AbstractDao<ThreadSubscriptionViewDbO
 
 	@Override
 	public Integer countByExample(ThreadSubscription obj,
-			ThreadSubscriptionViewDbObjExample ex) throws Exception {
+			ThreadSubscriptionViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

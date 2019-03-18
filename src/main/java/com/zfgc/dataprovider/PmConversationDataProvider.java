@@ -153,20 +153,14 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		} 
 	}
 	
-	public PmConversation getConversation(Integer convoId) throws ZfgcNotFoundException, Exception {
+	public PmConversation getConversation(Integer convoId) throws RuntimeException {
 		PmConversationDbObjExample ex = new PmConversationDbObjExample();
 		ex.createCriteria().andPmConversationIdEqualTo(convoId);
 		List<PmConversationDbObj> conversations = null;
 		PmConversation result = null;
 		
-		try {
-			conversations = pmConversationDao.get(ex);
-			result = null;
-		}
-		catch(Exception e)
-		{
-			throw new Exception(e.getMessage());
-		}
+		conversations = pmConversationDao.get(ex);
+		result = null;
 		
 		if(conversations.size() > 0) {
 			result = mapper.map(conversations.get(0),PmConversation.class);
@@ -178,7 +172,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		}
 	}
 	
-	public void deleteConversationFromBox(PmConversation convo, Users zfgcUser) throws ZfgcNotFoundException, Exception{
+	public void deleteConversationFromBox(PmConversation convo, Users zfgcUser) throws RuntimeException{
 		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId()).andPmConversationIdEqualTo(convo.getPmConversationId());
 		
@@ -192,7 +186,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brUserConversationDao.deleteByExample(null,ex);
 	}
 	
-	public List<PmArchiveBoxView> getArchiveBox(Users zfgcUser) throws ZfgcNotFoundException, Exception{
+	public List<PmArchiveBoxView> getArchiveBox(Users zfgcUser) throws RuntimeException{
 		PmArchiveBoxViewDbObjExample sendEx = pmArchiveBoxViewDao.getExample();
 		sendEx.createCriteria().andSenderIdEqualTo(zfgcUser.getUsersId()).andSendCopyFlagEqualTo(true);
 		
@@ -261,7 +255,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return mapper.map(result.get(0),BrPmConversationUserInvite.class);
 	}
 	
-	public boolean isUserPartOfConvo(Integer pmConversationId, Integer usersId) throws Exception{
+	public boolean isUserPartOfConvo(Integer pmConversationId, Integer usersId) throws RuntimeException{
 		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(usersId).andPmConversationIdEqualTo(pmConversationId);
 		List<BrUserConversationDbObj> result = null;
@@ -275,7 +269,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return result.size() > 0;
 	}
 	
-	public boolean isConvoArchived(Integer pmConversationId, Integer usersId) throws Exception{
+	public boolean isConvoArchived(Integer pmConversationId, Integer usersId) throws RuntimeException{
 		BrPmConversationArchiveDbObjExample ex = brPmConversationArchiveDao.getExample();
 		ex.createCriteria().andPmConversationIdEqualTo(pmConversationId).andUsersIdEqualTo(usersId);
 		List<BrPmConversationArchiveDbObj> result = null;
@@ -307,7 +301,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brPmConversationUserInviteDao.hardDelete(invite);
 	}
 	
-	public void setConvoToRead(Integer convoId, Integer usersId) throws Exception{
+	public void setConvoToRead(Integer convoId, Integer usersId) throws RuntimeException{
 		BrUserConversation convo = new BrUserConversation();
 		convo.setUsersId(usersId);
 		convo.setPmConversationId(convoId);
@@ -318,7 +312,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brUserConversationDao.updateByExample(convo, ex);
 	}
 	
-	public void setConvoToUnRead(Integer convoId, Integer usersId) throws Exception{
+	public void setConvoToUnRead(Integer convoId, Integer usersId) throws RuntimeException{
 		BrUserConversation convo = new BrUserConversation();
 		convo.setUsersId(usersId);
 		convo.setPmConversationId(convoId);

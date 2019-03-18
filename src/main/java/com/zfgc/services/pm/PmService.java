@@ -206,7 +206,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public PmConversation sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException, Exception{
+	public PmConversation sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException, RuntimeException{
 		if(user.getUsersId() == null){
 			throw new ZfgcNotFoundException();
 		}
@@ -256,7 +256,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public PersonalMessage sendMessage(Users user, PersonalMessage message) throws Exception{
+	public PersonalMessage sendMessage(Users user, PersonalMessage message) throws RuntimeException{
 		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
 		
 		Key senderKey = null;
@@ -278,7 +278,7 @@ public class PmService extends AbstractService {
 			}
 			catch(Exception ex){
 				ex.printStackTrace();
-				throw ex;
+				throw new RuntimeException(ex);
 			}
 			
 		}
@@ -364,7 +364,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException {
+	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException, RuntimeException {
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
 		aesKey.setUsersId(user.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
@@ -449,7 +449,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public void removeMultiConvoFromInbox(PmConversationMulti convos, Users zfgcUser)  throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+	public void removeMultiConvoFromInbox(PmConversationMulti convos, Users zfgcUser)  throws ZfgcInvalidAesKeyException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!checkIfAesKeyValid(convos.getAesKey(),zfgcUser)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
@@ -463,7 +463,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public void moveMultiConversationToArchive(PmConversationMulti convos, Users zfgcUser)  throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+	public void moveMultiConversationToArchive(PmConversationMulti convos, Users zfgcUser)  throws ZfgcInvalidAesKeyException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!checkIfAesKeyValid(convos.getAesKey(),zfgcUser)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
@@ -485,7 +485,8 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public void moveConversationToArchive(TwoFactorKey aesKey, Integer convoId, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+	@Transactional
+	public void moveConversationToArchive(TwoFactorKey aesKey, Integer convoId, Users zfgcUser) throws ZfgcInvalidAesKeyException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!checkIfAesKeyValid(aesKey,zfgcUser)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
@@ -504,7 +505,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public PmConvoBox getArchiveBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+	public PmConvoBox getArchiveBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!checkIfAesKeyValid(aesKey,zfgcUser)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
@@ -564,7 +565,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public void inviteUsers(Integer conversationId, PmUsersToAdd pmUsers, Users user) throws ZfgcNotFoundException, Exception{
+	public void inviteUsers(Integer conversationId, PmUsersToAdd pmUsers, Users user) throws ZfgcNotFoundException, RuntimeException{
 		
 		Users zfgc = new Users();
 		//todo: move this ID to a constants class
@@ -600,7 +601,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	private void addUserToConvo(Integer conversationId, Users user, TwoFactorKey aes) throws Exception{
+	private void addUserToConvo(Integer conversationId, Users user, TwoFactorKey aes) throws RuntimeException{
 		//get the user's invite
 		try {
 			BrPmConversationUserInvite invite = pmConversationDataProvider.getConvoInvite(conversationId, user.getUsersId());
@@ -612,7 +613,7 @@ public class PmService extends AbstractService {
 			pmConversationDataProvider.deleteInvite(invite);
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw e;
+			throw new RuntimeException(e);
 		}
 	}
 	

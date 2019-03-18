@@ -80,31 +80,31 @@ public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj, Thre
 	}
 	
 	@Override
-	public List<ThreadDbObj> get(ThreadDbObjExample ex) {
+	public List<ThreadDbObj> get(ThreadDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(Thread obj) {
+	public void hardDelete(Thread obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(Thread obj) {
+	public void updateOrInsert(Thread obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(Thread obj, ThreadDbObjExample ex) {
+	public void updateByExample(Thread obj, ThreadDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(Thread obj, ThreadDbObjExample ex) {
+	public Integer deleteByExample(Thread obj, ThreadDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
@@ -112,7 +112,7 @@ public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj, Thre
 
 	@Override
 	public Integer countByExample(Thread obj, ThreadDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

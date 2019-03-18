@@ -18,39 +18,39 @@ public class WhosOnlineDao extends AbstractDao<OnlineUserDbObjExample, OnlineUse
 	
 	@Override
 	public List<OnlineUserDbObj> get(OnlineUserDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		return onlineUserDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(OnlineUser obj) {
+	public void hardDelete(OnlineUser obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(OnlineUser obj) throws Exception {
+	public void updateOrInsert(OnlineUser obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateByExample(OnlineUser obj, OnlineUserDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(OnlineUser obj, OnlineUserDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Integer countByExample(OnlineUser obj, OnlineUserDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

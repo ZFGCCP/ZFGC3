@@ -11,18 +11,23 @@
     				password="${mbg.jdbc.password}"
     				userId="${mbg.jdbc.username}"/>
     				
-    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="forum">
+    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="ZFGC3">
     	<property name="enableSubPackages" value="true" />
     </javaModelGenerator>
-    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="forum">
+    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3">
     	<property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="forum" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3" type="XMLMAPPER" />
     
     
 
     <!-- tables -->
-    <!--<table schema="zfgc3" tableName="LKUP_MEMBER_GROUP" domainObjectName="LkupMemberGroupDbObj">
+    <table schema="zfgc3" tableName="LKUP_MEMBER_GROUP" domainObjectName="LkupMemberGroupDbObj">
+    	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <!--<table schema="zfgc3" tableName="BR_MEMBER_GROUP_USER" domainObjectName="BrMemberGroupUserDbObj">
+    </table>
+    <table schema="zfgc3" tableName="LKUP_MEMBER_GROUP" domainObjectName="LkupMemberGroupDbObj">
     	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
@@ -208,13 +213,13 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>

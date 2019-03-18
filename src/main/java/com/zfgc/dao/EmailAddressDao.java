@@ -17,18 +17,18 @@ public class EmailAddressDao extends AbstractDao<EmailAddressDbObjExample, Email
 	private EmailAddressDbObjMapper emailAddressDbObjMapper;
 	
 	@Override
-	public List<EmailAddressDbObj> get(EmailAddressDbObjExample ex) throws Exception {
+	public List<EmailAddressDbObj> get(EmailAddressDbObjExample ex) throws RuntimeException {
 		return emailAddressDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(EmailAddress obj) {
+	public void hardDelete(EmailAddress obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(EmailAddress obj) throws Exception {
+	public void updateOrInsert(EmailAddress obj) throws RuntimeException {
 		EmailAddressDbObj dbObj = mapper.map(obj, EmailAddressDbObj.class);
 		if(obj.getEmailAddressId() == null || obj.getEmailAddressId() == -1) {
 			emailAddressDbObjMapper.insert(dbObj);
@@ -42,19 +42,19 @@ public class EmailAddressDao extends AbstractDao<EmailAddressDbObjExample, Email
 	}
 
 	@Override
-	public void updateByExample(EmailAddress obj, EmailAddressDbObjExample ex) throws Exception {
+	public void updateByExample(EmailAddress obj, EmailAddressDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(EmailAddress obj, EmailAddressDbObjExample ex) throws Exception {
+	public Integer deleteByExample(EmailAddress obj, EmailAddressDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(EmailAddress obj, EmailAddressDbObjExample ex) throws Exception {
+	public Integer countByExample(EmailAddress obj, EmailAddressDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

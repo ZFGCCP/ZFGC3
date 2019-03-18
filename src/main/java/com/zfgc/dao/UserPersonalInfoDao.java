@@ -18,18 +18,18 @@ public class UserPersonalInfoDao extends AbstractDao<UserPersonalInfoDbObjExampl
 	
 	@Override
 	public List<UserPersonalInfoDbObj> get(UserPersonalInfoDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		return userPersonalInfoDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(PersonalInfo obj) {
+	public void hardDelete(PersonalInfo obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(PersonalInfo obj) throws Exception {
+	public void updateOrInsert(PersonalInfo obj) throws RuntimeException {
 		UserPersonalInfoDbObj dbObj = mapper.map(obj,UserPersonalInfoDbObj.class);
 		if(obj.getUserPersonalInfoId() == null || obj.getUserPersonalInfoId() == -1){
 			userPersonalInfoDbObjMapper.insert(dbObj);
@@ -43,21 +43,21 @@ public class UserPersonalInfoDao extends AbstractDao<UserPersonalInfoDbObjExampl
 
 	@Override
 	public void updateByExample(PersonalInfo obj,
-			UserPersonalInfoDbObjExample ex) throws Exception {
+			UserPersonalInfoDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(PersonalInfo obj,
-			UserPersonalInfoDbObjExample ex) throws Exception {
+			UserPersonalInfoDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Integer countByExample(PersonalInfo obj,
-			UserPersonalInfoDbObjExample ex) throws Exception {
+			UserPersonalInfoDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

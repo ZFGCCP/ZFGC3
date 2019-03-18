@@ -312,6 +312,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 	}
 
 	@Transactional
+	@Deprecated
 	public void linkUserToIp(Users user, IpAddress ipAddress, Boolean setPrimary) throws Exception{
 		if(setPrimary){
 			UsersDbObj tempUser = new UsersDbObj();
@@ -462,30 +463,30 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 	}
 	
 	@Override
-	public List<UsersDbObj> get(UsersDbObjExample ex) {
+	public List<UsersDbObj> get(UsersDbObjExample ex) throws RuntimeException {
 		return usersDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(Users obj) {
+	public void hardDelete(Users obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(Users obj) {
+	public void updateOrInsert(Users obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(Users obj, UsersDbObjExample ex) {
+	public void updateByExample(Users obj, UsersDbObjExample ex) throws RuntimeException {
 		UsersDbObj dbObj = mapper.map(obj, UsersDbObj.class);
 		usersDbObjMapper.updateByExampleSelective(dbObj, ex);
 	}
 
 	@Override
-	public Integer deleteByExample(Users obj, UsersDbObjExample ex) {
+	public Integer deleteByExample(Users obj, UsersDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
@@ -493,7 +494,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 
 	@Override
 	public Integer countByExample(Users obj, UsersDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -47,7 +47,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-4">
 					<select ng-disabled="!vm.isUserAdmin()"
-					        ng-model="vm.profile.primaryMemberGroupId" 
+					        ng-model="vm.profile.primaryMemberGroup.memberGroupId" 
 					        ng-options="memberGroup.id as memberGroup.value for memberGroup in vm.lookups.MEMBER_GROUP" 
 					        class="form-control small-input">
 				    </select>
@@ -59,7 +59,19 @@
 					<label>Secondary Membergroups</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					Click to view
+					<div class="responsive-table">
+						<div class="responsive-table-body">
+							<div class="responsive-table-row" ng-repeat="($index,group) in vm.profile.secondaryMemberGroups.memberGroups track by $index">
+								<div class="responsive-table-cell">
+									<i class="fas fa-trash"></i>
+								</div>
+								<div class="responsive-table-cell">
+									{{group.groupName}}
+								</div>
+							</div>
+						</div>
+						
+					</div>
 				</div>
 			</div>
 		</div>

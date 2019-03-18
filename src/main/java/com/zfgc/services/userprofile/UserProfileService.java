@@ -29,6 +29,7 @@ import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.sanitization.SanitizationService;
+import com.zfgc.services.users.MemberGroupService;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.validation.uservalidation.AccountSettingsValidator;
 import com.zfgc.validation.uservalidation.ProfileValidator;
@@ -77,6 +78,9 @@ public class UserProfileService extends AbstractService{
 	@Autowired
 	RuleRunService<Users> ruleRunner;
 	
+	@Autowired
+	MemberGroupService memberGroupService;
+	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
 	}
@@ -98,6 +102,7 @@ public class UserProfileService extends AbstractService{
 		//user.setTimeOffsetLkup(lookupService.getLkupValue(lookupService.TIMEZONE, user.getTimeOffset()));
 		
 		//permissions
+		profileView.setSecondaryMemberGroups(memberGroupService.getSecondaryMemberGroups(userId));
 		
 		//if you're not the owner if this profile, and you're not an admin
 		if(currentUserId == null || (!currentUserId.equals(userId) && 

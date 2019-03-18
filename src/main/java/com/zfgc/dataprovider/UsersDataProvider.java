@@ -32,7 +32,6 @@ import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
-@Transactional
 public class UsersDataProvider extends AbstractDataProvider {
 	@Autowired
 	private DozerBeanMapper mapper;
@@ -110,8 +109,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		}
 	}
 	
-	@Transactional
-	public Users createUser(Users user) throws Exception{
+	public Users createUser(Users user) throws RuntimeException{
 		
 		try {
 			//log Ip Address
@@ -131,11 +129,10 @@ public class UsersDataProvider extends AbstractDataProvider {
 			
 			return user;
 		} catch (Exception ex) {
-			throw new Exception(ex);
+			throw new RuntimeException(ex);
 		}
 	}
 	
-	@Transactional
 	public void setLogintime(Date loginTime,Users user){
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(user.getUsersId());

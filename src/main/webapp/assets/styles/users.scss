@@ -256,6 +256,34 @@
 	}
 }
 
+.member-badge-member{
+	width: 120px;
+    height: 24px;
+    background-color: #423d3d;
+    border: 2px outset #bdbdbd;
+    border-radius: 6px;
+    padding: 6px 10px;
+    margin-top: -10px;
+    
+    @media(max-width:767px){
+    	display:none;
+    }
+}
+
+.member-badge-member-sm{
+	width: 90px;
+    height: 24px;
+    background-color: #423d3d;
+    border: 2px outset #bdbdbd;
+    border-radius: 6px;
+    padding: 1px 10px;
+    margin: -10px 0 3px 0;
+
+	@media(min-width:768px){
+		display:none;
+	}
+}
+
 .bottom-section-wrap{
 	@media(max-width:767px){
 		float:none;
