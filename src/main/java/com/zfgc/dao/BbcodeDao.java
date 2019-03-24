@@ -63,31 +63,31 @@ public class BbcodeDao extends AbstractDao<BbCodeConfigDbObjExample, BbCodeConfi
 	}
 
 	@Override
-	public List<BbCodeConfigDbObj> get(BbCodeConfigDbObjExample ex) {
+	public List<BbCodeConfigDbObj> get(BbCodeConfigDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(BbcodeConfig obj) {
+	public void hardDelete(BbcodeConfig obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(BbcodeConfig obj) {
+	public void updateOrInsert(BbcodeConfig obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex) {
+	public void updateByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex) {
+	public Integer deleteByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
@@ -95,7 +95,7 @@ public class BbcodeDao extends AbstractDao<BbCodeConfigDbObjExample, BbCodeConfi
 
 	@Override
 	public Integer countByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

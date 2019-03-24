@@ -51,6 +51,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private String location;
 	private Boolean agreeToTermsFlag = false;
 	private Map<Integer,String> memberGroups = new HashMap<>();
+	private SecondaryMemberGroups secondaryMemberGroups;
 	private Integer primaryMemberGroupId = 0;
 	private String personalText;
 	private String customTitle;
@@ -507,5 +508,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@JsonIgnore
 	public String getCurrentIpAddress() {
 		return super.getUserIp();
+	}
+	public SecondaryMemberGroups getSecondaryMemberGroups() {
+		return secondaryMemberGroups;
+	}
+	public void setSecondaryMemberGroups(SecondaryMemberGroups secondaryMemberGroups) {
+		this.secondaryMemberGroups = secondaryMemberGroups;
 	}
 }

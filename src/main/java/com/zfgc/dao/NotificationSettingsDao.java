@@ -44,19 +44,19 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbO
 	}
 
 	@Override
-	public List<NotificationSettingsDbObj> get(NotificationSettingsDbObjExample ex) {
+	public List<NotificationSettingsDbObj> get(NotificationSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(NotificationSettings obj) {
+	public void hardDelete(NotificationSettings obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(NotificationSettings obj) {
+	public void updateOrInsert(NotificationSettings obj) throws RuntimeException {
 		NotificationSettingsDbObj dbObj = mapper.map(obj, NotificationSettingsDbObj.class);
 		if(dbObj.getNotificationSettingsId() == -1){
 			notificationSettingsDbObjMapper.insert(dbObj);
@@ -69,14 +69,14 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbO
 
 	@Override
 	public void updateByExample(NotificationSettings obj,
-			NotificationSettingsDbObjExample ex) {
+			NotificationSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(NotificationSettings obj,
-			NotificationSettingsDbObjExample ex) {
+			NotificationSettingsDbObjExample ex) throws RuntimeException {
 				return null;
 		// TODO Auto-generated method stub
 		
@@ -84,7 +84,7 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbO
 
 	@Override
 	public Integer countByExample(NotificationSettings obj,
-			NotificationSettingsDbObjExample ex) throws Exception {
+			NotificationSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

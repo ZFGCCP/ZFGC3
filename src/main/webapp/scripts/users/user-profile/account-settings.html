@@ -47,7 +47,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-4">
 					<select ng-disabled="!vm.isUserAdmin()"
-					        ng-model="vm.profile.primaryMemberGroupId" 
+					        ng-model="vm.profile.primaryMemberGroup.memberGroupId" 
 					        ng-options="memberGroup.id as memberGroup.value for memberGroup in vm.lookups.MEMBER_GROUP" 
 					        class="form-control small-input">
 				    </select>
@@ -59,7 +59,20 @@
 					<label>Secondary Membergroups</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					Click to view
+					
+					<div class="list-view-search dropdown-parent">
+						<select ng-model="vm.selectedMemberGroup" ng-change="vm.addMemberGroup()" ng-options="group.id as group.value for group in vm.lookups.MEMBER_GROUP" class="form-control small-input" ng-class="{'top-input' : vm.profile.secondaryMemberGroups.memberGroups.length > 0}"></select>
+					</div>
+					<div class="list-view-wrapper" ng-class="{'hide' : vm.profile.secondaryMemberGroups.memberGroups.length === 0}">
+						<div class="list-data" ng-repeat="($index,group) in vm.profile.secondaryMemberGroups.memberGroups track by $index">
+							<div class="list-cell trash">
+								<i class="fas fa-trash" ng-click="vm.removeMemberGroup($index)"></i>
+							</div>
+							<div class="list-cell data">
+								{{vm.getLkupValue(vm.lookups.MEMBER_GROUP, group.memberGroupId)}}
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

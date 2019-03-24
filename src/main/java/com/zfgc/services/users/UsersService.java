@@ -173,7 +173,7 @@ public class UsersService extends AbstractService {
 				}
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				throw ex;
+				throw new RuntimeException(ex);
 			}
 		}
 		return user;

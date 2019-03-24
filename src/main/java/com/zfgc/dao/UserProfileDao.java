@@ -62,7 +62,7 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 	}
 
 	@Override
-	public List<UserProfileViewDbObj> get(UserProfileViewDbObjExample ex) throws ZfgcNotFoundException {
+	public List<UserProfileViewDbObj> get(UserProfileViewDbObjExample ex) throws ZfgcNotFoundException, RuntimeException {
 		List<UserProfileViewDbObj> db = userProfileViewDbObjMapper.selectByExample(ex);
 		
 		if(db.size() == 0){
@@ -73,27 +73,27 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 	}
 
 	@Override
-	public void hardDelete(UserProfileView obj) {
+	public void hardDelete(UserProfileView obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(UserProfileView obj) {
+	public void updateOrInsert(UserProfileView obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateByExample(UserProfileView obj,
-			UserProfileViewDbObjExample ex) {
+			UserProfileViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(UserProfileView obj,
-			UserProfileViewDbObjExample ex) {
+			UserProfileViewDbObjExample ex) throws RuntimeException {
 				return null;
 		// TODO Auto-generated method stub
 		
@@ -101,7 +101,7 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 
 	@Override
 	public Integer countByExample(UserProfileView obj,
-			UserProfileViewDbObjExample ex) throws Exception {
+			UserProfileViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -21,18 +21,18 @@ public class UserSecuritySettingsDao extends AbstractDao<UserSecuritySettingsDbO
 	}
 	
 	@Override
-	public List<UserSecuritySettingsDbObj> get(UserSecuritySettingsDbObjExample ex) throws Exception {
+	public List<UserSecuritySettingsDbObj> get(UserSecuritySettingsDbObjExample ex) throws RuntimeException {
 		return userSecuritySettingsDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(UserSecurityInfo obj) {
+	public void hardDelete(UserSecurityInfo obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(UserSecurityInfo obj) {
+	public void updateOrInsert(UserSecurityInfo obj) throws RuntimeException {
 		UserSecuritySettingsDbObj dbObj = mapper.map(obj, UserSecuritySettingsDbObj.class);
 		
 		if(obj.getUserSecuritySettingsId() == null || obj.getUserSecuritySettingsId() == -1) {
@@ -46,19 +46,19 @@ public class UserSecuritySettingsDao extends AbstractDao<UserSecuritySettingsDbO
 	}
 
 	@Override
-	public void updateByExample(UserSecurityInfo obj, UserSecuritySettingsDbObjExample ex) throws Exception {
+	public void updateByExample(UserSecurityInfo obj, UserSecuritySettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(UserSecurityInfo obj, UserSecuritySettingsDbObjExample ex) throws Exception {
+	public Integer deleteByExample(UserSecurityInfo obj, UserSecuritySettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(UserSecurityInfo obj, UserSecuritySettingsDbObjExample ex) throws Exception {
+	public Integer countByExample(UserSecurityInfo obj, UserSecuritySettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

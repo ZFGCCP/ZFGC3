@@ -1,0 +1,42 @@
+.list-view-wrapper{
+	max-height: 150px;
+	overflow-y: auto;
+	border:1px solid black;
+	border-top: 0;
+	border-radius: 0 0 4px 4px;
+	
+	.list-data{
+		@media(max-width:767px){
+			height: 50px;
+		}
+	
+		height: 30px;
+		
+		.list-cell{
+			display:inline-block;
+		
+			&.trash{
+				@media(max-width: 767px){
+					font-size: 25px;
+				}
+			
+				text-shadow: 2px 2px 1px black;
+				font-size: 16px;
+			    width: 30px;
+			    position: relative;
+			    top: 7px;
+			    left: 10px;
+			    
+			    :hover{
+			    	cursor: pointer;
+			    	text-shadow: none;
+			    }
+			}
+			
+			&.data{   
+    			position: relative;
+    			top: 5px;
+			}
+		}
+	}
+}
