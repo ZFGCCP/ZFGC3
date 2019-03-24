@@ -107,8 +107,31 @@ table{
 	}
 }
 
-.inf-scroll-result:hover{
+.list-view-wrapper{
+	.list-data{
+	
+		.list-cell{
+			&.trash{
+				color: $midnight-stop;
+				
+				:hover{ 
+					color: $midnight-stop-hover;
+				}
+			}
+		}
+	}
+
+	.list-data:nth-child(odd){
+		background-color:$midnight-zebra-odd;
+	}
+		
+	.list-data:nth-child(even){
+		background-color:$midnight-zebra-even;
+	}
+	
+	.list-data:hover{
 		background-color:$midnight-row-hover;
+	}
 }
 
 ul.pagination{

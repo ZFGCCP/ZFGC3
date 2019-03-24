@@ -3,6 +3,7 @@ package com.zfgc.dataprovider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dao.BrMemberGroupUserDao;
 import com.zfgc.dao.EmailAddressDao;
 import com.zfgc.dao.NotificationSettingsDao;
 import com.zfgc.dao.PersonalMessagingSettingsDao;
@@ -10,9 +11,11 @@ import com.zfgc.dao.UserContactSettingsDao;
 import com.zfgc.dao.UserPersonalInfoDao;
 import com.zfgc.dao.UserProfileDao;
 import com.zfgc.dao.UserSecuritySettingsDao;
+import com.zfgc.dbobj.BrMemberGroupUserDbObjExample;
 import com.zfgc.dbobj.UserProfileViewDbObj;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.avatar.Avatar;
+import com.zfgc.model.bridge.BrMemberGroupUser;
 import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
@@ -52,6 +55,9 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	
 	@Autowired
 	EmailAddressDao emailAddressDao;
+	
+	@Autowired
+	BrMemberGroupUserDao brMemberGroupUserDao;
 	
 	public UserProfileView getUserProfile(Integer userId) throws Exception{
 		UserProfileViewDbObj userProfileViewDbObj = null;
@@ -95,6 +101,17 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		
 		userContactSettingsDao.updateOrInsert(accountSettings.getUserContactInfo());
 		userSecuritySettingsDao.updateOrInsert(accountSettings.getUserSecurityInfo());
+		
+		BrMemberGroupUserDbObjExample ex = brMemberGroupUserDao.getExample();
+		brMemberGroupUserDao.deleteByExample(null, ex);
+		
+		for(LkupMemberGroup group : accountSettings.getSecondaryMemberGroups().getMemberGroups()){
+			BrMemberGroupUser memberGroupUser = new BrMemberGroupUser();
+			memberGroupUser.setMemberGroupId(group.getMemberGroupId());
+			memberGroupUser.setUsersId(accountSettings.getUsersId());
+			brMemberGroupUserDao.updateOrInsert(memberGroupUser);
+		}
+		
 	}
 	
 	private void updateEmailAddress(Integer usersId, String email) throws Exception {

@@ -68,6 +68,14 @@
 			return UserService.loggedInUser.memberGroupNames.indexOf('Manager') > -1; 
 		};
 		
+		vm.addMemberGroup = function(){
+			vm.profile.secondaryMemberGroups.memberGroups.push({memberGroupId : vm.selectedMemberGroup});
+		};
+		
+		vm.removeMemberGroup = function(index){
+			vm.profile.secondaryMemberGroups.memberGroups.splice(index,1);
+		};
+		
 		 var w = angular.element($window);
          w.bind('resize', function () {
              

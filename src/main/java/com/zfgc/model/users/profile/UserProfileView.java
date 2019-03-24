@@ -115,6 +115,9 @@ public class UserProfileView extends BaseZfgcModel {
 		return sdf.format(dateRegistered);
 	}
 	public String getUserLocalTimeAsString(){
+		if(getTimeZone() == null){
+			return "";
+		}
 		Date now = new Date();
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(getTimeZone());
 		return sdf.format(now);
