@@ -65,7 +65,11 @@
 		};
 		
 		vm.isUserAdmin = function(){
-			return UserService.loggedInUser.memberGroupNames.indexOf('Manager') > -1; 
+			return UserService.isUserAdmin(UserService.loggedInUser);
+		};
+		
+		vm.isUserModerator = function(){
+			return UserService.isUserModerator(UserService.loggedInUser);
 		};
 		
 		vm.addMemberGroup = function(){

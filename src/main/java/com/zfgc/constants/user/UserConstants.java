@@ -7,4 +7,13 @@ public final class UserConstants {
 		public static  final int EXTERNAL_URL = 3;
 		public static  final int GALLERY = 4;
 	}
+	
+	public final class permissions{
+		public static final String ZFGC_ACCOUNT_ACTIVATOR = "ZFGC_ACCOUNT_ACTIVATOR";
+		public static final String ZFGC_USER = "ZFGC_USER";
+		public static final String ZFGC_STAFF = "ZFGC_STAFF";
+		public static final String ZFGC_MODERATION_STAFF = "ZFGC_MODERATION_STAFF";
+		public static final String ZFGC_ADMINISTRATION_STAFF = "ZFGC_ADMINISTRATION_STAFF";
+		
+	}
 }

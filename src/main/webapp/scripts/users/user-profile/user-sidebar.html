@@ -10,7 +10,6 @@
 		</div>
 		<div class="user-customtitle" ng-if="vm.profile.personalInfo.customTitle !== null">{{vm.profile.personalInfo.customTitle}}</div>
 		<div class="user-avatar-wrap">
-		   <!--<img class="user-avatar" src="http://zfgc.com/forum/index.php?action=dlattach;attach=12126;type=avatar"/>-->
 		   <img class="user-avatar" ng-src="{{vm.getAvatarUrl()}}"/>
 		</div>
 		<div class="member-badge-{{vm.profile.primaryMemberGroup.groupName.toLowerCase()}}">{{vm.profile.primaryMemberGroup.groupName}}</div>

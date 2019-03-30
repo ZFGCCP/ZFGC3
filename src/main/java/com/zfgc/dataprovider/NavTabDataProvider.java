@@ -19,13 +19,13 @@ public class NavTabDataProvider extends AbstractDataProvider {
 	@Autowired
 	NavTabDao navTabDao;
 	
-	public List<NavTab> getNavTabs(Users user) throws Exception{
+	public List<NavTab> getNavTabs(Users user) throws RuntimeException{
 		List<NavTabViewDbObj> navTabsDb = null;
 		try{
 			navTabsDb = navTabDao.getNavigationTabs(user);
 		}
 		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+			throw new RuntimeException(ex.getMessage());
 		}
 		Map<Integer, NavTab> mappedTabs = new HashMap<>();
 		

@@ -198,6 +198,7 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 "/zfgcui/userprofile",
 	        									 "/socket/whosonline",
 	        									 "/lookups/**",
+	        									 "/contentstream/**",
 	        									 "/subscriptions/threads/**",
 	        									 "/users/profile/{{\\d+}}",
 	        									 "/users/navigation",

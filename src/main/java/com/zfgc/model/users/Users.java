@@ -80,6 +80,9 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Date lastLogin;
 	private Integer primaryIp;
 	
+	@JsonIgnore
+	private List<Permissions> permissions;
+	
 	private String authToken;
 	private Boolean fromDb = true;
 	
@@ -98,6 +101,40 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	
 	@JsonIgnore
 	private UserProfileView savedProfile;
+	
+	//===================
+	//Permissions
+	//===================
+	
+	private boolean hasPerm(String permCode){
+		if(permissions == null){
+			return false;
+		}
+		
+		for(Permissions perm : permissions){
+			if(perm.getPermissionsCode().equals(permCode)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public Boolean isStaffMember(){
+		return hasPerm("ZFGC_STAFF");
+	}
+	
+	public Boolean isModerationStaff(){
+		return hasPerm("ZFGC_MODERATION_STAFF");
+	}
+	
+	public Boolean isAdministrationStaff(){
+		return hasPerm("ZFGC_ADMINISTRATION_STAFF");
+	}
+	
+	public Boolean isAccountSettingsEditorOrAdmin(){
+		return hasPerm("ZFGC_ACCOUNT_SETTINGS_EDITOR") || hasPerm("ZFGC_ACCOUNT_SETTINGS_ADMIN");
+	}
 	
 	public UserProfileView getSavedProfile() {
 		return savedProfile;
@@ -380,10 +417,12 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		List<String> roles = this.getMemberGroupNames();
 		
-		for(String role : roles){
-			authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
+		
+		if(permissions != null){
+			for(Permissions perm : permissions){
+				authorities.add(new SimpleGrantedAuthority("ROLE_" + perm.getPermissionsCode()));
+			}
 		}
 		return authorities;
 		//return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
@@ -462,7 +501,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		this.buddyList = buddyList;
 	}
 	public boolean getIsManager(){
-		return primaryMemberGroupId == 1 || memberGroups.containsKey(1);
+		return (primaryMemberGroupId != null && primaryMemberGroupId == 1 || memberGroups.containsKey(1));
 	}
 	@JsonIgnore
 	public boolean getHasRoles(String ... roles){
@@ -514,5 +553,11 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setSecondaryMemberGroups(SecondaryMemberGroups secondaryMemberGroups) {
 		this.secondaryMemberGroups = secondaryMemberGroups;
+	}
+	public List<Permissions> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(List<Permissions> permissions) {
+		this.permissions = permissions;
 	}
 }

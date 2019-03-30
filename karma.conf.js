@@ -115,15 +115,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pm.service.js",
 	    
-	"./src/main/webapp/scripts/modal/modal.service.js",
-	    
-	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.service.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
+	    
+	"./src/main/webapp/scripts/modal/modal.service.js",
+	    
+	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
@@ -177,8 +177,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
-	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
-	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAvatarGallery.html",
@@ -194,6 +192,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/modal/templates/modalUserTitleCard.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	    
+	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    

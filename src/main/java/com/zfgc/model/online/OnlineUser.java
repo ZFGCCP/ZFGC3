@@ -5,6 +5,8 @@ import com.zfgc.model.BaseZfgcModel;
 public class OnlineUser extends BaseZfgcModel {
 	private Integer usersId;
 	private String displayName;
+	private String primaryMemberGroup;
+	
 	public Integer getUsersId() {
 		return usersId;
 	}
@@ -21,6 +23,12 @@ public class OnlineUser extends BaseZfgcModel {
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public String getPrimaryMemberGroup() {
+		return primaryMemberGroup.toLowerCase();
+	}
+	public void setPrimaryMemberGroup(String primaryMemberGroup) {
+		this.primaryMemberGroup = primaryMemberGroup;
 	}
 	
 	
