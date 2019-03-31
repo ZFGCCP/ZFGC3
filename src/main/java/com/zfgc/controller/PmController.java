@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -51,6 +52,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/send", method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity sendPm(@RequestBody PersonalMessage message){
 		PmConversation convo = null;
 		
@@ -75,6 +77,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/auth", method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity authenticatePmKey(@RequestBody TwoFactorKey aes){
 		if (aes.getKey() == null){
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
@@ -94,6 +97,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity viewConvoBox(@RequestParam("filterType") Integer filterType, @RequestBody TwoFactorKey aesKey){
 		try{
 			
@@ -143,6 +147,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId) {
 		try {
 			PmConversation convo = pmService.getConversation(convoId, aesKey, zfgcUser());
@@ -159,6 +164,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}/delete",method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity deleteConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId){
 		PmConversation convo = new PmConversation();
 		convo.setPmConversationId(convoId);
@@ -177,6 +183,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}/delete/{usersId}")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity deleteConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId, @PathVariable("usersId") Integer usersId){
 		Users remove = new Users();
 		remove.setUsersId(usersId);
@@ -195,6 +202,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/conversation/delete",method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity deleteConversation(@RequestBody PmConversationMulti conversations){
 		try{
 			pmService.removeMultiConvoFromInbox(conversations, zfgcUser());
@@ -210,6 +218,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/converstion/{conversationId}/archive",method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity archiveConversation(@RequestBody TwoFactorKey aesKey, @PathVariable("conversationId") Integer convoId){
 		
 		try{
@@ -226,6 +235,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/conversation/archive",method=RequestMethod.POST,produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity archiveConversation(@RequestBody PmConversationMulti conversations){
 		
 		try{
@@ -242,6 +252,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}/inviteUsers",method=RequestMethod.POST,produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity inviteUsersToConversation(@RequestBody PmUsersToAdd pmUsers, @PathVariable("conversationId") Integer conversationId){
 		try{
 			pmService.inviteUsers(conversationId, pmUsers, zfgcUser());
@@ -255,6 +266,7 @@ public class PmController extends BaseController {
 	}
 	
 	@RequestMapping(value="/convobox/prune", method=RequestMethod.POST,produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity pruneConversations(@RequestBody PmPrune prune){
 		try{
 			pmService.pruneConversations(prune, zfgcUser());

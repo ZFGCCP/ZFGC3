@@ -96,10 +96,6 @@ public class UserProfileService extends AbstractService{
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
 		
-		//get buddy and ignore list
-		//user.getPersonalMessagingSettings().setBuddyList(buddyService.getBuddies(userId));
-		//user.getPersonalMessagingSettings().setIgnoreList(buddyService.getIgnores(userId));
-		
 		Integer currentUserId = zfgcUser.getUsersId();
 		//user.setTimeOffsetLkup(lookupService.getLkupValue(lookupService.TIMEZONE, user.getTimeOffset()));
 		
@@ -108,7 +104,7 @@ public class UserProfileService extends AbstractService{
 		
 		//if you're not the owner if this profile, and you're not an admin
 		if(currentUserId == null || (!currentUserId.equals(userId) && 
-			!zfgcUser.isAccountSettingsEditorOrAdmin())){
+			!zfgcUser.isModerationStaff())){
 			
 			//vm.profile.primaryIpAddress.ipAddress
 			
@@ -146,6 +142,14 @@ public class UserProfileService extends AbstractService{
 			if(profileView.getUserSecurityInfo().getHideEmailFlag()){
 				profileView.getUserContactInfo().setEmail(null);
 			}
+			
+			if(profileView.getUserSecurityInfo().getHideFacebookFlag()) {
+				profileView.getUserContactInfo().setFacebook(null);
+			}
+			
+			profileView.setNotificationSettings(null);
+			profileView.setPersonalMessagingSettings(null);
+			profileView.setSecondaryMemberGroups(null);
 		}
 		else {
 			//get buddy and ignore list

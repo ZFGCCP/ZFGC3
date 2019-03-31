@@ -2,6 +2,6 @@
 					<span ng-include="'scripts/widget-templates/user-profile/summary.html'"> </span>
 </collapsible-widget>
 
-<collapsible-widget widget-title="Contact Info">
+<collapsible-widget widget-title="Contact Info" ng-if="vm.profile.userContactInfo.hasContactInfo">
 				    <span ng-include="'scripts/widget-templates/user-profile/contact-data.html'"> </span>
 </collapsible-widget>

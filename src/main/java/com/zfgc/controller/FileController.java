@@ -13,6 +13,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.MimeType;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -79,6 +80,7 @@ public class FileController extends BaseController{
 	}
 	
 	@RequestMapping(value="/avatar/{usersId}", method=RequestMethod.POST)
+	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity uploadAvatar(@PathVariable("usersId") Integer usersId, @RequestParam("avatarFile") MultipartFile file){
 		try {
 			contentService.saveAvatar(file, usersId, super.zfgcUser());

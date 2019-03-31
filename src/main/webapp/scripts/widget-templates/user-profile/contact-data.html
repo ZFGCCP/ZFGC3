@@ -1,12 +1,12 @@
 <div class="column-data">
-	   	   <div class="row padded-row">
+	   	   <div class="row padded-row" ng-if="vm.profile.userContactInfo.email !== null">
 			   <div class="col-xs-12 col-sm-3 row-label">
 			      <label>Email:</label> 
 			   </div>
 			   <div class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.userContactInfo.email.emailAddress}}</div>
 		   </div>
 		   
-		   <div class="row padded-row" ng-if="vm.profile.userContactInfo.email !== null">
+		   <div class="row padded-row" ng-if="vm.profile.userContactInfo.facebook !== null">
 			   <div class="col-xs-12 col-sm-3 row-label">
 		      		<label>Facebook:</label> 
 		   	   </div>

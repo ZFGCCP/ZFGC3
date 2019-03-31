@@ -17,6 +17,17 @@ public class UserContactInfo extends BaseZfgcModel{
 	
 	private EmailAddress email;
 	
+	public boolean getHasContactInfo() {
+		return skype != null ||
+			   gtalk != null ||
+			   facebook != null ||
+			   psn != null ||
+			   xboxLive != null ||
+			   steam != null ||
+			   nnid != null ||
+			   email != null;
+	}
+	
 	public String getSkype() {
 		return skype;
 	}
