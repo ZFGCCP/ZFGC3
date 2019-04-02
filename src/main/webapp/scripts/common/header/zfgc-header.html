@@ -4,7 +4,7 @@
 			<div>
 				Welcome, <a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
 			</div>
-			<div><a href="http://devidp.zfgc.com/saml2/idp/SingleLogoutService.php?ReturnTo=http://localhost:8080/forum/zfgcui/bbs/index">Logout</a> | <a ui-sref="convoBox">Conversations ({{user.unreadPmCount}})</a></div>
+			<div><a href="saml/logout?local=true">Logout</a> | <a ui-sref="convoBox">Conversations ({{user.unreadPmCount}})</a></div>
 		</div>
 		<div ng-if="user.usersId === -1">
 			<div>

@@ -143,6 +143,7 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .entityBaseURL(zfgcSamlConfig.getEntityBaseUrl())
                 .requestSigned(false)
                 .metadataURL(zfgcSamlConfig.getMetadataUrl())
+                
             .and()
                 .sso()
                 .samlEntryPoint(new XhrSamlEntryPoint())
@@ -150,11 +151,13 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .defaultFailureURL(zfgcSamlConfig.getDefaultFailureUrl())
                 .idpSelectionPageURL(zfgcSamlConfig.getIdpSelectionPageUrl())
                 
+                
                 //.ssoProcessingURL("/forum/SSO")
                 
             .and()
                 .logout()
-                .defaultTargetURL("/")
+                .defaultTargetURL("/zfgcui/bbs/index")
+                .logoutURL("/saml/logout")
             .and()
                 .metadataManager()
                 .refreshCheckInterval(0)

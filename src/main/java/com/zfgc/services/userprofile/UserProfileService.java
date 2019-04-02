@@ -16,6 +16,7 @@ import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.Buddy;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
@@ -102,6 +103,9 @@ public class UserProfileService extends AbstractService{
 		//permissions
 		profileView.setSecondaryMemberGroups(memberGroupService.getSecondaryMemberGroups(userId));
 		
+		//get buddy and ignore list
+		profileView.setBuddyList(buddyService.getBuddies(userId));
+		
 		//if you're not the owner if this profile, and you're not an admin
 		if(currentUserId == null || (!currentUserId.equals(userId) && 
 			!zfgcUser.isModerationStaff())){
@@ -110,50 +114,62 @@ public class UserProfileService extends AbstractService{
 			
 			profileView.setPrimaryIpAddress(null);
 			
+			//if you're not one of the user's buddies
 			//hide contact fields with the hidden flag
-			if(profileView.getUserSecurityInfo().getHideSkypeFlag()){
-				profileView.getUserContactInfo().setSkype(null);
+			boolean isBuddy = false;
+			for(Buddy buddy : profileView.getBuddyList()){
+				if(buddy.getUser().getUsersId() == zfgcUser.getUsersId()){
+					isBuddy = true;
+					break;
+				}
 			}
 			
-			if(profileView.getUserSecurityInfo().getHideSteamFlag()){
-				profileView.getUserContactInfo().setSteam(null);
-			}
-			
-			if(profileView.getUserSecurityInfo().getHideXboxLiveFlag()){
-				profileView.getUserContactInfo().setXboxLive(null);
-			}
-			
-			if(profileView.getUserSecurityInfo().getHideNnidFlag()){
-				profileView.getUserContactInfo().setNnid(null);
-			}
-			
-			if(profileView.getUserSecurityInfo().getHidePsnFlag()){
-				profileView.getUserContactInfo().setPsn(null);
-			}
-			
-			if(profileView.getUserSecurityInfo().getHideGtalkFlag()){
-				profileView.getUserContactInfo().setGtalk(null);
-			}
-			
-			if(profileView.getUserSecurityInfo().getHideBirthDateFlag()){
-				profileView.getPersonalInfo().setBirthDate(null);
-			}
-			
-			if(profileView.getUserSecurityInfo().getHideEmailFlag()){
-				profileView.getUserContactInfo().setEmail(null);
-			}
-			
-			if(profileView.getUserSecurityInfo().getHideFacebookFlag()) {
-				profileView.getUserContactInfo().setFacebook(null);
+			if(!isBuddy){
+				if(profileView.getUserSecurityInfo().getHideSkypeFlag()){
+					profileView.getUserContactInfo().setSkype(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideSteamFlag()){
+					profileView.getUserContactInfo().setSteam(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideXboxLiveFlag()){
+					profileView.getUserContactInfo().setXboxLive(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideNnidFlag()){
+					profileView.getUserContactInfo().setNnid(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHidePsnFlag()){
+					profileView.getUserContactInfo().setPsn(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideGtalkFlag()){
+					profileView.getUserContactInfo().setGtalk(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideBirthDateFlag()){
+					profileView.getPersonalInfo().setBirthDate(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideEmailFlag()){
+					profileView.getUserContactInfo().setEmail(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideFacebookFlag()) {
+					profileView.getUserContactInfo().setFacebook(null);
+				}
+				
+				if(zfgcUser.getUsersId() == -1 || profileView.getPersonalMessagingSettings().getReceiveFromId() == 3){
+					profileView.setHidePm(true);
+				}
 			}
 			
 			profileView.setNotificationSettings(null);
 			profileView.setPersonalMessagingSettings(null);
 			profileView.setSecondaryMemberGroups(null);
-		}
-		else {
-			//get buddy and ignore list
-			profileView.setBuddyList(buddyService.getBuddies(userId));
+			profileView.setBuddyList(null);
 		}
 		
 		if(profileView.getProfileSummary().getSignature() != null){
