@@ -7,6 +7,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.dozer.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,9 +19,12 @@ import org.springframework.stereotype.Service;
 
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.IpAddress;
+import com.zfgc.model.users.Permissions;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.ip.IpAddressService;
+import com.zfgc.services.users.PermissionsService;
 import com.zfgc.services.users.UsersService;
 
 @Service
@@ -34,6 +38,9 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 	
 	@Autowired
 	IpAddressService ipService;
+	
+	@Autowired
+	PermissionsService permissionsService;
 	
 	private List<String> roles;
 	 
@@ -84,7 +91,7 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         
         user.setUsersId(Integer.parseInt(usersId));
         user.setFromDb(false);
-;
+        
         user.setPrimaryMemberGroupId(Integer.parseInt(primaryMemberGroupId));
         user.setTimeZone(credential.getAttributeAsString("TIME_ZONE"));
         
@@ -97,6 +104,17 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         }
         
         user.setMemberGroups(groups);
+        
+        List<Integer> memberGroupIds = new ArrayList<>();
+        memberGroupIds.add(user.getPrimaryMemberGroupId());
+        
+        if(user.getSecondaryMemberGroups() != null){
+	        for(LkupMemberGroup group : user.getSecondaryMemberGroups().getMemberGroups()){
+	        	memberGroupIds.add(group.getMemberGroupId());
+	        }
+        }
+        
+        user.setPermissions(permissionsService.getPermissionsByMemberGroup(memberGroupIds.toArray(new Integer[memberGroupIds.size()])));
         
         usersDataProvider.saveUser(user);
         

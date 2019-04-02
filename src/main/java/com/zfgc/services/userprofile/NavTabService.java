@@ -33,14 +33,14 @@ public class NavTabService extends AbstractService {
 		for(Iterator<NavTab> itr = navTabs.iterator(); itr.hasNext();){
 			NavTab navTab = itr.next();
 			
-			if(!navTab.getAllowSelfFlag() && !canViewSelfTab(userProfileId, user)){
+			if(!canViewTab(userProfileId, navTab, user)){
 				itr.remove();
 				continue;
 			}
 			
 			for(Iterator<NavTab> iterator = navTab.getSubTabs().iterator(); iterator.hasNext();){
 				NavTab childTab = iterator.next();
-				if(!childTab.getAllowSelfFlag() && !canViewSelfTab(userProfileId, user)){
+				if(!canViewTab(userProfileId, childTab, user)){
 					iterator.remove();
 				}
 			}
@@ -60,7 +60,7 @@ public class NavTabService extends AbstractService {
 		return navTabs;
 	}
 	
-	private Boolean canViewSelfTab(Integer userProfileId, Users user){
-		return userProfileId == user.getUsersId() || user.getPrimaryMemberGroupId() == 1 || user.getMemberGroups().contains(1);
+	private Boolean canViewTab(Integer userProfileId, NavTab tab, Users user){
+		return (user.isModerationStaff() || user.isAdministrationStaff()) || (userProfileId == user.getUsersId() && tab.getAllowSelfFlag()) || !tab.getAllowSelfFlag();
 	}
 }

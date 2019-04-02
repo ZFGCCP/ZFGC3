@@ -5,15 +5,33 @@ form{
 	}
 	
 	input[type="checkbox"]{
-		@media(max-width:767px){
-			zoom:2;
-			margin-top:1px;
+		@media(max-width: 767px){
+			padding: 10px;
 		}
-	}
 	
-	 input[type="checkbox"]:checked + label::after {
-	 	color:red;
-	 }
+		-webkit-appearance: none;
+    	background-color: #ffffff;
+    	border: 1px solid black;
+    	padding: 7px;
+    	border-radius: 3px;
+    	display: inline-block;
+    	position: relative;
+	}
+
+	input[type="checkbox"]:checked:after {
+		@media(max-width: 767px){
+			top: -6px;
+			font-size: 23px;
+		}
+	
+		content: '\2714';
+	    font-size: 17px;
+	    font-weight: 600;
+	    position: absolute;
+	    top: -4px;
+	    left: -1px;
+	    color: #239200;
+	}
 	
 	.labeled-checkbox{
 		@media(max-width:767px){

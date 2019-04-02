@@ -227,3 +227,13 @@ a:hover{
 .success-text{
 	color:$midnight-success-text;
 }
+
+.whos-online-wrapper{
+	.whos-online-user{
+		&.member-group-manager{
+			a{
+				color: #d9534f;
+			}
+		}
+	}
+}

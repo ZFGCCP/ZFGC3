@@ -150,7 +150,11 @@
 		};
 		
 		UserService.isUserAdmin = function(user){
-			return user.getPrimaryMemberGroupId === 2;
+			return user.administrationStaff === true;
+		};
+		
+		UserService.isUserModerator = function(user){
+			return user.moderationStaff === true;
 		};
 		
 		UserService.isCurrentUser = function(vm,user){

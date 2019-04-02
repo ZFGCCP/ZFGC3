@@ -34,6 +34,7 @@ public class UserProfileView extends BaseZfgcModel {
 	private LkupMemberGroup primaryMemberGroup;
 	private SecondaryMemberGroups secondaryMemberGroups;
 	private IpAddress primaryIpAddress;
+	private Boolean hidePm = false;
 	
 	private Date lastLogin;
 	private Boolean isOnlineFlag;
@@ -219,6 +220,14 @@ public class UserProfileView extends BaseZfgcModel {
 
 	public void setSecondaryMemberGroups(SecondaryMemberGroups secondaryMemberGroups) {
 		this.secondaryMemberGroups = secondaryMemberGroups;
+	}
+
+	public Boolean getHidePm() {
+		return hidePm;
+	}
+
+	public void setHidePm(Boolean hidePm) {
+		this.hidePm = hidePm;
 	}
 	
 }

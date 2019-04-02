@@ -22,10 +22,24 @@
     
 
     <!-- tables -->
+    <table schema="zfgc3" tableName="USER_SECURITY_SETTINGS" domainObjectName="UserSecuritySettingsDbObj">
+    	<generatedKey column="USER_SECURITY_SETTINGS_ID" sqlStatement="SELECT MAX(USER_SECURITY_SETTINGS_ID) + 1 FROM USER_SECURITY_SETTINGS"/>
+    </table>
+    
+    <table schema="zfgc3" tableName="USER_CONTACT_SETTINGS" domainObjectName="UserContactSettingsDbObj">
+    	<generatedKey column="USER_CONTACT_SETTINGS_ID" sqlStatement="SELECT MAX(USER_CONTACT_SETTINGS_ID) + 1 FROM USER_CONTACT_SETTINGS"/>
+    </table>
+    
+    <!--<table schema="zfgc3" tableName="PERMISSIONS" domainObjectName="PermissionsDbObj">
+    	<generatedKey column="PERMISSIONS_ID" sqlStatement="SELECT MAX(PERMISSIONS_ID) + 1 FROM PERMISSIONS"/>
+    </table>
+
+    <table schema="zfgc3" tableName="BR_PERMISSIONS_MEMBER_GROUP" domainObjectName="BrPermissionsMemberGroupDbObj">
+    </table>
     <table schema="zfgc3" tableName="LKUP_MEMBER_GROUP" domainObjectName="LkupMemberGroupDbObj">
     	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
-    <!--<table schema="zfgc3" tableName="BR_MEMBER_GROUP_USER" domainObjectName="BrMemberGroupUserDbObj">
+    <table schema="zfgc3" tableName="BR_MEMBER_GROUP_USER" domainObjectName="BrMemberGroupUserDbObj">
     </table>
     <table schema="zfgc3" tableName="LKUP_MEMBER_GROUP" domainObjectName="LkupMemberGroupDbObj">
     	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
@@ -213,7 +227,18 @@
     </table>-->
     
     <!-- views -->
-    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <!--<table schema="zfgc3" tableName="MEMBER_GROUP_PERMS_VIEW" domainObjectName="MemberGroupPermsDbObj">
+    </table>
+    
+    
+    <table schema="zfgc3" tableName="WHOS_ONLINE_VIEW" domainObjectName="OnlineUserDbObj">
+    </table>
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>

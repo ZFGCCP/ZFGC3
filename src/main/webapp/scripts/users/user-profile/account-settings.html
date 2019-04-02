@@ -6,7 +6,7 @@
 					<label>User Name</label>
 				</div>
 				<div class="col-xs-12 col-sm-4">
-					<input type="text" ng-model="vm.profile.loginName" class="form-control small-input" ng-disabled="true"/>
+					<input type="text" ng-model="vm.profile.loginName" class="form-control small-input" ng-disabled="!vm.isUserModerator()"/>
 				</div>
 			</div>
 			
@@ -25,7 +25,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-4">
 					<span class="datepicker" date-format="MM/dd/yyyy">
-						<input type="text" ng-model="vm.profile.dateRegisteredAsString" class="form-control small-input" ng-disabled="true"/>
+						<input type="text" ng-model="vm.profile.dateRegisteredAsString" class="form-control small-input" ng-disabled="!vm.isUserModerator()"/>
 					</span>
 				</div>
 			</div>
@@ -36,7 +36,7 @@
 				</div>
 				<div class="col-xs-12 col-sm-4">
 					<span class="datepicker" date-format="MM/dd/yyyy">
-						<input type="text" ng-model="vm.profile.birthDateAsString" class="form-control small-input" ng-disabled="true"/>
+						<input type="text" ng-model="vm.profile.personalInfo.birthDateAsString" class="form-control small-input" ng-disabled="!vm.isUserModerator()"/>
 					</span>
 				</div>
 			</div>
@@ -61,11 +61,16 @@
 				<div class="col-xs-12 col-sm-4">
 					
 					<div class="list-view-search dropdown-parent">
-						<select ng-model="vm.selectedMemberGroup" ng-change="vm.addMemberGroup()" ng-options="group.id as group.value for group in vm.lookups.MEMBER_GROUP" class="form-control small-input" ng-class="{'top-input' : vm.profile.secondaryMemberGroups.memberGroups.length > 0}"></select>
+						<select ng-model="vm.selectedMemberGroup" 
+								ng-disabled="!vm.isUserAdmin()"
+								ng-change="vm.addMemberGroup()" 
+								ng-options="group.id as group.value for group in vm.lookups.MEMBER_GROUP" 
+								class="form-control small-input" 
+								ng-class="{'top-input' : vm.profile.secondaryMemberGroups.memberGroups.length > 0}"></select>
 					</div>
 					<div class="list-view-wrapper" ng-class="{'hide' : vm.profile.secondaryMemberGroups.memberGroups.length === 0}">
 						<div class="list-data" ng-repeat="($index,group) in vm.profile.secondaryMemberGroups.memberGroups track by $index">
-							<div class="list-cell trash">
+							<div class="list-cell trash" ng-if="vm.isUserAdmin()">
 								<i class="fas fa-trash" ng-click="vm.removeMemberGroup($index)"></i>
 							</div>
 							<div class="list-cell data">
@@ -89,6 +94,19 @@
 				</div>
 				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
 					<input ng-model="vm.profile.userSecurityInfo.hideEmailFlag" value="true" type="checkbox"/>
+					<span>Hide</span>
+				</span>
+			</div>
+			
+			<div class="row padded-row">
+				<div class="col-xs-12 col-sm-4">
+					<label>Facebook</label>
+				</div>
+				<div class="col-xs-8 col-sm-4">
+					<input ng-model="vm.profile.userContactInfo.facebook" type="text" class="form-control small-input" ng-disabled="!vm.canEditRestrictedProfileField()"/>
+				</div>
+				<span class="col-xs-4 col-sm-4" ng-if="vm.canEditRestrictedProfileField()">
+					<input ng-model="vm.profile.userSecurityInfo.hideFacebookFlag" value="true" type="checkbox"/>
 					<span>Hide</span>
 				</span>
 			</div>
