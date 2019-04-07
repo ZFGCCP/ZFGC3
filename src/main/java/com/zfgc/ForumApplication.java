@@ -152,12 +152,16 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .idpSelectionPageURL(zfgcSamlConfig.getIdpSelectionPageUrl())
                 
                 
+                
                 //.ssoProcessingURL("/forum/SSO")
                 
             .and()
                 .logout()
                 .defaultTargetURL("/zfgcui/bbs/index")
                 .logoutURL("/saml/logout")
+                .invalidateSession(true)
+                .clearAuthentication(true)
+                .singleLogoutURL("/saml/singlelogout")
             .and()
                 .metadataManager()
                 .refreshCheckInterval(0)

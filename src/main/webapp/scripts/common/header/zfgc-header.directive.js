@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function zfgcHeader($rootScope, UserService, $q, $window, $location, WebsocketService, WhosOnlineService) {
+	function zfgcHeader($rootScope, UserService, $q, $window, $location, $resource, $state, $timeout, WebsocketService, WhosOnlineService) {
     	return {
     		restrict: 'E',
     		transclude: true,
@@ -15,6 +15,18 @@
     					stomp: null
     			};
 
+    			scope.logOutLocal = function(){
+    				var result = $resource("/forum/saml/logout?local=true",{}).get();
+    				result.$promise.then(function(data){
+    					$state.go('forum');
+    					$timeout(function(){
+    						$window.location.reload();
+    					},0);
+    					
+    				});
+    				
+    			};
+    			
     			scope.goToIdp = function(){
     				var returnTo = $location.absUrl();
     				$window.location = "http://devidp.zfgc.com/saml2/idp/SSOService.php?spentityid=zfgc-sp-dev&target=" + returnTo;
@@ -39,5 +51,5 @@
 	
 	angular
 	    .module("zfgc.forum")
-	    .directive("zfgcHeader", ['$rootScope','UserService', '$q', '$window', '$location', 'WebsocketService', 'WhosOnlineService', zfgcHeader]);
+	    .directive("zfgcHeader", ['$rootScope','UserService', '$q', '$window', '$location', '$resource', '$state', '$timeout', 'WebsocketService', 'WhosOnlineService', zfgcHeader]);
 })();
