@@ -8,7 +8,8 @@
 		{
 			newUser:{
 			         url: '/forum/users/newuser',
-			         method: 'POST'
+			         method: 'POST',
+			         isArray: true
 			},
 			newUserTemplate: {
 				url : '/forum/users/newuser/template',
@@ -78,6 +79,18 @@
 		
 		UserService.getNewUserTemplate = function(){
 			return UserService.resource.newUserTemplate();
+		};
+		
+		//returns true if all required registration fields are complete
+		UserService.registrationFieldsComplete = function(vm, user){
+			return vm.user.loginName !== null && vm.user.loginName !== "" && 
+				   vm.user.displayName !== null && vm.user.displayName !== "" &&
+				   vm.user.userSecurityInfo.newPassword !== null && vm.user.userSecurityInfo.newPassword !== "" &&
+				   vm.user.userContactInfo.email.emailAddress !== null && vm.user.userContactInfo.email.emailAddress !== "" &&
+				   vm.user.personalInfo.birthDateAsString !== null && vm.user.personalInfo.birthDateAsString !== "" &&
+				   vm.user.timeOffset !== null &&
+				   vm.user.agreeToTermsFlag !== false &&
+				   vcRecaptchaService.getResponse() !== "";
 		};
 		
 		UserService.register = function(user){

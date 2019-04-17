@@ -2,7 +2,8 @@ package com.zfgc.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
-@ConfigurationProperties("zfgc.generalConfig")
+
+@ConfigurationProperties("zfgc.general")
 public class ZfgcGeneralConfig {
 	private String recaptchaV2Key;
 
