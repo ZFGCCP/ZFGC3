@@ -565,8 +565,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public void inviteUsers(Integer conversationId, PmUsersToAdd pmUsers, Users user) throws ZfgcNotFoundException, RuntimeException{
-		
+	public void inviteUsers(Integer conversationId, PmUsersToAdd pmUsers, Users user) throws RuntimeException{
 		Users zfgc = new Users();
 		//todo: move this ID to a constants class
 		zfgc.setUsersId(2279);
@@ -580,11 +579,17 @@ public class PmService extends AbstractService {
 		
 		//create an invite code - using this user's private key and the receiving user's public key
 		for(Users receiver : pmUsers.getUsers()){
-			String encryptedKey = createInviteKey(user,receiver.getUsersId(),pmUsers.getAesKey());
+			//check if the user already has an invite to this convo
+			BrPmConversationUserInvite inviteCheck = pmConversationDataProvider.getConvoInvite(conversationId, receiver.getUsersId());
+			if(inviteCheck != null){
+				continue;
+			}
+			
+			//String encryptedKey = createInviteKey(user,receiver.getUsersId(),pmUsers.getAesKey());
 			String inviteCode = ZfgcSecurityUtils.generateMd5(ZfgcSecurityUtils.generateCryptoString(32));
 			BrPmConversationUserInvite invite = new BrPmConversationUserInvite();
 			invite.setInviteCode(inviteCode);
-			invite.setDecryptor(encryptedKey);
+			invite.setDecryptor(null);
 			invite.setUsersId(receiver.getUsersId());
 			invite.setPmConversationId(conversationId);
 			invite.setInviterId(user.getUsersId());

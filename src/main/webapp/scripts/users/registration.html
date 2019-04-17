@@ -7,7 +7,10 @@
 		</div>
 		<div class="section-body">
 			<div class="row">
-			    <div class="col-md-4">
+				<div class="col-xs-12 col-lg-4" ng-if="vm.complete === true">
+					Registration complete, please check your email for an activation link. You will be redirected to the home page in 5 seconds...
+				</div>
+			    <div class="col-xs-12 col-lg-4" ng-if="vm.complete === false">
 					<form>
 					  <div class="form-group">
 					    <label for="username">Username</label>
@@ -37,11 +40,13 @@
 					    <select ng-model="vm.user.timeOffset" ng-options="timezone.id as timezone.value for timezone in vm.lookups.TIMEZONE" class="form-control" id="timezone">
 					    </select>
 					  </div>
-					  <div class="checkbox">
+					  <div class="form-group checkbox">
 					    <label><input ng-model="vm.user.agreeToTermsFlag" type="checkbox">I agree to the terms and am 13 years of age or older</label>
 					  </div>
-					  <div vc-recaptcha key="vm.pubKey"></div>
-					  <button ng-click="vm.newUser()" type="button" class="btn btn-confirm">Submit</button>
+					  <div vc-recaptcha key="vm.pubKey" class="form-group"></div>
+					  <div class="form-group">
+					  	<button ng-click="vm.newUser()" ng-disabled="!vm.registrationFieldsComplete()" type="button" class="btn btn-confirm">Submit</button>
+					  </div>
 					</form>
 				</div>
 			</div>

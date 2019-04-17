@@ -1,5 +1,6 @@
 package com.zfgc.validation.uservalidation;
 
+import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.Users;
 import com.zfgc.rules.Rule;
@@ -13,11 +14,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.regex.Pattern;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class UserValidator extends AbstractValidator<Users> {
 
+	@Autowired
+	private ZfgcGeneralConfig zfgcGeneralConfig;
+	
 	@Override
 	public void validator(Users model) throws ZfgcValidationException {
 		checkEmailFormat(model);
@@ -35,7 +40,7 @@ public class UserValidator extends AbstractValidator<Users> {
 		boolean noError = false;
 		try {
 			
-			URL url = new URL("https://www.google.com/recaptcha/api/siteverify?secret=" + "6Lde4o4UAAAAAFOV3lag7R3a_HZy9KfQEQ8dYmQW" + "&response=" + user.getgResponseToken());
+			URL url = new URL("https://www.google.com/recaptcha/api/siteverify?secret=" + zfgcGeneralConfig.getRecaptchaV2Key() + "&response=" + user.getgResponseToken());
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setRequestMethod("POST");
 			conn.setRequestProperty("Accept", "application/json");

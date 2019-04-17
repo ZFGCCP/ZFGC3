@@ -237,13 +237,13 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		
 	}
 	
-	public BrPmConversationUserInvite getConvoInvite(Integer pmConversationId, Integer usersId) throws Exception{
+	public BrPmConversationUserInvite getConvoInvite(Integer pmConversationId, Integer usersId) throws RuntimeException{
 		BrPmConversationUserInviteDbObjExample ex = new BrPmConversationUserInviteDbObjExample(); 
 		ex.createCriteria().andUsersIdEqualTo(usersId).andPmConversationIdEqualTo(pmConversationId);
 		List<BrPmConversationUserInviteDbObj> result = null;
 		try {
 			result = brPmConversationUserInviteDao.get(ex);
-		} catch (Exception e) {
+		} catch (RuntimeException e) {
 			e.printStackTrace();
 			throw e;
 		}
@@ -293,7 +293,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return result.get(0).getArchiveDt();
 	}
 	
-	public void createInvite(BrPmConversationUserInvite invite) {
+	public void createInvite(BrPmConversationUserInvite invite) throws RuntimeException {
 		brPmConversationUserInviteDao.updateOrInsert(invite);
 	}
 	

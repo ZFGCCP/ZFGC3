@@ -21,6 +21,7 @@ import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -49,7 +50,7 @@ import it.ozimov.springboot.mail.configuration.EnableEmailTools;
 @SpringBootApplication
 @EnableSAMLSSO
 @MapperScan("com.zfgc.mappers")
-@EnableConfigurationProperties(ZfgcSamlConfig.class)
+@EnableConfigurationProperties({ZfgcSamlConfig.class, ZfgcGeneralConfig.class})
 @EnableTransactionManagement
 @EnableEmailTools
 public class ForumApplication extends SpringBootServletInitializer {
@@ -127,6 +128,9 @@ public class ForumApplication extends SpringBootServletInitializer {
 
     	@Autowired
     	public ZfgcSamlConfig zfgcSamlConfig;
+    	
+    	@Autowired
+    	public ZfgcGeneralConfig zfgcGeneralConfig;
     	
     	@Autowired
     	public SamlUsersDetailsServiceImpl samlUserDetailsService;
