@@ -168,9 +168,7 @@ public class BbcodeService{
 								}
 								
 								String parsedTag = processAttributes(validBbCodes.get(bbCodetest),attributes,contentAttPos);
-								if(contentAttPos.compareTo(ZERO) >= 0){
-									contentAttPos.add(output.length());
-								}
+								
 								//state change
 								//record whatever we found up to this point
 								//replace the bbcode with its html opening
@@ -180,6 +178,10 @@ public class BbcodeService{
 									}
 									output.append(parsedTag);
 									
+									if(contentAttPos.compareTo(ZERO) >= 0){
+										contentAttPos.add(output.length());
+									}
+									contentAttPos.setValue(output.indexOf("{{c}}"));
 									//if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
 										currentCode = bbCodetest;
 									//}
