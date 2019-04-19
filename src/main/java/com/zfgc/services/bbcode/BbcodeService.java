@@ -177,10 +177,7 @@ public class BbcodeService{
 										output.append(inputChar,lastKnownFreshPosition,openBracePos -  lastKnownFreshPosition);
 									}
 									output.append(parsedTag);
-									
-									if(contentAttPos.compareTo(ZERO) >= 0){
-										contentAttPos.add(output.length());
-									}
+
 									contentAttPos.setValue(output.indexOf("{{c}}"));
 									//if(states.size() == 0  || !validBbCodes.get(currentCode).getProcessContentFlag()){
 										currentCode = bbCodetest;
