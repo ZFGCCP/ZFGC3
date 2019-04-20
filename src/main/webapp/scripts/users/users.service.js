@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($rootScope, $resource, $window, $state, NotificationsService, vcRecaptchaService){
+	function UserService($rootScope, $resource, $window, $state, $timeout, NotificationsService, vcRecaptchaService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId', 'activationCode' : '@activationCode'},
@@ -138,28 +138,44 @@
 			});
 		};
 
+		UserService.postProfileSaveActions = function(vm){
+			UserService.activeTabSectionId = vm.activeTabSectionId; 
+			
+			$timeout(function(){
+				$state.reload();
+			},1000);
+		};
+		
 		UserService.saveAccountSettings = function(vm){
 			UserService.resource.saveAccountSettings(vm.profile).$promise.then(function(data){
 				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Account Settings successfully saved.','success'));
+				UserService.postProfileSaveActions(vm);
 			});
 		};
 		
 		UserService.saveForumProfile = function(vm){
 			UserService.resource.saveForumProfile(vm.profile).$promise.then(function(data){
 				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Forum Profile successfully saved.','success'));
+				UserService.postProfileSaveActions(vm);
 			});
 		};
 		
 		UserService.saveNotificationSettings = function(vm){
 			UserService.resource.saveNotificationSettings(vm.profile);
+			$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Notification Settings successfully saved.','success'));
+			UserService.postProfileSaveActions(vm);
 		};
 		
 		UserService.savePmSettings = function(vm){
 			UserService.resource.savePmSettings(vm.profile);
+			$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('PM Settings successfully saved.','success'));
+			UserService.postProfileSaveActions(vm);
 		};
 		
 		UserService.saveBuddyList = function(vm){
 			UserService.resource.saveBuddyList(vm.profile);
+			$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Buddy/Ignore List successfully saved.','success'));
+			UserService.postProfileSaveActions(vm);
 		};
 		
 		UserService.isUserAdmin = function(user){
@@ -222,5 +238,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$rootScope','$resource','$window','$state','NotificationsService','vcRecaptchaService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','$state','$timeout','NotificationsService','vcRecaptchaService',UserService])
 })();
