@@ -109,8 +109,13 @@
 	        	
 	        	UserService.resource.profileNavigation({"usersId":userId}).$promise.then(function(data){
 					vm.navTabs = data;
+					var activeTab = UserService.activeTab && UserService.activeTab !== null ? UserService.activeTab : data[0];
+					var activeSubTab = UserService.activeSubTab && UserService.activeSubTab !== null ? UserService.activeSubTab : data[0].subTabs[0];
 					
-					UserService.setTabActive(vm,data[0],data[0].subTabs[0]);
+					UserService.setTabActive(vm,activeTab,activeSubTab);
+					
+					UserService.activeTab = null;
+					UserService.activeSubTab = null;
 				});
 	        	
 	        	NotificationsService.getThreadSubs(userId,1,10).$promise.then(function(data){
@@ -130,6 +135,8 @@
 			vm.activeTabSectionId = subTab.navSectionId;
 			vm.activeTabNameId = subTab.title;
 			vm.activeParentName = tab.title;
+			vm.activeTab = tab;
+			vm.activeSubTab = subTab;
 		};
 		
 		UserService.getProfileNavigationTabs = function(vm){
@@ -139,7 +146,8 @@
 		};
 
 		UserService.postProfileSaveActions = function(vm){
-			UserService.activeTabSectionId = vm.activeTabSectionId; 
+			UserService.activeTab = vm.activeTab;
+			UserService.activeSubTab = vm.activeSubTab;
 			
 			$timeout(function(){
 				$state.reload();
