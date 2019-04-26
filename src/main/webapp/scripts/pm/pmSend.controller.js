@@ -59,7 +59,7 @@
 			var user = PmService.getUserDisplayName(usersId);
 			
 			user.$promise.then(function(data){
-				PmService.appendToSenderList(vm,data);
+				//PmService.appendToSenderList(vm,data);
 			});
 		}
 		

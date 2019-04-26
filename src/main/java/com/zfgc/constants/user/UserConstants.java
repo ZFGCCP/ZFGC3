@@ -1,6 +1,8 @@
 package com.zfgc.constants.user;
 
 public final class UserConstants {
+	public static final Integer ZFGC_USER_ID = 27418;
+	
 	public final class avatarTypes{
 		public static final int NONE = 1;
 		public static  final int FILE_UPLOAD = 2;
