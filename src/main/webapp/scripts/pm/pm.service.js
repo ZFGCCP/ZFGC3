@@ -133,12 +133,8 @@
 			return UserService.resource.getUserDisplayName({'userId' : usersId});
 		};
 		
-		pmService.appendToSenderList = function(vm,user){
-			if(!vm.personalMessage.receivers || vm.personalMessage.receivers === null){
-				vm.personalMessage.receivers = [];
-			}
-			
-			vm.personalMessage.receivers.push({'usersId' : user.usersId, 'displayName' : user.displayName});
+		pmService.appendToReceiverList = function(vm, user){
+			vm.conversation.participants.push({'usersId' : user.usersId, 'displayName' : user.displayName});
 		};
 		
 		pmService.getTemplate = function(templateConfig){

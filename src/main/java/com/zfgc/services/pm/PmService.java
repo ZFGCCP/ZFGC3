@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dao.BrPmConversationUserInviteDao;
 import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
@@ -289,9 +290,9 @@ public class PmService extends AbstractService {
 		senderSave.setSendCopyFlag(true);
 		
 		try{
-		pmDataProvider.saveMessage(senderSave);
+			pmDataProvider.saveMessage(senderSave);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			ex.printStackTrace();
 			throw ex;
 		}
@@ -568,7 +569,7 @@ public class PmService extends AbstractService {
 	public void inviteUsers(Integer conversationId, PmUsersToAdd pmUsers, Users user) throws RuntimeException{
 		Users zfgc = new Users();
 		//todo: move this ID to a constants class
-		zfgc.setUsersId(2279);
+		zfgc.setUsersId(UserConstants.ZFGC_USER_ID);
 		PmTemplateConfig pmTemplate = new PmTemplateConfig();
 		pmTemplate.setPmConversationId(null);
 		pmTemplate.setSubject(user.getDisplayName() + " has invited you to a conversation!");
