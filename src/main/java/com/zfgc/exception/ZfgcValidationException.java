@@ -2,7 +2,7 @@ package com.zfgc.exception;
 
 import com.zfgc.model.ZfgcValidationErrors;
 
-public class ZfgcValidationException extends Exception {
+public class ZfgcValidationException extends RuntimeException {
 	private static final long serialVersionUID = 3L;
 	private String modelName;
 	private ZfgcValidationException(){}

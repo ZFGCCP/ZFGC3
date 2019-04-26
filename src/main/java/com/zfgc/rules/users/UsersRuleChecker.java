@@ -21,7 +21,7 @@ public class UsersRuleChecker extends AbstractRulesChecker<Users>{
 	UsersService usersService;
 	
 	@Override
-	public void rulesCheck(Users model, Users user) throws ZfgcValidationException, Exception {
+	public void rulesCheck(Users model, Users user) throws ZfgcValidationException, RuntimeException {
 		if(authenticationService.doesEmailExist(model.getUserContactInfo().getEmail())){
 			Rule emailDuplicate = new Rule();
 			emailDuplicate.setRuleName("EMAIL_DUPLICATE");

@@ -17,7 +17,7 @@ public class AccountSettingsRuleChecker extends AbstractRulesChecker<Users>{
 	UsersDataProvider usersDataProvider;
 	
 	@Override
-	public void rulesCheck(Users model, Users user) throws Exception {
+	public void rulesCheck(Users model, Users user) throws RuntimeException {
 		
 		/*if(user.getPrimaryMemberGroupId() != 2){
 			if(user.getUsersId() != model.getUsersId()){

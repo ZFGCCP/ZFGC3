@@ -13,6 +13,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dao.MemberListViewDao;
+import com.zfgc.dao.NotificationSettingsDao;
+import com.zfgc.dao.PersonalMessagingSettingsDao;
 import com.zfgc.dao.UserContactSettingsDao;
 import com.zfgc.dao.UserPersonalInfoDao;
 import com.zfgc.dao.UserSecuritySettingsDao;
@@ -60,6 +62,12 @@ public class UsersDataProvider extends AbstractDataProvider {
 	@Autowired
 	private UserPersonalInfoDao userPersonalInfoDao;
 	
+	@Autowired
+	private PersonalMessagingSettingsDao personalMessagingSettingsDao;
+	
+	@Autowired
+	private NotificationSettingsDao notificationSettingsDao;
+	
 	Logger LOGGER = Logger.getLogger(UsersDataProvider.class);
 	
 	public Users getUser(Integer usersId) throws Exception{
@@ -70,7 +78,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		
 	}
 	
-	public Users getUserByToken(String token) throws Exception{
+	public Users getUserByToken(String token) throws RuntimeException{
 		try{
 			UsersDbObj dbObj = usersDao.getUserByToken(token);
 			return mapper.map(dbObj, Users.class);
@@ -78,8 +86,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
@@ -89,7 +97,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		usersDao.updateByExample(user, ex);
 	}
 	
-	public List<Users> getUsersByConversation(Integer conversationId) throws ZfgcNotFoundException, Exception{
+	public List<Users> getUsersByConversation(Integer conversationId) throws ZfgcNotFoundException, RuntimeException{
 		try{
 			List<UsersDbObj> dbObj = usersDao.getUsersByConversation(conversationId);
 			List<Users> users = new ArrayList<>();
@@ -104,8 +112,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
@@ -121,6 +129,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 			createContactInfo(user);
 			createPersonalInfo(user);
 			createUserSecuritySettings(user);
+			createUserPersonalMessagingSettings(user);
+			createUserNotificationSettings(user);
 			
 			//ogIpAddress(user.getPrimaryIpAddress(),true);
 			
@@ -152,75 +162,75 @@ public class UsersDataProvider extends AbstractDataProvider {
 		}
 	}
 	
-	private  void logEmailAddress(EmailAddress emailAddress) throws Exception{
+	private  void logEmailAddress(EmailAddress emailAddress) throws RuntimeException{
 		try{
 			authenticationDataProvider.logEmailAddress(emailAddress);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.info("Email Address " + emailAddress.getEmailAddress() + " already exists.");
-			throw new Exception("Email Address " + emailAddress.getEmailAddress() + " already exists.");
+			throw new RuntimeException("Email Address " + emailAddress.getEmailAddress() + " already exists.");
 		}
 	}
 	
-	public Boolean doesLoginNameExist(String loginName) throws Exception{
+	public Boolean doesLoginNameExist(String loginName) throws RuntimeException{
 		return usersDao.doesLoginNameExist(loginName);
 	}
 	
-	public Boolean doesDisplayNameExist(String displayName) throws Exception{
+	public Boolean doesDisplayNameExist(String displayName) throws RuntimeException{
 		return usersDao.doesDisplayNameExist(displayName);
 	}
 	
-	public Users getUserByLoginName(String loginName) throws Exception{
+	public Users getUserByLoginName(String loginName) throws RuntimeException{
 		try{
 			return usersDao.getUserByLoginName(loginName);
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
-	public Integer incrementLoginFailCount(String loginName) throws Exception{
+	public Integer incrementLoginFailCount(String loginName) throws RuntimeException{
 		try{
 			return usersDao.incrementLoginFails(loginName);
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
-	public void lockAccount(String loginName, Date lockTime) throws Exception{
+	public void lockAccount(String loginName, Date lockTime) throws RuntimeException{
 		try{
 			usersDao.lockAccount(loginName, lockTime);
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
-	public void unlockAccount(String loginName) throws Exception{
+	public void unlockAccount(String loginName) throws RuntimeException{
 		try{
 			usersDao.unlockAccount(loginName);
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
-	public Date getLockTime(String loginName) throws Exception{
+	public Date getLockTime(String loginName) throws RuntimeException{
 		try{
 			return usersDao.getAccountLockTime(loginName);
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 
-	public void linkUserToIp(Users user, IpAddress ipAddress, Boolean setPrimary) throws Exception {
+	public void linkUserToIp(Users user, IpAddress ipAddress, Boolean setPrimary) throws RuntimeException {
 		try{
 			usersDao.linkUserToIp(user,ipAddress,setPrimary);
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
@@ -303,7 +313,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		
 	}
 	
-	public Boolean checkUserPassword(Integer usersId, String password) throws Exception{
+	public Boolean checkUserPassword(Integer usersId, String password) throws RuntimeException{
 		return usersDao.checkUserPassword(usersId, password) > 0;
 	}
 	
@@ -337,6 +347,16 @@ public class UsersDataProvider extends AbstractDataProvider {
 		user.getUserSecurityInfo().setUsersId(user.getUsersId());
 		userSecuritySettingsDao.updateOrInsert(user.getUserSecurityInfo());
 		userSecuritySettingsDao.updateUserPassword(user.getUserSecurityInfo().getUsersId(), user.getUserSecurityInfo().getNewPassword());
+	}
+	
+	private void createUserPersonalMessagingSettings(Users user) throws RuntimeException{
+		user.getPersonalMessagingSettings().setUsersId(user.getUsersId());
+		personalMessagingSettingsDao.updateOrInsert(user.getPersonalMessagingSettings());
+	}
+	
+	private void createUserNotificationSettings(Users user) throws RuntimeException{
+		user.getNotificationSettings().setUsersId(user.getUsersId());
+		notificationSettingsDao.updateOrInsert(user.getNotificationSettings());
 	}
 	
 	public void activateUser(String activationCode) throws Exception{

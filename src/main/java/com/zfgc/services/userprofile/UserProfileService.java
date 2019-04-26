@@ -270,7 +270,7 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	@Transactional
-	public Users saveNotificationSettings(Users notificationSettings, Users zfgcUser) throws Exception{
+	public Users saveNotificationSettings(Users notificationSettings, Users zfgcUser) throws RuntimeException{
 		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(notificationSettings.getUsersId(), zfgcUser)){
 			throw new ZfgcUnauthorizedException();
 		}
@@ -281,8 +281,8 @@ public class UserProfileService extends AbstractService{
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getMessage());
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw new RuntimeException(ex.getMessage());
 		}
 		
 		return notificationSettings;

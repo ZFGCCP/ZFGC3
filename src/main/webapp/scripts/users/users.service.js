@@ -241,6 +241,48 @@
 			});
 		};
 		
+		UserService.isUserOnBuddyList = function(vm){
+			if(vm.profile && vm.profile !== null){
+				for(var i = 0; i < vm.profile.buddyList.length; i++){
+					if(vm.profile.buddyList[i].userBId === vm.profile.usersId){
+						return true;
+					}
+				}
+			}
+			
+			return false;
+		}
+		
+		UserService.canSendPmToUser = function(vm){
+			if(vm.profile && vm.profile !== null && UserService.loggedInUser && UserService.loggedInUser !== null){
+				var pmSettings = vm.profile.personalMessagingSettings.receiveFromId;
+				var loggedInUser = UserService.loggedInUser;
+				
+				if(loggedInUser.usersId !== vm.profile.usersId && loggedInUser.member){
+					switch(pmSettings){
+						case 2:
+							//todo: implement ignore list
+							return true;
+							break;
+							
+						case 3:
+							return loggedInUser.staffMember || UserService.isUserOnBuddyList(vm);
+							break;
+							
+						case 4:
+							return loggedInUser.staffMember;
+							break;
+							
+						default:
+							return true;
+						break;
+					}
+					
+				}
+			}
+			return false;
+		}
+		
 		return UserService;
 	}
 	

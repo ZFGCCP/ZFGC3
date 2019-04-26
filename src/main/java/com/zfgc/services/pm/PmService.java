@@ -575,7 +575,7 @@ public class PmService extends AbstractService {
 		pmTemplate.setReceivers(pmUsers.getUsers());
 		
 		PersonalMessage pm = getPmTemplate(pmTemplate);
-		pm.setMessage(user.getDisplayName() + " has invited you to their conversation! Click here to join!");
+		pm.setMessage(user.getDisplayName() + " has invited you to their conversation! Click [url=http://zfgc.com:8080/forum/conversation/" + conversationId + "]here[/url] to join!");
 		
 		//create an invite code - using this user's private key and the receiving user's public key
 		for(Users receiver : pmUsers.getUsers()){
@@ -622,7 +622,7 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public Integer getUnreadPmCount(Users user) throws Exception{
+	public Integer getUnreadPmCount(Users user) throws RuntimeException{
 		return pmConversationDataProvider.countUnread(user.getUsersId());
 	}
 }

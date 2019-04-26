@@ -91,7 +91,7 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
+	public List<Users> getUsersByConversation(Integer conversationId) throws RuntimeException{
 		List<Users> result = null;
 		
 		try{
@@ -101,16 +101,16 @@ public class UsersService extends AbstractService {
 			ex.printStackTrace();
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			ex.printStackTrace();
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		return result;
 	}
 	
 	@Transactional
-	public Users createNewUser(Users user, HttpServletRequest requestHeader) throws Exception{
+	public Users createNewUser(Users user, HttpServletRequest requestHeader) throws RuntimeException{
 		
 		
 		try {
@@ -121,7 +121,7 @@ public class UsersService extends AbstractService {
 			ex.printStackTrace();
 			throw ex;
 		}
-		catch (Exception ex) {
+		catch (RuntimeException ex) {
 			ex.printStackTrace();
 			throw ex;
 		}
@@ -142,7 +142,7 @@ public class UsersService extends AbstractService {
 			catch(ZfgcNotFoundException ex) {
 				potentialIp = ipAddressService.createIpAddress(requestHeader.getRemoteAddr());
 			}
-			catch(Exception ex) {
+			catch(RuntimeException ex) {
 				ex.printStackTrace();
 				throw ex;
 			}
@@ -191,13 +191,13 @@ public class UsersService extends AbstractService {
 		}
 	}
 	
-	public IpAddress setPrimaryIp(Users user, String ipAddress) throws Exception{
+	public IpAddress setPrimaryIp(Users user, String ipAddress) throws RuntimeException{
 		IpAddress ip = ipAddressService.createIpAddress(ipAddress);
 	    linkUserToIp(user,ip,true);
 		return ip;
 	}
 	
-	public void setUserIsSpammer(Users user) throws Exception{
+	public void setUserIsSpammer(Users user) throws RuntimeException{
 		user.getPrimaryIpAddress().setIsSpammerFlag(authenticationService.checkIpIsSpammer(user.getPrimaryIpAddress()));
 		user.getUserContactInfo().getEmail().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getUserContactInfo().getEmail()));
 	}
@@ -215,7 +215,7 @@ public class UsersService extends AbstractService {
 	}
 	
 	@Transactional
-	public Users authenticateUser(Users user, String sourceIp) throws Exception{
+	public Users authenticateUser(Users user, String sourceIp) throws RuntimeException{
 		IpAddress ipAddress = ipAddressService.createIpAddress(sourceIp);
 		Boolean doesUserExist = doesLoginNameExist(user.getLoginName());
 		if(isAccountLocked(user) || ipAddressService.isIpLocked(ipAddress)){
@@ -296,19 +296,19 @@ public class UsersService extends AbstractService {
 		return true;
 	}
 	
-	public Boolean doesLoginNameExist(String loginName) throws Exception {
+	public Boolean doesLoginNameExist(String loginName) throws RuntimeException {
 		return usersDataProvider.doesLoginNameExist(loginName);
 	}
 	
-	public Boolean doesDisplayNameExist(String loginName) throws Exception {
+	public Boolean doesDisplayNameExist(String loginName) throws RuntimeException {
 		return usersDataProvider.doesDisplayNameExist(loginName);
 	}
 
-	private void linkUserToIp(Users user, IpAddress ipAddress, Boolean isPrimary) throws Exception{
+	private void linkUserToIp(Users user, IpAddress ipAddress, Boolean isPrimary) throws RuntimeException{
 		usersDataProvider.linkUserToIp(user,ipAddress, isPrimary);
 	}
 	
-	public Users getLoggedInUser(Users user) throws Exception{
+	public Users getLoggedInUser(Users user) throws RuntimeException{
 		if(user.getUsersId() == null){
 			Users guest = new Users();
 			user.setDisplayName("Guest");

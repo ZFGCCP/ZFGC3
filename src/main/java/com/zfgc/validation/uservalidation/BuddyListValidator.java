@@ -10,7 +10,7 @@ import com.zfgc.validation.AbstractValidator;
 public class BuddyListValidator extends AbstractValidator<Buddy>{
 
 	@Override
-	public void validator(Buddy model) throws Exception {
+	public void validator(Buddy model) throws RuntimeException {
 		checkUsersAreNotEqual(model);
 	}
 	
