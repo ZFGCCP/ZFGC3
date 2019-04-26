@@ -90,11 +90,11 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		return result;
 	}
 	
-	public void saveNotificationSettings(Users notificationSettings) throws Exception{
+	public void saveNotificationSettings(Users notificationSettings) throws RuntimeException{
 		notificationSettingsDao.updateOrInsert(notificationSettings.getNotificationSettings());
 	}
 	
-	public void saveAccountSettings(Users accountSettings) throws Exception {
+	public void saveAccountSettings(Users accountSettings) throws RuntimeException {
 		//authenticationService.logEmailAddress(accountSettings.getEmailAddress());
 		//create or update email address table
 		emailAddressDao.updateOrInsert(accountSettings.getUserContactInfo().getEmail());

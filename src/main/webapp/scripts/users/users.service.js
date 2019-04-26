@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($rootScope, $resource, $window, $state, NotificationsService, vcRecaptchaService){
+	function UserService($rootScope, $resource, $window, $state, $timeout, NotificationsService, vcRecaptchaService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId', 'activationCode' : '@activationCode'},
@@ -109,8 +109,13 @@
 	        	
 	        	UserService.resource.profileNavigation({"usersId":userId}).$promise.then(function(data){
 					vm.navTabs = data;
+					var activeTab = UserService.activeTab && UserService.activeTab !== null ? UserService.activeTab : data[0];
+					var activeSubTab = UserService.activeSubTab && UserService.activeSubTab !== null ? UserService.activeSubTab : data[0].subTabs[0];
 					
-					UserService.setTabActive(vm,data[0],data[0].subTabs[0]);
+					UserService.setTabActive(vm,activeTab,activeSubTab);
+					
+					UserService.activeTab = null;
+					UserService.activeSubTab = null;
 				});
 	        	
 	        	NotificationsService.getThreadSubs(userId,1,10).$promise.then(function(data){
@@ -130,6 +135,8 @@
 			vm.activeTabSectionId = subTab.navSectionId;
 			vm.activeTabNameId = subTab.title;
 			vm.activeParentName = tab.title;
+			vm.activeTab = tab;
+			vm.activeSubTab = subTab;
 		};
 		
 		UserService.getProfileNavigationTabs = function(vm){
@@ -138,28 +145,45 @@
 			});
 		};
 
+		UserService.postProfileSaveActions = function(vm){
+			UserService.activeTab = vm.activeTab;
+			UserService.activeSubTab = vm.activeSubTab;
+			
+			$timeout(function(){
+				$state.reload();
+			},1000);
+		};
+		
 		UserService.saveAccountSettings = function(vm){
 			UserService.resource.saveAccountSettings(vm.profile).$promise.then(function(data){
 				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Account Settings successfully saved.','success'));
+				UserService.postProfileSaveActions(vm);
 			});
 		};
 		
 		UserService.saveForumProfile = function(vm){
 			UserService.resource.saveForumProfile(vm.profile).$promise.then(function(data){
 				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Forum Profile successfully saved.','success'));
+				UserService.postProfileSaveActions(vm);
 			});
 		};
 		
 		UserService.saveNotificationSettings = function(vm){
 			UserService.resource.saveNotificationSettings(vm.profile);
+			$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Notification Settings successfully saved.','success'));
+			UserService.postProfileSaveActions(vm);
 		};
 		
 		UserService.savePmSettings = function(vm){
 			UserService.resource.savePmSettings(vm.profile);
+			$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('PM Settings successfully saved.','success'));
+			UserService.postProfileSaveActions(vm);
 		};
 		
 		UserService.saveBuddyList = function(vm){
 			UserService.resource.saveBuddyList(vm.profile);
+			$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Buddy/Ignore List successfully saved.','success'));
+			UserService.postProfileSaveActions(vm);
 		};
 		
 		UserService.isUserAdmin = function(user){
@@ -217,10 +241,52 @@
 			});
 		};
 		
+		UserService.isUserOnBuddyList = function(vm){
+			if(vm.profile && vm.profile !== null){
+				for(var i = 0; i < vm.profile.buddyList.length; i++){
+					if(vm.profile.buddyList[i].userBId === vm.profile.usersId){
+						return true;
+					}
+				}
+			}
+			
+			return false;
+		}
+		
+		UserService.canSendPmToUser = function(vm){
+			if(vm.profile && vm.profile !== null && UserService.loggedInUser && UserService.loggedInUser !== null){
+				var pmSettings = vm.profile.personalMessagingSettings.receiveFromId;
+				var loggedInUser = UserService.loggedInUser;
+				
+				if(loggedInUser.usersId !== vm.profile.usersId && loggedInUser.member){
+					switch(pmSettings){
+						case 2:
+							//todo: implement ignore list
+							return true;
+							break;
+							
+						case 3:
+							return loggedInUser.staffMember || UserService.isUserOnBuddyList(vm);
+							break;
+							
+						case 4:
+							return loggedInUser.staffMember;
+							break;
+							
+						default:
+							return true;
+						break;
+					}
+					
+				}
+			}
+			return false;
+		}
+		
 		return UserService;
 	}
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$rootScope','$resource','$window','$state','NotificationsService','vcRecaptchaService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','$state','$timeout','NotificationsService','vcRecaptchaService',UserService])
 })();

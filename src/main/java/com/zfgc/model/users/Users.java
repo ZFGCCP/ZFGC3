@@ -120,6 +120,10 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		return false;
 	}
 	
+	public Boolean isMember(){
+		return hasPerm("ZFGC_USER");
+	}
+	
 	public Boolean isStaffMember(){
 		return hasPerm("ZFGC_STAFF");
 	}

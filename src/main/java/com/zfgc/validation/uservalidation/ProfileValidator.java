@@ -16,7 +16,7 @@ public class ProfileValidator extends AbstractValidator<Users>{
 	private final int WEBSITE_URL_LEN = 64;
 	
 	@Override
-	public void validator(Users model) throws Exception {
+	public void validator(Users model) throws RuntimeException {
 		if(!StringUtils.isEmpty(model.getPersonalInfo().getCustomTitle())){
 			if(model.getPersonalInfo().getCustomTitle().length() > CUSTOM_TITLE_LEN){
 				model.getErrors().getValidationErrors().add(super.createError("STRING_TOO_LONG", "Custome Title cannot be more than " + CUSTOM_TITLE_LEN + " characters."));

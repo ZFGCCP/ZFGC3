@@ -15,7 +15,7 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 	@Autowired
 	protected LookupService lookupService;
 	
-	public abstract void validator(T model) throws Exception;
+	public abstract void validator(T model) throws RuntimeException;
 	
 	public final String EMAIL_FORMAT = "^(?!.*--)[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9\\.]+\\.{1,1}[a-zA-Z]+$";
 	public final String URL_FORMAT = "^(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";

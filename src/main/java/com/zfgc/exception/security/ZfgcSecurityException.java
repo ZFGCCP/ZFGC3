@@ -1,6 +1,6 @@
 package com.zfgc.exception.security;
 
-public class ZfgcSecurityException extends Exception{
+public class ZfgcSecurityException extends RuntimeException{
 	private ZfgcSecurityException(){}
 	private String message = "";
 	

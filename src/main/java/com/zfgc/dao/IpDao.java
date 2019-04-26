@@ -26,7 +26,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	
 	Logger LOGGER = Logger.getLogger(IpDao.class);
 	
-	public IpAddressDbObj logIpAddress(IpAddress ip) throws Exception{
+	public IpAddressDbObj logIpAddress(IpAddress ip) throws RuntimeException{
 		IpAddressDbObj ipDbObj = mapper.map(ip, IpAddressDbObj.class);
 		
 		try{
@@ -36,9 +36,9 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 			super.logDbDuplicateKeyError(LOGGER, "IP_ADDRESS", ip.getIpAddress());
 			return null;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			super.logDbInsertError(LOGGER, "IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		return ipDbObj;
@@ -65,7 +65,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		}
 	}
 	
-	public Integer incrementLoginFails(String ipAddress) throws Exception{
+	public Integer incrementLoginFails(String ipAddress) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
@@ -83,13 +83,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		
 			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbGeneralError(LOGGER, "USERS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public void lockIpAddress(IpAddress ip, Date lockTime) throws Exception{
+	public void lockIpAddress(IpAddress ip, Date lockTime) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
@@ -103,13 +103,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		try{
 			jdbcTemplate.update(sql.toString(), params);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbUpdateError(LOGGER,"IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public Date getIpLockTime(IpAddress ipAddress) throws Exception{
+	public Date getIpLockTime(IpAddress ipAddress) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT LOCKED_UNTIL \n")
@@ -122,13 +122,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		try{
 			return jdbcTemplate.queryForObject(sql.toString(), params, Date.class);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbGeneralError(LOGGER,"IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public void unlockIp(IpAddress ipAddress) throws Exception{
+	public void unlockIp(IpAddress ipAddress) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
@@ -141,13 +141,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		try{
 			jdbcTemplate.update(sql.toString(), params);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbUpdateError(LOGGER,"IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public Integer incrementLoginFails(IpAddress ipAddress) throws Exception{
+	public Integer incrementLoginFails(IpAddress ipAddress) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
@@ -165,9 +165,9 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		
 			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbGeneralError(LOGGER, "IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 

@@ -4,6 +4,16 @@ form{
 		font-size:12px;
 	}
 	
+	.checkbox-wrapper{
+		display: flex;
+		align-items: center;
+		
+		label{
+			padding-left: 5px;
+    		padding-top: 7px;
+		}
+	}
+	
 	input[type="checkbox"]{
 		@media(max-width: 767px){
 			padding: 10px;
@@ -14,7 +24,7 @@ form{
     	border: 1px solid black;
     	padding: 7px;
     	border-radius: 3px;
-    	display: inline-block;
+    	display: inline-flex;
     	position: relative;
 	}
 

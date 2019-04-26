@@ -10,7 +10,7 @@ public class LoggingService {
 	@Autowired
 	LoggingDataProvider loggingDataProvider;
 	
-	public void logAction(Integer logType, String description, Integer usersId, String ipAddress) throws Exception{
+	public void logAction(Integer logType, String description, Integer usersId, String ipAddress) throws RuntimeException{
 		try{
 			loggingDataProvider.logAction(logType, description, usersId, ipAddress);
 		}

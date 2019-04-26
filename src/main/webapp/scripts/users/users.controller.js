@@ -80,6 +80,10 @@
 			vm.profile.secondaryMemberGroups.memberGroups.splice(index,1);
 		};
 		
+		vm.canSendPmToUser = function(){
+			return UserService.canSendPmToUser(vm);
+		};
+		
 		 var w = angular.element($window);
          w.bind('resize', function () {
              

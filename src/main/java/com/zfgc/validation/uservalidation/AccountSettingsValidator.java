@@ -9,7 +9,7 @@ import com.zfgc.validation.AbstractValidator;
 public class AccountSettingsValidator extends AbstractValidator<Users>{
 
 	@Override
-	public void validator(Users model) throws Exception {
+	public void validator(Users model) throws RuntimeException {
 		checkEmailFormat(model);
 		checkEmailLength(model);
 	}

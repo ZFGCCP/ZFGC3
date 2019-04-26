@@ -8,8 +8,8 @@ public class PersonalMessagingSettings extends BaseZfgcModel{
 
 	private Integer personalMessagingSettingsId;
     private Integer usersId;
-    private Integer receiveFromId;
-    private Integer notifyFrequencyId;
+    private Integer receiveFromId = 1;
+    private Integer notifyFrequencyId = 1;
 	
     private List<Buddy> ignoreList;
     
