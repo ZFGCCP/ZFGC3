@@ -434,6 +434,10 @@ public class PmService extends AbstractService {
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
 		}
 		
+		if(isConvoArchived(convoId, zfgcUser)){
+			throw new ZfgcSecurityException("You are not authorized to remove users from this converation.");
+		}
+		
 		PmConversation convo = pmConversationDataProvider.getConversation(convoId);
 		
 		//verify that this user is the starting user
@@ -567,6 +571,10 @@ public class PmService extends AbstractService {
 	
 	@Transactional
 	public void inviteUsers(Integer conversationId, PmUsersToAdd pmUsers, Users user) throws RuntimeException{
+		if(isConvoArchived(conversationId, user)){
+			throw new ZfgcSecurityException("You are not authorized to invite users to this converation.");
+		}
+		
 		Users zfgc = new Users();
 		//todo: move this ID to a constants class
 		zfgc.setUsersId(UserConstants.ZFGC_USER_ID);
@@ -625,5 +633,9 @@ public class PmService extends AbstractService {
 	
 	public Integer getUnreadPmCount(Users user) throws RuntimeException{
 		return pmConversationDataProvider.countUnread(user.getUsersId());
+	}
+	
+	private Boolean isConvoArchived(Integer pmConversationId, Users user) throws RuntimeException {
+		return pmConversationDataProvider.isConvoArchived(pmConversationId, user.getUsersId());
 	}
 }

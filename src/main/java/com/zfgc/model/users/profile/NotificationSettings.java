@@ -5,11 +5,11 @@ import com.zfgc.model.BaseZfgcModel;
 public class NotificationSettings extends BaseZfgcModel{
 
 	private Integer notificationSettingsId;
-    private Boolean karmaEmailFlag;
-    private Boolean karmaPmFlag;
-    private Boolean taggedEmailFlag;
-    private Boolean taggedPmFlag;
-    private Integer frequencyId;
+    private Boolean karmaEmailFlag = true;
+    private Boolean karmaPmFlag = true;
+    private Boolean taggedEmailFlag = true;
+    private Boolean taggedPmFlag = true;
+    private Integer frequencyId = 1;
     private Integer usersId;
 	
 	public Integer getNotificationSettingsId() {

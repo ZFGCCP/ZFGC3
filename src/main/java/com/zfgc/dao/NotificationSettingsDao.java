@@ -58,7 +58,7 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbO
 	@Override
 	public void updateOrInsert(NotificationSettings obj) throws RuntimeException {
 		NotificationSettingsDbObj dbObj = mapper.map(obj, NotificationSettingsDbObj.class);
-		if(dbObj.getNotificationSettingsId() == -1){
+		if(dbObj.getNotificationSettingsId() == null || dbObj.getNotificationSettingsId() == -1){
 			notificationSettingsDbObjMapper.insert(dbObj);
 			obj.setNotificationSettingsId(dbObj.getNotificationSettingsId());
 		}

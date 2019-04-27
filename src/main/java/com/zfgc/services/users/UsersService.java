@@ -45,6 +45,7 @@ import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.pm.PmService;
 import com.zfgc.util.ZfgcEmailUtils;
+import com.zfgc.util.security.RsaKeyPair;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
@@ -128,7 +129,7 @@ public class UsersService extends AbstractService {
 		
 		if(!user.getErrors().hasErrors()){
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
-			
+
 			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
 			user.setActiveFlag(false);
 			generateUniqueActivationCode(user);
@@ -171,6 +172,10 @@ public class UsersService extends AbstractService {
 					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
 					zfgcEmailUtils.sendEmail(subject, body, to);
 				}
+				
+				//generate rsa key pair for PM, then AES encrypt the private key - base it off of the password for now
+				//todo: when the encryption system for PMs is redone, update this to be a separate field distinct from the password
+				pmService.createKeyPairs(user.getUsersId(), user.getUserSecurityInfo().getNewPassword());
 			} catch (Exception ex) {
 				ex.printStackTrace();
 				throw new RuntimeException(ex);

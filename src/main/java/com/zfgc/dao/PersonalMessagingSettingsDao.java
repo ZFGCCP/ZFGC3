@@ -32,7 +32,7 @@ public class PersonalMessagingSettingsDao extends AbstractDao<PersonalMessagingS
 	@Override
 	public void updateOrInsert(PersonalMessagingSettings obj) throws RuntimeException {
 		PersonalMessagingSettingsDbObj dbObj = mapper.map(obj, PersonalMessagingSettingsDbObj.class);
-		if(obj.getPersonalMessagingSettingsId() == -1){
+		if(obj.getPersonalMessagingSettingsId() == null || obj.getPersonalMessagingSettingsId() == -1){
 			personalMessagingSettingsDbObjMapper.insert(dbObj);
 			obj.setPersonalMessagingSettingsId(dbObj.getPersonalMessagingSettingsId());
 		}
