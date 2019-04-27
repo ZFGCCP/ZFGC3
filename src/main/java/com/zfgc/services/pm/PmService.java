@@ -434,6 +434,10 @@ public class PmService extends AbstractService {
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
 		}
 		
+		if(isConvoArchived(convoId, zfgcUser)){
+			throw new ZfgcSecurityException("You are not authorized to remove users from this converation.");
+		}
+		
 		PmConversation convo = pmConversationDataProvider.getConversation(convoId);
 		
 		//verify that this user is the starting user

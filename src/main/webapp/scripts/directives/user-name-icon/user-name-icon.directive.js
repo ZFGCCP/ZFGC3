@@ -27,6 +27,15 @@
 				}
 			};
 			
+			$scope.isConvoArchived = function(){
+				if($scope.vm.conversation.pmConversationId === null){
+					return false;
+				}
+				else{
+					return $scope.vm.conversation.isArchived;
+				}
+			};
+			
 			$scope.isLoggedInUser = function(){
 				return $scope.usersId === UserService.loggedInUser.usersId;
 			};
