@@ -48,7 +48,7 @@ public class PermissionsDao extends AbstractDao<PermissionsDbObjExample, Permiss
 	}
 
 	@Override
-	public Integer countByExample(Permissions obj, PermissionsDbObjExample ex)
+	public Long countByExample(Permissions obj, PermissionsDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

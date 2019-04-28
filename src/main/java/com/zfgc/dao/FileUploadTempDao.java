@@ -50,7 +50,7 @@ public class FileUploadTempDao extends AbstractDao<FileUploadTempDbObjExample, F
 	}
 
 	@Override
-	public Integer countByExample(FileUploadTemp obj,
+	public Long countByExample(FileUploadTemp obj,
 			FileUploadTempDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

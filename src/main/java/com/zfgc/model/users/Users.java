@@ -89,7 +89,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@JsonIgnore
 	private String emailActivationCode;
 	
-	private Integer unreadPmCount = 0;
+	private Long unreadPmCount = 0L;
 	
 	private String gResponseToken;
 	
@@ -468,10 +468,10 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	public void setTimeZone(String timeZone) {
 		this.timeZone = timeZone;
 	}
-	public Integer getUnreadPmCount() {
+	public Long getUnreadPmCount() {
 		return unreadPmCount;
 	}
-	public void setUnreadPmCount(Integer unreadPmCount) {
+	public void setUnreadPmCount(Long unreadPmCount) {
 		this.unreadPmCount = unreadPmCount;
 	}
 	public Date getLastLogin() {

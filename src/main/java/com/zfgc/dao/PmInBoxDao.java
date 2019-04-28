@@ -51,7 +51,7 @@ public class PmInBoxDao extends AbstractDao<InboxViewDbObjExample,InboxViewDbObj
 	}
 
 	@Override
-	public Integer countByExample(PmBox obj, InboxViewDbObjExample ex)
+	public Long countByExample(PmBox obj, InboxViewDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

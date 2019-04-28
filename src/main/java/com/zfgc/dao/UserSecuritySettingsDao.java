@@ -58,7 +58,7 @@ public class UserSecuritySettingsDao extends AbstractDao<UserSecuritySettingsDbO
 	}
 
 	@Override
-	public Integer countByExample(UserSecurityInfo obj, UserSecuritySettingsDbObjExample ex) throws RuntimeException {
+	public Long countByExample(UserSecurityInfo obj, UserSecuritySettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

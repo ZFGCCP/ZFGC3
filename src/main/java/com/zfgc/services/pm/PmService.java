@@ -631,7 +631,7 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public Integer getUnreadPmCount(Users user) throws RuntimeException{
+	public Long getUnreadPmCount(Users user) throws RuntimeException{
 		return pmConversationDataProvider.countUnread(user.getUsersId());
 	}
 	

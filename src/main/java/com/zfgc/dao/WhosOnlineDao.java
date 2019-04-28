@@ -49,7 +49,7 @@ public class WhosOnlineDao extends AbstractDao<OnlineUserDbObjExample, OnlineUse
 	}
 
 	@Override
-	public Integer countByExample(OnlineUser obj, OnlineUserDbObjExample ex)
+	public Long countByExample(OnlineUser obj, OnlineUserDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

@@ -49,7 +49,7 @@ public class MemberGroupPermsDao extends AbstractDao<MemberGroupPermsDbObjExampl
 	}
 
 	@Override
-	public Integer countByExample(MemberGroupPerms obj,
+	public Long countByExample(MemberGroupPerms obj,
 			MemberGroupPermsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

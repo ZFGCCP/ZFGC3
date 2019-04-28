@@ -380,7 +380,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		usersDao.updateByExample(user, ex);
 	}
 	
-	public void resetActiveConnectionCounts() throws Exception {
+	public void resetActiveConnectionCounts() throws RuntimeException {
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andActiveConnectionsGreaterThan(0);
 		
@@ -389,5 +389,10 @@ public class UsersDataProvider extends AbstractDataProvider {
 		user.setActiveConnections(0);
 		
 		usersDao.updateByExample(user, ex);
+	}
+	
+	public Long getActiveUsersCount() throws RuntimeException {
+		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
+		return memberListingViewDao.countByExample(null, ex);
 	}
 }

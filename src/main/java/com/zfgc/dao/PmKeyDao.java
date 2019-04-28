@@ -55,7 +55,7 @@ public class PmKeyDao extends AbstractDao<PmKeyDbObjExample, PmKeyDbObj, PmKey>{
 	}
 
 	@Override
-	public Integer countByExample(PmKey obj, PmKeyDbObjExample ex)
+	public Long countByExample(PmKey obj, PmKeyDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

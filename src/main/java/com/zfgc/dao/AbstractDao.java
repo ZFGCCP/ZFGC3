@@ -34,7 +34,7 @@ public abstract class AbstractDao<Example, DbObj, Model>{
 	public abstract void updateOrInsert(Model obj) throws RuntimeException;
 	public abstract void updateByExample(Model obj, Example ex) throws RuntimeException;
 	public abstract Integer deleteByExample(Model obj, Example ex) throws RuntimeException;
-	public abstract Integer countByExample(Model obj, Example ex) throws RuntimeException;
+	public abstract Long countByExample(Model obj, Example ex) throws RuntimeException;
 	
 	protected void logDbInsertError(Logger LOGGER, String tableName){
 		LOGGER.error("Error inserting into " + tableName);

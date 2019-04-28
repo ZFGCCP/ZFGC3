@@ -94,7 +94,7 @@ public class BbcodeDao extends AbstractDao<BbCodeConfigDbObjExample, BbCodeConfi
 	}
 
 	@Override
-	public Integer countByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex)
+	public Long countByExample(BbcodeConfig obj, BbCodeConfigDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

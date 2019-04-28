@@ -64,10 +64,10 @@ public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjEx
 	}
 
 	@Override
-	public Integer countByExample(BrUserConversation obj,
+	public Long countByExample(BrUserConversation obj,
 			BrUserConversationDbObjExample ex) throws RuntimeException {
 		try{
-			return dbObjMapper.countByExample(ex);
+			return (long)dbObjMapper.countByExample(ex);
 		}
 		catch(Exception e){
 			e.printStackTrace();

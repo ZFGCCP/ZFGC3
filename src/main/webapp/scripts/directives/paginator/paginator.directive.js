@@ -12,10 +12,10 @@
 		directive.link = function ($scope, element, attrs) { 
 			$scope.pageNumber = 1;
 			$scope.resultsPerPage = 10;
-			$scope.service = $resource($scope.loadUrl,{},{isArray : true, method : 'GET'});
+			$scope.service = $resource($scope.loadUrl,{},{isArray: false, method : 'GET'});
 			
 			$scope.reloadData = function(){
-				$scope.resultsModel = $scope.service.query({pageNo : $scope.pageNumber, usersPerPage : $scope.resultsPerPage});
+				$scope.resultsModel = $scope.service.get({pageNo : $scope.pageNumber, usersPerPage : $scope.resultsPerPage});
 			}
 			
 			$scope.forward = function(){
@@ -32,6 +32,10 @@
 			}
 			
 			$scope.reloadData();
+			
+			$scope.resultsModel.$promise.then(function(data){
+				$scope.totalPages = Math.ceil(data.totalCount / $scope.resultsPerPage);
+			});
 		}
 		
 		return directive;

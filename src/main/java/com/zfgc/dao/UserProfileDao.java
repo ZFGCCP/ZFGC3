@@ -100,7 +100,7 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 	}
 
 	@Override
-	public Integer countByExample(UserProfileView obj,
+	public Long countByExample(UserProfileView obj,
 			UserProfileViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

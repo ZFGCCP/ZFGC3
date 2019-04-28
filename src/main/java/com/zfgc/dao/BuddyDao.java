@@ -79,7 +79,7 @@ public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddy
 	}
 
 	@Override
-	public Integer countByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex)
+	public Long countByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

@@ -64,7 +64,7 @@ public class CategoryDao extends AbstractDao<CategoryDbObjExample, CategoryDbObj
 	}
 
 	@Override
-	public Integer countByExample(Category obj, CategoryDbObjExample ex)
+	public Long countByExample(Category obj, CategoryDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

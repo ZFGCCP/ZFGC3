@@ -57,7 +57,7 @@ public class PersonalMessagingSettingsDao extends AbstractDao<PersonalMessagingS
 	}
 
 	@Override
-	public Integer countByExample(PersonalMessagingSettings obj,
+	public Long countByExample(PersonalMessagingSettings obj,
 			PersonalMessagingSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
