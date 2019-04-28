@@ -111,7 +111,7 @@ public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj, Thre
 	}
 
 	@Override
-	public Integer countByExample(Thread obj, ThreadDbObjExample ex)
+	public Long countByExample(Thread obj, ThreadDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

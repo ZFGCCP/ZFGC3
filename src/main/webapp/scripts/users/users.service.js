@@ -54,8 +54,7 @@
 			},
 			getMemberListing : {
 				url : '/forum/users/member-list',
-				method : 'GET',
-				isArray : true
+				method : 'GET'
 			},
 			getBuddyTemplate : {
 				url : '/forum/users/buddy',

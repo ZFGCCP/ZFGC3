@@ -56,7 +56,7 @@ public class AvatarGalleryDao extends AbstractDao<AvatarGalleryDbObjExample, Ava
 	}
 
 	@Override
-	public Integer countByExample(AvatarGallery obj,
+	public Long countByExample(AvatarGallery obj,
 			AvatarGalleryDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

@@ -50,7 +50,7 @@ public class PmConversationBoxViewDao extends AbstractDao<PmConversationBoxViewD
 	}
 
 	@Override
-	public Integer countByExample(PmConversationView obj,
+	public Long countByExample(PmConversationView obj,
 			PmConversationBoxViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

@@ -54,7 +54,7 @@ public class LkupMemberGroupDao extends AbstractDao<LkupMemberGroupDbObjExample,
 	}
 
 	@Override
-	public Integer countByExample(LkupMemberGroup obj, LkupMemberGroupDbObjExample ex) throws RuntimeException {
+	public Long countByExample(LkupMemberGroup obj, LkupMemberGroupDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

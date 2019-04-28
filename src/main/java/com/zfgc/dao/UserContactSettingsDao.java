@@ -58,7 +58,7 @@ public class UserContactSettingsDao extends AbstractDao<UserContactSettingsDbObj
 	}
 
 	@Override
-	public Integer countByExample(UserContactInfo obj,
+	public Long countByExample(UserContactInfo obj,
 			UserContactSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

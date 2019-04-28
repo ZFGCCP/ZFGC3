@@ -83,7 +83,7 @@ public class NotificationSettingsDao extends AbstractDao<NotificationSettingsDbO
 	}
 
 	@Override
-	public Integer countByExample(NotificationSettings obj,
+	public Long countByExample(NotificationSettings obj,
 			NotificationSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

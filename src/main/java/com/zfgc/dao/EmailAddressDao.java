@@ -54,7 +54,7 @@ public class EmailAddressDao extends AbstractDao<EmailAddressDbObjExample, Email
 	}
 
 	@Override
-	public Integer countByExample(EmailAddress obj, EmailAddressDbObjExample ex) throws RuntimeException {
+	public Long countByExample(EmailAddress obj, EmailAddressDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

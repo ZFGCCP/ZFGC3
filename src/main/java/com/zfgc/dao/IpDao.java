@@ -215,7 +215,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	}
 
 	@Override
-	public Integer countByExample(IpAddress obj, IpAddressDbObjExample ex)
+	public Long countByExample(IpAddress obj, IpAddressDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

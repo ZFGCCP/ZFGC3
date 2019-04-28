@@ -57,7 +57,7 @@ public class BrPmConversationArchiveDao extends AbstractDao<BrPmConversationArch
 	}
 
 	@Override
-	public Integer countByExample(BrPmConversationArchive obj,
+	public Long countByExample(BrPmConversationArchive obj,
 			BrPmConversationArchiveDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

@@ -22,10 +22,10 @@ public class MemberListViewDao extends AbstractDao<MemberListingViewDbObjExample
 		try{
 			return memberListingViewDbObjMapper.selectByExample(ex);
 		}
-		catch(Exception e){
+		catch(RuntimeException e){
 			e.printStackTrace();
+			throw e;
 		}
-		return null;
 	}
 
 	@Override
@@ -53,8 +53,8 @@ public class MemberListViewDao extends AbstractDao<MemberListingViewDbObjExample
 	}
 
 	@Override
-	public Integer countByExample(MemberListingView obj, MemberListingViewDbObjExample ex) throws RuntimeException {
-		return null;
+	public Long countByExample(MemberListingView obj, MemberListingViewDbObjExample ex) throws RuntimeException {
+		return memberListingViewDbObjMapper.countByExample(ex);
 	}
 
     

@@ -323,7 +323,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brUserConversationDao.updateByExample(convo, ex);
 	}
 	
-	public Integer countUnread(Integer usersId) throws RuntimeException{
+	public Long countUnread(Integer usersId) throws RuntimeException{
 		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(usersId).andReadFlagEqualTo(false);
 		

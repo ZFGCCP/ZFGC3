@@ -75,7 +75,7 @@ public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLog
 	}
 
 	@Override
-	public Integer countByExample(ActivityLog obj, ActivityLogDbObjExample ex)
+	public Long countByExample(ActivityLog obj, ActivityLogDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

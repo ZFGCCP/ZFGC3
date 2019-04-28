@@ -20,6 +20,7 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.users.MemberListingView;
+import com.zfgc.model.users.MembersView;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
@@ -263,7 +264,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/member-list", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getMemberList(@RequestParam Integer pageNo, @RequestParam Integer usersPerPage) {
-		List<MemberListingView> userList = null;
+		MembersView userList = null;
 		try {
 			userList = usersService.getMemberListingView(zfgcUser(), pageNo, usersPerPage);
 		} catch (Exception e) {

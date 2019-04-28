@@ -46,7 +46,7 @@ public class HtmlEntityDao extends AbstractDao<HtmlEntityDbObjExample, HtmlEntit
 	}
 
 	@Override
-	public Integer countByExample(Object obj, HtmlEntityDbObjExample ex)
+	public Long countByExample(Object obj, HtmlEntityDbObjExample ex)
 			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

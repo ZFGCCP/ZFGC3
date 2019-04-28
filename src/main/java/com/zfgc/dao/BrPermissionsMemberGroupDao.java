@@ -51,7 +51,7 @@ public class BrPermissionsMemberGroupDao extends AbstractDao<BrPermissionsMember
 	}
 
 	@Override
-	public Integer countByExample(BrPermissionsMemberGroup obj,
+	public Long countByExample(BrPermissionsMemberGroup obj,
 			BrPermissionsMemberGroupDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;

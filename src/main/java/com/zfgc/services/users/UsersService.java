@@ -32,6 +32,7 @@ import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
+import com.zfgc.model.users.MembersView;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
@@ -336,11 +337,17 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public List<MemberListingView> getMemberListingView(Users user, Integer pageNumber, Integer range) throws Exception{
+	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range) throws Exception{
 		//todo: add permission check
 		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range);
+		Long totalUsers = usersDataProvider.getActiveUsersCount();
+		MembersView members = new MembersView();
 		
-		return result;
+		members.setTotalCount(totalUsers);
+		members.setMembers(result);
+		
+		
+		return members;
 	}
 	
 	public void setUserOnline(Users user) throws Exception{
