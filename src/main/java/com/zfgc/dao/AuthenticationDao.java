@@ -46,7 +46,7 @@ public class AuthenticationDao extends AbstractDao{
 		}
 	}
 	
-	public void logEmailAddress(EmailAddress emailAddress) throws ZfgcDataExistsException, Exception{
+	public void logEmailAddress(EmailAddress emailAddress) throws ZfgcDataExistsException, RuntimeException{
 		if(getEmailAddress(emailAddress.getEmailAddress()) != null){
 			throw new ZfgcDataExistsException("EmailAddress: " + emailAddress.getEmailAddress());
 		}
@@ -55,35 +55,35 @@ public class AuthenticationDao extends AbstractDao{
 			EmailAddressDbObj emailAddressDbObj = mapper.map(emailAddress, EmailAddressDbObj.class);
 			emailAddressDbObjMapper.insertSelective(emailAddressDbObj);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Unable to log Email Address " + emailAddress.getEmailAddress());
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public EmailAddressDbObj getEmailAddress(String emailAddress) throws Exception{
+	public EmailAddressDbObj getEmailAddress(String emailAddress) throws RuntimeException{
 		try{
 			//return emailAddressDbObjMapper.selectByPrimaryKey(emailAddress);
 			return null;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Unable to obtain Email Address " + emailAddress);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public void saveAuthToken(AuthToken authToken) throws Exception{
+	public void saveAuthToken(AuthToken authToken) throws RuntimeException{
 		try{
 			AuthTokenDbObj authTokenDbObj = mapper.map(authToken, AuthTokenDbObj.class);
 			authTokenDbObjMapper.insertSelective(authTokenDbObj);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbInsertError(LOGGER, "AUTH_TOKEN");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public List<AuthTokenDbObj> getAuthTokenByUser(Users user) throws Exception{
+	public List<AuthTokenDbObj> getAuthTokenByUser(Users user) throws RuntimeException{
 		try{
 			AuthTokenDbObjExample authTokenDbObjExample = new AuthTokenDbObjExample(); 
 			authTokenDbObjExample.createCriteria().andUsersIdEqualTo(user.getUsersId());
@@ -91,13 +91,13 @@ public class AuthenticationDao extends AbstractDao{
 			
 			return tokens;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbSelectError(LOGGER, "AUTH_TOKEN");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public AuthTokenDbObj getAuthToken(String authToken) throws Exception{
+	public AuthTokenDbObj getAuthToken(String authToken) throws RuntimeException{
 		List<AuthTokenDbObj> dbObj = null;
 		try{
 			AuthTokenDbObjExample authTokenDbObjExample = new AuthTokenDbObjExample(); 
@@ -105,9 +105,9 @@ public class AuthenticationDao extends AbstractDao{
 			
 			dbObj = authTokenDbObjMapper.selectByExample(authTokenDbObjExample);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Unable to find auth token " + authToken);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		if(dbObj.size() == 0){
@@ -149,7 +149,7 @@ public class AuthenticationDao extends AbstractDao{
 	}
 
 	@Override
-	public Integer countByExample(Object obj, Object ex) throws Exception {
+	public Long countByExample(Object obj, Object ex) {
 		// TODO Auto-generated method stub
 		return null;
 	}

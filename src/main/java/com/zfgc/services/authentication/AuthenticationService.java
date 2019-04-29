@@ -52,7 +52,7 @@ public class AuthenticationService  extends AbstractService {
 	@Autowired
 	private PmKeyDataProvider pmKeyDataProvider;
 	
-	public String createPasswordHash(String password, String salt) throws Exception{
+	public String createPasswordHash(String password, String salt) throws RuntimeException{
 		String hashThis = password + salt;
 		
 		try{
@@ -60,7 +60,7 @@ public class AuthenticationService  extends AbstractService {
 		}
 		catch(NoSuchAlgorithmException ex){
 			LOGGER.error(ex.getMessage());
-			throw new Exception(ex.getMessage());
+			throw new RuntimeException(ex.getMessage());
 		}
 	}
 	
@@ -76,7 +76,7 @@ public class AuthenticationService  extends AbstractService {
 		return Base64.encodeBase64URLSafeString(salt);
 	}
 	
-	public static String generateSha256(String digestStr) throws Exception{
+	public static String generateSha256(String digestStr) throws NoSuchAlgorithmException, RuntimeException{
 		try{
 			MessageDigest digest = MessageDigest.getInstance(HASH_ALGORITHM);
 			digest.update(digestStr.getBytes());
@@ -85,11 +85,14 @@ public class AuthenticationService  extends AbstractService {
 			return Base64.encodeBase64URLSafeString(hash);
 		}
 		catch(NoSuchAlgorithmException ex){
-			throw new Exception(ex.getMessage());
+			throw ex;
+		}
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
-	public String generateAuthenticationToken(Users user, Integer ttl) throws Exception{
+	public String generateAuthenticationToken(Users user, Integer ttl) throws RuntimeException{
 		Random cryptoRand = new SecureRandom();
 		byte[] token = new byte[16];
 		cryptoRand.nextBytes(token);
@@ -109,22 +112,22 @@ public class AuthenticationService  extends AbstractService {
 		try{
 			authenticationDataProvider.createAuthToken(authToken);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			ex.printStackTrace();
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		return authToken.getToken();
 	}
 	
-	public Boolean isTokenValid(Users user, String token) throws Exception{
+	public Boolean isTokenValid(Users user, String token) throws RuntimeException{
 		List<AuthToken> tokens = null;
 		try{
 			tokens = authenticationDataProvider.getAuthTokensForUser(user);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			ex.printStackTrace();
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		Date now = ZfgcTimeUtils.getToday();
@@ -138,17 +141,17 @@ public class AuthenticationService  extends AbstractService {
 		return false;
 	}
 	
-	public Boolean checkUserPassword(Users user) throws Exception{
+	public Boolean checkUserPassword(Users user) throws RuntimeException{
 		try {
 			UserHashInfo hashInfo = usersDao.getUserPasswordAndSaltByName(user.getLoginName());
 			
 			return checkPassword(user.getPassword(),hashInfo);
 		} catch (Exception e) {
-			throw new Exception(e.getMessage());
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	
-	public Users authenticateWithToken(String authToken) throws Exception{
+	public Users authenticateWithToken(String authToken) throws RuntimeException{
 		try{
 			Boolean isTokenValid = checkToken(authToken);
 
@@ -164,12 +167,12 @@ public class AuthenticationService  extends AbstractService {
 		catch(ZfgcNotFoundException e){
 			throw new ZfgcNotFoundException(e.getResourceName());
 		}
-		catch(Exception e){
-			throw new Exception(e.getMessage());
+		catch(RuntimeException e){
+			throw e;
 		}
 	}
 	
-	public Boolean checkToken(String authToken) throws Exception{
+	public Boolean checkToken(String authToken) throws RuntimeException{
 		try{
 			AuthToken token = authenticationDataProvider.getAuthToken(authToken);
 			
@@ -183,12 +186,12 @@ public class AuthenticationService  extends AbstractService {
 		catch(ZfgcNotFoundException e){
 			throw new ZfgcNotFoundException(e.getResourceName());
 		}
-		catch(Exception e){
-			throw new Exception(e.getMessage());
+		catch(RuntimeException e){
+			throw new RuntimeException(e.getMessage());
 		}
 	}
 	
-	private Boolean checkPassword(String password, UserHashInfo userHashInfo) throws Exception{
+	private Boolean checkPassword(String password, UserHashInfo userHashInfo) throws RuntimeException{
 		try{
 			String hashCompare = createPasswordHash(password, userHashInfo.getPassSalt());
 			Boolean result =  hashCompare != null && hashCompare.equals(userHashInfo.getPassword());
@@ -197,23 +200,23 @@ public class AuthenticationService  extends AbstractService {
 		}
 		catch(Exception ex){
 			LOGGER.error("Error checking password");
-			throw new Exception(ex.getMessage());
+			throw new RuntimeException(ex.getMessage());
 		}
 	}
 	
-	public void logEmailAddress(EmailAddress emailAddress) throws Exception{
+	public void logEmailAddress(EmailAddress emailAddress) throws RuntimeException{
 		authenticationDataProvider.logEmailAddress(emailAddress);
 	}
 	
-	public Boolean checkIpIsSpammer(IpAddress ipAddress) throws Exception{
+	public Boolean checkIpIsSpammer(IpAddress ipAddress) throws RuntimeException{
 		return authenticationDataProvider.getIpSpamInfo(ipAddress).getIsSpammerFlag();
 	}
 	
-	public Boolean checkEmailIsSpammer(EmailAddress emailAddress) throws Exception{
+	public Boolean checkEmailIsSpammer(EmailAddress emailAddress) throws RuntimeException{
 		return authenticationDataProvider.getEmailSpamInfo(emailAddress).getIsSpammerFlag();
 	}
 	
-	public Boolean doesEmailExist(EmailAddress emailAddress) throws Exception{
+	public Boolean doesEmailExist(EmailAddress emailAddress) throws RuntimeException{
 		return authenticationDataProvider.doesEmailExist(emailAddress);
 	}
 	

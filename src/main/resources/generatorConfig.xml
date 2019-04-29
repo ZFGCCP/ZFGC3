@@ -19,19 +19,86 @@
     </sqlMapGenerator>
     <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3" type="XMLMAPPER" />
     
+    
 
     <!-- tables -->
-    	<table schema="Zfgc3" tableName="PERSONAL_MESSAGING_SETTINGS" domainObjectName="PersonalMessagingSettingsDbObj">
-    	<generatedKey column="PERSONAL_MESSAGING_SETTINGS_ID" sqlStatement="SELECT COALSESCE(MAX(PERSONAL_MESSAGING_SETTINGS_ID) + 1,0) FROM PERSONAL_MESSAGING_SETTINGS"/>
-    	</table>
     
-        <!--<table schema="Zfgc3" tableName="NOTIFICATION_SETTINGS" domainObjectName="NotificationSettingsDbObj">
-    	<generatedKey column="NOTIFICATION_SETTINGS_ID" sqlStatement="SELECT COALSESCE(MAX(NOTIFICATION_SETTINGS_ID) + 1,0) FROM NOTIFICATION_SETTINGS"/>
-    	<columnOverride column="KARMA_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="KARMA_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="TAGGED_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    	<columnOverride column="TAGGED_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    <table schema="Zfgc3" tableName="PERSONAL_MESSAGING_SETTINGS" domainObjectName="PersonalMessagingSettingsDbObj">
+   		<generatedKey column="PERSONAL_MESSAGING_SETTINGS_ID" sqlStatement="SELECT MAX(PERSONAL_MESSAGING_SETTINGS_ID) + 1 FROM PERSONAL_MESSAGING_SETTINGS"/>
+   	</table>
+   
+       <table schema="Zfgc3" tableName="NOTIFICATION_SETTINGS" domainObjectName="NotificationSettingsDbObj">
+	   	<generatedKey column="NOTIFICATION_SETTINGS_ID" sqlStatement="SELECT MAX(NOTIFICATION_SETTINGS_ID) + 1 FROM NOTIFICATION_SETTINGS"/>
+	   	<columnOverride column="KARMA_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+	   	<columnOverride column="KARMA_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+	   	<columnOverride column="TAGGED_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+	   	<columnOverride column="TAGGED_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+   	</table>
+    <!--<table schema="zfgc3" tableName="USER_SECURITY_SETTINGS" domainObjectName="UserSecuritySettingsDbObj">
+    	<generatedKey column="USER_SECURITY_SETTINGS_ID" sqlStatement="SELECT MAX(USER_SECURITY_SETTINGS_ID) + 1 FROM USER_SECURITY_SETTINGS"/>
     </table>
+    
+    <table schema="zfgc3" tableName="USER_CONTACT_SETTINGS" domainObjectName="UserContactSettingsDbObj">
+    	<generatedKey column="USER_CONTACT_SETTINGS_ID" sqlStatement="SELECT MAX(USER_CONTACT_SETTINGS_ID) + 1 FROM USER_CONTACT_SETTINGS"/>
+    </table>
+    
+    <table schema="zfgc3" tableName="PERMISSIONS" domainObjectName="PermissionsDbObj">
+    	<generatedKey column="PERMISSIONS_ID" sqlStatement="SELECT MAX(PERMISSIONS_ID) + 1 FROM PERMISSIONS"/>
+    </table>
+
+    <table schema="zfgc3" tableName="BR_PERMISSIONS_MEMBER_GROUP" domainObjectName="BrPermissionsMemberGroupDbObj">
+    </table>
+    <table schema="zfgc3" tableName="LKUP_MEMBER_GROUP" domainObjectName="LkupMemberGroupDbObj">
+    	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <table schema="zfgc3" tableName="BR_MEMBER_GROUP_USER" domainObjectName="BrMemberGroupUserDbObj">
+    </table>
+    <table schema="zfgc3" tableName="LKUP_MEMBER_GROUP" domainObjectName="LkupMemberGroupDbObj">
+    	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
+    	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
+    	<generatedKey column="users_id" sqlStatement="SELECT MAX(USERS_ID) + 1 FROM users"/>
+    	<columnOverride column="HIDE_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="PM_EMAIL_NOTIF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	
+    	<columnOverride column="HIDE_YIM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_AIM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_SKYPE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_STEAM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_XBOX_LIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_PSN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDE_NNID_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
+        <property name="virtualKeyColumns" value="USERS_ID" />
+    	<generatedKey column="users_id" sqlStatement="SELECT MAX(USERS_ID) + 1 FROM users"/>
+    	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="PM_EMAIL_NOTIF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <table schema="zfgc3" tableName="EMAIL_ADDRESS" domainObjectName="EmailAddressDbObj">
+    <generatedKey column="email_address_id" sqlStatement="SELECT MAX(EMAIL_ADDRESS_ID) + 1 FROM EMAIL_ADDRESS"/>
+    	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+   	<table schema="Zfgc3" tableName="PERSONAL_MESSAGING_SETTINGS" domainObjectName="PersonalMessagingSettingsDbObj">
+   		<generatedKey column="PERSONAL_MESSAGING_SETTINGS_ID" sqlStatement="SELECT MAX(PERSONAL_MESSAGING_SETTINGS_ID) + 1 FROM PERSONAL_MESSAGING_SETTINGS"/>
+   	</table>
+   
+       <table schema="Zfgc3" tableName="NOTIFICATION_SETTINGS" domainObjectName="NotificationSettingsDbObj">
+	   	<generatedKey column="NOTIFICATION_SETTINGS_ID" sqlStatement="SELECT MAX(NOTIFICATION_SETTINGS_ID) + 1 FROM NOTIFICATION_SETTINGS"/>
+	   	<columnOverride column="KARMA_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+	   	<columnOverride column="KARMA_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+	   	<columnOverride column="TAGGED_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+	   	<columnOverride column="TAGGED_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+   	</table>
     
     <table schema="Zfgc3" tableName="AVATAR" domainObjectName="AvatarDbObj">
     	<generatedKey column="AVATAR_ID" sqlStatement="SELECT MAX(AVATAR_ID) + 1 FROM AVATAR"/>
@@ -173,10 +240,30 @@
     
     <!-- views -->
     <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
-    </table>
-    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
+    <!--<table schema="zfgc3" tableName="MEMBER_GROUP_PERMS_VIEW" domainObjectName="MemberGroupPermsDbObj">
+    </table>
+    
+    
+    <table schema="zfgc3" tableName="WHOS_ONLINE_VIEW" domainObjectName="OnlineUserDbObj">
+    </table>
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="HIDDEN_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <table schema="zfgc3" tableName="WHOS_ONLINE_VIEW" domainObjectName="OnlineUserDbObj">
+    </table>
+
     <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>

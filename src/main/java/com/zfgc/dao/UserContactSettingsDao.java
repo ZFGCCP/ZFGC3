@@ -18,40 +18,48 @@ public class UserContactSettingsDao extends AbstractDao<UserContactSettingsDbObj
 	
 	@Override
 	public List<UserContactSettingsDbObj> get(UserContactSettingsDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		return userContactSettingsDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(UserContactInfo obj) {
+	public void hardDelete(UserContactInfo obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(UserContactInfo obj) {
+	public void updateOrInsert(UserContactInfo obj) throws RuntimeException {
 		UserContactSettingsDbObj data = mapper.map(obj, UserContactSettingsDbObj.class);
 		data.setEmailAddressId(obj.getEmail().getEmailAddressId());
-		userContactSettingsDbObjMapper.updateByPrimaryKey(data);
+		
+		if(obj.getUserContactSettingsId() == null || obj.getUserContactSettingsId() == -1) {
+			userContactSettingsDbObjMapper.insert(data);
+			obj.setUserContactSettingsId(data.getUserContactSettingsId());
+		}
+		else {
+			userContactSettingsDbObjMapper.updateByPrimaryKey(data);
+		}
+		
 	}
 
 	@Override
 	public void updateByExample(UserContactInfo obj,
-			UserContactSettingsDbObjExample ex) throws Exception {
+			UserContactSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(UserContactInfo obj,
-			UserContactSettingsDbObjExample ex) throws Exception {
+			UserContactSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(UserContactInfo obj,
-			UserContactSettingsDbObjExample ex) throws Exception {
+	public Long countByExample(UserContactInfo obj,
+			UserContactSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -92,13 +92,16 @@
 	}
 
 	.section-body{
+		&.no-padding{
+			padding-top:0;
+		}
+	
 		padding-top:20px;
 		font-size:11px;
 	}
 }
 
 .widget-container{
-   width:90%;
    margin:0 auto;
    margin-bottom:12px;
    box-shadow: 5px 5px 5px black;
@@ -148,6 +151,10 @@
 
 .padded-row{
 	padding-bottom:.8rem;
+}
+
+.padded{
+	padding:10px;
 }
 
 .title{font-size:14px;margin-top:20px;}

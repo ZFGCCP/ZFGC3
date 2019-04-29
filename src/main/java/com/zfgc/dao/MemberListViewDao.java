@@ -18,43 +18,43 @@ public class MemberListViewDao extends AbstractDao<MemberListingViewDbObjExample
 	private MemberListingViewDbObjMapper memberListingViewDbObjMapper;
 	
 	@Override
-	public List<MemberListingViewDbObj> get(MemberListingViewDbObjExample ex) throws Exception {
+	public List<MemberListingViewDbObj> get(MemberListingViewDbObjExample ex) throws RuntimeException {
 		try{
 			return memberListingViewDbObjMapper.selectByExample(ex);
 		}
-		catch(Exception e){
+		catch(RuntimeException e){
 			e.printStackTrace();
+			throw e;
 		}
-		return null;
 	}
 
 	@Override
-	public void hardDelete(MemberListingView obj) {
+	public void hardDelete(MemberListingView obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(MemberListingView obj) {
+	public void updateOrInsert(MemberListingView obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(MemberListingView obj, MemberListingViewDbObjExample ex) throws Exception {
+	public void updateByExample(MemberListingView obj, MemberListingViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(MemberListingView obj, MemberListingViewDbObjExample ex) throws Exception {
+	public Integer deleteByExample(MemberListingView obj, MemberListingViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(MemberListingView obj, MemberListingViewDbObjExample ex) throws Exception {
-		return null;
+	public Long countByExample(MemberListingView obj, MemberListingViewDbObjExample ex) throws RuntimeException {
+		return memberListingViewDbObjMapper.countByExample(ex);
 	}
 
     

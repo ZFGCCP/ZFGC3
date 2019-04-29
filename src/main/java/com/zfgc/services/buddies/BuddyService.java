@@ -54,7 +54,7 @@ public class BuddyService extends AbstractService {
 	}
 	
 	@Transactional
-	public void saveBuddies(Integer userId, List<Buddy> buddies, Users zfgcUser) throws Exception{
+	public void saveBuddies(Integer userId, List<Buddy> buddies, Users zfgcUser) throws RuntimeException, Exception{
 		List<Buddy> savedBuddies = getBuddies(userId);
 		
 		for(Buddy buddy : buddies){
@@ -63,7 +63,7 @@ public class BuddyService extends AbstractService {
 		}
 	}
 	
-	public Buddy getBuddyTemplate(Integer usersA, Integer usersB, Users zfgcUser) throws Exception{
+	public Buddy getBuddyTemplate(Integer usersA, Integer usersB, Users zfgcUser) throws RuntimeException, Exception{
 		Buddy buddy = buddyDataProvider.getBuddyTemplate(usersA, usersB);
 		ruleRunner.runRules(buddyListValidator, null, null, buddy, zfgcUser);
 		

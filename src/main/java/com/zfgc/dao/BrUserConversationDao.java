@@ -21,24 +21,24 @@ public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjEx
 	
 	@Override
 	public List<BrUserConversationDbObj> get(
-			BrUserConversationDbObjExample ex) throws Exception {
+			BrUserConversationDbObjExample ex) throws RuntimeException {
 		return dbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(BrUserConversation obj) {
+	public void hardDelete(BrUserConversation obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 	}
 
 	@Override
-	public void updateOrInsert(BrUserConversation obj) {
+	public void updateOrInsert(BrUserConversation obj) throws RuntimeException {
 		BrUserConversationDbObj dbObj = mapper.map(obj, BrUserConversationDbObj.class);
 		dbObjMapper.insert(dbObj);
 	}
 
 	@Override
 	public void updateByExample(BrUserConversation obj,
-			BrUserConversationDbObjExample ex) throws Exception {
+			BrUserConversationDbObjExample ex) throws RuntimeException {
 		try{
 			BrUserConversationDbObj dbObj = mapper.map(obj, BrUserConversationDbObj.class);
 			dbObjMapper.updateByExample(dbObj, ex);
@@ -52,7 +52,7 @@ public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjEx
 
 	@Override
 	public Integer deleteByExample(BrUserConversation obj,
-			BrUserConversationDbObjExample ex) throws Exception, ZfgcNotFoundException {
+			BrUserConversationDbObjExample ex) throws RuntimeException {
 		
 		Integer resultCount = dbObjMapper.deleteByExample(ex);
 		
@@ -64,10 +64,10 @@ public class BrUserConversationDao extends AbstractDao<BrUserConversationDbObjEx
 	}
 
 	@Override
-	public Integer countByExample(BrUserConversation obj,
-			BrUserConversationDbObjExample ex) throws Exception {
+	public Long countByExample(BrUserConversation obj,
+			BrUserConversationDbObjExample ex) throws RuntimeException {
 		try{
-			return dbObjMapper.countByExample(ex);
+			return (long)dbObjMapper.countByExample(ex);
 		}
 		catch(Exception e){
 			e.printStackTrace();

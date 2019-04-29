@@ -16,38 +16,38 @@ public class HtmlEntityDao extends AbstractDao<HtmlEntityDbObjExample, HtmlEntit
 	HtmlEntityDbObjMapper htmlEntityDbObjMapper;
 	
 	@Override
-	public List<HtmlEntityDbObj> get(HtmlEntityDbObjExample ex) {
+	public List<HtmlEntityDbObj> get(HtmlEntityDbObjExample ex) throws RuntimeException {
 		return htmlEntityDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(Object obj) {
+	public void hardDelete(Object obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(Object obj) {
+	public void updateOrInsert(Object obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(Object obj, HtmlEntityDbObjExample ex) {
+	public void updateByExample(Object obj, HtmlEntityDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(Object obj, HtmlEntityDbObjExample ex) {
+	public Integer deleteByExample(Object obj, HtmlEntityDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(Object obj, HtmlEntityDbObjExample ex)
-			throws Exception {
+	public Long countByExample(Object obj, HtmlEntityDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

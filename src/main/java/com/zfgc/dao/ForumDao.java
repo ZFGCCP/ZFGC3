@@ -143,39 +143,39 @@ public class ForumDao extends AbstractDao<ForumDbObjExample, ForumDbObj, Forum> 
 	}
 
 	@Override
-	public List<ForumDbObj> get(ForumDbObjExample ex) {
+	public List<ForumDbObj> get(ForumDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(Forum obj) {
+	public void hardDelete(Forum obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(Forum obj) {
+	public void updateOrInsert(Forum obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(Forum obj, ForumDbObjExample ex) {
+	public void updateByExample(Forum obj, ForumDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(Forum obj, ForumDbObjExample ex) {
+	public Integer deleteByExample(Forum obj, ForumDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(Forum obj, ForumDbObjExample ex)
-			throws Exception {
+	public Long countByExample(Forum obj, ForumDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

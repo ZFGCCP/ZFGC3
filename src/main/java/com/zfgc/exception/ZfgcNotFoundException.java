@@ -1,6 +1,6 @@
 package com.zfgc.exception;
 
-public class ZfgcNotFoundException extends Exception {
+public class ZfgcNotFoundException extends RuntimeException {
 	private static final long serialVersionUID = 1L;
 	private String resourceName;
 	

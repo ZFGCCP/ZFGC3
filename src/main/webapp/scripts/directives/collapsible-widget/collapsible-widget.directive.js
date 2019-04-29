@@ -12,7 +12,7 @@
 
 		directive.link = function ($scope, element, attrs) 
 		{ 
-			$scope.isCollapsed = true;
+			$scope.isCollapsed = false;
 			
 			$scope.toggle = function(){
 				$scope.isCollapsed = !$scope.isCollapsed;

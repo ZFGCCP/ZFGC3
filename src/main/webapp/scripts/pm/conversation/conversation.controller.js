@@ -55,11 +55,26 @@
 			PmService.openParticipantsModal(vm);
 		};
 		
+		vm.getUserDisplayName = function(usersId){
+			var user = PmService.getUserDisplayName(usersId);
+			
+			user.$promise.then(function(data){
+				PmService.appendToReceiverList(vm, user);
+			});
+		};
+		
 		if($location.search().conversationId && $location.search().conversationId !== null){
 			vm.openConversation($location.search().conversationId);
 		}
 		else{
 			vm.conversation = vm.getConvoTemplate();
+			
+			vm.conversation.$promise.then(function(data){
+				if($location.search().senderId){
+					vm.getUserDisplayName($location.search().senderId);
+				}
+			});
+			
 		}
 	}
 	

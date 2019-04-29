@@ -33,39 +33,39 @@ public class CategoryDao extends AbstractDao<CategoryDbObjExample, CategoryDbObj
 	}
 
 	@Override
-	public List<CategoryDbObj> get(CategoryDbObjExample ex) {
+	public List<CategoryDbObj> get(CategoryDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(Category obj) {
+	public void hardDelete(Category obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(Category obj) {
+	public void updateOrInsert(Category obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(Category obj, CategoryDbObjExample ex) {
+	public void updateByExample(Category obj, CategoryDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(Category obj, CategoryDbObjExample ex) {
+	public Integer deleteByExample(Category obj, CategoryDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(Category obj, CategoryDbObjExample ex)
-			throws Exception {
+	public Long countByExample(Category obj, CategoryDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

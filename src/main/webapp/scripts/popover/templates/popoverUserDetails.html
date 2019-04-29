@@ -1,6 +1,11 @@
 <div class="bottom-section-wrap col-xs-12 col-sm-8 col-md-12">
-	<div class="padded-row send-pm-icon"><a ng-href="/forum/sendPm?senderId={{vm.profile.usersId}}"><i class="fa fa-envelope"></i></a></div>
-	<div class="user-gender padded-row">Gender:{{}}</div>
-	<div class="user-age padded-row">Age: {{vm.profile.age}}</div>
-	<div class="user-birthdate padded-row">Birthdate: {{vm.profile.profileSummary.birthDateAsString}}</div>
+	<div class="member-badge-manager-sm">Manager</div>
+	<div class="padded-row send-pm-icon" ng-if="!vm.profile.hidePm && vm.canSendPmToUser()"><a ui-sref="sendPm({senderId: vm.profile.usersId})"><i class="fa fa-envelope"></i></a></div>
+	<div class="padded-row send-pm-icon" ng-if="vm.profile.userContactInfo.steam !== null"><a ng-href="https://steamcommunity.com/id/{{vm.profile.userContactInfo.steam}}" target="_blank"><i class="fab fa-steam-square"></i></a></div>
+	<div class="padded-row send-pm-icon" ng-if="vm.profile.userContactInfo.facebook !== null"><a ng-href="https://www.facebook.com/{{vm.profile.userContactInfo.facebook}}" target="_blank"><i class="fab fa-facebook-square"></i></a></div>
+	<div class="padded-row send-pm-icon" ng-if="vm.profile.userContactInfo.email !== null"><a ng-href="mailto:{{vm.profile.userContactInfo.email.emailAddress}}" target="_blank"><i class="fas fa-at"></i></a></div>
+	<div class="user-usertext paddded-row" ng-if="vm.profile.personalInfo.personalText !== null">{{vm.profile.personalInfo.personalText}}</div>
+	<div class="user-gender padded-row" ng-if="vm.profile.personalInfo.genderId !== null">Gender:{{vm.getLkupValue(vm.lookups.GENDER,vm.profile.personalInfo.genderId)}}</div>
+	<div class="user-age padded-row" ng-if="vm.profile.age !== null">Age: {{vm.profile.personalInfo.age}}</div>
+	<div class="user-birthdate padded-row" ng-if="vm.profile.profileSummary.birthDateAsString !== null">Birthdate: {{vm.profile.profileSummary.birthDateAsString}}</div>
 </div>

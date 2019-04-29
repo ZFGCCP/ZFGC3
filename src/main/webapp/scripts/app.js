@@ -1,4 +1,5 @@
-angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'datePicker','ui.bootstrap','ngAnimate','ngSanitize','infinite-scroll','LocalStorageModule','zfgc.modules'
+angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog','720kb.datepicker','ui.bootstrap',
+                        'ngAnimate','ngSanitize','infinite-scroll','LocalStorageModule','vcRecaptcha','zfgc.modules'
         ])
 	.config(['$resourceProvider','$urlRouterProvider','$httpProvider','$locationProvider','localStorageServiceProvider',
 	         function($resourceProvider,$urlRouterProvider,$httpProvider,$locationProvider,localStorageServiceProvider) {
@@ -17,7 +18,8 @@ angular.module('zfgc', ['zfgc.config', 'ui.router', 'ngResource', 'ngDialog', 'd
 		localStorageServiceProvider.setDefaultToCookie(false);
 		localStorageServiceProvider.setNotify(false,false);
 		
-		
+		$httpProvider.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+		//$httpProvider.defaults.headers.post["Content-Type"] = "text/plain";
 		
 	}])
 	.run(['$rootScope', '$transitions', function($rootScope,$transitions){

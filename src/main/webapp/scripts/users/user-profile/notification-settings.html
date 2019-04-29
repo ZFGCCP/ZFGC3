@@ -17,8 +17,8 @@
 				<div class="unit-content">
 					<h6>Notify when my karma changes:</h6> 
 					<div>
-						<span class="col-xs-12 col-sm-6 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.karmaPmFlag" value="true"/><label>By PM</label></span>
-						<span class="col-xs-12 col-sm-6 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.karmaEmailFlag" value="true"/><label>By E-mail</label></span>
+						<span class="col-xs-12 col-sm-6 checkbox-wrapper"><input type="checkbox" ng-model="vm.profile.notificationSettings.karmaPmFlag" value="true"/><label>By PM</label></span>
+						<span class="col-xs-12 col-sm-6 checkbox-wrapper"><input type="checkbox" ng-model="vm.profile.notificationSettings.karmaEmailFlag" value="true"/><label>By E-mail</label></span>
 					</div>
 				</div>
 			</div>
@@ -28,15 +28,15 @@
 				<div class="unit-content">
 					<h6>Notify when someone has tagged me in a post:</h6>
 					<div>
-						<span class="col-xs-12 col-sm-6 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.taggedPmFlag" value="true"/><label>By PM</label></span>
-						<span class="col-xs-12 col-sm-6 labeled-checkbox"><input type="checkbox" ng-model="vm.profile.notificationSettings.taggedEmailFlag" value="true"/><label>By E-mail</label></span>
+						<span class="col-xs-12 col-sm-6 checkbox-wrapper"><input type="checkbox" ng-model="vm.profile.notificationSettings.taggedPmFlag" value="true"/><label>By PM</label></span>
+						<span class="col-xs-12 col-sm-6 checkbox-wrapper"><input type="checkbox" ng-model="vm.profile.notificationSettings.taggedEmailFlag" value="true"/><label>By E-mail</label></span>
 					</div>
 				</div>
 			</div>
 		</div>
 	</collapsible-widget>
 	
-	<div class="xl-button-wrapper">
+	<div class="col-xs-12 form-group">
 		<button type="button" class="btn btn-save col-xs-12" ng-click="vm.saveNotificationSettings()">Save</button>
 	</div>
 </form>

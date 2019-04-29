@@ -1,33 +1,56 @@
 package com.zfgc.services.users;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.dao.LookupDao;
+import com.zfgc.dataprovider.EmailAddressDataProvider;
+import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.AuthToken;
+import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
+import com.zfgc.model.users.MembersView;
+import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.PersonalInfo;
 import com.zfgc.requiredfields.users.UsersRequiredFieldsChecker;
 import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.pm.PmService;
+import com.zfgc.util.ZfgcEmailUtils;
+import com.zfgc.util.security.RsaKeyPair;
+import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
+import com.zfgc.model.avatar.Avatar;
 
 @Service
 public class UsersService extends AbstractService {
@@ -40,6 +63,12 @@ public class UsersService extends AbstractService {
 	@Autowired
 	IpAddressService ipAddressService;
 	
+	@Autowired
+	EmailAddressDataProvider emailAddressDataProvider;
+	
+	@Autowired
+	private ZfgcEmailUtils zfgcEmailUtils;
+	
 	@Autowired 
 	UsersRequiredFieldsChecker requiredFieldsChecker;
 	
@@ -51,9 +80,20 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	PmService pmService;
-
 	
-	public List<Users> getUsersByConversation(Integer conversationId) throws Exception{
+	@Autowired
+	RuleRunService<Users> ruleRunner;
+	
+	Logger LOGGER = Logger.getLogger(UsersService.class);
+
+	public Users getUser(Integer usersId) throws Exception{
+		Users user = usersDataProvider.getUser(usersId);
+		user.setPrimaryIpAddress(ipAddressService.getIpAddress(user.getPrimaryIp()));
+		
+		return user;
+	}
+	
+	public List<Users> getUsersByConversation(Integer conversationId) throws RuntimeException{
 		List<Users> result = null;
 		
 		try{
@@ -63,54 +103,83 @@ public class UsersService extends AbstractService {
 			ex.printStackTrace();
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			ex.printStackTrace();
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		return result;
 	}
 	
-	public Users createNewUser(Users user, HttpServletRequest requestHeader){
-
+	@Transactional
+	public Users createNewUser(Users user, HttpServletRequest requestHeader) throws RuntimeException{
+		
 		
 		try {
-			requiredFieldsChecker.requiredFieldsCheck(user);
-			validator.validator(user);
 			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
-			ruleChecker.rulesCheck(user, null);
+			ruleRunner.runRules(validator, requiredFieldsChecker, ruleChecker, user, user);
 		} 
 		catch(ZfgcValidationException ex){
-			
-		}
-		catch (Exception ex) {
 			ex.printStackTrace();
-			return null;
+			throw ex;
+		}
+		catch (RuntimeException ex) {
+			ex.printStackTrace();
+			throw ex;
 		}
 		
 		if(!user.getErrors().hasErrors()){
 			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
-			
-			try{
-				//user.getUserHashInfo().setPassword(authenticationService.createPasswordHash(user.getPassword(), user.getUserHashInfo().getPassSalt()));
-			}
-			catch(Exception ex){
-				ex.printStackTrace();
-				return null;
-			}
-			
+
 			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
 			user.setActiveFlag(false);
+			generateUniqueActivationCode(user);
 			
-			user.setPrimaryIpAddress(ipAddressService.createIpAddress(requestHeader.getRemoteAddr()));
+			IpAddress potentialIp = null;
+			//does the remote Ip exist?
+			try {
+				IpAddress ipCheck = ipAddressService.getIpAddress(requestHeader.getRemoteAddr());
+				potentialIp = ipCheck;
+			}
+			catch(ZfgcNotFoundException ex) {
+				potentialIp = ipAddressService.createIpAddress(requestHeader.getRemoteAddr());
+			}
+			catch(RuntimeException ex) {
+				ex.printStackTrace();
+				throw ex;
+			}
+			
+			user.setPrimaryIpAddress(potentialIp);
+			user.setPrimaryIp(potentialIp.getIpAddressId());
 			
 			try {
 				setUserIsSpammer(user);
+				
+				user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
+				Avatar avatar = new Avatar();
+				avatar.setAvatarTypeId(1);
+				
+				user.getPersonalInfo().setAvatar(avatar);
+				
 				user = usersDataProvider.createUser(user);
 				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
+				
+				if(!user.getUserContactInfo().getEmail().getIsSpammerFlag()) {
+					String subject = "New Account Activation For ZFGC";
+					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
+								  "If you think you have received this email in error, please ignore it.<br><br>" +
+								  "http://localhost:8080/forum/zfgcui/useractivation?activationCode=" + user.getEmailActivationCode();
+					
+					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
+					zfgcEmailUtils.sendEmail(subject, body, to);
+				}
+				
+				//generate rsa key pair for PM, then AES encrypt the private key - base it off of the password for now
+				//todo: when the encryption system for PMs is redone, update this to be a separate field distinct from the password
+				pmService.createKeyPairs(user.getUsersId(), user.getUserSecurityInfo().getNewPassword());
 			} catch (Exception ex) {
 				ex.printStackTrace();
-				return null;
+				throw new RuntimeException(ex);
 			}
 		}
 		return user;
@@ -128,15 +197,15 @@ public class UsersService extends AbstractService {
 		}
 	}
 	
-	public IpAddress setPrimaryIp(Users user, String ipAddress) throws Exception{
+	public IpAddress setPrimaryIp(Users user, String ipAddress) throws RuntimeException{
 		IpAddress ip = ipAddressService.createIpAddress(ipAddress);
 	    linkUserToIp(user,ip,true);
 		return ip;
 	}
 	
-	public void setUserIsSpammer(Users user) throws Exception{
+	public void setUserIsSpammer(Users user) throws RuntimeException{
 		user.getPrimaryIpAddress().setIsSpammerFlag(authenticationService.checkIpIsSpammer(user.getPrimaryIpAddress()));
-		user.getEmailAddress().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getEmailAddress()));
+		user.getUserContactInfo().getEmail().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getUserContactInfo().getEmail()));
 	}
 	
 	public Users authenticateUserByToken(String token) throws Exception{
@@ -152,7 +221,7 @@ public class UsersService extends AbstractService {
 	}
 	
 	@Transactional
-	public Users authenticateUser(Users user, String sourceIp) throws Exception{
+	public Users authenticateUser(Users user, String sourceIp) throws RuntimeException{
 		IpAddress ipAddress = ipAddressService.createIpAddress(sourceIp);
 		Boolean doesUserExist = doesLoginNameExist(user.getLoginName());
 		if(isAccountLocked(user) || ipAddressService.isIpLocked(ipAddress)){
@@ -233,19 +302,19 @@ public class UsersService extends AbstractService {
 		return true;
 	}
 	
-	public Boolean doesLoginNameExist(String loginName) throws Exception {
+	public Boolean doesLoginNameExist(String loginName) throws RuntimeException {
 		return usersDataProvider.doesLoginNameExist(loginName);
 	}
 	
-	public Boolean doesDisplayNameExist(String loginName) throws Exception {
+	public Boolean doesDisplayNameExist(String loginName) throws RuntimeException {
 		return usersDataProvider.doesDisplayNameExist(loginName);
 	}
 
-	private void linkUserToIp(Users user, IpAddress ipAddress, Boolean isPrimary) throws Exception{
+	private void linkUserToIp(Users user, IpAddress ipAddress, Boolean isPrimary) throws RuntimeException{
 		usersDataProvider.linkUserToIp(user,ipAddress, isPrimary);
 	}
 	
-	public Users getLoggedInUser(Users user) throws Exception{
+	public Users getLoggedInUser(Users user) throws RuntimeException{
 		if(user.getUsersId() == null){
 			Users guest = new Users();
 			user.setDisplayName("Guest");
@@ -268,10 +337,65 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public List<MemberListingView> getMemberListingView(Users user, Integer pageNumber, Integer range) throws Exception{
+	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range) throws Exception{
 		//todo: add permission check
 		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range);
+		Long totalUsers = usersDataProvider.getActiveUsersCount();
+		MembersView members = new MembersView();
 		
-		return result;
+		members.setTotalCount(totalUsers);
+		members.setMembers(result);
+		
+		
+		return members;
+	}
+	
+	public void setUserOnline(Users user) throws Exception{
+		user.setActiveConnections(user.getActiveConnections() + 1);
+		user.setLastLogin(ZfgcTimeUtils.getToday());
+		usersDataProvider.setUserOnline(user);
+	}
+	
+	public void setUserOffline(Users user) throws Exception{
+		user.setActiveConnections(user.getActiveConnections() - 1);
+		
+		if(user.getActiveConnections() < 0){
+			user.setActiveConnections(0);
+		}
+		user.setLastLogin(ZfgcTimeUtils.getToday());
+		usersDataProvider.setUserOffline(user);
+	}
+
+	public Users getNewUserTemplate() {
+		Users user = new Users();
+		
+		user.setActiveFlag(false);
+		user.setUserContactInfo(new UserContactInfo());
+		user.getUserContactInfo().setEmail(new EmailAddress());
+		user.setUserSecurityInfo(new UserSecurityInfo());
+		user.setPersonalInfo(new PersonalInfo());
+		
+		return user;
+	}
+	
+	private void generateUniqueActivationCode(Users user) {
+		user.setEmailActivationCode(ZfgcSecurityUtils.generateCryptoString(32));
+	}
+	
+	public void activateUserAccount(String activationCode) throws Exception{
+		usersDataProvider.activateUser(activationCode);
+	}
+	
+	public void activateUserAccount(Integer usersId, Users zfgcUser) throws Exception{
+		//todo check the user role
+		usersDataProvider.activateUser(usersId);
+	}
+	
+	@PostConstruct
+	public void resetAllActiveConnections() throws Exception {
+		LOGGER.info("Resetting all active connection counts to 0...");
+		usersDataProvider.resetActiveConnectionCounts();
+		LOGGER.info("Finished resetting all active connection counts to 0.");
+		
 	}
 }

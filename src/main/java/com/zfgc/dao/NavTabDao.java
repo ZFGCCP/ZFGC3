@@ -29,39 +29,39 @@ public class NavTabDao extends AbstractDao<NavTabViewDbObjExample, NavTabViewDbO
 	}
 
 	@Override
-	public List<NavTabViewDbObj> get(NavTabViewDbObjExample ex) {
+	public List<NavTabViewDbObj> get(NavTabViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(NavTab obj) {
+	public void hardDelete(NavTab obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(NavTab obj) {
+	public void updateOrInsert(NavTab obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(NavTab obj, NavTabViewDbObjExample ex) {
+	public void updateByExample(NavTab obj, NavTabViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(NavTab obj, NavTabViewDbObjExample ex) {
+	public Integer deleteByExample(NavTab obj, NavTabViewDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(NavTab obj, NavTabViewDbObjExample ex)
-			throws Exception {
+	public Long countByExample(NavTab obj, NavTabViewDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

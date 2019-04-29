@@ -2,6 +2,7 @@ package com.zfgc.model;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -26,8 +27,25 @@ public abstract class BaseZfgcModel implements Comparable{
 				((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
 				.getRequest();
 		
-		Users user = (Users) ((Authentication) request.getUserPrincipal()).getPrincipal();
+		Users user = null;
+		
+		if(request.getUserPrincipal() != null){
+			user = (Users) ((Authentication) request.getUserPrincipal()).getPrincipal();
+		}
+		
+		if(user == null || StringUtils.isEmpty(user.getTimeZone())){
+			return "GMT";
+		}
+		
 		return user.getTimeZone();
+	}
+	
+	protected String getUserIp(){
+		HttpServletRequest request = 
+				((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+				.getRequest();
+		
+		return request.getRemoteAddr();
 	}
 	
 	protected Integer getUserId(){

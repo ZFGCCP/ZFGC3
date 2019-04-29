@@ -9,6 +9,7 @@ var gulp = require('gulp')
 ,	concat = require('gulp-concat')
 ,	sourcemaps = require('gulp-sourcemaps')
 ,	mainBowerFiles = require('main-bower-files')
+,	mainYarnFiles = require('main-yarn-files')
 ,	filter = require('gulp-filter')
 ,	sass = require('gulp-sass')
 ,	runSequence = require('run-sequence')
@@ -22,13 +23,14 @@ var gulp = require('gulp')
 
 
 gulp.task('default', function(){
-	return runSequence('clean',['bower-files','template-cache','scripts','styles'],'inject-dependencies','inject-test-dependencies');
+	return runSequence('clean',['yarn-files','template-cache','scripts','styles'],'inject-dependencies','inject-test-dependencies');
 });
 
 var root = 'src/main/webapp';
 var isProduction = process.env.NODE_ENV === 'production';
 var paths = {
-	bower: root+'/bower_components/**',
+	yarn: root + '/node_modules',
+	yarnPackage : root + '/package.json',
 	scripts: [root+'/scripts/vendor/**',root+'/scripts/**'],
 	scriptsJs: [root+'/scripts/**/*.js'],
 	templates: [root+'/scripts/**/*.html'],
@@ -105,6 +107,12 @@ gulp.task('bower-files', function(){
 	}
 });
 
+gulp.task('yarn-files', function(){
+	if(isProduction){
+		return minifyResources(gulp.src(mainYarnFiles()), 'vendor');
+	}
+});
+
 gulp.task('template-cache', function() {
 	if(isProduction) {
 		var minifyHtmlOpts = {
@@ -150,10 +158,12 @@ gulp.task('inject-dependencies', function(){
 	if (isProduction) {
 		dependencies = gulp.src(paths.dist, {read: false});
 	} else {
-		var bower = gulp.src(mainBowerFiles(), {read: false});
+		//var bower = gulp.src(mainBowerFiles(), {read: false});
+		var yarnDep = gulp.src(mainYarnFiles({ paths : {modulesFolder : paths.yarn, jsonFile : paths.yarnPackage}}), {read: false});
+		//var yarnDep = gulp.src(root + '/node_modules/**/*.js', {read : false});
 		var scripts = gulp.src(paths.scriptsJs).pipe(plumber({errorHandler: onError})).pipe(angularFileSort());
 		var styles = gulp.src(paths.compiledStyles);
-		var dependencies = series(bower, scripts, styles);
+		var dependencies = series(yarnDep, scripts, styles);
 	}
 	
 	return gulp.src(root + '/index.html')
@@ -171,11 +181,11 @@ gulp.task('inject-test-dependencies', function(){
 	var jsFilter = filter(['**/*.js']);
 	
 	//var libraries = gulp.src(paths.coreLibraries, {read: false});
-	var bower = gulp.src(mainBowerFiles(), {read: false}).pipe( plumber({errorHandler: onError}) ).pipe(jsFilter);
+	var yarnDep = gulp.src(mainYarnFiles({ paths : {modulesFolder : paths.yarn, jsonFile : paths.yarnPackage}}), {read: false}).pipe( plumber({errorHandler: onError}) ).pipe(jsFilter);
 	var scripts = gulp.src(paths.scriptsJs).pipe( plumber({errorHandler: onError}) ).pipe(angularFileSort());
 	var tests = gulp.src(paths.testJs, {read: false});
 	var templates = gulp.src(paths.templates, {read: false});
-	var allDependencies = series(/*libraries, */bower, scripts, tests, templates);
+	var allDependencies = series(/*libraries, */yarnDep, scripts, tests, templates);
 	
 	return gulp.src('./karma.conf.js')
 			.pipe( plumber({errorHandler: onError}) )

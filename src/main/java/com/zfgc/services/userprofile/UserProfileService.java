@@ -8,17 +8,21 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.constants.user.UserConstants;
+import com.zfgc.dataprovider.LkupMemberGroupDataProvider;
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
+import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.Buddy;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.ProfileSummary;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.requiredfields.users.AccountSettingsRequiredFieldsChecker;
 import com.zfgc.requiredfields.users.ProfileRequiredFieldsChecker;
+import com.zfgc.rules.Rule;
 import com.zfgc.rules.users.AccountSettingsRuleChecker;
 import com.zfgc.rules.users.ProfileRuleChecker;
 import com.zfgc.services.AbstractService;
@@ -28,6 +32,7 @@ import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.sanitization.SanitizationService;
+import com.zfgc.services.users.MemberGroupService;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.validation.uservalidation.AccountSettingsValidator;
 import com.zfgc.validation.uservalidation.ProfileValidator;
@@ -36,6 +41,9 @@ import com.zfgc.validation.uservalidation.ProfileValidator;
 public class UserProfileService extends AbstractService{
 	@Autowired
 	UserProfileDataProvider userProfileDataProvider;
+	
+	@Autowired
+	LkupMemberGroupDataProvider lkupMemberGroupDataProvider;
 	
 	@Autowired
 	NavTabService navTabService;
@@ -73,71 +81,95 @@ public class UserProfileService extends AbstractService{
 	@Autowired
 	RuleRunService<Users> ruleRunner;
 	
+	@Autowired
+	MemberGroupService memberGroupService;
+	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
 	}
 	
 	public UserProfileView getProfile(Integer userId, Users zfgcUser) throws Exception{
 		UserProfileView profileView = null;
-		Users user = null;
 		try{
 			profileView = userProfileDataProvider.getUserProfile(userId);
 		}
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
-
-		//get buddy and ignore list
-		//user.getPersonalMessagingSettings().setBuddyList(buddyService.getBuddies(userId));
-		//user.getPersonalMessagingSettings().setIgnoreList(buddyService.getIgnores(userId));
 		
 		Integer currentUserId = zfgcUser.getUsersId();
 		//user.setTimeOffsetLkup(lookupService.getLkupValue(lookupService.TIMEZONE, user.getTimeOffset()));
 		
 		//permissions
+		profileView.setSecondaryMemberGroups(memberGroupService.getSecondaryMemberGroups(userId));
+		
+		//get buddy and ignore list
+		profileView.setBuddyList(buddyService.getBuddies(userId));
 		
 		//if you're not the owner if this profile, and you're not an admin
 		if(currentUserId == null || (!currentUserId.equals(userId) && 
-			!lookupService.getLkupValue(LookupService.MEMBER_GROUP,zfgcUser.getPrimaryMemberGroupId()).equals("Manager"))){
+			!zfgcUser.isModerationStaff())){
 			
-			user.setPrimaryIpAddress(null);
+			//vm.profile.primaryIpAddress.ipAddress
 			
+			profileView.setPrimaryIpAddress(null);
+			
+			//if you're not one of the user's buddies
 			//hide contact fields with the hidden flag
-			if(user.getUserSecurityInfo().getHideSkypeFlag()){
-				user.getUserContactInfo().setSkype(null);
+			boolean isBuddy = false;
+			for(Buddy buddy : profileView.getBuddyList()){
+				if(buddy.getUser().getUsersId() == zfgcUser.getUsersId()){
+					isBuddy = true;
+					break;
+				}
 			}
 			
-			if(user.getUserSecurityInfo().getHideSteamFlag()){
-				user.getUserContactInfo().setSteam(null);
+			if(!isBuddy){
+				if(profileView.getUserSecurityInfo().getHideSkypeFlag()){
+					profileView.getUserContactInfo().setSkype(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideSteamFlag()){
+					profileView.getUserContactInfo().setSteam(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideXboxLiveFlag()){
+					profileView.getUserContactInfo().setXboxLive(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideNnidFlag()){
+					profileView.getUserContactInfo().setNnid(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHidePsnFlag()){
+					profileView.getUserContactInfo().setPsn(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideGtalkFlag()){
+					profileView.getUserContactInfo().setGtalk(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideBirthDateFlag()){
+					profileView.getPersonalInfo().setBirthDate(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideEmailFlag()){
+					profileView.getUserContactInfo().setEmail(null);
+				}
+				
+				if(profileView.getUserSecurityInfo().getHideFacebookFlag()) {
+					profileView.getUserContactInfo().setFacebook(null);
+				}
+				
+				if(zfgcUser.getUsersId() == -1 || profileView.getPersonalMessagingSettings().getReceiveFromId() == 3){
+					profileView.setHidePm(true);
+				}
 			}
 			
-			if(user.getUserSecurityInfo().getHideXboxLiveFlag()){
-				user.getUserContactInfo().setXboxLive(null);
-			}
-			
-			if(user.getUserSecurityInfo().getHideNnidFlag()){
-				user.getUserContactInfo().setNnid(null);
-			}
-			
-			if(user.getUserSecurityInfo().getHidePsnFlag()){
-				user.getUserContactInfo().setPsn(null);
-			}
-			
-			if(user.getUserSecurityInfo().getHideGtalkFlag()){
-				user.getUserContactInfo().setGtalk(null);
-			}
-			
-			if(user.getUserSecurityInfo().getHideBirthDateFlag()){
-				user.setBirthDate(null);
-			}
-			
-			if(user.getHideEmailFlag()){
-				user.getEmailAddress().setEmailAddress(null);
-			}
-		}
-		else {
-			//get buddy and ignore list
-			profileView.setBuddyList(buddyService.getBuddies(userId));
+			profileView.setNotificationSettings(null);
+			profileView.setPersonalMessagingSettings(null);
+			profileView.setSecondaryMemberGroups(null);
+			profileView.setBuddyList(null);
 		}
 		
 		if(profileView.getProfileSummary().getSignature() != null){
@@ -155,7 +187,79 @@ public class UserProfileService extends AbstractService{
 			throw new ZfgcUnauthorizedException();
 		}
 		
+		UserProfileView savedUser = this.getProfile(accountSettings.getUsersId(), zfgcUser);
+		
 		ruleRunner.runRules(accountSettingsValidator, accountSettingsRequiredFieldsChecker, accountSettingsRuleChecker, accountSettings, zfgcUser);
+		
+		//make sure username, birthdate and date registered were not changed (unless user is part of the moderation staff)
+		if(!zfgcUser.isModerationStaff()){
+			if(!accountSettings.getLoginName().equals(savedUser.getLoginName())){
+				Rule changedUsername = new Rule();
+				changedUsername.setRuleName("CHANGED_USERNAME");
+				changedUsername.setErrorMessage("You do not have permission to change a user's username");
+				accountSettings.getErrors().getRuleErrors().add(changedUsername);
+			}
+			
+			if(!accountSettings.getPersonalInfo().getBirthDate().equals(savedUser.getPersonalInfo().getBirthDate())){
+				Rule changedBirthDt = new Rule();
+				changedBirthDt.setRuleName("CHANGED_BIRTHDT");
+				changedBirthDt.setErrorMessage("You do not have permission to change a user's birth date");
+				accountSettings.getErrors().getRuleErrors().add(changedBirthDt);
+			}
+			
+			if(!accountSettings.getDateRegistered().equals(savedUser.getDateRegistered())){
+				Rule changedRegDt = new Rule();
+				changedRegDt.setRuleName("CHANGED_REGDT");
+				changedRegDt.setErrorMessage("You do not have permission to change a user's registration date");
+				accountSettings.getErrors().getRuleErrors().add(changedRegDt);
+			}
+			
+			if(accountSettings.getErrors().hasErrors()){
+				throw new ZfgcValidationException(accountSettings.getClass().getName());
+			}
+		}
+		
+		//make sure member groups were not changed (unless user is an admin)
+		if(!zfgcUser.isAdministrationStaff()){
+			if(!accountSettings.getPrimaryMemberGroupId().equals(savedUser.getPrimaryMemberGroup())){
+				Rule changedRegDt = new Rule();
+				changedRegDt.setRuleName("CHANGED_PRIM_MEMBER_GROUP");
+				changedRegDt.setErrorMessage("You do not have permission to change a user's primary member group");
+				accountSettings.getErrors().getRuleErrors().add(changedRegDt);
+			}
+			
+			boolean groupChanged = false;
+			
+			if(accountSettings.getSecondaryMemberGroups().getMemberGroups().size() == savedUser.getSecondaryMemberGroups().getMemberGroups().size()){
+				//check each group - if the order is different, something was changed
+				for(LkupMemberGroup group : accountSettings.getSecondaryMemberGroups().getMemberGroups()){
+					for(LkupMemberGroup savedGroup : savedUser.getSecondaryMemberGroups().getMemberGroups()){
+						if(!group.getMemberGroupId().equals(savedGroup.getMemberGroupId())){
+							groupChanged = true;
+							break;
+						}
+					}
+					
+					if(groupChanged){
+						break;
+					}
+				}
+			}
+			else{
+				groupChanged = true;
+			}
+			
+			if(groupChanged){
+				Rule changedRegDt = new Rule();
+				changedRegDt.setRuleName("CHANGED_SEC_MEMBER_GROUP");
+				changedRegDt.setErrorMessage("You do not have permission to change a user's secondary member groups");
+				accountSettings.getErrors().getRuleErrors().add(changedRegDt);
+			}
+			
+			if(accountSettings.getErrors().hasErrors()){
+				throw new ZfgcValidationException(accountSettings.getClass().getName());
+			}
+		}
 		
 		userProfileDataProvider.saveAccountSettings(accountSettings);
 		
@@ -166,7 +270,7 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	@Transactional
-	public Users saveNotificationSettings(Users notificationSettings, Users zfgcUser) throws Exception{
+	public Users saveNotificationSettings(Users notificationSettings, Users zfgcUser) throws RuntimeException{
 		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(notificationSettings.getUsersId(), zfgcUser)){
 			throw new ZfgcUnauthorizedException();
 		}
@@ -177,8 +281,8 @@ public class UserProfileService extends AbstractService{
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getMessage());
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw new RuntimeException(ex.getMessage());
 		}
 		
 		return notificationSettings;

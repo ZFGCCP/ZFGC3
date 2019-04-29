@@ -1,12 +1,11 @@
 (function(){
 	'use strict';
 	
-	function RegistrationCtrl(LookupsService, UserService){
+	function RegistrationCtrl($timeout, $state, $q, LookupsService, UserService){
 		var vm = this;
-		vm.user = {};
-		vm.somevalue = 'swipe all day';
-		
+		vm.complete = false;
 		vm.lookups = LookupsService.getLookupsList("TIMEZONE");
+		vm.pubKey = "6Ldo4o4UAAAAALPKi9eVnhq_q2lCXxeJaEuf5joT";
 		
 		vm.getCurrentTimeZone = function(){
 			var tz = jstz.determine();
@@ -14,6 +13,14 @@
 		};
 		
 		console.log(vm.getCurrentTimeZone());
+		
+		vm.getUserTemplate = function(){
+			vm.user = UserService.getNewUserTemplate();
+		};
+		
+		vm.registrationFieldsComplete = function(){
+			return UserService.registrationFieldsComplete(vm, vm.user);
+		};
 		
 		vm.getCurrentTimeZoneId = function(){
 			var tz = vm.getCurrentTimeZone();
@@ -26,9 +33,16 @@
 		
 		vm.newUser= function(){
 			vm.setDisplayNameOnSubmit();
-			UserService.register(vm.user).$promise.then(function(data){
-				
-			});
+			var registered = UserService.register(vm.user);
+			
+			if(registered !== null){
+				registered.$promise.then(function(data){
+					vm.complete = true;
+					$timeout(function(){
+						$state.go('forum');
+					}, 5000);
+				});
+			}
 		};
 		
 		vm.setDisplayNameOnSubmit = function(){
@@ -37,12 +51,14 @@
 			}
 		};
 		
-		vm.lookups.$promise.then(function(data){
+		vm.getUserTemplate();
+		
+		$q.all([vm.lookups.$promise,vm.user.$promise]).then(function(){
 			vm.user.timeOffset= vm.getCurrentTimeZoneId();
 		});
 	}
 	
 	angular
 		.module('zfgc.users')
-		.controller('RegistrationCtrl', ['LookupsService','UserService', RegistrationCtrl])
+		.controller('RegistrationCtrl', ['$timeout','$state','$q','LookupsService','UserService', RegistrationCtrl])
 })();

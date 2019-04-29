@@ -19,39 +19,39 @@ public class PmConversationBoxViewDao extends AbstractDao<PmConversationBoxViewD
 	
 	@Override
 	public List<PmConversationBoxViewDbObjWithBLOBs> get(
-			PmConversationBoxViewDbObjExample ex) throws Exception {
+			PmConversationBoxViewDbObjExample ex) throws RuntimeException {
 		return pmConversationBoxViewDbObjMapper.selectByExampleWithBLOBs(ex);
 	}
 
 	@Override
-	public void hardDelete(PmConversationView obj) throws UnsupportedOperationException{
+	public void hardDelete(PmConversationView obj) throws UnsupportedOperationException, RuntimeException{
 		throw new UnsupportedOperationException();
 	}
 
 	@Override
-	public void updateOrInsert(PmConversationView obj) throws UnsupportedOperationException {
+	public void updateOrInsert(PmConversationView obj) throws UnsupportedOperationException, RuntimeException {
 		throw new UnsupportedOperationException();
 		
 	}
 
 	@Override
 	public void updateByExample(PmConversationView obj,
-			PmConversationBoxViewDbObjExample ex) throws UnsupportedOperationException {
+			PmConversationBoxViewDbObjExample ex) throws UnsupportedOperationException, RuntimeException {
 		throw new UnsupportedOperationException();
 		
 	}
 
 	@Override
 	public Integer deleteByExample(PmConversationView obj,
-			PmConversationBoxViewDbObjExample ex) {
+			PmConversationBoxViewDbObjExample ex) throws RuntimeException {
 				return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(PmConversationView obj,
-			PmConversationBoxViewDbObjExample ex) throws Exception {
+	public Long countByExample(PmConversationView obj,
+			PmConversationBoxViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

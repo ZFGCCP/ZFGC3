@@ -18,21 +18,21 @@ public class PersonalMessagingSettingsDao extends AbstractDao<PersonalMessagingS
 	
 	@Override
 	public List<PersonalMessagingSettingsDbObj> get(
-			PersonalMessagingSettingsDbObjExample ex) throws Exception {
+			PersonalMessagingSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(PersonalMessagingSettings obj) {
+	public void hardDelete(PersonalMessagingSettings obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(PersonalMessagingSettings obj) throws Exception {
+	public void updateOrInsert(PersonalMessagingSettings obj) throws RuntimeException {
 		PersonalMessagingSettingsDbObj dbObj = mapper.map(obj, PersonalMessagingSettingsDbObj.class);
-		if(obj.getPersonalMessagingSettingsId() == -1){
+		if(obj.getPersonalMessagingSettingsId() == null || obj.getPersonalMessagingSettingsId() == -1){
 			personalMessagingSettingsDbObjMapper.insert(dbObj);
 			obj.setPersonalMessagingSettingsId(dbObj.getPersonalMessagingSettingsId());
 		}
@@ -44,21 +44,21 @@ public class PersonalMessagingSettingsDao extends AbstractDao<PersonalMessagingS
 
 	@Override
 	public void updateByExample(PersonalMessagingSettings obj,
-			PersonalMessagingSettingsDbObjExample ex) throws Exception {
+			PersonalMessagingSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(PersonalMessagingSettings obj,
-			PersonalMessagingSettingsDbObjExample ex) throws Exception {
+			PersonalMessagingSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(PersonalMessagingSettings obj,
-			PersonalMessagingSettingsDbObjExample ex) throws Exception {
+	public Long countByExample(PersonalMessagingSettings obj,
+			PersonalMessagingSettingsDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

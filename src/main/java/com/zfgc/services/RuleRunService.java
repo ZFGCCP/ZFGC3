@@ -12,7 +12,7 @@ import com.zfgc.validation.AbstractValidator;
 @Component
 public class RuleRunService<M extends BaseZfgcModel> {
 
-	public void runRules(AbstractValidator<M> validator, AbstractRequiredFieldsChecker<M> reqFields, AbstractRulesChecker<M> rules, M model, Users user) throws ZfgcValidationException, Exception{
+	public void runRules(AbstractValidator<M> validator, AbstractRequiredFieldsChecker<M> reqFields, AbstractRulesChecker<M> rules, M model, Users user) throws ZfgcValidationException, RuntimeException{
 		
 		if(reqFields != null){
 			reqFields.requiredFieldsCheck(model);

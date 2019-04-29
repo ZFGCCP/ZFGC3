@@ -35,19 +35,19 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 		}
 	}
 	
-	public void logEmailAddress(EmailAddress emailAddress) throws Exception{
+	public void logEmailAddress(EmailAddress emailAddress) throws RuntimeException{
 		try{
 			authenticationDao.logEmailAddress(emailAddress);
 		}
 		catch(ZfgcDataExistsException ex){
 			
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	
-	public IpAddress getIpSpamInfo(IpAddress ipAddress) throws Exception{
+	public IpAddress getIpSpamInfo(IpAddress ipAddress) throws RuntimeException{
 		IpAddress ipSpamInfo = new IpAddress();
 		ipSpamInfo.setIpAddress(ipAddress.getIpAddress());
 
@@ -60,29 +60,33 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 			try {
 				ipSpamInfo.setIsSpammerFlag(getSpamInfoFromUrl("http://api.stopforumspam.org/api?ip=" + ipAddress.getIpAddress()));
 
-			} catch (Exception ex) {
-				throw new Exception(ex.getMessage());
+			} catch (RuntimeException ex) {
+				throw ex;
+			} catch (IOException e) {
+				throw new RuntimeException(e.getMessage());
 			}
 		}
 		
 		return ipSpamInfo;
 	}
 	
-	public EmailAddress getEmailSpamInfo(EmailAddress emailAddress) throws Exception{
+	public EmailAddress getEmailSpamInfo(EmailAddress emailAddress) throws RuntimeException{
 		EmailAddress emailSpamInfo = new EmailAddress();
 		emailSpamInfo.setEmailAddress(emailAddress.getEmailAddress());
 		
 		try{
 			emailSpamInfo.setIsSpammerFlag(getSpamInfoFromUrl("http://api.stopforumspam.org/api?email=" + emailAddress.getEmailAddress()));
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
+		} catch (IOException e) {
+			throw new RuntimeException(e.getMessage());
 		}
 		
 		return emailSpamInfo;
 	}
 	
-	private Boolean getSpamInfoFromUrl(String apiCall) throws Exception{
+	private Boolean getSpamInfoFromUrl(String apiCall) throws IOException, RuntimeException{
 		try {
 			URL url = new URL(apiCall);
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
@@ -95,23 +99,28 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 			br.readLine();
 			String output = br.readLine();
 
+			br.close();
+			
 			return !output.contains("no");
 
 		} catch (IOException ex) {
 			ex.printStackTrace();
-			throw new Exception(ex.getMessage());
+			throw ex;
+		}
+		catch (RuntimeException ex){
+			throw ex;
 		}
 	}
 	
-	public Boolean doesEmailExist(EmailAddress emailAddress) throws Exception{
+	public Boolean doesEmailExist(EmailAddress emailAddress) throws RuntimeException{
 		return authenticationDao.getEmailAddress(emailAddress.getEmailAddress()) != null;
 	}
 	
-	public void createAuthToken(AuthToken authToken) throws Exception{
+	public void createAuthToken(AuthToken authToken) throws RuntimeException{
 		authenticationDao.saveAuthToken(authToken);
 	}
 	
-	public List<AuthToken> getAuthTokensForUser(Users user) throws Exception{
+	public List<AuthToken> getAuthTokensForUser(Users user) throws RuntimeException{
 		List<AuthTokenDbObj> result = authenticationDao.getAuthTokenByUser(user);
 		
 		List<AuthToken> output = new ArrayList<>();
@@ -123,7 +132,7 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 		return output;
 	}
 	
-	public AuthToken getAuthToken(String authToken) throws Exception{
+	public AuthToken getAuthToken(String authToken) throws RuntimeException{
 		try{
 			AuthToken auth = mapper.map(authenticationDao.getAuthToken(authToken), AuthToken.class);
 			
@@ -132,8 +141,8 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 		catch(ZfgcNotFoundException ex){
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 }

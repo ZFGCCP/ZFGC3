@@ -41,38 +41,38 @@ public class LookupDao extends AbstractDao<Object,Object,Object>{
 	}
 
 	@Override
-	public List<Object> get(Object ex) {
+	public List<Object> get(Object ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(Object obj) {
+	public void hardDelete(Object obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(Object obj) {
+	public void updateOrInsert(Object obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(Object obj, Object ex) {
+	public void updateByExample(Object obj, Object ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(Object obj, Object ex) {
+	public Integer deleteByExample(Object obj, Object ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(Object obj, Object ex) throws Exception {
+	public Long countByExample(Object obj, Object ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

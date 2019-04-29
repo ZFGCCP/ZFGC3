@@ -13,35 +13,35 @@ module.exports = function(config) {
     // list of files / patterns to load in the browser
     files: [
 	    
-	"./src/main/webapp/bower_components/angular/angular.js",
+	"./src/main/webapp/node_modules/angular/angular.js",
 	    
-	"./src/main/webapp/bower_components/jquery/dist/jquery.js",
+	"./src/main/webapp/node_modules/angular-animate/angular-animate.js",
 	    
-	"./src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js",
+	"./src/main/webapp/node_modules/angular-local-storage/dist/angular-local-storage.js",
 	    
-	"./src/main/webapp/bower_components/angular-resource/angular-resource.js",
+	"./src/main/webapp/node_modules/angular-recaptcha/release/angular-recaptcha.js",
 	    
-	"./src/main/webapp/bower_components/tether/dist/js/tether.js",
+	"./src/main/webapp/node_modules/angular-resource/angular-resource.js",
 	    
-	"./src/main/webapp/bower_components/moment/moment.js",
+	"./src/main/webapp/node_modules/angular-sanitize/angular-sanitize.js",
 	    
-	"./src/main/webapp/bower_components/moment-timezone/builds/moment-timezone-with-data-2010-2020.js",
+	"./src/main/webapp/node_modules/angular-ui-bootstrap/dist/ui-bootstrap-tpls.js",
 	    
-	"./src/main/webapp/bower_components/ng-dialog/js/ngDialog.js",
+	"./src/main/webapp/node_modules/angular-ui-router/release/angular-ui-router.js",
 	    
-	"./src/main/webapp/bower_components/angular-bootstrap/ui-bootstrap-tpls.js",
+	"./src/main/webapp/node_modules/angularjs-datepicker/dist/angular-datepicker.js",
 	    
-	"./src/main/webapp/bower_components/angular-animate/angular-animate.js",
+	"./src/main/webapp/node_modules/jquery/dist/jquery.js",
 	    
-	"./src/main/webapp/bower_components/angular-sanitize/angular-sanitize.js",
+	"./src/main/webapp/node_modules/ng-dialog/js/ngDialog.js",
 	    
-	"./src/main/webapp/bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js",
+	"./src/main/webapp/node_modules/ng-infinite-scroll/build/ng-infinite-scroll.js",
 	    
-	"./src/main/webapp/bower_components/angular-local-storage/dist/angular-local-storage.js",
+	"./src/main/webapp/node_modules/sockjs-client/dist/sockjs.min.js",
 	    
-	"./src/main/webapp/bower_components/bootstrap/dist/js/bootstrap.js",
+	"./src/main/webapp/node_modules/stomp-websocket/lib/stomp.min.js",
 	    
-	"./src/main/webapp/bower_components/angular-datepicker/dist/angular-datepicker.js",
+	"./src/main/webapp/node_modules/tether/dist/js/tether.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
@@ -52,6 +52,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	    
+	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
@@ -73,17 +75,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
-	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -93,11 +97,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
+	"./src/main/webapp/scripts/users/activation.controller.js",
+	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
+	    
+	"./src/main/webapp/scripts/sockets/web-socket.service.js",
 	    
 	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
@@ -111,11 +119,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -127,9 +135,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
-	"./src/main/webapp/scripts/filters/range.filter.js",
-	    
 	"./src/main/webapp/scripts/error/error.module.js",
+	    
+	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -143,21 +151,25 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
+	"./src/main/webapp/scripts/users/activation.html",
+	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
-	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
@@ -175,19 +187,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
+	    
+	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
-	    
-	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
-	    
-	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
 	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    

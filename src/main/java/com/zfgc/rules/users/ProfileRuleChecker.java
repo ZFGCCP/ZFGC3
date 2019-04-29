@@ -10,7 +10,7 @@ import com.zfgc.rules.Rule;
 public class ProfileRuleChecker extends AbstractRulesChecker<Users>{
 
 	@Override
-	public void rulesCheck(Users model, Users user) throws Exception {
+	public void rulesCheck(Users model, Users user) throws RuntimeException {
 		/*if(model.getAge() < 13){
 			Rule coppaViolation = new Rule();
 			coppaViolation.setRuleName("COPPA_VIOLATION_AGE");

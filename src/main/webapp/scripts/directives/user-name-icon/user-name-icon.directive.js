@@ -12,13 +12,28 @@
 		
 		directive.link = function($scope,element,attrs){
 			$scope.removeUserFromConversation = function(){
-				PmService.removeUser($scope.vm.conversation.pmConversationId,$scope.usersId,$scope.vm).$promise.then(function(data){
-					NotificationsService.addAlert("User Successfully Removed","success");
-					
-					//we can't do this in one line unfortunately due to some issue with gulp-angular-filesort
+				if($scope.vm.conversation.pmConversationId === null){
 					var userIndex = $scope.vm.conversation.participants.map(function(e) { return e.usersId; }).indexOf('$scope.usersId');
 					$scope.vm.conversation.participants.splice(userIndex,1);
-				});
+				}
+				else{
+					PmService.removeUser($scope.vm.conversation.pmConversationId,$scope.usersId,$scope.vm).$promise.then(function(data){
+						NotificationsService.addAlert("User Successfully Removed","success");
+						
+						//we can't do this in one line unfortunately due to some issue with gulp-angular-filesort
+						var userIndex = $scope.vm.conversation.participants.map(function(e) { return e.usersId; }).indexOf('$scope.usersId');
+						$scope.vm.conversation.participants.splice(userIndex,1);
+					});
+				}
+			};
+			
+			$scope.isConvoArchived = function(){
+				if($scope.vm.conversation.pmConversationId === null){
+					return false;
+				}
+				else{
+					return $scope.vm.conversation.isArchived;
+				}
 			};
 			
 			$scope.isLoggedInUser = function(){

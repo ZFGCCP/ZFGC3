@@ -20,7 +20,7 @@ public class PmArchiveBoxViewDao extends AbstractDao<PmArchiveBoxViewDbObjExampl
 	
 	@Override
 	public List<PmArchiveBoxViewDbObjWithBLOBs> get(PmArchiveBoxViewDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		List<PmArchiveBoxViewDbObjWithBLOBs> result = null;
 		result = dbObjMapper.selectByExampleWithBLOBs(ex);
 
@@ -28,34 +28,34 @@ public class PmArchiveBoxViewDao extends AbstractDao<PmArchiveBoxViewDbObjExampl
 	}
 
 	@Override
-	public void hardDelete(PmArchiveBoxView obj) {
+	public void hardDelete(PmArchiveBoxView obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(PmArchiveBoxView obj) {
+	public void updateOrInsert(PmArchiveBoxView obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateByExample(PmArchiveBoxView obj,
-			PmArchiveBoxViewDbObjExample ex) {
+			PmArchiveBoxViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(PmArchiveBoxView obj,
-			PmArchiveBoxViewDbObjExample ex) throws Exception {
+			PmArchiveBoxViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(PmArchiveBoxView obj,
-			PmArchiveBoxViewDbObjExample ex) throws Exception {
+	public Long countByExample(PmArchiveBoxView obj,
+			PmArchiveBoxViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

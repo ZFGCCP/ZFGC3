@@ -20,6 +20,18 @@
 			return LookupsService.resource.getLkupList(list);
 		};
 		
+		LookupsService.getLkupValue = function(lookup,id){
+			if(lookup && lookup !== null && !angular.isUndefined(id) && id !== null){
+				for(var i = 0; i < lookup.length; i++){
+					if(lookup[i].id === id){
+						return lookup[i].value;
+					}
+				}
+			}
+			
+			return "";
+		};
+		
 		return LookupsService;
 		
 	}

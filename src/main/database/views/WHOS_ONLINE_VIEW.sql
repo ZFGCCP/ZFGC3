@@ -1,0 +1,7 @@
+select `U`.`DISPLAY_NAME` AS `DISPLAY_NAME`,
+       `U`.`USERS_ID` AS `USERS_ID`,
+       `U`.`LAST_LOGIN` AS `LAST_LOGIN`,
+       G.GROUP_NAME as PRIMARY_MEMBER_GROUP
+       from `zfgc3_dev`.`users` `U` 
+       JOIN LKUP_MEMBER_GROUP G ON U.PRIMARY_MEMBER_GROUP_ID = G.MEMBER_GROUP_ID
+       where (`U`.`ACTIVE_CONNECTIONS` > 0) 

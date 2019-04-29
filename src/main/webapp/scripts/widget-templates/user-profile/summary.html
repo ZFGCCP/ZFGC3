@@ -13,7 +13,7 @@
 		   <div class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.dateRegisteredAsString}}</div>
 	   </div>
 	   
-	   <div class="row padded-row">
+	   <div class="row padded-row" ng-if="vm.profile.primaryIpAddress !== null">
 		   <div class="col-xs-12 col-sm-3 row-label">
 	      		<label>Primary IP:</label> 
 	   	   </div>
@@ -38,7 +38,7 @@
 		   <div class="col-xs-12 col-sm-3 row-label">
 	      		<label>Last Active At:</label> 
 	   	   </div>
-		   <div class="user-contact-title col-xs-12 col-sm-9"></div>
+		   <div class="user-contact-title col-xs-12 col-sm-9">{{vm.profile.lastLoginAsString}}</div>
 	   </div>
 	   
 	   <div class="row padded-row signature-preview">

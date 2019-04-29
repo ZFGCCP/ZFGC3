@@ -2,6 +2,7 @@ package com.zfgc.model.users.profile;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import org.apache.commons.lang3.StringUtils;
@@ -26,6 +27,16 @@ public class PersonalInfo extends BaseZfgcModel {
 	private Integer usersId;
 	
 	private Avatar avatar;
+
+	public Long getAge(){
+		if(birthDate == null){
+			return null;
+		}
+		
+		Long age = ZfgcTimeUtils.getYearsBetween(birthDate, ZfgcTimeUtils.getToday());
+		
+		return age;
+	}
 	
 	@JsonIgnore
 	public Integer getAvatarId(){

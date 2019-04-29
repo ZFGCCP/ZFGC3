@@ -43,18 +43,24 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Date birthDate;
 	private Integer gender;
 
+	@JsonIgnore
 	private Date lockedUntil;
-	private Date loginFailedAttempts;
+	@JsonIgnore
+	private Integer loginFailedAttempts;
 	private Integer timeOffset;
 	private String location;
 	private Boolean agreeToTermsFlag = false;
 	private Map<Integer,String> memberGroups = new HashMap<>();
+	private SecondaryMemberGroups secondaryMemberGroups;
 	private Integer primaryMemberGroupId = 0;
 	private String personalText;
 	private String customTitle;
 	private String websiteTitle;
 	private String websiteUrl;
 	private String timeZone;
+	@JsonIgnore
+	private Integer activeConnections;
+	private Boolean isOnlineFlag;
 	
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
@@ -72,11 +78,20 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private List<Buddy> buddyList = new ArrayList<>();
 	private Avatar avatar;
 	private Date lastLogin;
+	private Integer primaryIp;
+	
+	@JsonIgnore
+	private List<Permissions> permissions;
 	
 	private String authToken;
 	private Boolean fromDb = true;
 	
-	private Integer unreadPmCount = 0;
+	@JsonIgnore
+	private String emailActivationCode;
+	
+	private Long unreadPmCount = 0L;
+	
+	private String gResponseToken;
 	
 	@JsonIgnore
 	private String timeOffsetLkup;
@@ -86,6 +101,44 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	
 	@JsonIgnore
 	private UserProfileView savedProfile;
+	
+	//===================
+	//Permissions
+	//===================
+	
+	private boolean hasPerm(String permCode){
+		if(permissions == null){
+			return false;
+		}
+		
+		for(Permissions perm : permissions){
+			if(perm.getPermissionsCode().equals(permCode)){
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public Boolean isMember(){
+		return hasPerm("ZFGC_USER");
+	}
+	
+	public Boolean isStaffMember(){
+		return hasPerm("ZFGC_STAFF");
+	}
+	
+	public Boolean isModerationStaff(){
+		return hasPerm("ZFGC_MODERATION_STAFF");
+	}
+	
+	public Boolean isAdministrationStaff(){
+		return hasPerm("ZFGC_ADMINISTRATION_STAFF");
+	}
+	
+	public Boolean isAccountSettingsEditorOrAdmin(){
+		return hasPerm("ZFGC_ACCOUNT_SETTINGS_EDITOR") || hasPerm("ZFGC_ACCOUNT_SETTINGS_ADMIN");
+	}
 	
 	public UserProfileView getSavedProfile() {
 		return savedProfile;
@@ -196,12 +249,6 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
 		return sdf.format(dateRegistered);
 	}
-	public Date getLoginFailedAttempts() {
-		return loginFailedAttempts;
-	}
-	public void setLoginFailedAttempts(Date loginFailedAttempts) {
-		this.loginFailedAttempts = loginFailedAttempts;
-	}
 	public Date getLockedUntil() {
 		return lockedUntil;
 	}
@@ -253,7 +300,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		
 		Date today = ZfgcTimeUtils.getToday(timeOffsetLkup);
 		
-		if(birthDate != null){
+		if(personalInfo.getBirthDate() != null){
 			age = ZfgcTimeUtils.getYearsBetween(personalInfo.getBirthDate(), today);
 		}
 
@@ -374,10 +421,12 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-		List<String> roles = this.getMemberGroupNames();
 		
-		for(String role : roles){
-			authorities.add(new SimpleGrantedAuthority("ROLE_" + role.toUpperCase()));
+		
+		if(permissions != null){
+			for(Permissions perm : permissions){
+				authorities.add(new SimpleGrantedAuthority("ROLE_" + perm.getPermissionsCode()));
+			}
 		}
 		return authorities;
 		//return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
@@ -419,10 +468,10 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	public void setTimeZone(String timeZone) {
 		this.timeZone = timeZone;
 	}
-	public Integer getUnreadPmCount() {
+	public Long getUnreadPmCount() {
 		return unreadPmCount;
 	}
-	public void setUnreadPmCount(Integer unreadPmCount) {
+	public void setUnreadPmCount(Long unreadPmCount) {
 		this.unreadPmCount = unreadPmCount;
 	}
 	public Date getLastLogin() {
@@ -456,11 +505,63 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		this.buddyList = buddyList;
 	}
 	public boolean getIsManager(){
-		return primaryMemberGroupId == 1 || memberGroups.containsKey(1);
+		return (primaryMemberGroupId != null && primaryMemberGroupId == 1 || memberGroups.containsKey(1));
 	}
 	@JsonIgnore
 	public boolean getHasRoles(String ... roles){
 		//todo: add role checks
 		return true;
+	}
+	public Boolean getIsOnlineFlag() {
+		return isOnlineFlag;
+	}
+	public void setIsOnlineFlag(Boolean isOnlineFlag) {
+		this.isOnlineFlag = isOnlineFlag;
+	}
+	public Integer getActiveConnections() {
+		return activeConnections;
+	}
+	public void setActiveConnections(Integer activeConnections) {
+		this.activeConnections = activeConnections;
+	}
+	public Integer getLoginFailedAttempts() {
+		return loginFailedAttempts;
+	}
+	public void setLoginFailedAttempts(Integer loginFailedAttempts) {
+		this.loginFailedAttempts = loginFailedAttempts;
+	}
+	public String getgResponseToken() {
+		return gResponseToken;
+	}
+	public void setgResponseToken(String gResponseToken) {
+		this.gResponseToken = gResponseToken;
+	}
+	public String getEmailActivationCode() {
+		return emailActivationCode;
+	}
+	public void setEmailActivationCode(String emailActivationCode) {
+		this.emailActivationCode = emailActivationCode;
+	}
+	public Integer getPrimaryIp() {
+		return primaryIp;
+	}
+	public void setPrimaryIp(Integer primaryIp) {
+		this.primaryIp = primaryIp;
+	}
+	@JsonIgnore
+	public String getCurrentIpAddress() {
+		return super.getUserIp();
+	}
+	public SecondaryMemberGroups getSecondaryMemberGroups() {
+		return secondaryMemberGroups;
+	}
+	public void setSecondaryMemberGroups(SecondaryMemberGroups secondaryMemberGroups) {
+		this.secondaryMemberGroups = secondaryMemberGroups;
+	}
+	public List<Permissions> getPermissions() {
+		return permissions;
+	}
+	public void setPermissions(List<Permissions> permissions) {
+		this.permissions = permissions;
 	}
 }

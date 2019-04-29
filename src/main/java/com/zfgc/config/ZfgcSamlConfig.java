@@ -2,6 +2,7 @@ package com.zfgc.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
+
 @ConfigurationProperties("zfgc.saml")
 public class ZfgcSamlConfig {
 

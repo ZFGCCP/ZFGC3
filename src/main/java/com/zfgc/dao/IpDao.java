@@ -1,5 +1,6 @@
 package com.zfgc.dao;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dbobj.IpAddressDbObj;
 import com.zfgc.dbobj.IpAddressDbObjExample;
+import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.mappers.IpAddressDbObjMapper;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.IpAddress;
@@ -24,7 +26,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	
 	Logger LOGGER = Logger.getLogger(IpDao.class);
 	
-	public IpAddressDbObj logIpAddress(IpAddress ip) throws Exception{
+	public IpAddressDbObj logIpAddress(IpAddress ip) throws RuntimeException{
 		IpAddressDbObj ipDbObj = mapper.map(ip, IpAddressDbObj.class);
 		
 		try{
@@ -34,9 +36,9 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 			super.logDbDuplicateKeyError(LOGGER, "IP_ADDRESS", ip.getIpAddress());
 			return null;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			super.logDbInsertError(LOGGER, "IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		return ipDbObj;
@@ -63,7 +65,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		}
 	}
 	
-	public Integer incrementLoginFails(String ipAddress) throws Exception{
+	public Integer incrementLoginFails(String ipAddress) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
@@ -81,13 +83,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		
 			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbGeneralError(LOGGER, "USERS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public void lockIpAddress(IpAddress ip, Date lockTime) throws Exception{
+	public void lockIpAddress(IpAddress ip, Date lockTime) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
@@ -101,13 +103,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		try{
 			jdbcTemplate.update(sql.toString(), params);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbUpdateError(LOGGER,"IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public Date getIpLockTime(IpAddress ipAddress) throws Exception{
+	public Date getIpLockTime(IpAddress ipAddress) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT LOCKED_UNTIL \n")
@@ -120,13 +122,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		try{
 			return jdbcTemplate.queryForObject(sql.toString(), params, Date.class);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbGeneralError(LOGGER,"IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public void unlockIp(IpAddress ipAddress) throws Exception{
+	public void unlockIp(IpAddress ipAddress) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
@@ -139,13 +141,13 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		try{
 			jdbcTemplate.update(sql.toString(), params);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbUpdateError(LOGGER,"IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public Integer incrementLoginFails(IpAddress ipAddress) throws Exception{
+	public Integer incrementLoginFails(IpAddress ipAddress) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE IP_ADDRESS \n")
@@ -163,46 +165,58 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 		
 			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbGeneralError(LOGGER, "IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 
 	@Override
-	public List<IpAddressDbObj> get(IpAddressDbObjExample ex) {
+	public List<IpAddressDbObj> get(IpAddressDbObjExample ex) throws ZfgcNotFoundException, RuntimeException {
+		List<IpAddressDbObj> dbObj = ipAddressDbObjMapper.selectByExample(ex);
+		
+		if(dbObj.size() > 0) {
+			return dbObj;
+		}
+		
+		throw new ZfgcNotFoundException("IP Address not found");
+	}
+
+	@Override
+	public void hardDelete(IpAddress obj) throws RuntimeException {
 		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateOrInsert(IpAddress obj) throws RuntimeException {
+		IpAddressDbObj dbObj = mapper.map(obj, IpAddressDbObj.class);
+		if(obj.getIpAddressId() == -1) {
+			ipAddressDbObjMapper.insert(dbObj);
+			obj.setIpAddressId(dbObj.getIpAddressId());
+		}
+		else {
+			ipAddressDbObjMapper.updateByPrimaryKey(dbObj);
+		}
+		
+	}
+
+	@Override
+	public void updateByExample(IpAddress obj, IpAddressDbObjExample ex) throws RuntimeException {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public Integer deleteByExample(IpAddress obj, IpAddressDbObjExample ex) throws RuntimeException {
 		return null;
-	}
-
-	@Override
-	public void hardDelete(IpAddress obj) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(IpAddress obj) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void updateByExample(IpAddress obj, IpAddressDbObjExample ex) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Integer deleteByExample(IpAddress obj, IpAddressDbObjExample ex) {
-		return null;
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public Integer countByExample(IpAddress obj, IpAddressDbObjExample ex)
-			throws Exception {
+	public Long countByExample(IpAddress obj, IpAddressDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

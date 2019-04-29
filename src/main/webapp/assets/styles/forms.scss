@@ -4,16 +4,44 @@ form{
 		font-size:12px;
 	}
 	
-	input[type="checkbox"]{
-		@media(max-width:767px){
-			zoom:2;
-			margin-top:1px;
+	.checkbox-wrapper{
+		display: flex;
+		align-items: center;
+		
+		label{
+			padding-left: 5px;
+    		padding-top: 7px;
 		}
 	}
 	
-	 input[type="checkbox"]:checked + label::after {
-	 	color:red;
-	 }
+	input[type="checkbox"]{
+		@media(max-width: 767px){
+			padding: 10px;
+		}
+	
+		-webkit-appearance: none;
+    	background-color: #ffffff;
+    	border: 1px solid black;
+    	padding: 7px;
+    	border-radius: 3px;
+    	display: inline-flex;
+    	position: relative;
+	}
+
+	input[type="checkbox"]:checked:after {
+		@media(max-width: 767px){
+			top: -6px;
+			font-size: 23px;
+		}
+	
+		content: '\2714';
+	    font-size: 17px;
+	    font-weight: 600;
+	    position: absolute;
+	    top: -4px;
+	    left: -1px;
+	    color: #239200;
+	}
 	
 	.labeled-checkbox{
 		@media(max-width:767px){
@@ -28,6 +56,16 @@ form{
   		fieldset[disabled] & {
     		opacity: .3;
   		}
+  		
+  		&.top-input{
+  			border-radius: 4px 4px 0 0;
+  		}
+  		
+  		&.bottom-input{
+  			border-radius: 0 0 4px 4px;
+  		}
+  		
+  		border: 1px solid black;
 	}
 	
 	.xl-button-wrapper{

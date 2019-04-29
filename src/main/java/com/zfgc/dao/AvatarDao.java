@@ -45,19 +45,19 @@ public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj, Avat
 	}
 
 	@Override
-	public List<AvatarDbObj> get(AvatarDbObjExample ex) {
+	public List<AvatarDbObj> get(AvatarDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(Avatar obj) {
+	public void hardDelete(Avatar obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(Avatar obj) {
+	public void updateOrInsert(Avatar obj) throws RuntimeException {
 		AvatarDbObj dbObj = mapper.map(obj, AvatarDbObj.class);
 		if(obj.getAvatarId() == null || obj.getAvatarId() == -1){
 			avatarDbObjMapper.insert(dbObj);
@@ -70,19 +70,19 @@ public class AvatarDao extends AbstractDao<AvatarDbObjExample, AvatarDbObj, Avat
 	}
 
 	@Override
-	public void updateByExample(Avatar obj, AvatarDbObjExample ex) {
+	public void updateByExample(Avatar obj, AvatarDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(Avatar obj, AvatarDbObjExample ex) {
+	public Integer deleteByExample(Avatar obj, AvatarDbObjExample ex) throws RuntimeException {
 		return avatarDbObjMapper.deleteByExample(ex);
 	}
 
 	@Override
-	public Integer countByExample(Avatar obj, AvatarDbObjExample ex)
-			throws Exception {
+	public Long countByExample(Avatar obj, AvatarDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

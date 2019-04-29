@@ -19,11 +19,22 @@ public class IpAddressService {
 	@Autowired
 	IpDataProvider ipDataProvider;
 	
+	public IpAddress getIpAddress(Integer ipAddressId) throws RuntimeException {
+		IpAddress ip = ipDataProvider.getIpAddress(ipAddressId);
+		return ip;
+	}
+	
+	public IpAddress getIpAddress(String ipAddress) throws RuntimeException{
+		IpAddress ip = ipDataProvider.getIpAddress(ipAddress);
+		return ip;
+	}
 	
 	public IpAddress createIpAddress(String ipAddressAsString){
 		IpAddress ipAddress = new IpAddress();
 		ipAddress.setIpAddress(ipAddressAsString);
 		ipAddress.setVersion(getIpVersion(ipAddressAsString));
+		ipAddress.setIpAddressId(-1);
+		ipAddress.setIsLockedFlag(false);
 		
 		return ipAddress;
 	}
@@ -78,12 +89,12 @@ public class IpAddressService {
 		return true;
 	}
 	
-	public Integer incrementLoginFailCount(IpAddress ipAddress) throws Exception{
+	public Integer incrementLoginFailCount(IpAddress ipAddress) throws RuntimeException{
 		try{
 			return ipDataProvider.incrementLoginFailCount(ipAddress);
 		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+		catch(RuntimeException ex){
+			throw ex;
 		}
 	}
 	

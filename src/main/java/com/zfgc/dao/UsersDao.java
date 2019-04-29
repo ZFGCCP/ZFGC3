@@ -35,7 +35,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 	
 	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_TOKEN A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
 	
-	public List<UsersDbObj> getUsersByConversation(Integer conversationId) throws Exception{
+	public List<UsersDbObj> getUsersByConversation(Integer conversationId) throws RuntimeException{
 		List<UsersDbObj> result = usersDbObjMapper.getUsersByConversation(conversationId);
 		
 		if(result.size() <= 0){
@@ -46,7 +46,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		return result;
 	}
 	
-	public List<UsersDbObj> getUsersById(List<Integer> userIds) throws Exception{
+	public List<UsersDbObj> getUsersById(List<Integer> userIds) throws RuntimeException{
 		UsersDbObjExample ex = getExample();
 		ex.createCriteria().andUsersIdIn(userIds);
 		
@@ -59,7 +59,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		return users;
 	}
 	
-	public UsersDbObj getUserByToken(String authToken) throws Exception{
+	public UsersDbObj getUserByToken(String authToken) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		//TODO add time expiration, get rid of *
@@ -78,9 +78,9 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 			
 			return user;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Error getting user for token " + authToken);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		
@@ -90,7 +90,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		UsersDbObj usersDbObj = mapper.map(user, UsersDbObj.class);
 		usersDbObj.setPassword(user.getUserHashInfo().getPassword());
 		usersDbObj.setPassSalt(user.getUserHashInfo().getPassSalt());
-		usersDbObj.setPrimaryIp(user.getPrimaryIpAddress().getIpAddress());
+		usersDbObj.setPrimaryIp(user.getPrimaryIpAddress().getIpAddressId());
 		//usersDbObj.setEmailAddress(user.getEmailAddress().getEmailAddress());
 		try{
 			usersDbObjMapper.insertSelective(usersDbObj);
@@ -104,7 +104,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		return usersDbObj;
 	}
 	
-	public UserHashInfo getUserPasswordAndSaltById(Integer usersId) throws Exception{
+	public UserHashInfo getUserPasswordAndSaltById(Integer usersId) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT PASSWORD, PASS_SALT \n")
@@ -118,13 +118,13 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 			UserHashInfo hashInfo = (UserHashInfo)jdbcTemplate.queryForObject(sql.toString(), params, new BeanPropertyRowMapper(UserHashInfo.class));
 			return hashInfo;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Error getting password for user " + usersId);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public UserHashInfo getUserPasswordAndSaltByName(String loginName) throws Exception{
+	public UserHashInfo getUserPasswordAndSaltByName(String loginName) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT PASSWORD, PASS_SALT \n")
@@ -138,13 +138,13 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 			UserHashInfo hashInfo = (UserHashInfo)jdbcTemplate.queryForObject(sql.toString(), params, new BeanPropertyRowMapper(UserHashInfo.class));
 			return hashInfo;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Error getting password for user " + loginName);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public UserHashInfo getUserPasswordAndSaltByDisplayName(String displayName) throws Exception{
+	public UserHashInfo getUserPasswordAndSaltByDisplayName(String displayName) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT PASSWORD, PASS_SALT \n")
@@ -158,13 +158,13 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 			UserHashInfo hashInfo = (UserHashInfo)jdbcTemplate.queryForObject(sql.toString(), params, new BeanPropertyRowMapper(UserHashInfo.class));
 			return hashInfo;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Error getting password for user " + displayName);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public Users getUserByLoginName(String loginName) throws Exception{
+	public Users getUserByLoginName(String loginName) throws RuntimeException{
 		UsersDbObjExample usersDbObjExample = new UsersDbObjExample();
 		usersDbObjExample.createCriteria().andLoginNameEqualTo(loginName);
 		
@@ -175,15 +175,15 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 				return mapper.map(usersDbObj.get(0), Users.class);
 			}
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Error finding login name " + loginName);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 
 		return null;
 	}
 	
-	public Users getUserByDisplayName(String displayName) throws Exception{
+	public Users getUserByDisplayName(String displayName) throws RuntimeException{
 		UsersDbObjExample usersDbObjExample = new UsersDbObjExample();
 		usersDbObjExample.createCriteria().andDisplayNameEqualTo(displayName);
 		
@@ -194,42 +194,42 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 				return mapper.map(usersDbObj.get(0), Users.class);
 			}
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Error finding display name " + displayName);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 		
 		return null;
 	}
 	
-	public Boolean doesLoginNameExist(String loginName) throws Exception{
+	public Boolean doesLoginNameExist(String loginName) throws RuntimeException{
 		UsersDbObjExample usersDbObjExample = new UsersDbObjExample();
 		usersDbObjExample.createCriteria().andLoginNameEqualTo(loginName);
 		
 		try{
 			return usersDbObjMapper.countByExample(usersDbObjExample) > 0;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Error finding login name " + loginName);
 			ex.printStackTrace();
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public Boolean doesDisplayNameExist(String displayName) throws Exception{
+	public Boolean doesDisplayNameExist(String displayName) throws RuntimeException{
 		UsersDbObjExample usersDbObjExample = new UsersDbObjExample();
 		usersDbObjExample.createCriteria().andDisplayNameEqualTo(displayName);
 		
 		try{
 			return usersDbObjMapper.countByExample(usersDbObjExample) > 0;
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			LOGGER.error("Error finding display name " + displayName);
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public Integer incrementLoginFails(String loginName) throws Exception{
+	public Integer incrementLoginFails(String loginName) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE users \n")
@@ -247,13 +247,13 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		
 			return jdbcTemplate.queryForObject(sql.toString(), params, Integer.class);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbGeneralError(LOGGER, "USERS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public void lockAccount(String loginName, Date lockTime) throws Exception{
+	public void lockAccount(String loginName, Date lockTime) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE users \n")
@@ -267,13 +267,13 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		try{
 			jdbcTemplate.update(sql.toString(), params);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbUpdateError(LOGGER,"USERS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public void unlockAccount(String loginName) throws Exception{
+	public void unlockAccount(String loginName) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("UPDATE users \n")
@@ -286,13 +286,13 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		try{
 			jdbcTemplate.update(sql.toString(), params);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbUpdateError(LOGGER,"USERS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 	
-	public Date getAccountLockTime(String loginName) throws Exception{
+	public Date getAccountLockTime(String loginName) throws RuntimeException{
 		StringBuilder sql = new StringBuilder();
 		
 		sql.append("SELECT LOCKED_UNTIL \n")
@@ -305,25 +305,26 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		try{
 			return jdbcTemplate.queryForObject(sql.toString(), params, Date.class);
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			logDbGeneralError(LOGGER,"USERS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 	}
 
 	@Transactional
-	public void linkUserToIp(Users user, IpAddress ipAddress, Boolean setPrimary) throws Exception{
+	@Deprecated
+	public void linkUserToIp(Users user, IpAddress ipAddress, Boolean setPrimary) throws RuntimeException{
 		if(setPrimary){
 			UsersDbObj tempUser = new UsersDbObj();
 			tempUser.setUsersId(user.getUsersId());
-			tempUser.setPrimaryIp(ipAddress.getIpAddress());
+			tempUser.setPrimaryIp(ipAddress.getIpAddressId());
 			
 			try{
 				usersDbObjMapper.updateByPrimaryKeySelective(tempUser);
 			}
-			catch(Exception ex){
+			catch(RuntimeException ex){
 				super.logDbUpdateError(LOGGER, "USERS");
-				throw new Exception(ex.getMessage());
+				throw ex;
 			}
 		}
 		
@@ -337,9 +338,9 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		catch(DuplicateKeyException ex){
 			super.logDbDuplicateKeyError(LOGGER, "BR_USERS_IP_ADDRESS", brUsersIpAddress.getUsersId() + ", " + brUsersIpAddress.getIpAddress());
 		}
-		catch(Exception ex){
+		catch(RuntimeException ex){
 			super.logDbInsertError(LOGGER, "BR_USERS_IP_ADDRESS");
-			throw new Exception(ex.getMessage());
+			throw ex;
 		}
 
 	}
@@ -462,43 +463,43 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 	}
 	
 	@Override
-	public List<UsersDbObj> get(UsersDbObjExample ex) {
+	public List<UsersDbObj> get(UsersDbObjExample ex) throws RuntimeException {
 		return usersDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(Users obj) {
+	public void hardDelete(Users obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(Users obj) {
+	public void updateOrInsert(Users obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(Users obj, UsersDbObjExample ex) {
+	public void updateByExample(Users obj, UsersDbObjExample ex) throws RuntimeException {
 		UsersDbObj dbObj = mapper.map(obj, UsersDbObj.class);
 		usersDbObjMapper.updateByExampleSelective(dbObj, ex);
 	}
 
 	@Override
-	public Integer deleteByExample(Users obj, UsersDbObjExample ex) {
+	public Integer deleteByExample(Users obj, UsersDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(Users obj, UsersDbObjExample ex)
-			throws Exception {
+	public Long countByExample(Users obj, UsersDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 	
-	public Integer checkUserPassword(Integer usersId, String password) throws Exception{
+	public Integer checkUserPassword(Integer usersId, String password) throws RuntimeException{
 		return usersDbObjMapper.validateUserPassword(usersId, password);
 	}
 	

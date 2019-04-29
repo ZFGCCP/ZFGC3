@@ -44,39 +44,39 @@ public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLog
 	}
 
 	@Override
-	public List<ActivityLogDbObj> get(ActivityLogDbObjExample ex) {
+	public List<ActivityLogDbObj> get(ActivityLogDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public void hardDelete(ActivityLog obj) {
+	public void hardDelete(ActivityLog obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(ActivityLog obj) {
+	public void updateOrInsert(ActivityLog obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(ActivityLog obj, ActivityLogDbObjExample ex) {
+	public void updateByExample(ActivityLog obj, ActivityLogDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(ActivityLog obj, ActivityLogDbObjExample ex) {
+	public Integer deleteByExample(ActivityLog obj, ActivityLogDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(ActivityLog obj, ActivityLogDbObjExample ex)
-			throws Exception {
+	public Long countByExample(ActivityLog obj, ActivityLogDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

@@ -19,7 +19,7 @@ public class AvatarGalleryDao extends AbstractDao<AvatarGalleryDbObjExample, Ava
 	
 	@Override
 	public List<AvatarGalleryDbObj> get(AvatarGalleryDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		List<AvatarGalleryDbObj> result = avatarGalleryDbObjMapper.selectByExample(ex);
 		
 		if(result == null || result.size() == 0){
@@ -30,34 +30,34 @@ public class AvatarGalleryDao extends AbstractDao<AvatarGalleryDbObjExample, Ava
 	}
 
 	@Override
-	public void hardDelete(AvatarGallery obj) {
+	public void hardDelete(AvatarGallery obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(AvatarGallery obj) {
+	public void updateOrInsert(AvatarGallery obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public void updateByExample(AvatarGallery obj, AvatarGalleryDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(AvatarGallery obj,
-			AvatarGalleryDbObjExample ex) throws Exception {
+			AvatarGalleryDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(AvatarGallery obj,
-			AvatarGalleryDbObjExample ex) throws Exception {
+	public Long countByExample(AvatarGallery obj,
+			AvatarGalleryDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

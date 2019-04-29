@@ -8,16 +8,16 @@ public class UserSecurityInfo extends BaseZfgcModel{
 	private String confirmNewPassword;
 	private String newPassword;
 	private String currentPassword;
-	private Boolean hideBirthDateFlag;
-	private Boolean hideGenderFlag;
-	private Boolean hideSkypeFlag;
-	private Boolean hideGtalkFlag;
-	private Boolean hideFacebookFlag;
-	private Boolean hidePsnFlag;
-	private Boolean hideXboxLiveFlag;
-	private Boolean hideSteamFlag;
-	private Boolean hideNnidFlag;
-	private Boolean hideEmailFlag;
+	private Boolean hideBirthDateFlag = false;
+	private Boolean hideGenderFlag = false;
+	private Boolean hideSkypeFlag = false;
+	private Boolean hideGtalkFlag = false;
+	private Boolean hideFacebookFlag = false;
+	private Boolean hidePsnFlag = false;
+	private Boolean hideXboxLiveFlag = false;
+	private Boolean hideSteamFlag = false;
+	private Boolean hideNnidFlag = false;
+	private Boolean hideEmailFlag = false;
 	private Integer usersId;
 	
 	public Boolean getHideSkypeFlag() {

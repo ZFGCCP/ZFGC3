@@ -19,40 +19,40 @@ public class PmInBoxDao extends AbstractDao<InboxViewDbObjExample,InboxViewDbObj
 	
 	@Override
 	public List<InboxViewDbObjWithBLOBs> get(InboxViewDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		List<InboxViewDbObjWithBLOBs> inbox = inboxViewDbObjMapper.selectByExampleWithBLOBs(ex);
 		
 		return inbox;
 	}
 
 	@Override
-	public void hardDelete(PmBox obj) {
+	public void hardDelete(PmBox obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(PmBox obj) {
+	public void updateOrInsert(PmBox obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(PmBox obj, InboxViewDbObjExample ex) {
+	public void updateByExample(PmBox obj, InboxViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(PmBox obj, InboxViewDbObjExample ex) {
+	public Integer deleteByExample(PmBox obj, InboxViewDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(PmBox obj, InboxViewDbObjExample ex)
-			throws Exception {
+	public Long countByExample(PmBox obj, InboxViewDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

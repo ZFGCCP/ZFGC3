@@ -6,6 +6,11 @@
 		UserService.loadProfile($location.search().userId,vm);
 		
 		vm.lookups = LookupsService.getLookupsList("MEMBER_GROUP,AVATAR_TYPE,AVATAR_GALLERY,GENDER,NOTIFICATION_FREQUENCY,LKUP_RECEIVE_MESSAGES,LKUP_PM_NOTIF");
+		vm.getLkupValue = LookupsService.getLkupValue;
+		
+		vm.userActivation = function(){
+			UserService.adminUserActivate(vm.profile.usersId);
+		};
 		
 		vm.tabClick = function(tab, subTab){
 			UserService.setTabActive(vm,tab, subTab);
@@ -57,6 +62,26 @@
 		
 		vm.selectBuddy = function(buddy){
 			UserService.addBuddy(vm,buddy);
+		};
+		
+		vm.isUserAdmin = function(){
+			return UserService.isUserAdmin(UserService.loggedInUser);
+		};
+		
+		vm.isUserModerator = function(){
+			return UserService.isUserModerator(UserService.loggedInUser);
+		};
+		
+		vm.addMemberGroup = function(){
+			vm.profile.secondaryMemberGroups.memberGroups.push({memberGroupId : vm.selectedMemberGroup});
+		};
+		
+		vm.removeMemberGroup = function(index){
+			vm.profile.secondaryMemberGroups.memberGroups.splice(index,1);
+		};
+		
+		vm.canSendPmToUser = function(){
+			return UserService.canSendPmToUser(vm);
 		};
 		
 		 var w = angular.element($window);

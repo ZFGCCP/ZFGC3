@@ -51,36 +51,36 @@ public class BuddyDao extends AbstractDao<BrBuddyIgnoreListDbObjExample, BrBuddy
 	}
 
 	@Override
-	public List<BrBuddyIgnoreListDbObj> get(BrBuddyIgnoreListDbObjExample ex) {
+	public List<BrBuddyIgnoreListDbObj> get(BrBuddyIgnoreListDbObjExample ex) throws RuntimeException {
 		return brBuddyIgnoreListDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(Buddy obj) {
+	public void hardDelete(Buddy obj) throws RuntimeException {
 		BrBuddyIgnoreListDbObj dbObj = mapper.map(obj, BrBuddyIgnoreListDbObj.class);
 		brBuddyIgnoreListDbObjMapper.deleteByPrimaryKey(dbObj);
 	}
 
 	@Override
-	public void updateOrInsert(Buddy obj) {
+	public void updateOrInsert(Buddy obj) throws RuntimeException {
 		BrBuddyIgnoreListDbObj dbObj = mapper.map(obj, BrBuddyIgnoreListDbObj.class);
 		brBuddyIgnoreListDbObjMapper.insert(dbObj);
 	}
 
 	@Override
-	public void updateByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex) {
+	public void updateByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex) throws RuntimeException {
 		BrBuddyIgnoreListDbObj dbObj = mapper.map(obj, BrBuddyIgnoreListDbObj.class);
 		brBuddyIgnoreListDbObjMapper.updateByExample(dbObj,ex);
 	}
 
 	@Override
-	public Integer deleteByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex) {
+	public Integer deleteByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex) throws RuntimeException {
 		return brBuddyIgnoreListDbObjMapper.deleteByExample(ex);
 	}
 
 	@Override
-	public Integer countByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex)
-			throws Exception {
+	public Long countByExample(Buddy obj, BrBuddyIgnoreListDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

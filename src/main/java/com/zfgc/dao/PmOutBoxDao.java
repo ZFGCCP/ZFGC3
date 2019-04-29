@@ -19,40 +19,40 @@ public class PmOutBoxDao extends AbstractDao<OutboxViewDbObjExample, OutboxViewD
 	
 	@Override
 	public List<OutboxViewDbObjWithBLOBs> get(OutboxViewDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		List<OutboxViewDbObjWithBLOBs> outbox = outboxVewDbObjMapper.selectByExampleWithBLOBs(ex);
 		
 		return outbox;
 	}
 
 	@Override
-	public void hardDelete(PmBox obj) {
+	public void hardDelete(PmBox obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(PmBox obj) {
+	public void updateOrInsert(PmBox obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateByExample(PmBox obj, OutboxViewDbObjExample ex) {
+	public void updateByExample(PmBox obj, OutboxViewDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer deleteByExample(PmBox obj, OutboxViewDbObjExample ex) {
+	public Integer deleteByExample(PmBox obj, OutboxViewDbObjExample ex) throws RuntimeException {
 		return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(PmBox obj, OutboxViewDbObjExample ex)
-			throws Exception {
+	public Long countByExample(PmBox obj, OutboxViewDbObjExample ex)
+			throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

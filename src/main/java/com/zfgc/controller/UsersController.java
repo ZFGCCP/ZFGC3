@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,6 +20,7 @@ import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.users.MemberListingView;
+import com.zfgc.model.users.MembersView;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
@@ -62,20 +64,52 @@ class UsersController extends BaseController{
 		
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
-	
+
 	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	
 	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
 		
-		user = usersService.createNewUser(user, request);
-		
-		if(user == null){
+		try {
+			user = usersService.createNewUser(user, request);
+		} catch(ZfgcValidationException ex){
+			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
+		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
-		else if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
-		}
+		
 		return ResponseEntity.status(HttpStatus.OK).body(new String[]{"Created user successfully."});
+	}
+	
+	@RequestMapping(value="/newuser/template", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getNewUserTemplate() {
+		return ResponseEntity.status(HttpStatus.OK).body(usersService.getNewUserTemplate());
+	}
+	
+	@RequestMapping(value="/newuser/activation", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity activateUser(@RequestParam("activationCode") String activationCode) {
+		try {
+			usersService.activateUserAccount(activationCode);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
+	}
+	
+	//admin only endpoint
+	@RequestMapping(value="/{usersId}/activation", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_ZFGC_ACCOUNT_ACTIVATOR')")
+	public ResponseEntity activateExistingUser(@PathVariable("usersId") Integer usersId) {
+		try {
+			usersService.activateUserAccount(usersId, zfgcUser());
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
+		}
+		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
@@ -122,15 +156,18 @@ class UsersController extends BaseController{
 			return ResponseEntity.status(HttpStatus.OK).body(user);
 		} 
 		catch(ZfgcNotFoundException ex){
+			ex.printStackTrace();
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested resource could not be found.");
 		}
 		catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(e.getMessage());
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
 	}
 	
 	@RequestMapping(value="/profile/account", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity saveAccountSettings(@RequestBody Users accountSettings){
 		try {
 			userProfileService.saveAccountSettings(accountSettings,zfgcUser());
@@ -149,6 +186,7 @@ class UsersController extends BaseController{
 	
 	@RequestMapping(value="/profile", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity saveForumProfile(@RequestBody Users forumProfile){
 		try {
 			userProfileService.saveForumProfile(forumProfile,zfgcUser());
@@ -167,6 +205,7 @@ class UsersController extends BaseController{
 	
 	@RequestMapping(value="/profile/notifications", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity saveNotificationSettings(@RequestBody Users notificationSettings){
 		try {
 			userProfileService.saveNotificationSettings(notificationSettings,zfgcUser());
@@ -180,6 +219,7 @@ class UsersController extends BaseController{
 	
 	@RequestMapping(value="/profile/pmSettings", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity savePmSettings(@RequestBody Users pmSettings){
 		try {
 			userProfileService.savePmSettings(pmSettings,zfgcUser());
@@ -193,6 +233,7 @@ class UsersController extends BaseController{
 	
 	@RequestMapping(value="/profile/buddyList", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity saveBuddyListSettings(@RequestBody Users buddyList){
 		try {
 			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser());
@@ -223,7 +264,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/member-list", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getMemberList(@RequestParam Integer pageNo, @RequestParam Integer usersPerPage) {
-		List<MemberListingView> userList = null;
+		MembersView userList = null;
 		try {
 			userList = usersService.getMemberListingView(zfgcUser(), pageNo, usersPerPage);
 		} catch (Exception e) {

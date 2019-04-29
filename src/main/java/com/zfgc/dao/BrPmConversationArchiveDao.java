@@ -18,7 +18,7 @@ public class BrPmConversationArchiveDao extends AbstractDao<BrPmConversationArch
 	
 	@Override
 	public List<BrPmConversationArchiveDbObj> get(
-			BrPmConversationArchiveDbObjExample ex) throws Exception {
+			BrPmConversationArchiveDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		try {
 			return dbObjMapper.selectByExample(ex);
@@ -30,13 +30,13 @@ public class BrPmConversationArchiveDao extends AbstractDao<BrPmConversationArch
 	}
 
 	@Override
-	public void hardDelete(BrPmConversationArchive obj) {
+	public void hardDelete(BrPmConversationArchive obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(BrPmConversationArchive obj) {
+	public void updateOrInsert(BrPmConversationArchive obj) throws RuntimeException {
 		BrPmConversationArchiveDbObj dbObj = mapper.map(obj, BrPmConversationArchiveDbObj.class);
 		
 		dbObjMapper.insert(dbObj);
@@ -44,21 +44,21 @@ public class BrPmConversationArchiveDao extends AbstractDao<BrPmConversationArch
 
 	@Override
 	public void updateByExample(BrPmConversationArchive obj,
-			BrPmConversationArchiveDbObjExample ex) {
+			BrPmConversationArchiveDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(BrPmConversationArchive obj,
-			BrPmConversationArchiveDbObjExample ex) throws Exception {
+			BrPmConversationArchiveDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Integer countByExample(BrPmConversationArchive obj,
-			BrPmConversationArchiveDbObjExample ex) throws Exception {
+	public Long countByExample(BrPmConversationArchive obj,
+			BrPmConversationArchiveDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

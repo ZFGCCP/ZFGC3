@@ -18,7 +18,7 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 	PersonalMessageDbObjMapper personalMessageDbObjMapper;
 	
 	@Override
-	public List<PersonalMessageDbObjWithBLOBs> get(PersonalMessageDbObjExample ex) throws Exception{
+	public List<PersonalMessageDbObjWithBLOBs> get(PersonalMessageDbObjExample ex) throws RuntimeException{
 		try {
 			return personalMessageDbObjMapper.selectByExampleWithBLOBs(ex);
 		}
@@ -29,13 +29,13 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 	}
 
 	@Override
-	public void hardDelete(PersonalMessage obj) {
+	public void hardDelete(PersonalMessage obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(PersonalMessage obj) {
+	public void updateOrInsert(PersonalMessage obj) throws RuntimeException {
 		PersonalMessageDbObjWithBLOBs dbObj = mapper.map(obj, PersonalMessageDbObjWithBLOBs.class);
 		
 		if(dbObj.getPersonalMessageId() == null || dbObj.getPersonalMessageId() == -1){
@@ -45,7 +45,7 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 
 	@Override
 	public void updateByExample(PersonalMessage obj,
-			PersonalMessageDbObjExample ex) {
+			PersonalMessageDbObjExample ex) throws RuntimeException {
 		PersonalMessageDbObjWithBLOBs dbObj = mapper.map(obj, PersonalMessageDbObjWithBLOBs.class);
 		
 		personalMessageDbObjMapper.updateByExample(dbObj, ex);
@@ -54,15 +54,15 @@ public class PersonalMessageDao extends AbstractDao<PersonalMessageDbObjExample,
 
 	@Override
 	public Integer deleteByExample(PersonalMessage obj,
-			PersonalMessageDbObjExample ex) {
+			PersonalMessageDbObjExample ex) throws RuntimeException {
 				return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(PersonalMessage obj,
-			PersonalMessageDbObjExample ex) throws Exception {
+	public Long countByExample(PersonalMessage obj,
+			PersonalMessageDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

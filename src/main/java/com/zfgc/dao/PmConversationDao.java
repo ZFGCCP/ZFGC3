@@ -18,18 +18,18 @@ public class PmConversationDao extends AbstractDao<PmConversationDbObjExample, P
 	
 	@Override
 	public List<PmConversationDbObj> get(PmConversationDbObjExample ex)
-			throws Exception {
+			throws RuntimeException {
 		return pmConversationDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
-	public void hardDelete(PmConversation obj) {
+	public void hardDelete(PmConversation obj) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void updateOrInsert(PmConversation obj) {
+	public void updateOrInsert(PmConversation obj) throws RuntimeException {
 		PmConversationDbObj dbObj = mapper.map(obj, PmConversationDbObj.class);
 		
 		if(dbObj.getPmConversationId() == null){
@@ -44,22 +44,22 @@ public class PmConversationDao extends AbstractDao<PmConversationDbObjExample, P
 
 	@Override
 	public void updateByExample(PmConversation obj,
-			PmConversationDbObjExample ex) {
+			PmConversationDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
 	public Integer deleteByExample(PmConversation obj,
-			PmConversationDbObjExample ex) {
+			PmConversationDbObjExample ex) throws RuntimeException {
 				return null;
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public Integer countByExample(PmConversation obj,
-			PmConversationDbObjExample ex) throws Exception {
+	public Long countByExample(PmConversation obj,
+			PmConversationDbObjExample ex) throws RuntimeException {
 		// TODO Auto-generated method stub
 		return null;
 	}

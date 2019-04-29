@@ -7,7 +7,7 @@ import com.zfgc.validation.AbstractValidator;
 public class PmPruneValidator extends AbstractValidator<PmPrune> {
 
 	@Override
-	public void validator(PmPrune model) throws Exception {
+	public void validator(PmPrune model) throws RuntimeException {
 		// TODO Auto-generated method stub
 		
 	}
