@@ -2,12 +2,12 @@ package com.zfgc.model;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.mysql.cj.util.StringUtils;
 import com.zfgc.model.subscriptions.ThreadSubscription;
 import com.zfgc.model.users.Users;
 
@@ -33,7 +33,7 @@ public abstract class BaseZfgcModel implements Comparable{
 			user = (Users) ((Authentication) request.getUserPrincipal()).getPrincipal();
 		}
 		
-		if(user == null || StringUtils.isNullOrEmpty(user.getTimeZone())){
+		if(user == null || StringUtils.isEmpty(user.getTimeZone())){
 			return "GMT";
 		}
 		

@@ -29,7 +29,7 @@
     			
     			scope.goToIdp = function(){
     				var returnTo = $location.absUrl();
-    				$window.location = "http://devidp.zfgc.com/saml2/idp/SSOService.php?spentityid=zfgc-sp-dev&target=" + returnTo;
+    				$window.location = "http://devidp.zfgc.com/saml2/idp/SSOService.php?spentityid=zfgc-sp&target=" + returnTo;
     			};
     			
     			scope.startListener = function() {
