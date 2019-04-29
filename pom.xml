@@ -5,7 +5,7 @@
 
 	<groupId>com.zfgc</groupId>
 	<artifactId>forum</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.1-FADO</version>
 	<packaging>war</packaging>
 
 	<name>forum</name>
@@ -24,6 +24,23 @@
 	</properties>
 
 	<dependencies>
+	
+		<dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter</artifactId>
+		  <exclusions>
+		    <exclusion>
+		      <groupId>org.springframework.boot</groupId>
+		      <artifactId>spring-boot-starter-logging</artifactId>
+		    </exclusion>
+		  </exclusions>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-tomcat</artifactId>
+			<scope>provided</scope>
+		</dependency>
 	
 		<dependency>
     		<groupId>org.mybatis.spring.boot</groupId>
@@ -56,6 +73,12 @@
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+			    <exclusion>
+			      <groupId>org.springframework.boot</groupId>
+			      <artifactId>spring-boot-starter-logging</artifactId>
+			    </exclusion>
+		  </exclusions>
 		</dependency>
 		
 		<dependency>
