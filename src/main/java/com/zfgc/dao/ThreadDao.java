@@ -2,7 +2,8 @@ package com.zfgc.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
@@ -17,7 +18,7 @@ import com.zfgc.model.users.Users;
 
 @Component
 public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj, Thread> {
-	Logger LOGGER = Logger.getLogger(ThreadDao.class);
+	private Logger LOGGER = LogManager.getLogger(ThreadDao.class);
 	
 	@Autowired
 	ThreadDbObjMapper threadDbObjMapper;

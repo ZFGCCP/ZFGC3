@@ -2,7 +2,8 @@ package com.zfgc.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,7 @@ public class AuthenticationDao extends AbstractDao{
 	@Autowired
 	private AuthTokenDbObjMapper authTokenDbObjMapper;
 	
-	private Logger LOGGER = Logger.getLogger(AuthenticationDao.class);
+	private Logger LOGGER = LogManager.getLogger(AuthenticationDao.class);
 	
 	public void logIpAddress(IpAddress ipAddress) throws Exception{
 		

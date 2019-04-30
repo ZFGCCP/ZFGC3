@@ -3,7 +3,8 @@ package com.zfgc.dao;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLog
 	@Autowired
 	ActivityLogDbObjMapper activityLogDbObjMapper;
 	
-	Logger LOGGER = Logger.getLogger(LoggingDao.class);
+	private Logger LOGGER = LogManager.getLogger(LoggingDao.class);
 	
 	public void logAction(Integer logType, String description, Integer usersId, String ipAddress) throws Exception{
 		ActivityLogDbObj activityLogDbObj = new ActivityLogDbObj();

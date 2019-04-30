@@ -13,7 +13,8 @@ import javax.annotation.PostConstruct;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.mutable.MutableInt;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,7 @@ public class BbcodeService{
 	public Map<String,BbcodeConfig> validBbCodes = new HashMap<>();
 	public Map<String,Integer> bbCodeCounts= new HashMap<>();
 	private Boolean outputContent = true;
-	Logger LOGGER = Logger.getLogger(BbcodeService.class);
+	private Logger LOGGER = LogManager.getLogger(BbcodeService.class);
 	
 	@Autowired
 	BbCodeDataProvider bbCodeDataProvider;

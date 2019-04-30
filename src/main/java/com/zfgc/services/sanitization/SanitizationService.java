@@ -6,7 +6,8 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 
 import org.apache.ibatis.annotations.Results;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -23,7 +24,7 @@ public class SanitizationService extends AbstractService {
 	private Map<String,String> entities = null;
 	private Map<String,String> reverseEntities = null;
 	
-	Logger LOGGER = Logger.getLogger(SanitizationService.class);
+	private Logger LOGGER = LogManager.getLogger(SanitizationService.class);
 	
 	public String sanitizeMessage(String inputMessage){
 		return transformMessage(inputMessage,entities);

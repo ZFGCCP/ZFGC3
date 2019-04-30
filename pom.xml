@@ -5,7 +5,7 @@
 
 	<groupId>com.zfgc</groupId>
 	<artifactId>forum</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.1.1-LINK</version>
 	<packaging>war</packaging>
 
 	<name>forum</name>
@@ -38,6 +38,14 @@
 				<exclusion>
 					<artifactId>log4j-over-slf4j</artifactId>
 					<groupId>org.slf4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>log4j-to-slf4j</artifactId>
+					<groupId>org.apache.logging.log4j</groupId>
+				</exclusion>
+				<exclusion>
+					<artifactId>logback-classic</artifactId>
+					<groupId>ch.qos.logback</groupId>
 				</exclusion>
 			</exclusions>
 		</dependency>
@@ -95,13 +103,12 @@
 		<dependency>
     		<groupId>net.sf.dozer</groupId>
     		<artifactId>dozer</artifactId>
-    		<version>5.4.0</version>
-    		<exclusions>
-    			<exclusion>
-    				<artifactId>slf4j-api</artifactId>
-    				<groupId>org.slf4j</groupId>
-    			</exclusion>
-    		</exclusions>
+    		<version>5.5.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-log4j2</artifactId>
 		</dependency>
 	</dependencies>
 	

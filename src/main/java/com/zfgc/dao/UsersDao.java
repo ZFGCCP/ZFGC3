@@ -3,7 +3,8 @@ package com.zfgc.dao;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -31,7 +32,7 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 	@Autowired
 	BrUsersIpAddressDbObjMapper brUsersIpAddressDbObjMapper;
 	
-	Logger LOGGER = Logger.getLogger(UsersDao.class);
+	private Logger LOGGER = LogManager.getLogger(UsersDao.class);
 	
 	private final String SQL_FOR_FIELD = "FROM users U INNER JOIN AUTH_TOKEN A ON A.USERS_ID = U.USERS_ID WHERE A.TOKEN = :token";
 	

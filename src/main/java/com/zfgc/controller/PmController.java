@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -44,6 +47,8 @@ public class PmController extends BaseController {
 	
 	@Autowired
 	AuthenticationService authenticationService;
+	
+	private Logger logger = LogManager.getLogger(PmController.class);
 	
 	
 	@RequestMapping(value="/template", method=RequestMethod.POST, produces="application/json")
@@ -158,7 +163,14 @@ public class PmController extends BaseController {
 			
 			return ResponseEntity.ok(convo);
 		}
-		catch (ZfgcInvalidAesKeyException e) {
+		catch (ZfgcNotFoundException ex){
+			ex.printStackTrace();
+			logger.error(ExceptionUtils.getStackTrace(ex));
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+		}
+		catch (ZfgcInvalidAesKeyException ex) {
+			ex.printStackTrace();
+			logger.error(ExceptionUtils.getStackTrace(ex));
 	    	return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	    }
 	}
