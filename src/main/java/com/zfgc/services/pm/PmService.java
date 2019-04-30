@@ -410,6 +410,9 @@ public class PmService extends AbstractService {
 			
 			return convo;
 		}
+		catch (RuntimeException ex){
+			throw ex;
+		}
 		catch(Exception ex) {
 			ex.printStackTrace();
 			return null;

@@ -2,7 +2,8 @@ package com.zfgc.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,7 @@ public class CategoryDao extends AbstractDao<CategoryDbObjExample, CategoryDbObj
 	@Autowired
 	CategoryDbObjMapper categoryDbObjMapper;
 
-	Logger LOGGER = Logger.getLogger(CategoryDao.class);
+	private Logger LOGGER = LogManager.getLogger(CategoryDao.class);
 	
 	public List<CategoryDbObj> getCategories() throws Exception{
 		try{

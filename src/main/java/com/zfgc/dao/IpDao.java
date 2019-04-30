@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -24,7 +25,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	@Autowired
 	IpAddressDbObjMapper ipAddressDbObjMapper;
 	
-	Logger LOGGER = Logger.getLogger(IpDao.class);
+	private Logger LOGGER = LogManager.getLogger(IpDao.class);
 	
 	public IpAddressDbObj logIpAddress(IpAddress ip) throws RuntimeException{
 		IpAddressDbObj ipDbObj = mapper.map(ip, IpAddressDbObj.class);

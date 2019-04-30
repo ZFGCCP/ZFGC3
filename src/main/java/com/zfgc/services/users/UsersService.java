@@ -16,7 +16,8 @@ import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -84,7 +85,7 @@ public class UsersService extends AbstractService {
 	@Autowired
 	RuleRunService<Users> ruleRunner;
 	
-	Logger LOGGER = Logger.getLogger(UsersService.class);
+	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
 	public Users getUser(Integer usersId) throws Exception{
 		Users user = usersDataProvider.getUser(usersId);
@@ -101,7 +102,7 @@ public class UsersService extends AbstractService {
 		}
 		catch(ZfgcNotFoundException ex){
 			ex.printStackTrace();
-			throw new ZfgcNotFoundException(ex.getResourceName());
+			throw ex;
 		}
 		catch(RuntimeException ex){
 			ex.printStackTrace();

@@ -4,6 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,6 +37,7 @@ import com.zfgc.services.users.UsersService;
 @RequestMapping("/users")
 class UsersController extends BaseController{
 	
+	private Logger logger = LogManager.getLogger(UsersController.class);	
 	@Autowired
 	UsersService usersService;
 
@@ -72,8 +76,12 @@ class UsersController extends BaseController{
 		try {
 			user = usersService.createNewUser(user, request);
 		} catch(ZfgcValidationException ex){
+			ex.printStackTrace();
+			logger.error(ExceptionUtils.getStackTrace(ex));
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
-		} catch (Exception e) {
+		} catch (Exception ex) {
+			ex.printStackTrace();
+			logger.error(ExceptionUtils.getStackTrace(ex));
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
 		
