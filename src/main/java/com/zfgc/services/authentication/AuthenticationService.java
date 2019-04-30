@@ -1,7 +1,8 @@
 package com.zfgc.services.authentication;
 
 import org.apache.commons.lang3.time.DateUtils;
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.apache.tomcat.util.codec.binary.Base64;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.codec.Hex;
@@ -38,7 +39,7 @@ public class AuthenticationService  extends AbstractService {
 	private final static String HASH_ALGORITHM = "SHA-256";
 	private final int SALT_LENGTH = 128;
 	public final String PM_PARITY_WORD = "ZFGC3";
-	private Logger LOGGER = Logger.getLogger(AuthenticationService.class);
+	private Logger LOGGER = LogManager.getLogger(AuthenticationService.class);
 	
 	@Autowired
 	private UsersDao usersDao;

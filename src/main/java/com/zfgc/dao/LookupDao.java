@@ -2,7 +2,8 @@ package com.zfgc.dao;
 
 import java.util.List;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
@@ -13,7 +14,7 @@ import com.zfgc.model.lookups.Lookup;
 @Component
 public class LookupDao extends AbstractDao<Object,Object,Object>{
 	
-	Logger LOGGER = Logger.getLogger(LookupDao.class);
+	private Logger LOGGER = LogManager.getLogger(LookupDao.class);
 	
 	public List<Lookup> getLookup(String lookupName) throws Exception{
 		StringBuilder sql = new StringBuilder();

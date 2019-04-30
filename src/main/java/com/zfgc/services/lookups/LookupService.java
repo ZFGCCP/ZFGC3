@@ -6,7 +6,8 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.apache.log4j.Logger;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -19,7 +20,7 @@ public class LookupService{
 	@Autowired
 	LookupDao lookupDao;
 	
-	Logger LOGGER = Logger.getLogger(LookupDao.class);
+	Logger LOGGER = LogManager.getLogger(LookupService.class);
 	private Map<String,List<Lookup>> lookups = new HashMap<>();
 	
 	public static final String BBCODE = "BBCODE";
