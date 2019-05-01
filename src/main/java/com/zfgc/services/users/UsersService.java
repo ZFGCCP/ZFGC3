@@ -134,6 +134,7 @@ public class UsersService extends AbstractService {
 
 			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
 			user.setActiveFlag(false);
+			user.setPrimaryMemberGroupId(2);
 			generateUniqueActivationCode(user);
 			
 			IpAddress potentialIp = null;
