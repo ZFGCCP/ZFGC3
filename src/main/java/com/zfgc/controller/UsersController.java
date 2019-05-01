@@ -181,8 +181,10 @@ class UsersController extends BaseController{
 			userProfileService.saveAccountSettings(accountSettings,zfgcUser());
 		} 
 		catch(ZfgcUnauthorizedException ex){
+			ex.printStackTrace();
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
 		} catch (ZfgcValidationException ex) {
+			ex.printStackTrace();
 			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(accountSettings.getErrors());
 		} catch (Exception e) {
 			e.printStackTrace();
