@@ -317,12 +317,10 @@ public class UsersService extends AbstractService {
 	}
 	
 	public Users getLoggedInUser(Users user) throws RuntimeException{
-		if(user.getUsersId() == null){
+		if(user.getUsersId() == null || user.getUsersId() == -1){
 			Users guest = new Users();
-			user.setDisplayName("Guest");
-			Map<Integer, String> role = new HashMap<>();
-			
-			role.put(0,"Guest");
+			guest.setDisplayName("Guest");
+			guest.setPrimaryMemberGroupId(0);
 			
 			return guest;
 		}

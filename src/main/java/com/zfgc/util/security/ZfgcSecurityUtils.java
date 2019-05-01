@@ -182,6 +182,6 @@ public class ZfgcSecurityUtils {
 	}
 	
 	public static boolean checkUserAuthorizationProfileEditor(Integer usersId, Users zfgcUser){
-		return zfgcUser.isModerationStaff() || zfgcUser.isAdministrationStaff() || usersId == zfgcUser.getUsersId();
+		return zfgcUser.isModerationStaff() || zfgcUser.isAdministrationStaff() || usersId.equals(zfgcUser.getUsersId());
 	}
 }

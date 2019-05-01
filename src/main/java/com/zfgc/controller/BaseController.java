@@ -22,8 +22,9 @@ public abstract class BaseController {
 	protected Users zfgcUser(Principal principal){
 		if(principal == null){
 			Users guest = new Users();
-			guest.setUsersId(-1);
+			guest.setUsersId(null);
 			guest.setDisplayName("Guest");
+			guest.setPrimaryMemberGroupId(0);
 			
 			return guest;
 		}
