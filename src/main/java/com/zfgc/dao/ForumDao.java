@@ -32,6 +32,8 @@ public class ForumDao extends AbstractDao<ForumDbObjExample, ForumDbObj, Forum> 
 		//show all forums this user has permission to read.
 		//this includes anything permission with a read or write flag
 		//including the guest role
+		
+		//todo: This needs to be updated to use mybatis mappers in version 2
 		sql.append("SELECT F.FORUM_ID,F.CATEGORY_ID,F.PARENT_FORUM_ID,F.SEQ_NO,F.NAME,F.DESCRIPTION \n")
 		   .append("FROM FORUM F\n")
 		   .append("INNER JOIN BR_MEMBER_GROUP_FORUM M ON M.FORUM_ID = F.FORUM_ID AND (");

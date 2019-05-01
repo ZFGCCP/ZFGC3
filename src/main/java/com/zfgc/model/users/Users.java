@@ -23,6 +23,7 @@ import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.avatar.Avatar;
+import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.profile.Buddy;
 import com.zfgc.model.users.profile.NotificationSettings;
 import com.zfgc.model.users.profile.PersonalInfo;
@@ -52,7 +53,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Boolean agreeToTermsFlag = false;
 	private Map<Integer,String> memberGroups = new HashMap<>();
 	private SecondaryMemberGroups secondaryMemberGroups;
-	private Integer primaryMemberGroupId = 0;
+	private Integer primaryMemberGroupId;
 	private String personalText;
 	private String customTitle;
 	private String websiteTitle;
@@ -79,6 +80,8 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Avatar avatar;
 	private Date lastLogin;
 	private Integer primaryIp;
+	
+	private LkupMemberGroup primaryMemberGroup;
 	
 	@JsonIgnore
 	private List<Permissions> permissions;
@@ -563,5 +566,13 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	}
 	public void setPermissions(List<Permissions> permissions) {
 		this.permissions = permissions;
+	}
+
+	public LkupMemberGroup getPrimaryMemberGroup() {
+		return primaryMemberGroup;
+	}
+
+	public void setPrimaryMemberGroup(LkupMemberGroup primaryMemberGroup) {
+		this.primaryMemberGroup = primaryMemberGroup;
 	}
 }

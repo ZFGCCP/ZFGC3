@@ -80,7 +80,7 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 			} catch (ZfgcNotFoundException e) {
 				IpAddress newIp = ipService.createIpAddress(user.getCurrentIpAddress());
 	        	user.setPrimaryIpAddress(newIp);
-	        	user.setPrimaryIp(-1);
+	        	user.setPrimaryIp(newIp.getIpAddressId());
 	        	
 				e.printStackTrace();
 			}

@@ -161,7 +161,7 @@ public class UserProfileService extends AbstractService{
 					profileView.getUserContactInfo().setFacebook(null);
 				}
 				
-				if(zfgcUser.getUsersId() == -1 || profileView.getPersonalMessagingSettings().getReceiveFromId() == 3){
+				if(zfgcUser.getUsersId() == null || profileView.getPersonalMessagingSettings().getReceiveFromId() == 3){
 					profileView.setHidePm(true);
 				}
 			}
@@ -200,7 +200,7 @@ public class UserProfileService extends AbstractService{
 				accountSettings.getErrors().getRuleErrors().add(changedUsername);
 			}
 			
-			if(!accountSettings.getPersonalInfo().getBirthDate().equals(savedUser.getPersonalInfo().getBirthDate())){
+			/*if(!accountSettings.getPersonalInfo().getBirthDate().equals(savedUser.getPersonalInfo().getBirthDate())){
 				Rule changedBirthDt = new Rule();
 				changedBirthDt.setRuleName("CHANGED_BIRTHDT");
 				changedBirthDt.setErrorMessage("You do not have permission to change a user's birth date");
@@ -212,7 +212,7 @@ public class UserProfileService extends AbstractService{
 				changedRegDt.setRuleName("CHANGED_REGDT");
 				changedRegDt.setErrorMessage("You do not have permission to change a user's registration date");
 				accountSettings.getErrors().getRuleErrors().add(changedRegDt);
-			}
+			}*/
 			
 			if(accountSettings.getErrors().hasErrors()){
 				throw new ZfgcValidationException(accountSettings.getClass().getName());
@@ -221,7 +221,7 @@ public class UserProfileService extends AbstractService{
 		
 		//make sure member groups were not changed (unless user is an admin)
 		if(!zfgcUser.isAdministrationStaff()){
-			if(!accountSettings.getPrimaryMemberGroupId().equals(savedUser.getPrimaryMemberGroup())){
+			if(!accountSettings.getPrimaryMemberGroup().getMemberGroupId().equals(savedUser.getPrimaryMemberGroup().getMemberGroupId())){
 				Rule changedRegDt = new Rule();
 				changedRegDt.setRuleName("CHANGED_PRIM_MEMBER_GROUP");
 				changedRegDt.setErrorMessage("You do not have permission to change a user's primary member group");
@@ -261,6 +261,7 @@ public class UserProfileService extends AbstractService{
 			}
 		}
 		
+		accountSettings.setPrimaryMemberGroupId(accountSettings.getPrimaryMemberGroup().getMemberGroupId());
 		userProfileDataProvider.saveAccountSettings(accountSettings);
 		
 		if(!StringUtils.isEmpty(accountSettings.getUserSecurityInfo().getNewPassword())){
