@@ -121,9 +121,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public Users createUser(Users user) throws RuntimeException{
 		
 		try {
-			//log Ip Address
-			ipDataProvider.saveIpAddress(user.getPrimaryIpAddress());
-			
 			UsersDbObj usersDbObj = usersDao.createUser(user);
 			user.setUsersId(usersDbObj.getUsersId());
 			

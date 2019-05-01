@@ -192,7 +192,7 @@ public class IpDao extends AbstractDao<IpAddressDbObjExample, IpAddressDbObj, Ip
 	@Override
 	public void updateOrInsert(IpAddress obj) throws RuntimeException {
 		IpAddressDbObj dbObj = mapper.map(obj, IpAddressDbObj.class);
-		if(obj.getIpAddressId() == -1) {
+		if(obj.getIpAddressId() == null) {
 			ipAddressDbObjMapper.insert(dbObj);
 			obj.setIpAddressId(dbObj.getIpAddressId());
 		}
