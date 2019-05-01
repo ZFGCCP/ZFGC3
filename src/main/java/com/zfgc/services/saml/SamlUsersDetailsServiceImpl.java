@@ -92,7 +92,7 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         user.setUsersId(Integer.parseInt(usersId));
         user.setFromDb(false);
         
-        user.setPrimaryMemberGroupId(Integer.parseInt(primaryMemberGroupId));
+        user.setPrimaryMemberGroupId(user.getPrimaryMemberGroupId());
         user.setTimeZone(credential.getAttributeAsString("TIME_ZONE"));
         
         Map<Integer, String> groups = new HashMap<Integer, String>();

@@ -33,8 +33,10 @@ public class IpAddressService {
 		IpAddress ipAddress = new IpAddress();
 		ipAddress.setIpAddress(ipAddressAsString);
 		ipAddress.setVersion(getIpVersion(ipAddressAsString));
-		ipAddress.setIpAddressId(-1);
 		ipAddress.setIsLockedFlag(false);
+		
+		//save the ip
+		this.ipDataProvider.saveIpAddress(ipAddress);
 		
 		return ipAddress;
 	}
