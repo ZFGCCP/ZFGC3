@@ -22,8 +22,11 @@
     
 
     <!-- tables -->
-    
-    <table schema="Zfgc3" tableName="PERSONAL_MESSAGING_SETTINGS" domainObjectName="PersonalMessagingSettingsDbObj">
+    <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
+    	<generatedKey column="IP_ADDRESS_ID" sqlStatement="SELECT MAX(IP_ADDRESS_ID) + 1 FROM IP_ADDRESS"></generatedKey>
+    	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <!--<table schema="Zfgc3" tableName="PERSONAL_MESSAGING_SETTINGS" domainObjectName="PersonalMessagingSettingsDbObj">
    		<generatedKey column="PERSONAL_MESSAGING_SETTINGS_ID" sqlStatement="SELECT MAX(PERSONAL_MESSAGING_SETTINGS_ID) + 1 FROM PERSONAL_MESSAGING_SETTINGS"/>
    	</table>
    
@@ -34,7 +37,7 @@
 	   	<columnOverride column="TAGGED_EMAIL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
 	   	<columnOverride column="TAGGED_PM_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
    	</table>
-    <!--<table schema="zfgc3" tableName="USER_SECURITY_SETTINGS" domainObjectName="UserSecuritySettingsDbObj">
+    <table schema="zfgc3" tableName="USER_SECURITY_SETTINGS" domainObjectName="UserSecuritySettingsDbObj">
     	<generatedKey column="USER_SECURITY_SETTINGS_ID" sqlStatement="SELECT MAX(USER_SECURITY_SETTINGS_ID) + 1 FROM USER_SECURITY_SETTINGS"/>
     </table>
     
@@ -239,12 +242,12 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <!--<table schema="zfgc3" tableName="MEMBER_GROUP_PERMS_VIEW" domainObjectName="MemberGroupPermsDbObj">
+    <table schema="zfgc3" tableName="MEMBER_GROUP_PERMS_VIEW" domainObjectName="MemberGroupPermsDbObj">
     </table>
     
     
