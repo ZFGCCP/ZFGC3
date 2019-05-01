@@ -61,6 +61,8 @@ public class NavTabService extends AbstractService {
 	}
 	
 	private Boolean canViewTab(Integer userProfileId, NavTab tab, Users user){
-		return (user.isModerationStaff() || user.isAdministrationStaff()) || (userProfileId == user.getUsersId() && tab.getAllowSelfFlag()) || !tab.getAllowSelfFlag();
+		return (user.isModerationStaff() || user.isAdministrationStaff()) || 
+			   (userProfileId.equals(user.getUsersId()) && tab.getAllowSelfFlag()) || 
+			   !tab.getAllowSelfFlag();
 	}
 }
