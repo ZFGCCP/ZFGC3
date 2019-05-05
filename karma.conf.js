@@ -141,6 +141,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
+	"./src/main/webapp/scripts/common/server-config.service.js",
+	    
 	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/scripts/app.js",
