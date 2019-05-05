@@ -15,6 +15,7 @@ public class ZfgcSamlConfig {
 	private String defaultSuccessUrl;
 	private	String defaultFailureUrl;
 	private	String idpSelectionPageUrl;
+	private String localMetaData;
 	
 	public String getDefaultSuccessUrl() {
 		return defaultSuccessUrl;
@@ -90,5 +91,13 @@ public class ZfgcSamlConfig {
 	
 	public String getEntityBaseUrl(){
 		return scheme + "://" + serverName + ":" + serverPort + contextPath;
+	}
+
+	public String getLocalMetaData() {
+		return localMetaData;
+	}
+
+	public void setLocalMetaData(String localMetaData) {
+		this.localMetaData = localMetaData;
 	}
 }

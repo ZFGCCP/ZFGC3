@@ -8,11 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.security.core.Authentication;
 
+import com.zfgc.config.ZfgcSamlConfig;
 import com.zfgc.model.users.Users;
 
 public abstract class BaseController {
 	@Autowired
 	HttpServletRequest request;
+	
+	@Autowired
+	ZfgcSamlConfig zfgcSamlConfig;
 	
 	protected Users zfgcUser(){
 		Principal userPrincipal = request.getUserPrincipal();

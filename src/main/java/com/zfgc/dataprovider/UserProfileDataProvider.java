@@ -11,8 +11,10 @@ import com.zfgc.dao.UserContactSettingsDao;
 import com.zfgc.dao.UserPersonalInfoDao;
 import com.zfgc.dao.UserProfileDao;
 import com.zfgc.dao.UserSecuritySettingsDao;
+import com.zfgc.dao.UsersDao;
 import com.zfgc.dbobj.BrMemberGroupUserDbObjExample;
 import com.zfgc.dbobj.UserProfileViewDbObj;
+import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.bridge.BrMemberGroupUser;
@@ -58,6 +60,9 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	
 	@Autowired
 	BrMemberGroupUserDao brMemberGroupUserDao;
+	
+	@Autowired
+	UsersDao usersDao;
 	
 	public UserProfileView getUserProfile(Integer userId) throws Exception{
 		UserProfileViewDbObj userProfileViewDbObj = null;
@@ -111,6 +116,12 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 			memberGroupUser.setUsersId(accountSettings.getUsersId());
 			brMemberGroupUserDao.updateOrInsert(memberGroupUser);
 		}
+		
+		Users user = new Users();
+		user.setPrimaryMemberGroupId(accountSettings.getPrimaryMemberGroupId());
+		UsersDbObjExample example = usersDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(accountSettings.getUsersId());
+		usersDao.updateByExample(user, example);
 		
 	}
 	
