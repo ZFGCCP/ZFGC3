@@ -170,8 +170,6 @@ public class ForumApplication extends SpringBootServletInitializer {
                 .metadataManager()
                 .refreshCheckInterval(0)
                 .metadataTrustCheck(false)
-                
-                //.localMetadataLocation("classpath:/sp-metadata.xml")
             .and()
                 .extendedMetadata()
                
@@ -211,6 +209,7 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 "/lookups/**",
 	        									 "/contentstream/**",
 	        									 "/subscriptions/threads/**",
+	        									 "/config/**",
 	        									 "/users/profile/{{\\d+}}",
 	        									 "/users/navigation",
 	        									 "/users/loggedInUser",
