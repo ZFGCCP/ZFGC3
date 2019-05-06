@@ -277,3 +277,10 @@ button:disabled{
 	display:flex;
 	align-items:center;
 }
+
+ol{
+	li{
+		font-size: 14px;
+		list-style-type: decimal;
+	}
+}
