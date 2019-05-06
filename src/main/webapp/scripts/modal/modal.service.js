@@ -71,7 +71,11 @@
 			
 			ModalService.currentDialog = $uibModal.open({ templateUrl: 'scripts/modal/templates/modalValidationError.html', 
                 						 windowClass: 'ngdialog-theme-default',
-                						 controller: 'ModalCtrl as vm'});
+                						 controller: 'ModalCtrl as vm',
+                						 resolve : {
+                							 params: null
+                						 }
+										});
 		}
 		
 		ModalService.closeValidationErrors = function(){

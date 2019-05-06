@@ -5,6 +5,12 @@
 }
 
 .modal-wrapper{
+	.modal-header{
+		.error-icon{
+			text-shadow: 0px 0px 10px black;
+		}
+	}
+
 	form{
 		display:inline-block;
 		width:100%;
