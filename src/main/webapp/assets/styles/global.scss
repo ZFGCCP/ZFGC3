@@ -19,6 +19,30 @@
     
     .left-nav-panel{
     	float:left;
+    	width: 10%;
+    	box-shadow: 4px 0 4px black;
+    	margin-top: 76px;
+    	position: sticky;
+    	top: 0;
+    	
+    	ul{
+    		padding-left: 0;
+    		margin-bottom: 0;
+    		
+    		li{
+    			height: 40px;
+			    background-color: #001e38;
+			    list-style: none;
+			    width: 100%;
+			    border-bottom: 1px solid #dbdbdb;
+			    font-size: 13px;
+			    cursor: pointer;
+			    
+			    .nav-text{
+			   		padding: 10px 0 0 5px;
+			    }
+    		}
+    	}
     }
 }
 
