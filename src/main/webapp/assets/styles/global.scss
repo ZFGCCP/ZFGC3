@@ -18,6 +18,36 @@
     
     
     .left-nav-panel{
+    	.panel-group{
+    		margin: 0;
+    	
+	    	.panel{
+	    		height: 40px;
+	    		border-radius: 0;
+	    		background-color: #001e38;
+	    		border-top: 0;
+	    		border-bottom: 1px solid white;
+	    		border-right: 0;
+	    		border-left: 0;
+	    		margin: 0 !important;
+	    		display:inline-block;
+	    		
+	    		.event-wrapper{
+	    			.event{
+	    				padding: 10px 0;
+	    			}
+	    		}
+	    		
+	    		.panel-heading{
+	    			padding: 10px 0 0 5px;
+	    			
+		    		.panel-title{
+		    			font-size:13px;
+		    		}
+	    		}
+    		}
+    	}
+    
     	float:left;
     	width: 10%;
     	box-shadow: 4px 0 4px black;
