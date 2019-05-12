@@ -211,6 +211,7 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 "/subscriptions/threads/**",
 	        									 "/index.php",
 	        									 "/config/**",
+	        									 "/calendar/**",
 	        									 "/users/profile/{{\\d+}}",
 	        									 "/users/navigation",
 	        									 "/users/loggedInUser",

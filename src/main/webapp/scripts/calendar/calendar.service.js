@@ -9,6 +9,11 @@
 				url : '/forum/calendar/upcoming',
 				method : 'GET',
 				isArray: true
+			},
+			upcomingBirthdays : {
+				url : '/forum/calendar/birthday',
+				method : 'GET',
+				isArray : true
 			}
 		});
 		

@@ -10,7 +10,12 @@
 		}
 
 		directive.link = function ($scope, element, attrs) {
+			$scope.events = CalendarService.resource.upcomingEvents();
+			$scope.birthdays = CalendarService.resource.upcomingBirthdays();
+			$scope.accordions = {};
 			
+			$scope.accordions.events = false;
+			$scope.accordions.birthdays = false;
 		}
 		
 		return directive;

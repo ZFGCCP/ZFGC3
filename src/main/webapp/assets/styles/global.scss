@@ -18,6 +18,8 @@
     
     
     .left-nav-panel{
+    	z-index: 99;
+    
     	.panel-group{
     		margin: 0;
     	
@@ -32,18 +34,31 @@
 	    		margin: 0 !important;
 	    		display:inline-block;
 	    		
-	    		.event-wrapper{
-	    			.event{
-	    				padding: 10px 0;
+	    		.collapse{
+	    			&.in{
+	    				display: inline-table !important;
 	    			}
 	    		}
 	    		
 	    		.panel-heading{
 	    			padding: 10px 0 0 5px;
+	    			height: 40px;
 	    			
 		    		.panel-title{
 		    			font-size:13px;
 		    		}
+	    		}
+	    		
+	    		.panel-body{
+	    			padding: 0 !important;
+	    			border: 0 !important;
+	    			
+	    			.event-wrapper{
+	    				padding-left: 30px;
+	    				.event{
+	    					padding: 10px 0;
+	    				}
+	    			}
 	    		}
     		}
     	}

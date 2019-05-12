@@ -20,9 +20,17 @@ public class CalendarDataProvider extends AbstractDataProvider{
 	private UpcomingCalendarDao upcomingCalendarDao;
 	
 	public List<UpcomingCalendar> getUpcomingEvents(Date startDt, Integer range) {
+		return getUpcoming(startDt, range, false);
+	}
+	
+	public List<UpcomingCalendar> getUpcomingBirthdays(Date startDt, Integer range){
+		return getUpcoming(startDt, range, true);
+	}
+	
+	private List<UpcomingCalendar> getUpcoming(Date startDt, Integer range, Boolean birthDay){
 		Date endDt = DateUtils.addDays(startDt, range);
 		UpcomingCalendarViewDbObjExample ex = upcomingCalendarDao.getExample();
-		ex.createCriteria().andEventDtEqualTo(startDt).andEventDtBetween(startDt, endDt);
+		ex.createCriteria().andEventDtBetween(startDt, endDt).andBirthdateFlagEqualTo(birthDay);
 		
 		List<UpcomingCalendarViewDbObj> dbObj = upcomingCalendarDao.get(ex);
 		List<UpcomingCalendar> obj = new ArrayList<>();
@@ -35,5 +43,4 @@ public class CalendarDataProvider extends AbstractDataProvider{
 		
 		return obj;
 	}
-	
 }

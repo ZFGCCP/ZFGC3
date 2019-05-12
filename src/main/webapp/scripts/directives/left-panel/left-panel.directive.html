@@ -4,19 +4,20 @@
   		<li><div class="nav-text"><a ui-sref="members"><i class="fas fa-users"></i> Members</a></div></li>
   		<li>
   			<div class="nav-text">
-  				<i class="fas fa-calendar-alt"></i> Upcoming Calendar
+  				<i class="fas fa-calendar-alt"></i> Calendar
   			</div>
   		</li>
-  		<li uib-accordion-group>
-  			<div uib-accordion-heading><i class="fas fa-calendar-day"></i> Events <i class="fas fa-caret-right"></i></div>
+  		<li uib-accordion-group is-open="accordions.events" is-disabled="!events || events === null || events.length < 1">
+  			<div uib-accordion-heading><i class="fas fa-calendar-day"></i> Events <i class="fas" ng-class="{'fa-caret-right' : accordions.events === false, 'fa-caret-down' : accordions.events === true}"></i></div>
   			<div class="event-wrapper">
-  				<div class="event">Test</div>
-  				<div class="event">Test2</div>
-  				<div class="event">Test3</div>
+  				<div ng-repeat="($index, event) in events" class="event">
+  					<div ng-bind="event.eventName"></div>
+  				</div>
+  				
   			</div>
   		</li>
-  		<li uib-accordion-group>
-  			<div uib-accordion-heading><i class="fas fa-birthday-cake"></i> Birthdays <i class="fas fa-caret-right"></i></div>
+  		<li uib-accordion-group is-open="accordions.birthdays" is-disabled="!birthdays || birthdays === null || birthdays.length < 1">
+  			<div uib-accordion-heading><i class="fas fa-birthday-cake"></i> Birthdays <i class="fas" ng-class="{'fa-caret-right' : accordions.birthdays === false, 'fa-caret-down' : accordions.birthdays === true}"></i></div>
   		</li>
   	</ul>
   	<div uib-accordion>

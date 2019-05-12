@@ -24,14 +24,26 @@ public class CalendarController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getUpcomingEvents(){
 		try{
-			List<UpcomingCalendar> events = calendarService.getUpcomingCalendarEvents(zfgcUser());
+			List<UpcomingCalendar> events = calendarService.getUpcomingCalendarEvents(false, zfgcUser());
 			return ResponseEntity.ok(events);
 		}
 		catch(RuntimeException ex){
 			ex.printStackTrace();
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		
+	}
+	
+	@RequestMapping(value="/birthday", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getUpcomingBirthdays(){
+		try{
+			List<UpcomingCalendar> events = calendarService.getUpcomingCalendarEvents(true, zfgcUser());
+			return ResponseEntity.ok(events);
+		}
+		catch(RuntimeException ex){
+			ex.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+		}
 	}
 	
 }

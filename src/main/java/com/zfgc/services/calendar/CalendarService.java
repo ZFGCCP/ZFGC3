@@ -18,8 +18,15 @@ public class CalendarService extends AbstractService{
 	@Autowired
 	private CalendarDataProvider calendarDataProvider;
 	
-	public List<UpcomingCalendar> getUpcomingCalendarEvents(Users user){
-		List<UpcomingCalendar> result = calendarDataProvider.getUpcomingEvents(ZfgcTimeUtils.getToday(user.getTimeZone()), 5);
+	public List<UpcomingCalendar> getUpcomingCalendarEvents(Boolean birthDay, Users user){
+		List<UpcomingCalendar> result = null;
+		
+		if(birthDay){
+			result = calendarDataProvider.getUpcomingBirthdays(ZfgcTimeUtils.getToday(), 5);
+		}
+		else{
+			result = calendarDataProvider.getUpcomingEvents(ZfgcTimeUtils.getToday(), 5);
+		}
 		
 		return result;
 	}
