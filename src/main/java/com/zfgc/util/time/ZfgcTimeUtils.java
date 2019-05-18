@@ -93,6 +93,23 @@ public class ZfgcTimeUtils extends DateUtils {
 		return miliSecondsToYears(msBetween);
 	}
 	
+	public static Integer weeksInMonth(Integer month, Integer year) {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.DAY_OF_MONTH, 1);
+		cal.set(Calendar.YEAR, year);
+		
+		Integer lastDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+		Integer firstWeek = cal.get(Calendar.WEEK_OF_YEAR);
+		
+		cal.set(Calendar.DAY_OF_MONTH, lastDayOfMonth);
+		
+		Integer lastWeek = cal.get(Calendar.WEEK_OF_YEAR);
+		
+		return lastWeek - firstWeek;
+		
+		
+	}
+	
 	public static long miliSecondsToSeconds(long ms){
 		return ms / MILLIS_PER_SECOND;
 	}
