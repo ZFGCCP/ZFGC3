@@ -61,10 +61,10 @@ public class CalendarController extends BaseController{
 			CalendarMonth month = calendarService.getMonthView(cal);
 			return ResponseEntity.ok(month);
 		}
-		else if(viewTypeId == CalendarConstants.ViewType.WEEK.getValue()) {
-			CalendarWeek week = calendarService.getWeekView(cal);
+		/*else if(viewTypeId == CalendarConstants.ViewType.WEEK.getValue()) {
+			CalendarWeek week = calendarService.getWeekView(cal, );
 			return ResponseEntity.ok(week);
-		}
+		}*/
 		
 		throw new RuntimeException();
 	}

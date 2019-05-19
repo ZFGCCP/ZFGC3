@@ -8,6 +8,7 @@ import com.zfgc.model.BaseZfgcModel;
 public class CalendarWeek extends BaseZfgcModel {
 
 	private List<CalendarDate> daysOfWeek = new ArrayList<>();
+	private Integer dayIndex;
 	
 	@Override
 	public String getHMAC() throws Exception {
@@ -21,6 +22,14 @@ public class CalendarWeek extends BaseZfgcModel {
 
 	public void setDaysOfWeek(List<CalendarDate> daysOfWeek) {
 		this.daysOfWeek = daysOfWeek;
+	}
+
+	public Integer getDayIndex() {
+		return dayIndex;
+	}
+
+	public void setDayIndex(Integer dayIndex) {
+		this.dayIndex = dayIndex;
 	}
 
 }

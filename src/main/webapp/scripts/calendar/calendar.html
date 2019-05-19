@@ -6,10 +6,22 @@
 	</div>
 	<div class="section-body">
 		<div class="row">
-			<div class="calendar-month-wrapper">
+			<div class="calendar-day-details col-xs-2">
+				<div class="date-wrapper">
+					<h3>{{vm.calendar.weeks[0].daysOfWeek[0].dateStampAsString}}</h3>
+					<h4>{{vm.calendar.weeks[0].daysOfWeek[0].dayOfWeek}}</h4>
+				</div>
+			</div>
+			<div class="calendar-month-wrapper col-xs-10">
 				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week">
 					<span ng-repeat="day in week.daysOfWeek" class="calendar-date">
 						{{day.date}}
+						<div class="event-wrapper">
+							<div ng-repeat="event in day.events" class="event">
+								<span class="event-circle"></span>
+								<span class="event-name">{{event.eventName}}</span>
+							</div>
+						</div>
 					</span>
 				</div>
 			</div>

@@ -2,12 +2,11 @@
 	
 	function CalendarViewCtrl(CalendarService){
 		var vm = this;
+		vm.params = {};
 		
-		vm.calendar = CalendarService.resource.get({'viewTypeId' : 0, 'startingDt' : '05/18/2019'});
+		vm.params.date = CalendarService.getToday();
 		
-		vm.calendar.$promise.then(function(data){
-			console.log(vm.calendar);
-		});
+		vm.calendar = CalendarService.resource.get({'viewTypeId' : 0, 'startingDt' : vm.params.date});
 	}
 	
 	angular.module('zfgc.calendar')

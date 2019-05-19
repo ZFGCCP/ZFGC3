@@ -17,6 +17,17 @@
 			}
 		});
 		
+		CalendarService.getToday = function(){
+			var today = new Date();
+			var mm = today.getMonth() + 1; // getMonth() is zero-based
+			var dd = today.getDate();
+
+			return [(mm>9 ? '' : '0') + mm,
+					(dd>9 ? '' : '0') + dd,
+					today.getFullYear()
+		         ].join('/');
+		};
+		
 		return CalendarService;
 	}
 	
