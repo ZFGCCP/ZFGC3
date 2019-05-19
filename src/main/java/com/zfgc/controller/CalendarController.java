@@ -1,5 +1,6 @@
 package com.zfgc.controller;
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.zfgc.constants.CalendarConstants.CalendarConstants;
+import com.zfgc.model.calendar.CalendarMonth;
+import com.zfgc.model.calendar.CalendarWeek;
 import com.zfgc.model.calendar.UpcomingCalendar;
 import com.zfgc.services.calendar.CalendarService;
 
@@ -48,11 +52,21 @@ public class CalendarController extends BaseController{
 		}
 	}
 	
-	@RequestMapping(value="/calendar", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="", method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity getCalendarView(@RequestParam("viewTypeId") Integer viewTypeId, @RequestParam("startingDt") Date startingDt) {
-		try {
-			CalendarMonth month = calendarService.getCurrentMonthView();
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(startingDt);
+		
+		if(viewTypeId == CalendarConstants.ViewType.MONTH.getValue()) {
+			CalendarMonth month = calendarService.getMonthView(cal);
+			return ResponseEntity.ok(month);
 		}
+		else if(viewTypeId == CalendarConstants.ViewType.WEEK.getValue()) {
+			CalendarWeek week = calendarService.getWeekView(cal);
+			return ResponseEntity.ok(week);
+		}
+		
+		throw new RuntimeException();
 	}
 	
 }

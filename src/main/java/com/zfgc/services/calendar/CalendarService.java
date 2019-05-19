@@ -35,8 +35,7 @@ public class CalendarService extends AbstractService{
 		return result;
 	}
 	
-	public CalendarMonth getCurrentMonthView() {
-		Calendar cal = Calendar.getInstance();
+	public CalendarMonth getMonthView(Calendar cal) throws RuntimeException{
 		Integer month = cal.get(Calendar.MONTH);
 		Integer year = cal.get(Calendar.YEAR);
 		
@@ -49,7 +48,7 @@ public class CalendarService extends AbstractService{
 			CalendarWeek week = getWeekView(cal);
 			
 			result.getWeeks().add(week);
-			dateLoop = week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate();
+			dateLoop = week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate() + 1;
 		}
 		
 		return result;

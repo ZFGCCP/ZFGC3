@@ -98,14 +98,14 @@ public class ZfgcTimeUtils extends DateUtils {
 		cal.set(Calendar.DAY_OF_MONTH, 1);
 		cal.set(Calendar.YEAR, year);
 		
-		Integer lastDayOfMonth = cal.get(Calendar.DAY_OF_MONTH);
+		Integer lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
 		Integer firstWeek = cal.get(Calendar.WEEK_OF_YEAR);
 		
 		cal.set(Calendar.DAY_OF_MONTH, lastDayOfMonth);
 		
 		Integer lastWeek = cal.get(Calendar.WEEK_OF_YEAR);
 		
-		return lastWeek - firstWeek;
+		return (lastWeek - firstWeek) + 1;
 		
 		
 	}

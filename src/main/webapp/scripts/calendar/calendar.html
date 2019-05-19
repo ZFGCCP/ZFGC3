@@ -1,0 +1,18 @@
+<div class="section-container" ng-controller="CalendarViewCtrl as vm">
+	<div class="section-header">
+		<div class="section-title-wrapper">
+			<div class="section-title">Calendar</div>
+		</div>
+	</div>
+	<div class="section-body">
+		<div class="row">
+			<div class="calendar-month-wrapper">
+				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week">
+					<span ng-repeat="day in week.daysOfWeek" class="calendar-date">
+						{{day.date}}
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

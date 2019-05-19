@@ -3,7 +3,7 @@
 	function CalendarService($resource){
 		var CalendarService = {};
 		
-		CalendarService.resource = $resource('/forum/calendar',{},
+		CalendarService.resource = $resource('/forum/calendar',{viewTypeId : '@viewTypeId'},
 		{
 			upcomingEvents : {
 				url : '/forum/calendar/upcoming',
