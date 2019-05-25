@@ -1,14 +1,43 @@
+.calendar-day-details{
+	box-shadow: 5px 0px 5px black;
+	height: 519px;
+	margin-top: -19px;
+}
+
 .calendar-month-wrapper{
-	
 
 	.calendar-week{
 		height: 100px;
    		width: 1120px;
+   		border-bottom: 1px solid #1c3171;
    		
    		.calendar-date{
    			width: 160px;
     		display: inline-block;
-    		height: 60px;
+    		height: 100px;
+    		border-right: 1px solid #1c3171;
+    		
+    		.event-wrapper{
+    			display: block;
+			    position: absolute;
+			    margin-top: 5px;
+			    
+			    .event{
+			   		margin-bottom: 5px;
+			   		
+			   		.event-circle{
+			   			width: 10px;
+					    height: 10px;
+					    background-color: #ff7ff7;
+					    display: inline-flex;
+					    border-radius: 5px;
+			   		}
+			   		
+			   		.event-name{
+			   			display:inline-flex;
+			   		}
+			    }
+    		}
    		}
 	}
 }
