@@ -1,6 +1,7 @@
 package com.zfgc.dataprovider;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -31,6 +32,33 @@ public class CalendarDataProvider extends AbstractDataProvider{
 		Date endDt = DateUtils.addDays(startDt, range);
 		UpcomingCalendarViewDbObjExample ex = upcomingCalendarDao.getExample();
 		ex.createCriteria().andEventDtBetween(startDt, endDt).andBirthdateFlagEqualTo(birthDay);
+		
+		List<UpcomingCalendarViewDbObj> dbObj = upcomingCalendarDao.get(ex);
+		List<UpcomingCalendar> obj = new ArrayList<>();
+		if(dbObj != null){
+			for(UpcomingCalendarViewDbObj db : dbObj){
+				UpcomingCalendar calendar = mapper.map(db, UpcomingCalendar.class);
+				obj.add(calendar);
+			}
+		}
+		
+		return obj;
+	}
+	
+	public List<UpcomingCalendar> getEventsForMonth(Calendar cal){
+		Integer lastDayOfMonth = cal.getActualMaximum(Calendar.DAY_OF_MONTH);
+		Calendar internalCal = Calendar.getInstance();
+		internalCal.setTime(cal.getTime());
+		internalCal.set(Calendar.DAY_OF_MONTH, 1);
+		
+		Date firstDate = internalCal.getTime();
+		
+		internalCal.set(Calendar.DAY_OF_MONTH, lastDayOfMonth);
+		
+		Date lastDate = internalCal.getTime();
+		
+		UpcomingCalendarViewDbObjExample ex = upcomingCalendarDao.getExample();
+		ex.createCriteria().andEventDtBetween(firstDate, lastDate);
 		
 		List<UpcomingCalendarViewDbObj> dbObj = upcomingCalendarDao.get(ex);
 		List<UpcomingCalendar> obj = new ArrayList<>();

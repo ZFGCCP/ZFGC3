@@ -154,25 +154,13 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/conversation/{conversationId}", method=RequestMethod.POST, produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity viewConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId) {
-		try {
-			PmConversation convo = pmService.getConversation(convoId, aesKey, zfgcUser());
-			
-			if(convo == null) {
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			}
-			
-			return ResponseEntity.ok(convo);
+		PmConversation convo = pmService.getConversation(convoId, aesKey, zfgcUser());
+		
+		if(convo == null) {
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
-		catch (ZfgcNotFoundException ex){
-			ex.printStackTrace();
-			logger.error(ExceptionUtils.getStackTrace(ex));
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-		catch (ZfgcInvalidAesKeyException ex) {
-			ex.printStackTrace();
-			logger.error(ExceptionUtils.getStackTrace(ex));
-	    	return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-	    }
+		
+		return ResponseEntity.ok(convo);
 	}
 	
 	@RequestMapping(value="/conversation/{conversationId}/delete",method=RequestMethod.POST, produces="application/json")

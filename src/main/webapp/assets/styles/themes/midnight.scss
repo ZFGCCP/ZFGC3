@@ -241,3 +241,11 @@ a:hover{
 		}
 	}
 }
+
+.calendar-month-wrapper{
+	.calendar-date{
+		&:hover{
+			background-color: $midnight-row-hover;
+		}
+	}
+}

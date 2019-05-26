@@ -1,0 +1,32 @@
+<div class="section-container" ng-controller="CalendarViewCtrl as vm">
+	<div class="section-header">
+		<div class="section-title-wrapper">
+			<div class="section-title">Calendar</div>
+		</div>
+	</div>
+	<div class="section-body">
+		<div class="row">
+			<div class="calendar-day-details col-xs-2">
+				<div class="date-wrapper">
+					<h3>{{vm.calendar.selectedDate.dateStampAsString}}</h3>
+					<h4>{{vm.calendar.selectedDate.dayOfWeek}}</h4>
+				</div>
+			</div>
+			<div class="calendar-month-wrapper col-xs-10">
+				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week">
+					<span ng-repeat="day in week.daysOfWeek" class="calendar-date" ng-click="vm.changeDate(day)" ng-class="{'disabled' : day.date === null, 'selected' : day.isSelected === true}">
+						<span class="date-wrapper">					
+							{{day.date}}
+						</span>
+						<div class="event-wrapper">
+							<div ng-repeat="event in day.events" class="event">
+								<span class="event-circle"></span>
+								<span class="event-name">{{event.eventName}}</span>
+							</div>
+						</div>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

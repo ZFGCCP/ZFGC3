@@ -2,10 +2,7 @@
   	<ul uib-accordion>
   		<li><div class="nav-text"><a ui-sref="forum"><i class="fas fa-dungeon"></i> Forum</a></div></li>
   		<li><div class="nav-text"><a ui-sref="members"><i class="fas fa-users"></i> Members</a></div></li>
-  		<li>
-  			<div class="nav-text">
-  				<i class="fas fa-calendar-alt"></i> Calendar
-  			</div>
+  		<li><div class="nav-text"><a ui-sref="calendar"><i class="fas fa-calendar-alt"></i> Calendar</a></div>
   		</li>
   		<li uib-accordion-group is-open="accordions.events" is-disabled="!events || events === null || events.length < 1">
   			<div uib-accordion-heading><i class="fas fa-calendar-day"></i> Events <i class="fas" ng-class="{'fa-caret-right' : accordions.events === false, 'fa-caret-down' : accordions.events === true}"></i></div>
