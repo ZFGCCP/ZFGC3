@@ -13,6 +13,7 @@ public class CalendarDate extends BaseZfgcModel {
 	private String dayOfWeek;
 	private Date dateStamp;
 	private List<UpcomingCalendar> events;
+	private Boolean isSelected = false;
 	
 	@Override
 	public String getHMAC() throws Exception {
@@ -56,5 +57,13 @@ public class CalendarDate extends BaseZfgcModel {
 
 	public void setEvents(List<UpcomingCalendar> events) {
 		this.events = events;
+	}
+
+	public Boolean getIsSelected() {
+		return isSelected;
+	}
+
+	public void setIsSelected(Boolean isSelected) {
+		this.isSelected = isSelected;
 	}
 }

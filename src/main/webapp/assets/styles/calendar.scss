@@ -15,10 +15,22 @@
    		border-bottom: 1px solid #1c3171;
    		
    		.calendar-date{
-   		
-   			&:hover{
-   				cursor: pointer;
-   			}
+   			cursor: pointer;
+
+			&.disabled {
+				background-color: #040810;
+			}
+			
+			&.selected{
+				background-color: #8faab9;
+    			color: black;
+    			
+    			.date-wrapper{
+    				font-size: 15px;
+    				font-weight: bold;
+    			}
+
+			}
    		
    			width: 160px;
     		display: inline-block;

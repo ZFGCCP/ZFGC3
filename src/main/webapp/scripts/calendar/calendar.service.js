@@ -29,7 +29,18 @@
 		};
 		
 		CalendarService.changeDate = function(vm, date){
-			vm.calendar.selectedDate = date;
+			if(date.date !== null){
+				vm.calendar.selectedDate = date;
+				
+				//set the selected param
+				vm.calendar.weeks.forEach(function(week){
+					week.daysOfWeek.forEach(function(day){
+						day.isSelected = false;
+					});
+				});
+				
+				date.isSelected = true;
+			}
 		};
 		
 		return CalendarService;

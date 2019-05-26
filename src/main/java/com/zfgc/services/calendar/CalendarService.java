@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,6 +27,8 @@ public class CalendarService extends AbstractService{
 	
 	@Autowired
 	private CalendarDataProvider calendarDataProvider;
+	
+	Logger LOGGER = LogManager.getLogger(CalendarService.class);
 	
 	public List<UpcomingCalendar> getUpcomingCalendarEvents(Boolean birthDay, Users user){
 		List<UpcomingCalendar> result = null;
@@ -68,6 +72,7 @@ public class CalendarService extends AbstractService{
 			for(CalendarDate date : week.getDaysOfWeek()) {
 				if(date.getDate() != null && date.getDate().equals(selectedDate)) {
 					result.setSelectedDate(date);
+					date.setIsSelected(true);
 					break;
 				}
 			}
@@ -106,15 +111,20 @@ public class CalendarService extends AbstractService{
 		Calendar internalCal = Calendar.getInstance();
 		internalCal.setTime(cal.getTime());
 		
+		LOGGER.info(internalCal.get(Calendar.MONTH));
+		
 		for(int i = firstDayOfWeek; i <= lastDayOfWeek; i++) {
-			internalCal.set(Calendar.DATE, i);
+			
+			
 			CalendarDate date = new CalendarDate();
 			
-			if(i >= 1 && i <= internalCal.getActualMaximum(Calendar.DATE)) {
+			if(i >= 1 && i <= internalCal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
+				internalCal.set(Calendar.DAY_OF_MONTH, i);
+				
 				date.setDate(i);
 				date.setEvents(mappedEvents.get(i));
 			}
-			
+			LOGGER.info(internalCal.get(Calendar.MONTH));
 			date.setDayOfWeek(internalCal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
 			date.setDateStamp(internalCal.getTime());
 			
