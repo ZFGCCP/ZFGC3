@@ -28,6 +28,10 @@
 		         ].join('/');
 		};
 		
+		CalendarService.changeDate = function(vm, date){
+			vm.calendar.selectedDate = date;
+		};
+		
 		return CalendarService;
 	}
 	

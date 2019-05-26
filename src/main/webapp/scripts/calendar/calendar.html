@@ -8,14 +8,16 @@
 		<div class="row">
 			<div class="calendar-day-details col-xs-2">
 				<div class="date-wrapper">
-					<h3>{{vm.calendar.weeks[0].daysOfWeek[0].dateStampAsString}}</h3>
-					<h4>{{vm.calendar.weeks[0].daysOfWeek[0].dayOfWeek}}</h4>
+					<h3>{{vm.calendar.selectedDate.dateStampAsString}}</h3>
+					<h4>{{vm.calendar.selectedDate.dayOfWeek}}</h4>
 				</div>
 			</div>
 			<div class="calendar-month-wrapper col-xs-10">
 				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week">
-					<span ng-repeat="day in week.daysOfWeek" class="calendar-date">
-						{{day.date}}
+					<span ng-repeat="day in week.daysOfWeek" class="calendar-date" ng-click="vm.changeDate(day)">
+						<span class="date-wrapper">					
+							{{day.date}}
+						</span>
 						<div class="event-wrapper">
 							<div ng-repeat="event in day.events" class="event">
 								<span class="event-circle"></span>

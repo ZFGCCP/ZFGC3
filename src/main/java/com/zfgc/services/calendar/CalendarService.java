@@ -44,6 +44,7 @@ public class CalendarService extends AbstractService{
 		Integer year = cal.get(Calendar.YEAR);
 		
 		Integer numWeeks = ZfgcTimeUtils.weeksInMonth(month, year);
+		int selectedDate = cal.get(Calendar.DATE);
 		
 		//get all events
 		List<UpcomingCalendar> events = calendarDataProvider.getEventsForMonth(cal);
@@ -56,7 +57,20 @@ public class CalendarService extends AbstractService{
 			CalendarWeek week = getWeekView(cal, mappedEvents);
 			
 			result.getWeeks().add(week);
-			dateLoop = week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate() + 1;
+			
+			if(week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate() != null) {
+				dateLoop = week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate() + 1;
+			}
+		}
+		
+		//get the date object of the selected date
+		for(CalendarWeek week : result.getWeeks()) {
+			for(CalendarDate date : week.getDaysOfWeek()) {
+				if(date.getDate() != null && date.getDate().equals(selectedDate)) {
+					result.setSelectedDate(date);
+					break;
+				}
+			}
 		}
 		
 		return result;
@@ -89,12 +103,21 @@ public class CalendarService extends AbstractService{
 		
 		CalendarWeek week = new CalendarWeek();
 		
+		Calendar internalCal = Calendar.getInstance();
+		internalCal.setTime(cal.getTime());
+		
 		for(int i = firstDayOfWeek; i <= lastDayOfWeek; i++) {
+			internalCal.set(Calendar.DATE, i);
 			CalendarDate date = new CalendarDate();
-			date.setDate(i);
-			date.setDayOfWeek(cal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
-			date.setDateStamp(cal.getTime());
-			date.setEvents(mappedEvents.get(i));
+			
+			if(i >= 1 && i <= internalCal.getActualMaximum(Calendar.DATE)) {
+				date.setDate(i);
+				date.setEvents(mappedEvents.get(i));
+			}
+			
+			date.setDayOfWeek(internalCal.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.US));
+			date.setDateStamp(internalCal.getTime());
+			
 			week.getDaysOfWeek().add(date);
 		}
 		

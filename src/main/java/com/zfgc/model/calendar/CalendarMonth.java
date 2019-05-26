@@ -10,7 +10,16 @@ public class CalendarMonth extends BaseZfgcModel {
 	private List<CalendarWeek> weeks = new ArrayList<>();
 	private Integer currentWeekIndex = 0;
 	private List<UpcomingCalendar> events;
+	private CalendarDate selectedDate;
 	
+	public CalendarDate getSelectedDate() {
+		return selectedDate;
+	}
+
+	public void setSelectedDate(CalendarDate selectedDate) {
+		this.selectedDate = selectedDate;
+	}
+
 	@Override
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub

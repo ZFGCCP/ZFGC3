@@ -24,49 +24,49 @@ public class RuntimeExceptionHandler {
 	
 	@ExceptionHandler(value=RuntimeException.class)
 	public ResponseEntity defaultErrorHandler(HttpServletRequest req, Exception e) {
-		LOGGER.error(e.getStackTrace());
+		LOGGER.error("An unexpected error occured.", e);
 		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error occured. Please contact an administrator for assistance.");
 	}
 	
 	@ExceptionHandler(value=ZfgcNotFoundException.class)
 	public ResponseEntity zfgcNotFoundErrorHandler(HttpServletRequest req, Exception e) {
-		LOGGER.error(e.getStackTrace());
+		LOGGER.error(e.getMessage(), e);
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
 	}
 	
 	@ExceptionHandler(value=ZfgcDataExistsException.class)
 	public ResponseEntity zfgcDataExistsErrorHandler(HttpServletRequest req, Exception e) {
-		LOGGER.error(e.getStackTrace());
+		LOGGER.error(e.getMessage(), e);
 		return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
 	}
 	
 	@ExceptionHandler(value=ZfgcValidationException.class)
 	public ResponseEntity zfgcValidationErrorHandler(HttpServletRequest req, ZfgcValidationException e) {
-		LOGGER.error(e.getStackTrace());
+		LOGGER.error(e.getMessage(), e);
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getErrors());
 	}
 	
 	@ExceptionHandler(value=ZfgcInvalidAesKeyException.class)
 	public ResponseEntity zfgcInvalidAesKeyErrorHandler(HttpServletRequest req, Exception e) {
-		LOGGER.error(e.getStackTrace());
+		LOGGER.error(e.getMessage(), e);
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	}
 	
 	@ExceptionHandler(value=ZfgcSecurityException.class)
 	public ResponseEntity zfgcSecurityErrorHandler(HttpServletRequest req, Exception e) {
-		LOGGER.error(e.getStackTrace());
+		LOGGER.error(e.getMessage(), e);
 		return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 	}
 	
 	@ExceptionHandler(value=ZfgcUnauthorizedException.class)
 	public ResponseEntity zfgcUnauthorizedErrorHandler(HttpServletRequest req, Exception e) {
-		LOGGER.error(e.getStackTrace());
+		LOGGER.error(e.getMessage(), e);
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 	}
 	
 	@ExceptionHandler(value=ZfgcInvalidFileException.class)
 	public ResponseEntity zfgcInvalidFileErrorHandler(HttpServletRequest req, Exception e) {
-		LOGGER.error(e.getStackTrace());
+		LOGGER.error(e.getMessage(), e);
 		return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
 	}
 }
