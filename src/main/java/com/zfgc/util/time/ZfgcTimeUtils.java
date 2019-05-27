@@ -6,10 +6,16 @@ import java.util.Date;
 import java.util.TimeZone;
 
 import org.apache.commons.lang3.time.DateUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.zfgc.services.system.SystemService;
 
 public class ZfgcTimeUtils extends DateUtils {
 	public static final long MILIS_PER_YEAR = 31540000000L;
+	
+	@Autowired
+	private static SystemService systemService;
 	
 	public static String createDateAsString(String timeInMs){
 		Long result = Long.parseLong(timeInMs);
@@ -20,7 +26,7 @@ public class ZfgcTimeUtils extends DateUtils {
 	
 	public static SimpleDateFormat getZfgcSimpleDateTimeFormat(){
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		sdf.setTimeZone(TimeZone.getTimeZone(SystemService.TIME_ZONE));
 		
 		return sdf;
 	}
@@ -34,7 +40,7 @@ public class ZfgcTimeUtils extends DateUtils {
 	
 	public static SimpleDateFormat getZfgcSimpleDateFormat(){
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-		sdf.setTimeZone(TimeZone.getTimeZone("GMT"));
+		sdf.setTimeZone(TimeZone.getTimeZone(SystemService.TIME_ZONE));
 		
 		return sdf;
 	}
