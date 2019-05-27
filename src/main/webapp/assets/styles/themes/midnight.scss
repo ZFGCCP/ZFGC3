@@ -247,5 +247,13 @@ a:hover{
 		&:hover{
 			background-color: $midnight-row-hover;
 		}
+		
+		&.disabled{
+			background-color: $midnight-element-disabled;
+		}
+		
+		&.selected{
+			background-color: $midnight-element-selected;
+		}
 	}
 }

@@ -17,12 +17,7 @@
    		.calendar-date{
    			cursor: pointer;
 
-			&.disabled {
-				background-color: #040810;
-			}
-			
 			&.selected{
-				background-color: #8faab9;
     			color: black;
     			
     			.date-wrapper{
