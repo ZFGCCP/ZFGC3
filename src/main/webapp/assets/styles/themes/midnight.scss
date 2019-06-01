@@ -241,3 +241,29 @@ a:hover{
 		}
 	}
 }
+
+._720kb-datepicker-calendar{
+
+	._720kb-datepicker-calendar-header{
+		background-color: $midnight-modal-exp-background-color;
+		
+		a:link{
+			color: $midnight-color;
+		}
+		
+		._720kb-datepicker-calendar-month{
+		
+			span{
+				color: $midnight-color;
+			}
+		}
+	}
+	
+	._720kb-datepicker-calendar-body{
+		background-color: $midnight-calendar-body;
+		
+		a:link{
+			color: $midnight-calendar-body-text;
+		}
+	}
+}
