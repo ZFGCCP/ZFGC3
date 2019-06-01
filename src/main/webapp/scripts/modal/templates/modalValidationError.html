@@ -1,25 +1,28 @@
 <div class="modal-wrapper modal-fade">
 	<div class="modal-header">
-		<h2 ng-if="vm.checkHasRequiredFields()">Required Fields Error</h2>
-		<h2 ng-if="vm.checkHasValidation()">Validation Error</h2>
-		<h2 ng-if="vm.checkHasRules()">Rule Error</h2>
+		<h2>
+			<span class="error-icon">
+				<i class="fas fa-exclamation-circle"></i>
+			</span>
+			Validation Error
+		</h2>
 	</div>
 	<form>
 		<div class="modal-body">
 			<div ng-if="vm.checkHasRequiredFields()">
-				<ul>
+				<ol>
 					<li ng-repeat="error in vm.requiredFields()">{{error.errorMessage}}</li>
-				</ul>
+				</ol>
 			</div>
 			<div ng-if="vm.checkHasValidation()">
-				<ul>
+				<ol>
 					<li ng-repeat="error in vm.validation()">{{error.errorMessage}}</li>
-				</ul>
+				</ol>
 			</div>
 			<div ng-if="vm.checkHasRules()">
-				<ul>
+				<ol>
 					<li ng-repeat="error in vm.rules()">{{error.errorMessage}}</li>
-				</ul>
+				</ol>
 			</div>
 		</div>
 		<div class="modal-footer">
