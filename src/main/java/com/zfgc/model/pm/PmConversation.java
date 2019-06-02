@@ -17,6 +17,7 @@ public class PmConversation extends BaseZfgcModel {
 	private List<Users> participants;
 	private Boolean isArchived = false;
 	private Date archiveDt;
+	private String subject;
 	
 	public Integer getPmConversationId() {
 		return pmConversationId;
@@ -88,6 +89,14 @@ public class PmConversation extends BaseZfgcModel {
 	@JsonIgnore
 	public void setArchiveDt(Date archiveDt) {
 		this.archiveDt = archiveDt;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
 	}
 	
 }

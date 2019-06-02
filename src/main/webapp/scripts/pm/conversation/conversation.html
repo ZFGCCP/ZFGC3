@@ -4,8 +4,14 @@
 			<div class="section-title-wrapper">
 				<div class="section-title">Conversation</div>
 				<div class="subsection-title">
-					<div>
-						Subject : <span ng-bind-html="vm.getConvoTitle()"></span><i class="fas fa-pencil-alt edit-text-icon"></i>
+					<div ng-if="vm.editingSubject === false">
+						Subject : <span ng-bind-html="vm.conversation.subject"></span><i class="fas fa-pencil-alt edit-text-icon" ng-click="vm.editSubject()"></i>
+					</div>
+					
+					<div ng-if="vm.editingSubject === true">
+						<form>
+							<span>Subject</span> : <input type="text" ng-model="vm.conversation.subject" class="form-control small-input"/>
+						</form>
 					</div>
 				</div>
 			</div>

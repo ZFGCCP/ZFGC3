@@ -350,6 +350,7 @@ public class PmService extends AbstractService {
 		return convo;
 	}
 	
+	@Deprecated
 	public PmConvoBox getConvoBox(Users user){
 		try {
 			List<PmConversationView> convos = pmConversationDataProvider.getBoxViewByUsersId(user);
