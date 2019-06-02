@@ -4,14 +4,15 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.requiredfields.AbstractRequiredFieldsChecker;
 import com.zfgc.requiredfields.RequiredField;
 
 @Component
-public class AccountSettingsRequiredFieldsChecker extends AbstractRequiredFieldsChecker<Users>{
+public class AccountSettingsRequiredFieldsChecker extends AbstractRequiredFieldsChecker<UserProfileView>{
 
 	@Override
-	public void requiredFieldsCheck(Users model) throws ZfgcValidationException {
+	public void requiredFieldsCheck(UserProfileView model) throws ZfgcValidationException {
 		//check email address
 		checkRequiredFieldString(model.getUserContactInfo().getEmail().getEmailAddress(), "Email Address", "Email Address " + IS_REQUIRED_FIELD, model.getErrors().getRequiredFieldsErrors());
 	

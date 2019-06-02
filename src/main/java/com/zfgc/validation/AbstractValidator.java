@@ -74,27 +74,30 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 		}
 	}
 	
-	protected void checkEmailFormat(Users model){
-		if(model.getEmailAddress() != null &&
-		   !Pattern.matches(GENERAL_STRING_FORMAT, model.getUserContactInfo().getEmail().getEmailAddress()) ||
-		   !Pattern.matches(EMAIL_FORMAT, model.getUserContactInfo().getEmail().getEmailAddress())){
+	protected void checkEmailFormat(String email, BaseZfgcModel model){
+		if(email != null &&
+		   !Pattern.matches(GENERAL_STRING_FORMAT, email) ||
+		   !Pattern.matches(EMAIL_FORMAT,email)){
 			
 			Rule emailFormatRule = new Rule();
 			emailFormatRule.setRuleName("INVALID_EMAIL_FORMAT");
 			emailFormatRule.setErrorMessage("Email address was not in the correct format.");
+			
 			model.getErrors().getValidationErrors().add(emailFormatRule);
 		}
 	}
 	
-	protected void checkEmailLength(Users model){
-		if(model.getEmailAddress() != null &&
-		   !model.getEmailAddress().getEmailAddress().equals("") &&
-		   model.getEmailAddress().getEmailAddress().length() > 254){
+	protected void checkEmailLength(String email, BaseZfgcModel model){
+		if(email != null &&
+		   !email.equals("") &&
+		   email.length() > 254){
 			
 			Rule emailLengthRule = new Rule();
 			emailLengthRule.setRuleName("EMAIL_LENGTH");
 			emailLengthRule.setErrorMessage("Email address must not be greater than 254 characters.");
+			
 			model.getErrors().getValidationErrors().add(emailLengthRule);
+
 		}
 	}
 }

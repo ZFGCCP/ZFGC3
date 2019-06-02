@@ -47,9 +47,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -83,7 +83,7 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
+	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -143,11 +143,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/server-config.service.js",
 	    
-	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
+	"./src/main/webapp/scripts/calendar/calendar.module.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar.service.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
 	"./src/main/webapp/scripts/app.config.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar.html",
 	    
 	"./src/main/webapp/scripts/error/internalServerError.html",
 	    
@@ -169,7 +175,7 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
+	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
@@ -231,9 +237,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
 	    
