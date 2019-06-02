@@ -176,7 +176,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/profile/account", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
-	public ResponseEntity saveAccountSettings(@RequestBody Users accountSettings){
+	public ResponseEntity saveAccountSettings(@RequestBody UserProfileView accountSettings){
 		try {
 			userProfileService.saveAccountSettings(accountSettings,zfgcUser());
 		} 
@@ -197,7 +197,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/profile", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
-	public ResponseEntity saveForumProfile(@RequestBody Users forumProfile){
+	public ResponseEntity saveForumProfile(@RequestBody UserProfileView forumProfile){
 		try {
 			userProfileService.saveForumProfile(forumProfile,zfgcUser());
 		} 
@@ -216,7 +216,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/profile/notifications", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
-	public ResponseEntity saveNotificationSettings(@RequestBody Users notificationSettings){
+	public ResponseEntity saveNotificationSettings(@RequestBody UserProfileView notificationSettings){
 		try {
 			userProfileService.saveNotificationSettings(notificationSettings,zfgcUser());
 		} catch (Exception e) {
@@ -230,7 +230,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/profile/pmSettings", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
-	public ResponseEntity savePmSettings(@RequestBody Users pmSettings){
+	public ResponseEntity savePmSettings(@RequestBody UserProfileView pmSettings){
 		try {
 			userProfileService.savePmSettings(pmSettings,zfgcUser());
 		} catch (Exception e) {
@@ -244,7 +244,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/profile/buddyList", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
-	public ResponseEntity saveBuddyListSettings(@RequestBody Users buddyList){
+	public ResponseEntity saveBuddyListSettings(@RequestBody UserProfileView buddyList){
 		try {
 			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser());
 		}

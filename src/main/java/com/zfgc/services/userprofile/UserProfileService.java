@@ -79,7 +79,7 @@ public class UserProfileService extends AbstractService{
 	ProfileRuleChecker profileRuleChecker;
 	
 	@Autowired
-	RuleRunService<Users> ruleRunner;
+	RuleRunService<UserProfileView> ruleRunner;
 	
 	@Autowired
 	MemberGroupService memberGroupService;
@@ -182,7 +182,7 @@ public class UserProfileService extends AbstractService{
 	}
 
 	@Transactional
-	public Users saveAccountSettings(Users accountSettings,Users zfgcUser) throws Exception {
+	public UserProfileView saveAccountSettings(UserProfileView accountSettings,Users zfgcUser) throws Exception {
 		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(accountSettings.getUsersId(), zfgcUser)){
 			throw new ZfgcUnauthorizedException();
 		}
@@ -261,7 +261,7 @@ public class UserProfileService extends AbstractService{
 			}
 		}
 		
-		accountSettings.setPrimaryMemberGroupId(accountSettings.getPrimaryMemberGroup().getMemberGroupId());
+		//accountSettings.setPrimaryMemberGroupId(accountSettings.getPrimaryMemberGroup().getMemberGroupId());
 		userProfileDataProvider.saveAccountSettings(accountSettings);
 		
 		if(!StringUtils.isEmpty(accountSettings.getUserSecurityInfo().getNewPassword())){
@@ -271,7 +271,7 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	@Transactional
-	public Users saveNotificationSettings(Users notificationSettings, Users zfgcUser) throws RuntimeException{
+	public UserProfileView saveNotificationSettings(UserProfileView notificationSettings, Users zfgcUser) throws RuntimeException{
 		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(notificationSettings.getUsersId(), zfgcUser)){
 			throw new ZfgcUnauthorizedException();
 		}
@@ -290,7 +290,7 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	@Transactional
-	public Users savePmSettings(Users pmSettings, Users zfgcUser) throws Exception{
+	public UserProfileView savePmSettings(UserProfileView pmSettings, Users zfgcUser) throws Exception{
 		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(pmSettings.getUsersId(), zfgcUser)){
 			throw new ZfgcUnauthorizedException();
 		}
@@ -308,7 +308,7 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	@Transactional
-	public Users saveBuddyIgnoreList(Users buddyIgnore, Users zfgcUser) throws Exception{
+	public UserProfileView saveBuddyIgnoreList(UserProfileView buddyIgnore, Users zfgcUser) throws Exception{
 		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(buddyIgnore.getUsersId(), zfgcUser)){
 			throw new ZfgcUnauthorizedException();
 		}
@@ -321,7 +321,7 @@ public class UserProfileService extends AbstractService{
 	}
 	
 	@Transactional
-	public Users saveForumProfile(Users forumProfile, Users zfgcUser) throws Exception{
+	public UserProfileView saveForumProfile(UserProfileView forumProfile, Users zfgcUser) throws Exception{
 		if(!ZfgcSecurityUtils.checkUserAuthorizationProfileEditor(forumProfile.getUsersId(), zfgcUser)){
 			throw new ZfgcUnauthorizedException();
 		}
