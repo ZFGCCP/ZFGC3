@@ -210,7 +210,7 @@ public class UsersService extends AbstractService {
 		user.getUserContactInfo().getEmail().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getUserContactInfo().getEmail()));
 	}
 	
-	public Users authenticateUserByToken(String token) throws Exception{
+	public Users authenticateUserByToken(String token) throws RuntimeException{
 		try{
 			return authenticationService.authenticateWithToken(token);
 		}
@@ -218,7 +218,7 @@ public class UsersService extends AbstractService {
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
 		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+			throw new RuntimeException(ex);
 		}
 	}
 	
@@ -337,7 +337,7 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range) throws Exception{
+	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range) throws RuntimeException{
 		//todo: add permission check
 		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range);
 		Long totalUsers = usersDataProvider.getActiveUsersCount();
@@ -350,7 +350,7 @@ public class UsersService extends AbstractService {
 		return members;
 	}
 	
-	public void setUserOnline(Users user) throws Exception{
+	public void setUserOnline(Users user) throws RuntimeException{
 		user.setActiveConnections(user.getActiveConnections() + 1);
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOnline(user);
@@ -382,11 +382,11 @@ public class UsersService extends AbstractService {
 		user.setEmailActivationCode(ZfgcSecurityUtils.generateCryptoString(32));
 	}
 	
-	public void activateUserAccount(String activationCode) throws Exception{
+	public void activateUserAccount(String activationCode) throws RuntimeException{
 		usersDataProvider.activateUser(activationCode);
 	}
 	
-	public void activateUserAccount(Integer usersId, Users zfgcUser) throws Exception{
+	public void activateUserAccount(Integer usersId, Users zfgcUser) throws RuntimeException{
 		//todo check the user role
 		usersDataProvider.activateUser(usersId);
 	}

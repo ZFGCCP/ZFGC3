@@ -42,12 +42,12 @@ public class ContentDataProvider extends AbstractDataProvider{
 		return wrapper;
 	}
 	
-	public InputStreamWrapper getFileHandler(String fileName) throws FileNotFoundException {
+	public InputStreamWrapper getFileHandler(String fileName) throws ZfgcNotFoundException {
 		InputStream stream = null;
 		try {
 			stream = new FileInputStream(fileName);
 		} catch (FileNotFoundException e) {
-			throw new FileNotFoundException(e.getMessage());
+			throw new ZfgcNotFoundException(e.getMessage());
 		}
 
 		InputStreamWrapper wrapper = new InputStreamWrapper();

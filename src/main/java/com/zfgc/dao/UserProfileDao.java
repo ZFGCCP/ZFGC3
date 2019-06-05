@@ -32,7 +32,7 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 	
 	private Logger LOGGER = LogManager.getLogger(UserProfileDao.class);
 	
-	public UserProfileViewDbObj getUserProfile(Integer userId) throws Exception{
+	public UserProfileViewDbObj getUserProfile(Integer userId) throws RuntimeException{
 		UserProfileViewDbObjExample userProfileViewDbObjExample = super.getExample();
 		userProfileViewDbObjExample.createCriteria().andUsersIdEqualTo(userId);
 		List<UserProfileViewDbObj> userProfileViewDbObj = null;
@@ -41,7 +41,7 @@ public class UserProfileDao extends AbstractDao<UserProfileViewDbObjExample, Use
 		}
 		catch(Exception ex){
 			logDbSelectError(LOGGER,"USER_PROFILE_VIEW");
-			throw new Exception(ex.getMessage());
+			throw new RuntimeException(ex);
 		}
 		
 		if(userProfileViewDbObj == null || userProfileViewDbObj.size() == 0){

@@ -64,7 +64,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	@Autowired
 	UsersDao usersDao;
 	
-	public UserProfileView getUserProfile(Integer userId) throws Exception{
+	public UserProfileView getUserProfile(Integer userId) throws RuntimeException{
 		UserProfileViewDbObj userProfileViewDbObj = null;
 		try{
 			userProfileViewDbObj = userProfileDao.getUserProfile(userId);
@@ -133,11 +133,11 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		pmSettingsDao.updateOrInsert(pmSettings.getPersonalMessagingSettings());
 	}
 	
-	public void saveForumProfile(UserProfileView forumProfile) throws Exception{
+	public void saveForumProfile(UserProfileView forumProfile) throws RuntimeException{
 		userPersonalInfoDao.updateOrInsert(forumProfile.getPersonalInfo());
 	}
 	
-	public void updateUserPassword(Users user, String password) throws Exception{
+	public void updateUserPassword(Users user, String password) throws RuntimeException{
 		userSecuritySettingsDao.updateUserPassword(user.getUsersId(), password);
 	}
 	

@@ -96,7 +96,7 @@ public class BuddyDataProvider extends AbstractDataProvider{
 		buddyDao.updateOrInsert(buddy);
 	}
 	
-	public Buddy getBuddyTemplate(Integer usersA, Integer usersB) throws Exception{
+	public Buddy getBuddyTemplate(Integer usersA, Integer usersB) throws RuntimeException{
 		Buddy buddy = new Buddy();
 		buddy.setBuddyFlag(true);
 		buddy.setIgnoreFlag(false);

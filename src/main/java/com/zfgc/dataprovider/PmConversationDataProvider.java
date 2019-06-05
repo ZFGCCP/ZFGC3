@@ -179,7 +179,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brUserConversationDao.deleteByExample(null, ex);
 	}
 	
-	public void bulkDeleteConversation(List<Integer> ids, Users zfgcUser) throws Exception{
+	public void bulkDeleteConversation(List<Integer> ids, Users zfgcUser) throws RuntimeException{
 		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId()).andPmConversationIdIn(ids);
 		
@@ -206,7 +206,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return result;
 	}
 	
-	public List<Integer> getConvosToBePruned(PmPrune prune, Users zfgcUser) throws Exception{
+	public List<Integer> getConvosToBePruned(PmPrune prune, Users zfgcUser) throws RuntimeException{
 		PmConversationBoxViewDbObjExample pruneEx = pmConversationBoxViewDao.getExample();
 		Criteria crit = pruneEx.createCriteria();
 		
