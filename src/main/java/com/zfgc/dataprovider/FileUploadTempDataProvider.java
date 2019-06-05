@@ -17,7 +17,7 @@ public class FileUploadTempDataProvider extends AbstractDataProvider{
 	@Autowired
 	private FileUploadTempDao fileUploadTempDao;
 	
-	public void createTempRecord(String fileName, Integer usersId) throws Exception{
+	public void createTempRecord(String fileName, Integer usersId) throws RuntimeException{
 		FileUploadTemp temp = new FileUploadTemp();
 		temp.setFileName(fileName);
 		temp.setUsersId(usersId);

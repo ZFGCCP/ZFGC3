@@ -52,17 +52,13 @@ public class ForumController extends BaseController {
 	public ResponseEntity getForum(@PathVariable("forumId") Short forumId, 
 			                       @RequestParam("itemsPerPage") Integer itemsPerPage, 
 			                       @RequestParam("pageNo") Integer pageNo){
-		try {
-			Forum forum = forumService.getForum(forumId, itemsPerPage, pageNo,zfgcUser());
-			
-			if(forum == null){
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
-			}
-			
-			return ResponseEntity.ok(forum);
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new String[]{"The requested resource could not be found"});
+		Forum forum = forumService.getForum(forumId, itemsPerPage, pageNo,zfgcUser());
+		
+		if(forum == null){
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
 		}
+		
+		return ResponseEntity.ok(forum);
 	}
 	
 	//test for bbcodes
@@ -72,8 +68,7 @@ public class ForumController extends BaseController {
 			bbCodeService.parseText("test test test[b]this [b][i]is[/i][/b] a test[/b][bmore test[/b]");
 		} catch (NoSuchFieldException | SecurityException
 				| IllegalArgumentException | IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			throw new RuntimeException(e);
 		}
 		
 		return (ResponseEntity) ResponseEntity.ok();

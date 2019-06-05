@@ -29,15 +29,10 @@ public class WebSocketController extends BaseController{
 	@MessageMapping("/usersocket/init")
 	@SendTo("/socket/whosonline")
 	public ResponseEntity createUserSession(Principal auth) {
-		try {
-			usersService.setUserOnline(zfgcUser(auth));
-			WhosOnlineList online = whosOnlineService.getWhosOnline();
-			
-			return ResponseEntity.ok(online);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was an error with the user handshake.");
-		}
+		usersService.setUserOnline(zfgcUser(auth));
+		WhosOnlineList online = whosOnlineService.getWhosOnline();
+		
+		return ResponseEntity.ok(online);
 	}
 	
 }

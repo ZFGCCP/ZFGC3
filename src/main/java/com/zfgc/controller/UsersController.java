@@ -59,12 +59,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getCurrentlyLoggedInUser(){
 		Users user = null;
-		try{
-			user = usersService.getLoggedInUser(zfgcUser());
-		}
-		catch(Exception ex){
-			ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(ex.getMessage());
-		}
+		user = usersService.getLoggedInUser(zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
@@ -72,18 +67,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/newuser", method=RequestMethod.POST, produces="application/json")	
 	@ResponseBody
 	public ResponseEntity createNewUser(@RequestBody Users user, HttpServletRequest request){
-		
-		try {
-			user = usersService.createNewUser(user, request);
-		} catch(ZfgcValidationException ex){
-			ex.printStackTrace();
-			logger.error(ExceptionUtils.getStackTrace(ex));
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(user.getErrors());
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			logger.error(ExceptionUtils.getStackTrace(ex));
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
-		}
+		user = usersService.createNewUser(user, request);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(new String[]{"Created user successfully."});
 	}
@@ -97,12 +81,7 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/newuser/activation", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public ResponseEntity activateUser(@RequestParam("activationCode") String activationCode) {
-		try {
-			usersService.activateUserAccount(activationCode);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
-		}
+		usersService.activateUserAccount(activationCode);
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
@@ -111,23 +90,14 @@ class UsersController extends BaseController{
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_ACCOUNT_ACTIVATOR')")
 	public ResponseEntity activateExistingUser(@PathVariable("usersId") Integer usersId) {
-		try {
-			usersService.activateUserAccount(usersId, zfgcUser());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
-		}
+		usersService.activateUserAccount(usersId, zfgcUser());
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public ResponseEntity authenticateUser(@RequestBody Users user, HttpServletRequest request){
-		try {
-			user = usersService.authenticateUser(user, request.getRemoteAddr());
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(new String[]{"An unexpected error has occurred. Please contact a system administrator."});
-		}
+		user = usersService.authenticateUser(user, request.getRemoteAddr());
 		
 		if(user.getErrors().hasErrors()){
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user.getErrors());
@@ -139,57 +109,27 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/tokenauth", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public ResponseEntity authenticateUser(HttpServletRequest request){
-		try{
-			Users user = usersService.authenticateUserByToken(request.getHeader("authorization"));
-			if(user == null){
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
-			}
-			
-			return ResponseEntity.status(HttpStatus.OK).body(user);
-		}
-		catch(ZfgcNotFoundException ex){
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("You are not authorized to access this resource.");
-		}
-		catch(Exception ex){
+		Users user = usersService.authenticateUserByToken(request.getHeader("authorization"));
+		if(user == null){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
 		}
+		
+		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
 	
 	@RequestMapping(value="/profile/{userId}", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){
-		try {
-			UserProfileView user = userProfileService.getProfile(userId, zfgcUser());
-			
-			return ResponseEntity.status(HttpStatus.OK).body(user);
-		} 
-		catch(ZfgcNotFoundException ex){
-			ex.printStackTrace();
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body("The requested resource could not be found.");
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
-		}
+		UserProfileView user = userProfileService.getProfile(userId, zfgcUser());
+		
+		return ResponseEntity.status(HttpStatus.OK).body(user);
 	}
 	
 	@RequestMapping(value="/profile/account", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity saveAccountSettings(@RequestBody UserProfileView accountSettings){
-		try {
-			userProfileService.saveAccountSettings(accountSettings,zfgcUser());
-		} 
-		catch(ZfgcUnauthorizedException ex){
-			ex.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ex.getMessage());
-		} catch (ZfgcValidationException ex) {
-			ex.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(accountSettings.getErrors());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		userProfileService.saveAccountSettings(accountSettings,zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(accountSettings);
 	}
@@ -198,17 +138,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity saveForumProfile(@RequestBody UserProfileView forumProfile){
-		try {
-			userProfileService.saveForumProfile(forumProfile,zfgcUser());
-		} 
-		catch(ZfgcValidationException e){
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(forumProfile.getErrors());
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		userProfileService.saveForumProfile(forumProfile,zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(forumProfile);
 	}
@@ -217,12 +147,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity saveNotificationSettings(@RequestBody UserProfileView notificationSettings){
-		try {
-			userProfileService.saveNotificationSettings(notificationSettings,zfgcUser());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		userProfileService.saveNotificationSettings(notificationSettings,zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(notificationSettings);
 	}
@@ -231,12 +156,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity savePmSettings(@RequestBody UserProfileView pmSettings){
-		try {
-			userProfileService.savePmSettings(pmSettings,zfgcUser());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		userProfileService.savePmSettings(pmSettings,zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).body(pmSettings);
 	}
@@ -245,17 +165,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity saveBuddyListSettings(@RequestBody UserProfileView buddyList){
-		try {
-			userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser());
-		}
-		catch(ZfgcValidationException ex){
-			ex.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getErrors());
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
-		}
-		
+		userProfileService.saveBuddyIgnoreList(buddyList,zfgcUser());
 		return ResponseEntity.status(HttpStatus.OK).body(buddyList);
 	}
 	
@@ -275,11 +185,7 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getMemberList(@RequestParam Integer pageNo, @RequestParam Integer usersPerPage) {
 		MembersView userList = null;
-		try {
-			userList = usersService.getMemberListingView(zfgcUser(), pageNo, usersPerPage);
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occured. Please contact a system administrator.");
-		}
+		userList = usersService.getMemberListingView(zfgcUser(), pageNo, usersPerPage);
 		
 		return ResponseEntity.ok(userList);
 	}
@@ -287,20 +193,6 @@ class UsersController extends BaseController{
 	@RequestMapping(value="/buddy", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getBuddyTemplate(@RequestParam Integer userAId, @RequestParam Integer userBId){
-		try{
-			return ResponseEntity.status(HttpStatus.OK).body(buddyService.getBuddyTemplate(userAId, userBId, zfgcUser()));
-		}
-		catch(ZfgcNotFoundException ex){
-			ex.printStackTrace();
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(ex.getMessage());
-		}
-		catch(ZfgcValidationException ex){
-			ex.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(ex.getErrors());
-		}
-		catch(Exception ex){
-			ex.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occured. Please contact a system administrator.");
-		}
+		return ResponseEntity.status(HttpStatus.OK).body(buddyService.getBuddyTemplate(userAId, userBId, zfgcUser()));
 	}
 }

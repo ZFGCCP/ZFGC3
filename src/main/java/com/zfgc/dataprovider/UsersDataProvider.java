@@ -290,7 +290,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return usersDao.getDisplayName(usersId);
 	}
 	
-	public List<MemberListingView> getMemberListing(Integer pageIndex, Integer usersPerPage) throws Exception{
+	public List<MemberListingView> getMemberListing(Integer pageIndex, Integer usersPerPage) throws RuntimeException{
 		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
 		ex.setLimitStart(pageIndex * usersPerPage);
 		ex.setLimitRange(usersPerPage);
@@ -315,7 +315,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return usersDao.checkUserPassword(usersId, password) > 0;
 	}
 	
-	public void setUserOnline(Users user) throws Exception{
+	public void setUserOnline(Users user) throws RuntimeException{
 		UsersDbObjExample userEx = usersDao.getExample();
 		userEx.createCriteria().andUsersIdEqualTo(user.getUsersId());
 
@@ -357,7 +357,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		notificationSettingsDao.updateOrInsert(user.getNotificationSettings());
 	}
 	
-	public void activateUser(String activationCode) throws Exception{
+	public void activateUser(String activationCode) throws RuntimeException{
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andEmailActivationCodeEqualTo(activationCode);
 		
@@ -368,7 +368,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 		usersDao.updateByExample(user, ex);
 	}
 	
-	public void activateUser(Integer usersId) throws Exception{
+	public void activateUser(Integer usersId) throws RuntimeException{
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(usersId);
 		

@@ -38,17 +38,8 @@ public class FileController extends BaseController{
 	@RequestMapping(value="/avatar/{avatarId}", method=RequestMethod.GET)
 	public ResponseEntity getAvatar(@PathVariable("avatarId") Integer avatarId, HttpServletResponse response){
 		InputStreamWrapper is = null;
-		
-		try{
-			is = contentService.getAvatarHandle(avatarId);
-		}
-		catch(FileNotFoundException  e){
-			e.printStackTrace();
-			return (ResponseEntity) ResponseEntity.status(HttpStatus.NOT_FOUND);
-		} catch (ZfgcNotFoundException e) {
-			e.printStackTrace();
-			return (ResponseEntity) ResponseEntity.status(HttpStatus.NOT_FOUND);
-		}
+
+		is = contentService.getAvatarHandle(avatarId);
 
 		return ResponseEntity.status(HttpStatus.OK)
 				             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=avatar" + avatarId)
@@ -59,19 +50,8 @@ public class FileController extends BaseController{
 	@RequestMapping(value="/avatar/gallery/{galleryId}", method=RequestMethod.GET)
 	public ResponseEntity getGalleryAvatar(@PathVariable("galleryId") Integer galleryId, HttpServletResponse response){
 		InputStreamWrapper is = null;
-		
-		try{
-			is = contentService.getAvatarGalleryHandle(galleryId);
-		}
-		catch(FileNotFoundException  e){
-			e.printStackTrace();
-			return (ResponseEntity) ResponseEntity.status(HttpStatus.NOT_FOUND);
-		} catch (ZfgcNotFoundException e) {
-			e.printStackTrace();
-			return (ResponseEntity) ResponseEntity.status(HttpStatus.NOT_FOUND);
-		} catch (Exception e) {
-			return (ResponseEntity) ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+
+		is = contentService.getAvatarGalleryHandle(galleryId);
 
 		return ResponseEntity.status(HttpStatus.OK)
 				             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + galleryId)
@@ -82,21 +62,7 @@ public class FileController extends BaseController{
 	@RequestMapping(value="/avatar/{usersId}", method=RequestMethod.POST)
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity uploadAvatar(@PathVariable("usersId") Integer usersId, @RequestParam("avatarFile") MultipartFile file){
-		try {
-			contentService.saveAvatar(file, usersId, super.zfgcUser());
-		} 
-		catch(ZfgcInvalidFileException e){
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getMessage());
-		}
-		catch(IOException e){
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("There was a problem uploading the file. Please contact a system administrator.");
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An internal server error occurred. Please contact a system administrator.");
-		}
+		contentService.saveAvatar(file, usersId, super.zfgcUser());
 
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}

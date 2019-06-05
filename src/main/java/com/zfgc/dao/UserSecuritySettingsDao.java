@@ -16,7 +16,7 @@ public class UserSecuritySettingsDao extends AbstractDao<UserSecuritySettingsDbO
 	@Autowired
 	private UserSecuritySettingsDbObjMapper userSecuritySettingsDbObjMapper;
 	
-	public void updateUserPassword(Integer usersId, String password) throws Exception{
+	public void updateUserPassword(Integer usersId, String password) throws RuntimeException{
 		userSecuritySettingsDbObjMapper.updateUserPassword(usersId, password);
 	}
 	

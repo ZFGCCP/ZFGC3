@@ -13,7 +13,7 @@ public class WhosOnlineService extends AbstractService {
 	@Autowired
 	WhosOnlineDataProvider whosOnlineDataProvider;
 	
-	public WhosOnlineList getWhosOnline() throws Exception{
+	public WhosOnlineList getWhosOnline() throws RuntimeException{
 		WhosOnlineList online = whosOnlineDataProvider.getWhosOnline();
 		
 		return online;

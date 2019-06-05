@@ -60,16 +60,7 @@ public class PmController extends BaseController {
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity sendPm(@RequestBody PersonalMessage message){
 		PmConversation convo = null;
-		
-		try{
-			convo = pmService.sendMessageInConversation(zfgcUser(), message.getReceivers(), message);
-		}
-		catch(ZfgcNotFoundException ex){
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		}
-		catch(Exception ex){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		convo = pmService.sendMessageInConversation(zfgcUser(), message.getReceivers(), message);
 		
 		return ResponseEntity.ok(convo);
 	}
@@ -88,57 +79,43 @@ public class PmController extends BaseController {
 			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
 		
-		try {
-			Boolean result = authenticationService.isValidAesKey(aes);
-			
-			if(result == false){
-				return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-			}
-		} catch (ZfgcInvalidAesKeyException e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		Boolean result = authenticationService.isValidAesKey(aes);
+		
+		if(result == false){
+			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
 		}
+
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity viewConvoBox(@RequestParam("filterType") Integer filterType, @RequestBody TwoFactorKey aesKey){
-		try{
+		PmConvoBox convos = null;
+		//todo: use constants
+		switch(filterType) {
+		case 0:
+			convos = pmService.getConversationBox(aesKey, zfgcUser());
+			break;
 			
-			PmConvoBox convos = null;
-			//todo: use constants
-			switch(filterType) {
-			case 0:
-				convos = pmService.getConversationBox(aesKey, zfgcUser());
-				break;
-				
-			case 1:
-				convos = pmService.getConversationsInBox(aesKey, zfgcUser());
-				break;
-				
-			case 2:
-				convos = pmService.getConversationsSentBox(aesKey, zfgcUser());
-				break;
-				
-			case 3:
-				convos = pmService.getArchiveBox(aesKey, zfgcUser());
-				break;
-			}
+		case 1:
+			convos = pmService.getConversationsInBox(aesKey, zfgcUser());
+			break;
 			
-			if(convos == null){
-				return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-			}
+		case 2:
+			convos = pmService.getConversationsSentBox(aesKey, zfgcUser());
+			break;
 			
-			return ResponseEntity.ok(convos);
+		case 3:
+			convos = pmService.getArchiveBox(aesKey, zfgcUser());
+			break;
 		}
-	    catch (ZfgcInvalidAesKeyException e) {
-	    	return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-	    } catch (ZfgcNotFoundException e) {
-	    	return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-	    } catch (Exception e) {
+		
+		if(convos == null){
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
 		}
+		
+		return ResponseEntity.ok(convos);
 	}
 	
 	@RequestMapping(value="/convobox/prune/template", method=RequestMethod.GET, produces="application/json")
@@ -168,16 +145,8 @@ public class PmController extends BaseController {
 	public ResponseEntity deleteConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId){
 		PmConversation convo = new PmConversation();
 		convo.setPmConversationId(convoId);
-		
-		try {
-			pmService.removeConvoFromInbox(aesKey, convo, zfgcUser());
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+
+		pmService.removeConvoFromInbox(aesKey, convo, zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -187,16 +156,7 @@ public class PmController extends BaseController {
 	public ResponseEntity deleteConversation(@RequestBody TwoFactorKey aesKey,@PathVariable("conversationId") Integer convoId, @PathVariable("usersId") Integer usersId){
 		Users remove = new Users();
 		remove.setUsersId(usersId);
-		
-		try{
-			pmService.removeUserFromConvo(aesKey, convoId, remove, zfgcUser());
-		} catch (ZfgcSecurityException e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		pmService.removeUserFromConvo(aesKey, convoId, remove, zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -204,15 +164,7 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/conversation/delete",method=RequestMethod.POST, produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity deleteConversation(@RequestBody PmConversationMulti conversations){
-		try{
-			pmService.removeMultiConvoFromInbox(conversations, zfgcUser());
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		pmService.removeMultiConvoFromInbox(conversations, zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -220,16 +172,7 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/converstion/{conversationId}/archive",method=RequestMethod.POST, produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity archiveConversation(@RequestBody TwoFactorKey aesKey, @PathVariable("conversationId") Integer convoId){
-		
-		try{
-			pmService.moveConversationToArchive(aesKey, convoId, zfgcUser());
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		pmService.moveConversationToArchive(aesKey, convoId, zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -237,16 +180,7 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/conversation/archive",method=RequestMethod.POST,produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity archiveConversation(@RequestBody PmConversationMulti conversations){
-		
-		try{
-			pmService.moveMultiConversationToArchive(conversations, zfgcUser());
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		pmService.moveMultiConversationToArchive(conversations, zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -254,14 +188,7 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/conversation/{conversationId}/inviteUsers",method=RequestMethod.POST,produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity inviteUsersToConversation(@RequestBody PmUsersToAdd pmUsers, @PathVariable("conversationId") Integer conversationId){
-		try{
-			pmService.inviteUsers(conversationId, pmUsers, zfgcUser());
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch (Exception e) {
-			e.printStackTrace();
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
+		pmService.inviteUsers(conversationId, pmUsers, zfgcUser());
 		
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
@@ -269,18 +196,8 @@ public class PmController extends BaseController {
 	@RequestMapping(value="/convobox/prune", method=RequestMethod.POST,produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity pruneConversations(@RequestBody PmPrune prune){
-		try{
-			pmService.pruneConversations(prune, zfgcUser());
-		} catch (ZfgcInvalidAesKeyException e) {
-			return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-		} catch (ZfgcNotFoundException e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-		} catch(ZfgcValidationException e){
-			return ResponseEntity.status(HttpStatus.UNPROCESSABLE_ENTITY).body(e.getErrors());
-		} catch (Exception e) {
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-		
+		pmService.pruneConversations(prune, zfgcUser());
+
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 }
