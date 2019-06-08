@@ -98,6 +98,7 @@ public class UserProfileService extends AbstractService{
 		}
 		
 		Integer currentUserId = zfgcUser.getUsersId();
+		profileView.setTimeZone(lookupService.getLkupValue(lookupService.TIMEZONE, profileView.getTimeOffset()));
 		//user.setTimeOffsetLkup(lookupService.getLkupValue(lookupService.TIMEZONE, user.getTimeOffset()));
 		
 		//permissions

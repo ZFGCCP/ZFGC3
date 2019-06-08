@@ -3,6 +3,7 @@
 	function conversationCtrl($rootScope, $scope, $state, $location, PmService, ForumPostService, ModalService){
 		var vm = this;
 		vm.showReplyBox = false;
+		vm.editingSubject = false;
 		
 		vm.participants = [];
 		
@@ -61,6 +62,14 @@
 			user.$promise.then(function(data){
 				PmService.appendToReceiverList(vm, user);
 			});
+		};
+		
+		vm.editSubject = function(){
+			vm.editingSubject = true;
+		};
+		
+		vm.changeSubject = function(){
+			PmService.updateConversationSubject(vm, vm.conversation);
 		};
 		
 		if($location.search().conversationId && $location.search().conversationId !== null){

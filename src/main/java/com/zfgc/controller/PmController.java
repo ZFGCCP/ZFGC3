@@ -193,6 +193,14 @@ public class PmController extends BaseController {
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
+	@RequestMapping(value="/conversation/{conversationId}/subject", method=RequestMethod.PUT, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
+	public ResponseEntity updateConversationSubject(@RequestBody String newSubject, @PathVariable("conversationId") Integer conversationId) {
+		pmService.updateConversationSubject(conversationId, newSubject);
+		
+		return ResponseEntity.ok().build();
+	}
+	
 	@RequestMapping(value="/convobox/prune", method=RequestMethod.POST,produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity pruneConversations(@RequestBody PmPrune prune){

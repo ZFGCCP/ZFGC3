@@ -22,11 +22,15 @@
     
 
     <!-- tables -->
-    <table schema="zfgc3" tableName="SYSTEM_SETTINGS" domainObjectName="SystemSettingsDbObj">
+    <table schema="Zfgc3" tableName="PM_CONVERSATION" domainObjectName="PmConversationDbObj">
+    	<generatedKey column="PM_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(PM_CONVERSATION_ID) + 1,0) FROM PM_CONVERSATION"/>
+    </table>
+    
+    <!--<table schema="zfgc3" tableName="SYSTEM_SETTINGS" domainObjectName="SystemSettingsDbObj">
     	<generatedKey column="SYSTEM_SETTING_ID" sqlStatement="SELECT MAX(SYSTEM_SETTING_ID) + 1 FROM SYSTEM_SETTINGS"></generatedKey>
     </table>
     
-    <!--<table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
+    <table schema="zfgc3" tableName="IP_ADDRESS" domainObjectName="IpAddressDbObj">
     	<generatedKey column="IP_ADDRESS_ID" sqlStatement="SELECT MAX(IP_ADDRESS_ID) + 1 FROM IP_ADDRESS"></generatedKey>
     	<columnOverride column="IS_SPAMMER_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>

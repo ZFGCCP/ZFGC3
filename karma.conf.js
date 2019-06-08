@@ -47,9 +47,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -121,11 +121,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -141,13 +141,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
-	"./src/main/webapp/scripts/common/server-config.service.js",
-	    
 	"./src/main/webapp/scripts/calendar/calendar.module.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar.service.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
+	    
+	"./src/main/webapp/scripts/common/server-config.service.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -237,9 +237,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html"
 	    

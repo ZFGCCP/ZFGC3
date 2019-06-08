@@ -350,6 +350,7 @@ public class PmService extends AbstractService {
 		return convo;
 	}
 	
+	@Deprecated
 	public PmConvoBox getConvoBox(Users user){
 		try {
 			List<PmConversationView> convos = pmConversationDataProvider.getBoxViewByUsersId(user);
@@ -640,5 +641,9 @@ public class PmService extends AbstractService {
 	
 	private Boolean isConvoArchived(Integer pmConversationId, Users user) throws RuntimeException {
 		return pmConversationDataProvider.isConvoArchived(pmConversationId, user.getUsersId());
+	}
+	
+	public void updateConversationSubject(Integer convoId, String subject) {
+		pmConversationDataProvider.updateConversationSubject(convoId, subject);
 	}
 }
