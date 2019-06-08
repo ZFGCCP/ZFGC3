@@ -16,7 +16,7 @@ public class WhosOnlineDataProvider extends AbstractDataProvider{
 	@Autowired
 	WhosOnlineDao whosOnlineDao;
 	
-	public WhosOnlineList getWhosOnline() throws Exception{
+	public WhosOnlineList getWhosOnline() throws RuntimeException{
 		WhosOnlineList result = new WhosOnlineList();
 		
 		List<OnlineUserDbObj> dbObj = whosOnlineDao.get(whosOnlineDao.getExample()); 

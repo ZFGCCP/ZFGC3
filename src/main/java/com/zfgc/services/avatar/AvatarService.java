@@ -40,7 +40,7 @@ public class AvatarService extends AbstractService {
 		avatarDataProvider.deleteAvatarRecord(avatarId);
 	}
 	
-	public Avatar createAvatarRecordFromExternal(Avatar avatar) throws Exception{
+	public Avatar createAvatarRecordFromExternal(Avatar avatar) throws RuntimeException{
 		Avatar av = avatarDataProvider.createAvatarRecord(avatar);
 		return av;
 	}

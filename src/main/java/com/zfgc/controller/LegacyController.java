@@ -36,14 +36,7 @@ public class LegacyController extends BaseController{
 		    return new ResponseEntity<>(httpHeaders, HttpStatus.SEE_OTHER);
 		}
 		catch (URISyntaxException ex){
-			ex.printStackTrace();
-			LOGGER.error(ExceptionUtils.getStackTrace(ex));
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-		}
-		catch(RuntimeException ex){
-			ex.printStackTrace();
-			LOGGER.error(ExceptionUtils.getStackTrace(ex));
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+			throw new RuntimeException(ex);
 		}
 	}
 	

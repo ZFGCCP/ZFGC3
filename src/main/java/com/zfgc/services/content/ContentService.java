@@ -31,39 +31,45 @@ public class ContentService extends AbstractService{
 	@Autowired
 	FileUploadTempDataProvider fileUploadTempDataProvider;
 	
-	public InputStreamWrapper getAvatarHandle(Integer avatarId) throws FileNotFoundException, ZfgcNotFoundException{
+	public InputStreamWrapper getAvatarHandle(Integer avatarId) throws ZfgcNotFoundException{
 		try {
 			return contentDataProvider.getAvatarHandle(avatarId);
 		} catch (FileNotFoundException e) {
-			throw new FileNotFoundException(e.getMessage());
+			throw new ZfgcNotFoundException(e.getMessage());
 		} catch (ZfgcNotFoundException e) {
 			throw new ZfgcNotFoundException("Avatar " + avatarId);
 		}
 	}
 	
-	public InputStreamWrapper getAvatarGalleryHandle(Integer galleryId) throws FileNotFoundException, ZfgcNotFoundException, Exception{
+	public InputStreamWrapper getAvatarGalleryHandle(Integer galleryId) throws ZfgcNotFoundException{
 		return contentDataProvider.getFileHandler(avatarDataProvider.getAvatarGallery(galleryId).getFilePath());
 	}
 	
-	public void saveAvatar(MultipartFile file, Integer userId, Users zfgcUser) throws Exception{
+	public void saveAvatar(MultipartFile file, Integer userId, Users zfgcUser) throws RuntimeException{
 		validateFile(file);
 		
 		writeFile(file, zfgcUser);											   
 	}
 	
-	private void writeFile(MultipartFile file, Users zfgcUser) throws Exception{
+	private void writeFile(MultipartFile file, Users zfgcUser) throws RuntimeException{
 		FileOutputStream stream;
 		String extension = StringUtils.substring(file.getOriginalFilename(), StringUtils.lastIndexOf(file.getOriginalFilename(), '.'),file.getOriginalFilename().length() - 1);
-		byte[] bytes = file.getBytes();
+		byte[] bytes;
+		try {
+			bytes = file.getBytes();
 		
-		String newFileName = ZfgcSecurityUtils.generateCryptoString(16) + "-" + zfgcUser.getUsersId() + extension;
-		stream = new FileOutputStream("/assets/images/avatar/" + newFileName);
-		
-		stream.write(bytes);
-		
-		stream.close();
-		
-		fileUploadTempDataProvider.createTempRecord(newFileName, zfgcUser.getUsersId());
+			String newFileName = ZfgcSecurityUtils.generateCryptoString(16) + "-" + zfgcUser.getUsersId() + extension;
+			stream = new FileOutputStream("/assets/images/avatar/" + newFileName);
+			
+			stream.write(bytes);
+			
+			stream.close();
+			
+			fileUploadTempDataProvider.createTempRecord(newFileName, zfgcUser.getUsersId());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			throw new RuntimeException(e.getMessage());
+		}
 	}
 	
 	private void validateFile(MultipartFile file) throws ZfgcInvalidFileException{

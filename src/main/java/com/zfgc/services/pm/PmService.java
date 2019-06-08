@@ -420,7 +420,7 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public void removeConvoFromInbox(TwoFactorKey aesKey, PmConversation convo, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+	public void removeConvoFromInbox(TwoFactorKey aesKey, PmConversation convo, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		aesKey.setUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
@@ -431,7 +431,7 @@ public class PmService extends AbstractService {
 		pmConversationDataProvider.deleteConversationFromBox(convo, zfgcUser);
 	}
 	
-	public void removeUserFromConvo(TwoFactorKey aesKey, Integer convoId, Users remove, Users zfgcUser) throws ZfgcSecurityException, ZfgcNotFoundException, Exception{
+	public void removeUserFromConvo(TwoFactorKey aesKey, Integer convoId, Users remove, Users zfgcUser) throws ZfgcSecurityException, ZfgcNotFoundException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		aesKey.setUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
@@ -545,7 +545,7 @@ public class PmService extends AbstractService {
 		return true;
 	}
 	
-	public void pruneConversations(PmPrune prune, Users zfgcUser) throws Exception{
+	public void pruneConversations(PmPrune prune, Users zfgcUser) throws RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!checkIfAesKeyValid(prune.getTfa(),zfgcUser)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());

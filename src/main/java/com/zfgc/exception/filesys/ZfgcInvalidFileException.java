@@ -1,6 +1,6 @@
 package com.zfgc.exception.filesys;
 
-public class ZfgcInvalidFileException extends Exception {
+public class ZfgcInvalidFileException extends RuntimeException {
 
 	
 	private static final long serialVersionUID = -5072868047496039174L;
