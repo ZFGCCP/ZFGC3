@@ -3,14 +3,19 @@
 		<div class="section-header">
 			<div class="section-title-wrapper">
 				<div class="section-title">Conversation</div>
-				<div class="subsection-title">
+				<div class="subsection-title conversation-subject-wrapper">
 					<div ng-if="vm.editingSubject === false">
 						Subject : <span ng-bind-html="vm.conversation.subject"></span><i class="fas fa-pencil-alt edit-text-icon" ng-click="vm.editSubject()"></i>
 					</div>
 					
 					<div ng-if="vm.editingSubject === true">
 						<form>
-							<span>Subject</span> : <input type="text" ng-model="vm.conversation.subject" class="form-control small-input"/>
+							<span class="display-inline-flex">Subject: </span> 
+							<span class="display-inline-flex">
+								<input type="text" ng-model="vm.conversation.subject" class="form-control subject-edit-box small-input"/>
+								<i ng-click="vm.changeSubject()" class="subject-edit-accept fas fa-check-circle"></i>
+								<i ng-click="vm.editingSubject = false;" class="fas fa-times-circle"></i>
+							</span>
 						</form>
 					</div>
 				</div>

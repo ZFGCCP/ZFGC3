@@ -32,6 +32,18 @@
 	display:inline-block;
 }
 
+.conversation-subject-wrapper{
+	.subject-edit-box{
+		width: 300px;
+    	height: 15px;
+	}
+	
+	.subject-edit-accept{
+		padding-right: 3px;
+    	padding-left: 5px;
+	}
+}
+
 .from-user{
 	display:inline-block;
 	padding-bottom:5px;

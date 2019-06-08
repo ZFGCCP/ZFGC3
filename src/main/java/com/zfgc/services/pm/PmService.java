@@ -642,4 +642,8 @@ public class PmService extends AbstractService {
 	private Boolean isConvoArchived(Integer pmConversationId, Users user) throws RuntimeException {
 		return pmConversationDataProvider.isConvoArchived(pmConversationId, user.getUsersId());
 	}
+	
+	public void updateConversationSubject(Integer convoId, String subject) {
+		pmConversationDataProvider.updateConversationSubject(convoId, subject);
+	}
 }

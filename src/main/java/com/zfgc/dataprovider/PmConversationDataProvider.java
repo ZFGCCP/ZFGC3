@@ -329,4 +329,14 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		
 		return brUserConversationDao.countByExample(null, ex);
 	}
+	
+	public void updateConversationSubject(Integer convoId, String newSubject) {
+		PmConversation convo = new PmConversation();
+		convo.setSubject(newSubject);
+		
+		PmConversationDbObjExample ex = pmConversationDao.getExample();
+		ex.createCriteria().andPmConversationIdEqualTo(convoId);
+		
+		pmConversationDao.updateByExample(convo, ex);
+	}
 }

@@ -68,6 +68,10 @@
 			vm.editingSubject = true;
 		};
 		
+		vm.changeSubject = function(){
+			PmService.updateConversationSubject(vm, vm.conversation);
+		};
+		
 		if($location.search().conversationId && $location.search().conversationId !== null){
 			vm.openConversation($location.search().conversationId);
 		}

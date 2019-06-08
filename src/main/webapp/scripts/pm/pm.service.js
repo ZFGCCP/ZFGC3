@@ -28,6 +28,10 @@
 				url : '/forum/pm/conversation/:conversationId/delete/:usersId',
 				method : 'POST'
 			},
+			newSubject : {
+				url : '/forum/pm/conversation/:conversationId/subject',
+				method : 'PUT'
+			},
 			pruneTemplate : {
 				url : '/forum/pm/convobox/prune/template',
 				method : 'GET'
@@ -238,6 +242,13 @@
 			var usersToInvite = {'aesKey' : {'key' : localStorageService.get('pmKey')}, users : users};
 			var result = pmService.resource.invite({conversationId : conversationId},usersToInvite);
 			return result;
+		};
+		
+		pmService.updateConversationSubject = function(vm, conversation){
+			pmService.resource.newSubject({conversationId : conversation.pmConversationId}, conversation.subject).$promise.then(function(){
+				vm.editingSubject = false;
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Subject updated successfully.','success'));
+			});
 		};
 
 		return pmService;
