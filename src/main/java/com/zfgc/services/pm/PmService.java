@@ -39,8 +39,11 @@ import com.zfgc.model.pm.PmTemplateConfig;
 import com.zfgc.model.pm.PmUsersToAdd;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
+import com.zfgc.requiredfields.pm.PmConversationRequiredFields;
 import com.zfgc.requiredfields.pm.PmPruneRequiredFields;
+import com.zfgc.rules.pm.PmConversationRules;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.sanitization.SanitizationService;
@@ -75,6 +78,15 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	PmPruneRequiredFields pmPruneRequiredFields;
+	
+	@Autowired
+	PmConversationRequiredFields pmConversationRequiredFields;
+	
+	@Autowired
+	PmConversationRules pmConversationRules;
+	
+	@Autowired
+	RuleRunService<PersonalMessage> ruleRunner;
 	
 	private PmBox decryptPmBox(PmBox pmBox, PmKey keys, TwoFactorKey aesKey){
 		String decryptedRsa = ZfgcSecurityUtils.decryptAes(keys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
@@ -212,6 +224,8 @@ public class PmService extends AbstractService {
 			throw new ZfgcNotFoundException();
 		}
 
+		ruleRunner.runRules(null, pmConversationRequiredFields, pmConversationRules, message, user);
+		
 		sendMessage(user, message);
 		
 		if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),user.getUsersId())){
@@ -274,7 +288,7 @@ public class PmService extends AbstractService {
 		
 		if(message.getPmConversationId() == null){
 			try{
-				PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId());
+				PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId(), message.getSubject());
 				message.setPmConversationId(convo.getPmConversationId());
 			}
 			catch(Exception ex){

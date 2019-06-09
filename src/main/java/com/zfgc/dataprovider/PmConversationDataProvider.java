@@ -67,9 +67,10 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	}
 	
 	@Transactional
-	public PmConversation createConversation(Integer initiator){
+	public PmConversation createConversation(Integer initiator, String subject){
 		PmConversation obj = new PmConversation();
 		obj.setStartDt(ZfgcTimeUtils.getToday());
+		obj.setSubject(subject);
 		obj.setInitiatorId(initiator);
 		
 		pmConversationDao.updateOrInsert(obj);

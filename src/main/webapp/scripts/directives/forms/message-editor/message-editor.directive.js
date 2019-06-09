@@ -15,8 +15,12 @@
 			$scope.template = {
 				pmConversationId : $scope.conversation.pmConversationId,
 				receivers : $scope.conversation.participants,
-				subject : ""
+				subject : $scope.conversation.subject
 			};
+			
+			$scope.$watch('conversation.subject', function(){
+				$scope.personalMessage.subject = $scope.conversation.subject;
+			});
 			
 			$scope.conversation.$promise.then(function(data){
 				if(!$scope.getTemplate || $scope.getTemplate === null || $scope.getTemplate === false){

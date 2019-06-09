@@ -58,6 +58,10 @@
 		};
 		
 		ModalService.createValidationErrorPopup = function(errorResponse){
+			ModalService.requiredFieldsErrors = [];
+			ModalService.validationErrors = [];
+			ModalService.ruleCheckErrors = [];
+			
 			if(errorResponse.requiredFieldsErrors.length > 0){
 				ModalService.requiredFieldsErrors = errorResponse.requiredFieldsErrors;
 			}
