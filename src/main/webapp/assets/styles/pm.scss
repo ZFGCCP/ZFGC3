@@ -44,6 +44,20 @@
 	}
 }
 
+.conversation-new-subject-wrapper{
+	padding-top: 10px;
+    padding-left: 20px;
+    
+    .conversation-subject{
+    	display: flex;
+    	align-items: center;
+    	
+    	label{
+    		padding-right: 5px;
+    	}
+    }
+}
+
 .from-user{
 	display:inline-block;
 	padding-bottom:5px;

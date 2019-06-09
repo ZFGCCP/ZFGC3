@@ -9,8 +9,16 @@
 	
 		<div class="section-body">
 			<div class="row conversation-wrapper">
+				<form>
+					<div class="conversation-new-subject-wrapper col-xs-12">
+						<div class="conversation-subject">
+							<label>Subject: </label>
+							<input type="text" class="form-control small-input" ng-model="vm.conversation.subject"/>
+						</div>
+					</div>
+				</form>
 				<div class="conversation-participants-wrapper col-xs-12">
-					<span class="conversation-participants-label">Participants:</span> 
+					<label class="conversation-participants-label">Participants:</label> 
 					<span class="conversation-participants">
 						<user-name-icon ng-repeat="($index, participant) in vm.conversation.participants | limitTo : 6" 
 									    users-id="participant.usersId" 
