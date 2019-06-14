@@ -22,11 +22,17 @@
     
 
     <!-- tables -->
+    <table schema="Zfgc3" tableName="USER_CONNECTION" domainObjectName="UserConnectionDbObj">
+    	<generatedKey column="USER_CONNECTION_ID" sqlStatement="SELECT COALESCE(MAX(USER_CONNECTION_ID) + 1,0) FROM USER_CONNECTION"/>
+    </table>
+    <!--<table schema="Zfgc3" tableName="SYSTEM_DIRECTORIES" domainObjectName="SystemDirectoryDbObj">
+    	<generatedKey column="SYSTEM_DIRECTORY_ID" sqlStatement="SELECT COALESCE(MAX(SYSTEM_DIRECTORY_ID) + 1,0) FROM SYSTEM_DIRECTORIES"/>
+    </table>
     <table schema="Zfgc3" tableName="PM_CONVERSATION" domainObjectName="PmConversationDbObj">
     	<generatedKey column="PM_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(PM_CONVERSATION_ID) + 1,0) FROM PM_CONVERSATION"/>
     </table>
     
-    <!--<table schema="zfgc3" tableName="SYSTEM_SETTINGS" domainObjectName="SystemSettingsDbObj">
+    <table schema="zfgc3" tableName="SYSTEM_SETTINGS" domainObjectName="SystemSettingsDbObj">
     	<generatedKey column="SYSTEM_SETTING_ID" sqlStatement="SELECT MAX(SYSTEM_SETTING_ID) + 1 FROM SYSTEM_SETTINGS"></generatedKey>
     </table>
     

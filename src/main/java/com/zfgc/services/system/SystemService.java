@@ -19,10 +19,12 @@ public class SystemService extends AbstractService{
 	private SystemSettingsDataProvider systemSettingsDataProvider;
 	
 	public static String TIME_ZONE = "";
+	public static String AVATAR_DIRECTORY = "";
 	
 	@PostConstruct
 	public void initializeSystemSettings() {
 		TIME_ZONE = lookups.getLkupValue("TIMEZONE", Integer.parseInt(systemSettingsDataProvider.getSystemValue("TIME_ZONE")));
+		AVATAR_DIRECTORY = systemSettingsDataProvider.getSystemDirectory("AVAGAL");
 	}
 	
 }

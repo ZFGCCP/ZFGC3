@@ -26,6 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.IpDataProvider;
+import com.zfgc.dataprovider.UserConnectionDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -34,6 +35,7 @@ import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.MembersView;
+import com.zfgc.model.users.UserConnection;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
@@ -84,6 +86,9 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	RuleRunService<Users> ruleRunner;
+	
+	@Autowired
+	UserConnectionDataProvider userConnectionDataProvider;
 	
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 

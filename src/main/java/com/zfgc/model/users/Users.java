@@ -80,6 +80,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Avatar avatar;
 	private Date lastLogin;
 	private Integer primaryIp;
+	private Integer userConnectionId;
 	
 	private LkupMemberGroup primaryMemberGroup;
 	
@@ -574,5 +575,13 @@ public class Users extends BaseZfgcModel implements UserDetails {
 
 	public void setPrimaryMemberGroup(LkupMemberGroup primaryMemberGroup) {
 		this.primaryMemberGroup = primaryMemberGroup;
+	}
+
+	public Integer getUserConnectionId() {
+		return userConnectionId;
+	}
+
+	public void setUserConnectionId(Integer userConnectionId) {
+		this.userConnectionId = userConnectionId;
 	}
 }

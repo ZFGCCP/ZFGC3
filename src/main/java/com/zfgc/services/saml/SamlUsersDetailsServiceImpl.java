@@ -17,11 +17,13 @@ import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import com.zfgc.dataprovider.UserConnectionDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Permissions;
+import com.zfgc.model.users.UserConnection;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.users.PermissionsService;
@@ -41,6 +43,9 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 	
 	@Autowired
 	PermissionsService permissionsService;
+	
+	@Autowired
+	UserConnectionDataProvider userConnectionDataProvider;
 	
 	private List<String> roles;
 	 
@@ -117,6 +122,11 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         user.setPermissions(permissionsService.getPermissionsByMemberGroup(memberGroupIds.toArray(new Integer[memberGroupIds.size()])));
         
         usersDataProvider.saveUser(user);
+        
+      	//create a connection entry for the user
+  		UserConnection connection = userConnectionDataProvider.getUserConnectionTemplate(user);
+  		userConnectionDataProvider.insertNewConnection(connection);
+  		user.setUserConnectionId(connection.getUserConnectionId());
         
         return user;
 	}
