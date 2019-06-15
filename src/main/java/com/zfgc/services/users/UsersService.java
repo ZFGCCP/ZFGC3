@@ -355,13 +355,19 @@ public class UsersService extends AbstractService {
 		return members;
 	}
 	
-	public void setUserOnline(Users user) throws RuntimeException{
+	public void setUserOnline(Users user, String sessionId) throws RuntimeException{
 		user.setActiveConnections(user.getActiveConnections() + 1);
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOnline(user);
+		
+		//create a connection entry for the user
+  		UserConnection connection = userConnectionDataProvider.getUserConnectionTemplate(user);
+  		connection.setSessionId(sessionId);
+  		userConnectionDataProvider.insertNewConnection(connection);
+  		user.setUserConnectionId(connection.getUserConnectionId());
 	}
 	
-	public void setUserOffline(Users user) throws Exception{
+	public void setUserOffline(Users user, String sessionId) throws Exception{
 		user.setActiveConnections(user.getActiveConnections() - 1);
 		
 		if(user.getActiveConnections() < 0){
@@ -369,6 +375,8 @@ public class UsersService extends AbstractService {
 		}
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOffline(user);
+		
+		userConnectionDataProvider.deleteUserConnection(sessionId);
 	}
 
 	public Users getNewUserTemplate() {

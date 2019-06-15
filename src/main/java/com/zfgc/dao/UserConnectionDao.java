@@ -51,8 +51,7 @@ public class UserConnectionDao extends AbstractDao<UserConnectionDbObjExample, U
 	@Override
 	public Integer deleteByExample(UserConnection obj,
 			UserConnectionDbObjExample ex) throws RuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		return userConnectionDbObjMapper.deleteByExample(ex);
 	}
 
 	@Override

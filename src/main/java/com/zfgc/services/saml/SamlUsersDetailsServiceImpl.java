@@ -123,11 +123,6 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         
         usersDataProvider.saveUser(user);
         
-      	//create a connection entry for the user
-  		UserConnection connection = userConnectionDataProvider.getUserConnectionTemplate(user);
-  		userConnectionDataProvider.insertNewConnection(connection);
-  		user.setUserConnectionId(connection.getUserConnectionId());
-        
         return user;
 	}
 

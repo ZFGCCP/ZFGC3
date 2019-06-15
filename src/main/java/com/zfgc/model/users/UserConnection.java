@@ -12,6 +12,7 @@ public class UserConnection extends BaseZfgcModel {
     private String osType;
     private String osName;
     private String osVersion;
+    private String sessionId;
     
     private IpAddress ipAddress;
 	
@@ -91,6 +92,14 @@ public class UserConnection extends BaseZfgcModel {
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public String getSessionId() {
+		return sessionId;
+	}
+
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
 	}
 	
 }

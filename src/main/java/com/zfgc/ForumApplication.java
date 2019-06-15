@@ -18,6 +18,7 @@ import org.springframework.web.socket.config.annotation.AbstractWebSocketMessage
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -117,7 +118,7 @@ public class ForumApplication extends SpringBootServletInitializer {
     	
 		@Override
 		public void registerStompEndpoints(StompEndpointRegistry registry) {
-			registry.addEndpoint("/ws").setHandshakeHandler(samlHandshakeHandler).withSockJS();
+			registry.addEndpoint("/ws").setHandshakeHandler(samlHandshakeHandler).addInterceptors(new HttpSessionHandshakeInterceptor()).withSockJS();
 			
 		}
     	

@@ -60,4 +60,10 @@ public class UserConnectionDataProvider extends AbstractDataProvider {
 		return connection;
 	}
 	
+	public void deleteUserConnection(String sessionId) {
+		UserConnectionDbObjExample ex = userConnectionDao.getExample();
+		ex.createCriteria().andSessionIdEqualTo(sessionId);
+		
+		userConnectionDao.deleteByExample(null, ex);
+	}
 }
