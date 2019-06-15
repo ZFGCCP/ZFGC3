@@ -2,6 +2,7 @@ package com.zfgc.services.users;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
@@ -361,6 +362,30 @@ public class UsersService extends AbstractService {
 		usersDataProvider.setUserOnline(user);
 		
 		//create a connection entry for the user
+		try {
+			URL url = new URL("http://api.userstack.com/detect?access_key=" + "198990e1212995a6e75023a0d5c0872f" + "&ua=" + user.getUserAgent());
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setRequestMethod("GET");
+			
+			conn.getResponseCode();
+		    InputStream stream = conn.getErrorStream();
+		    if (stream == null) {
+		        stream = conn.getInputStream();
+		    }
+			
+			BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+			char [] buffer = new char[1000];
+			br.read(buffer);
+			
+			br.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+		catch (RuntimeException ex){
+			throw ex;
+		}
+		
   		UserConnection connection = userConnectionDataProvider.getUserConnectionTemplate(user);
   		connection.setSessionId(sessionId);
   		userConnectionDataProvider.insertNewConnection(connection);

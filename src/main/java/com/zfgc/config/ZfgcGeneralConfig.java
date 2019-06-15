@@ -7,6 +7,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ZfgcGeneralConfig {
 	private String recaptchaV2Key;
 	private String uiUrl;
+	private String userStackApiKey;
 
 	public String getRecaptchaV2Key() {
 		return recaptchaV2Key;
@@ -22,6 +23,14 @@ public class ZfgcGeneralConfig {
 
 	public void setUiUrl(String uiUrl) {
 		this.uiUrl = uiUrl;
+	}
+
+	public String getUserStackApiKey() {
+		return userStackApiKey;
+	}
+
+	public void setUserStackApiKey(String userStackApiKey) {
+		this.userStackApiKey = userStackApiKey;
 	}
 	
 }

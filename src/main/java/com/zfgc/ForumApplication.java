@@ -41,6 +41,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProv
 import com.zfgc.config.XhrSamlEntryPoint;
 import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.config.ZfgcSamlConfig;
+import com.zfgc.interceptors.HttpUserAgentHandshakeInterceptor;
 import com.zfgc.services.saml.SamlHandshakeHandler;
 import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 
@@ -118,7 +119,7 @@ public class ForumApplication extends SpringBootServletInitializer {
     	
 		@Override
 		public void registerStompEndpoints(StompEndpointRegistry registry) {
-			registry.addEndpoint("/ws").setHandshakeHandler(samlHandshakeHandler).addInterceptors(new HttpSessionHandshakeInterceptor()).withSockJS();
+			registry.addEndpoint("/ws").setHandshakeHandler(samlHandshakeHandler).addInterceptors(new HttpUserAgentHandshakeInterceptor()).withSockJS();
 			
 		}
     	

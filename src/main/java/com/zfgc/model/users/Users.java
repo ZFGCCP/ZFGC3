@@ -106,10 +106,12 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@JsonIgnore
 	private UserProfileView savedProfile;
 	
+	@JsonIgnore
+	private String userAgent;
+	
 	//===================
 	//Permissions
 	//===================
-	
 	private boolean hasPerm(String permCode){
 		if(permissions == null){
 			return false;
@@ -583,5 +585,13 @@ public class Users extends BaseZfgcModel implements UserDetails {
 
 	public void setUserConnectionId(Integer userConnectionId) {
 		this.userConnectionId = userConnectionId;
+	}
+	
+	public String getUserAgent() {
+		return userAgent;
+	}
+
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
 	}
 }
