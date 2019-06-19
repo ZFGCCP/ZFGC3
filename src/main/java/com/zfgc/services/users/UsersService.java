@@ -7,6 +7,7 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.CharBuffer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -90,7 +91,7 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	UserConnectionDataProvider userConnectionDataProvider;
-	
+
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
 	public Users getUser(Integer usersId) throws Exception{
@@ -362,32 +363,33 @@ public class UsersService extends AbstractService {
 		usersDataProvider.setUserOnline(user);
 		
 		//create a connection entry for the user
-		try {
-			URL url = new URL("http://api.userstack.com/detect?access_key=" + "198990e1212995a6e75023a0d5c0872f" + "&ua=" + user.getUserAgent());
+		/*try {
+			URL url = new URL("http://api.userstack.com/detect?access_key=" + "198990e1212995a6e75023a0d5c0872f" + "&ua=" + user.getUserAgent().replace(" ", "%20"));
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setRequestMethod("GET");
-			
-			conn.getResponseCode();
-		    InputStream stream = conn.getErrorStream();
-		    if (stream == null) {
-		        stream = conn.getInputStream();
-		    }
-			
+			conn.setRequestProperty("Accept", "application/json");
+			conn.setRequestProperty("User-Agent", "");
+
+		    InputStream stream = conn.getInputStream();
+
 			BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-			char [] buffer = new char[1000];
+			CharBuffer buffer = CharBuffer.allocate(1024);
 			br.read(buffer);
 			
 			br.close();
+			
+			String json = buffer.toString();
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 		catch (RuntimeException ex){
 			throw ex;
-		}
+		}*/
 		
   		UserConnection connection = userConnectionDataProvider.getUserConnectionTemplate(user);
   		connection.setSessionId(sessionId);
+  		connection.setUserAgent(user.getUserAgent());
   		userConnectionDataProvider.insertNewConnection(connection);
   		user.setUserConnectionId(connection.getUserConnectionId());
 	}
@@ -434,6 +436,10 @@ public class UsersService extends AbstractService {
 		LOGGER.info("Resetting all active connection counts to 0...");
 		usersDataProvider.resetActiveConnectionCounts();
 		LOGGER.info("Finished resetting all active connection counts to 0.");
+		
+		LOGGER.info("Clearing out user connections...");
+		userConnectionDataProvider.deleteAllUserConnections();
+		LOGGER.info("Finished clearing out user connections.");
 		
 	}
 }

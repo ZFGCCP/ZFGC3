@@ -66,4 +66,9 @@ public class UserConnectionDataProvider extends AbstractDataProvider {
 		
 		userConnectionDao.deleteByExample(null, ex);
 	}
+	
+	public void deleteAllUserConnections(){
+		UserConnectionDbObjExample ex = userConnectionDao.getExample();
+		userConnectionDao.deleteByExample(null, ex);
+	}
 }
