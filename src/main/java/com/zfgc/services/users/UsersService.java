@@ -2,10 +2,12 @@ package com.zfgc.services.users;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.CharBuffer;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -26,6 +28,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.IpDataProvider;
+import com.zfgc.dataprovider.UserConnectionDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -34,6 +37,7 @@ import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.MembersView;
+import com.zfgc.model.users.UserConnection;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
@@ -85,6 +89,9 @@ public class UsersService extends AbstractService {
 	@Autowired
 	RuleRunService<Users> ruleRunner;
 	
+	@Autowired
+	UserConnectionDataProvider userConnectionDataProvider;
+
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
 	public Users getUser(Integer usersId) throws Exception{
@@ -350,13 +357,44 @@ public class UsersService extends AbstractService {
 		return members;
 	}
 	
-	public void setUserOnline(Users user) throws RuntimeException{
+	public void setUserOnline(Users user, String sessionId) throws RuntimeException{
 		user.setActiveConnections(user.getActiveConnections() + 1);
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOnline(user);
+		
+		//create a connection entry for the user
+		/*try {
+			URL url = new URL("http://api.userstack.com/detect?access_key=" + "198990e1212995a6e75023a0d5c0872f" + "&ua=" + user.getUserAgent().replace(" ", "%20"));
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "application/json");
+			conn.setRequestProperty("User-Agent", "");
+
+		    InputStream stream = conn.getInputStream();
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+			CharBuffer buffer = CharBuffer.allocate(1024);
+			br.read(buffer);
+			
+			br.close();
+			
+			String json = buffer.toString();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+			throw new RuntimeException(ex);
+		}
+		catch (RuntimeException ex){
+			throw ex;
+		}*/
+		
+  		UserConnection connection = userConnectionDataProvider.getUserConnectionTemplate(user);
+  		connection.setSessionId(sessionId);
+  		connection.setUserAgent(user.getUserAgent());
+  		userConnectionDataProvider.insertNewConnection(connection);
+  		user.setUserConnectionId(connection.getUserConnectionId());
 	}
 	
-	public void setUserOffline(Users user) throws Exception{
+	public void setUserOffline(Users user, String sessionId) throws Exception{
 		user.setActiveConnections(user.getActiveConnections() - 1);
 		
 		if(user.getActiveConnections() < 0){
@@ -364,6 +402,8 @@ public class UsersService extends AbstractService {
 		}
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOffline(user);
+		
+		userConnectionDataProvider.deleteUserConnection(sessionId);
 	}
 
 	public Users getNewUserTemplate() {
@@ -396,6 +436,10 @@ public class UsersService extends AbstractService {
 		LOGGER.info("Resetting all active connection counts to 0...");
 		usersDataProvider.resetActiveConnectionCounts();
 		LOGGER.info("Finished resetting all active connection counts to 0.");
+		
+		LOGGER.info("Clearing out user connections...");
+		userConnectionDataProvider.deleteAllUserConnections();
+		LOGGER.info("Finished clearing out user connections.");
 		
 	}
 }

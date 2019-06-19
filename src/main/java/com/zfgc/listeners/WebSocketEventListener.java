@@ -28,6 +28,7 @@ public class WebSocketEventListener {
 		try {
 			WhosOnlineList online = whosOnlineService.getWhosOnline();
 			whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,7 +41,7 @@ public class WebSocketEventListener {
 		try {
 			if(event.getUser() != null){
 				Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
-				usersService.setUserOffline(user);
+				usersService.setUserOffline(user, event.getSessionId());
 			}
 			
 			WhosOnlineList online = whosOnlineService.getWhosOnline();

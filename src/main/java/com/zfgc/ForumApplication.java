@@ -18,6 +18,7 @@ import org.springframework.web.socket.config.annotation.AbstractWebSocketMessage
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
 import org.springframework.web.socket.config.annotation.StompEndpointRegistry;
 import org.springframework.web.socket.server.support.DefaultHandshakeHandler;
+import org.springframework.web.socket.server.support.HttpSessionHandshakeInterceptor;
 import org.dozer.DozerBeanMapper;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,6 +41,7 @@ import com.github.ulisesbocchio.spring.boot.security.saml.configurer.ServiceProv
 import com.zfgc.config.XhrSamlEntryPoint;
 import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.config.ZfgcSamlConfig;
+import com.zfgc.interceptors.HttpUserAgentHandshakeInterceptor;
 import com.zfgc.services.saml.SamlHandshakeHandler;
 import com.zfgc.services.saml.SamlUsersDetailsServiceImpl;
 
@@ -117,7 +119,7 @@ public class ForumApplication extends SpringBootServletInitializer {
     	
 		@Override
 		public void registerStompEndpoints(StompEndpointRegistry registry) {
-			registry.addEndpoint("/ws").setHandshakeHandler(samlHandshakeHandler).withSockJS();
+			registry.addEndpoint("/ws").setHandshakeHandler(samlHandshakeHandler).addInterceptors(new HttpUserAgentHandshakeInterceptor()).withSockJS();
 			
 		}
     	
