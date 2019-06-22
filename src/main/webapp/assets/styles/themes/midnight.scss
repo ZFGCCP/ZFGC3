@@ -275,3 +275,18 @@ a:hover{
 		}
 	}
 }
+
+.whos-online-detail-wrapper{
+	
+	.whos-online:nth-child(odd){
+		background-color:$midnight-zebra-odd;
+	}
+	
+	.whos-online:nth-child(even){
+		background-color:$midnight-zebra-even;
+	}
+	
+	.whos-online:hover{
+		background-color:$midnight-row-hover;
+	}
+}

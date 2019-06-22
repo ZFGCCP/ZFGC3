@@ -256,6 +256,9 @@
     </table>-->
     
     <!-- views -->
+    <table schema="zfgc3" tableName="WHOS_ONLINE_DETAIL_VIEW" domainObjectName="OnlineUserDetailDbObj">
+    </table>
+    
     <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
