@@ -10,6 +10,7 @@
 		
 		directive.link = function($scope,element,attrs){
 			$scope.users = null;
+			$scope.showDetails = false;
 			
 			$scope.updateWhosOnline = function(data){
 				$scope.users = WhosOnlineService.updateWhosOnline(data);
@@ -20,6 +21,12 @@
 				WebsocketService.subscribe("/socket/whosonline", $scope.updateWhosOnline);
 				WebsocketService.send("/forum/usersocket/init",{},{});
 			});
+			
+			$scope.toggleDetails = function(){
+				$scope.showDetails = !$scope.showDetails;
+				
+				$rootScope.$broadcast("WhosOnlineDetailsToggled", $scope.showDetails);
+			};
 		}
 		
 		return directive;
