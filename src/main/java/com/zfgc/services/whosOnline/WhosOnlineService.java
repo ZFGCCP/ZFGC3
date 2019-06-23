@@ -19,4 +19,10 @@ public class WhosOnlineService extends AbstractService {
 		return online;
 	}
 	
+	public WhosOnlineList getWhosOnlineDetailed() throws RuntimeException {
+		WhosOnlineList online = whosOnlineDataProvider.getWhosOnline();
+		
+		return online;
+	}
+	
 }

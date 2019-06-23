@@ -11,21 +11,21 @@
     				password="${mbg.jdbc.password}"
     				userId="${mbg.jdbc.username}"/>
     				
-    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="ZFGC3">
+    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="forum">
     	<property name="enableSubPackages" value="true" />
     </javaModelGenerator>
-    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3">
+    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="forum">
     	<property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="forum" type="XMLMAPPER" />
     
     
 
     <!-- tables -->
-    <table schema="Zfgc3" tableName="USER_CONNECTION" domainObjectName="UserConnectionDbObj">
+    <!--<table schema="Zfgc3" tableName="USER_CONNECTION" domainObjectName="UserConnectionDbObj">
     	<generatedKey column="USER_CONNECTION_ID" sqlStatement="SELECT COALESCE(MAX(USER_CONNECTION_ID) + 1,0) FROM USER_CONNECTION"/>
     </table>
-    <!--<table schema="Zfgc3" tableName="SYSTEM_DIRECTORIES" domainObjectName="SystemDirectoryDbObj">
+    <table schema="Zfgc3" tableName="SYSTEM_DIRECTORIES" domainObjectName="SystemDirectoryDbObj">
     	<generatedKey column="SYSTEM_DIRECTORY_ID" sqlStatement="SELECT COALESCE(MAX(SYSTEM_DIRECTORY_ID) + 1,0) FROM SYSTEM_DIRECTORIES"/>
     </table>
     <table schema="Zfgc3" tableName="PM_CONVERSATION" domainObjectName="PmConversationDbObj">

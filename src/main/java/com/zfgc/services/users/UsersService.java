@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.IpDataProvider;
@@ -92,6 +93,9 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	UserConnectionDataProvider userConnectionDataProvider;
+	
+	@Autowired
+	ZfgcGeneralConfig zfgcGeneralConfig;
 
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
@@ -178,7 +182,7 @@ public class UsersService extends AbstractService {
 					String subject = "New Account Activation For ZFGC";
 					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
 								  "If you think you have received this email in error, please ignore it.<br><br>" +
-								  "http://localhost:8080/forum/zfgcui/useractivation?activationCode=" + user.getEmailActivationCode();
+								  zfgcGeneralConfig.getUiUrl() + "/useractivation?activationCode=" + user.getEmailActivationCode();
 					
 					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
 					zfgcEmailUtils.sendEmail(subject, body, to);
@@ -376,6 +380,7 @@ public class UsersService extends AbstractService {
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(stream));
 			String result = br.readLine();
+			br.close();
 			
 			String[] params = result.split(";");
 			Map<String, String> mappedParams = new HashMap<>();
@@ -386,7 +391,8 @@ public class UsersService extends AbstractService {
 				mappedParams.put(split[0], split.length > 1 ? split[1] : null);
 			}
 			
-			UserConnection onlineUser = new UserConnection();
+			UserConnection onlineUser = userConnectionDataProvider.getUserConnectionTemplate(user);
+	  		onlineUser.setSessionId(sessionId);
 			onlineUser.setAgentName(mappedParams.get("agent_name"));
 			onlineUser.setAgentType(mappedParams.get("agent_type"));
 			onlineUser.setAgentVersion(mappedParams.get("agent_version"));
@@ -396,7 +402,10 @@ public class UsersService extends AbstractService {
 			onlineUser.setOsVersionName(mappedParams.get("os_versionName"));
 			onlineUser.setOsVersionNumber(mappedParams.get("os_versionNumber"));
 			
-			br.close();
+	  		userConnectionDataProvider.insertNewConnection(onlineUser);
+	  		user.setUserConnectionId(onlineUser.getUserConnectionId());
+			
+			
 			
 		} catch (IOException ex) {
 			ex.printStackTrace();
@@ -405,12 +414,6 @@ public class UsersService extends AbstractService {
 		catch (RuntimeException ex){
 			throw ex;
 		}
-		
-  		UserConnection connection = userConnectionDataProvider.getUserConnectionTemplate(user);
-  		connection.setSessionId(sessionId);
-  		connection.setUserAgent(user.getUserAgent());
-  		userConnectionDataProvider.insertNewConnection(connection);
-  		user.setUserConnectionId(connection.getUserConnectionId());
 	}
 	
 	public void setUserOffline(Users user, String sessionId) throws Exception{
