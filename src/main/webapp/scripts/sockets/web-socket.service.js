@@ -15,7 +15,11 @@
 		};
 		
 		service.subscribe = function(subscription, responseCallback){
-			socket.stomp.subscribe(subscription, responseCallback);
+			return socket.stomp.subscribe(subscription, responseCallback);
+		};
+		
+		service.unsubscribe = function(subscription){
+			subscription.unsubscribe();
 		};
 		
 		service.send = function(destination,headers,body){

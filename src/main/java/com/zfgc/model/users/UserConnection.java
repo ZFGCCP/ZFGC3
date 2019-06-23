@@ -6,13 +6,17 @@ public class UserConnection extends BaseZfgcModel {
 
 	private Integer userConnectionId;
     private Integer usersId;
-    private String userAgentVersion;
     private Integer ipAddressId;
-    private String userAgent;
-    private String osType;
-    private String osName;
-    private String osVersion;
     private String sessionId;
+    
+    private String agentType;
+	private String agentName;
+	private String agentVersion;
+	
+	private String osType;
+	private String osName;
+	private String osVersionName;
+	private String osVersionNumber;
     
     private IpAddress ipAddress;
 	
@@ -32,28 +36,12 @@ public class UserConnection extends BaseZfgcModel {
 		this.usersId = usersId;
 	}
 
-	public String getUserAgentVersion() {
-		return userAgentVersion;
-	}
-
-	public void setUserAgentVersion(String userAgentVersion) {
-		this.userAgentVersion = userAgentVersion;
-	}
-
 	public Integer getIpAddressId() {
 		return ipAddressId;
 	}
 
 	public void setIpAddressId(Integer ipAddressId) {
 		this.ipAddressId = ipAddressId;
-	}
-
-	public String getUserAgent() {
-		return userAgent;
-	}
-
-	public void setUserAgent(String userAgent) {
-		this.userAgent = userAgent;
 	}
 
 	public String getOsType() {
@@ -70,14 +58,6 @@ public class UserConnection extends BaseZfgcModel {
 
 	public void setOsName(String osName) {
 		this.osName = osName;
-	}
-
-	public String getOsVersion() {
-		return osVersion;
-	}
-
-	public void setOsVersion(String osVersion) {
-		this.osVersion = osVersion;
 	}
 
 	public IpAddress getIpAddress() {
@@ -100,6 +80,46 @@ public class UserConnection extends BaseZfgcModel {
 
 	public void setSessionId(String sessionId) {
 		this.sessionId = sessionId;
+	}
+
+	public String getAgentType() {
+		return agentType;
+	}
+
+	public void setAgentType(String agentType) {
+		this.agentType = agentType;
+	}
+
+	public String getAgentName() {
+		return agentName;
+	}
+
+	public void setAgentName(String agentName) {
+		this.agentName = agentName;
+	}
+
+	public String getAgentVersion() {
+		return agentVersion;
+	}
+
+	public void setAgentVersion(String agentVersion) {
+		this.agentVersion = agentVersion;
+	}
+
+	public String getOsVersionName() {
+		return osVersionName;
+	}
+
+	public void setOsVersionName(String osVersionName) {
+		this.osVersionName = osVersionName;
+	}
+
+	public String getOsVersionNumber() {
+		return osVersionNumber;
+	}
+
+	public void setOsVersionNumber(String osVersionNumber) {
+		this.osVersionNumber = osVersionNumber;
 	}
 	
 }

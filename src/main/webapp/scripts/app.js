@@ -38,5 +38,6 @@ angular.module('zfgc.modules', [
     'zfgc.error',
     'zfgc.notifications',
     'zfgc.pm',
-    'zfgc.calendar'
+    'zfgc.calendar',
+    'zfgc.online'
 ]);

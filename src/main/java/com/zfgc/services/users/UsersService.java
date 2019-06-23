@@ -25,6 +25,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.IpDataProvider;
@@ -56,6 +57,7 @@ import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
 import com.zfgc.model.avatar.Avatar;
+import com.zfgc.model.online.OnlineUser;
 
 @Service
 public class UsersService extends AbstractService {
@@ -91,6 +93,9 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	UserConnectionDataProvider userConnectionDataProvider;
+	
+	@Autowired
+	ZfgcGeneralConfig zfgcGeneralConfig;
 
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
@@ -177,7 +182,7 @@ public class UsersService extends AbstractService {
 					String subject = "New Account Activation For ZFGC";
 					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
 								  "If you think you have received this email in error, please ignore it.<br><br>" +
-								  "http://localhost:8080/forum/zfgcui/useractivation?activationCode=" + user.getEmailActivationCode();
+								  zfgcGeneralConfig.getUiUrl() + "/useractivation?activationCode=" + user.getEmailActivationCode();
 					
 					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
 					zfgcEmailUtils.sendEmail(subject, body, to);
@@ -363,8 +368,9 @@ public class UsersService extends AbstractService {
 		usersDataProvider.setUserOnline(user);
 		
 		//create a connection entry for the user
-		/*try {
-			URL url = new URL("http://api.userstack.com/detect?access_key=" + "198990e1212995a6e75023a0d5c0872f" + "&ua=" + user.getUserAgent().replace(" ", "%20"));
+		try {
+			URL url = new URL("http://www.useragentstring.com?uas=" + user.getUserAgent().replace(" ", "%20") + "&getText=all");
+			//URL url = new URL("http://api.userstack.com/detect?access_key=" + "198990e1212995a6e75023a0d5c0872f" + "&ua=" + user.getUserAgent().replace(" ", "%20"));
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
@@ -373,25 +379,41 @@ public class UsersService extends AbstractService {
 		    InputStream stream = conn.getInputStream();
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-			CharBuffer buffer = CharBuffer.allocate(1024);
-			br.read(buffer);
-			
+			String result = br.readLine();
 			br.close();
 			
-			String json = buffer.toString();
+			String[] params = result.split(";");
+			Map<String, String> mappedParams = new HashMap<>();
+			
+			for(String param : params) {
+				String[] split = param.split("=");
+				
+				mappedParams.put(split[0], split.length > 1 ? split[1] : null);
+			}
+			
+			UserConnection onlineUser = userConnectionDataProvider.getUserConnectionTemplate(user);
+	  		onlineUser.setSessionId(sessionId);
+			onlineUser.setAgentName(mappedParams.get("agent_name"));
+			onlineUser.setAgentType(mappedParams.get("agent_type"));
+			onlineUser.setAgentVersion(mappedParams.get("agent_version"));
+			
+			onlineUser.setOsName(mappedParams.get("os_name"));
+			onlineUser.setOsType(mappedParams.get("os_type"));
+			onlineUser.setOsVersionName(mappedParams.get("os_versionName"));
+			onlineUser.setOsVersionNumber(mappedParams.get("os_versionNumber"));
+			
+	  		userConnectionDataProvider.insertNewConnection(onlineUser);
+	  		user.setUserConnectionId(onlineUser.getUserConnectionId());
+			
+			
+			
 		} catch (IOException ex) {
 			ex.printStackTrace();
 			throw new RuntimeException(ex);
 		}
 		catch (RuntimeException ex){
 			throw ex;
-		}*/
-		
-  		UserConnection connection = userConnectionDataProvider.getUserConnectionTemplate(user);
-  		connection.setSessionId(sessionId);
-  		connection.setUserAgent(user.getUserAgent());
-  		userConnectionDataProvider.insertNewConnection(connection);
-  		user.setUserConnectionId(connection.getUserConnectionId());
+		}
 	}
 	
 	public void setUserOffline(Users user, String sessionId) throws Exception{

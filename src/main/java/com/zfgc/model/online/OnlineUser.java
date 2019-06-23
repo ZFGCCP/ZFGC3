@@ -1,12 +1,14 @@
 package com.zfgc.model.online;
 
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.users.IpAddress;
 
 public class OnlineUser extends BaseZfgcModel {
 	private Integer usersId;
 	private String displayName;
 	private String primaryMemberGroup;
-	
+	private IpAddress ipAddress;
+
 	public Integer getUsersId() {
 		return usersId;
 	}
@@ -29,6 +31,12 @@ public class OnlineUser extends BaseZfgcModel {
 	}
 	public void setPrimaryMemberGroup(String primaryMemberGroup) {
 		this.primaryMemberGroup = primaryMemberGroup;
+	}
+	public IpAddress getIpAddress() {
+		return ipAddress;
+	}
+	public void setIpAddress(IpAddress ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 	
 	
