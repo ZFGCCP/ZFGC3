@@ -8,7 +8,7 @@ public class OnlineUser extends BaseZfgcModel {
 	private String displayName;
 	private String primaryMemberGroup;
 	private IpAddress ipAddress;
-	
+
 	public Integer getUsersId() {
 		return usersId;
 	}
