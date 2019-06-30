@@ -21,22 +21,18 @@
 		</span>
 		
 		<div class="whos-online-detail-wrapper" uib-accordion  ng-style="{ 'display' : showDetails === true ? 'block' : 'none'}">
-			<div class="whos-online" uib-accordion-group class="panel-default" ng-repeat="($index, user) in users.onlineUsersDetailed">
-				<div uib-accordion-heading><span class="caret-collapsed"><i class="fas fa-plus-square"></i></span> {{user[0].displayName}}</div>
+			<div class="whos-online" uib-accordion-group class="panel-default" ng-repeat="($index, user) in users.onlineUsersDetailed" is-open="user[0].isOpen">
+				<div uib-accordion-heading><span class="caret-collapsed"><i class="fas" ng-class="{'fa-plus-square' : !user[0].isOpen, 'fa-minus-square' : user[0].isOpen}"></i></span> {{user[0].displayName}}</div>
 				<div class="whos-online-session-detail col-xs-12" ng-repeat="($indexU, session) in user">
 					<div class="col-xs-12 col-sm-3">
 						<div class="detail-line">{{session.ip.ipAddress}}</div>
-						<div class="detail-line"><i class="fab fa-windows"></i>{{session.osName === null ? 'Unknown OS' : session.osName}}</div>
-						<div class="detail-line"><i class="fab fa-firefox"></i>{{session.agentName === null ? 'Unknown Browser' : session.agentName}}</div>
+						<div class="detail-line"><span class="icon" ng-bind-html="osTypes[session.osType]"></span><span>{{session.osName === null ? 'Unknown OS' : session.osName}}</span></div>
+						<div class="detail-line"><span class="icon" ng-bind-html="browserTypes[session.agentName].iconHtml"></span><span>{{session.agentName === null ? 'Unknown Browser' : session.agentName}}</span></div>
 					</div>
 					<div class="col-md-9">
 						<div>Viewing the profile of MG-Zero</div>
 					</div>
 				</div>
-			</div>
-			<div class="whos-online" uib-accordion-group class="panel-default">
-				<div uib-accordion-heading><span class="caret-collapsed"><i class="fas fa-plus-square"></i></span> Test Username</div>
-				<div>Other test</div>
 			</div>
 		</div>
 	</div>
