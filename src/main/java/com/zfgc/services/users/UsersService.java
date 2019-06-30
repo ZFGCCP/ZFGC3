@@ -366,12 +366,13 @@ public class UsersService extends AbstractService {
 		user.setActiveConnections(user.getActiveConnections() + 1);
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOnline(user);
-		
+		String result = null;
 		//create a connection entry for the user
 		try {
 			URL url = new URL("http://www.useragentstring.com?uas=" + user.getUserAgent().replace(" ", "%20") + "&getText=all");
 			//URL url = new URL("http://api.userstack.com/detect?access_key=" + "198990e1212995a6e75023a0d5c0872f" + "&ua=" + user.getUserAgent().replace(" ", "%20"));
 			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setConnectTimeout(3000);
 			conn.setRequestMethod("GET");
 			conn.setRequestProperty("Accept", "application/json");
 			conn.setRequestProperty("User-Agent", "");
@@ -379,9 +380,17 @@ public class UsersService extends AbstractService {
 		    InputStream stream = conn.getInputStream();
 
 			BufferedReader br = new BufferedReader(new InputStreamReader(stream));
-			String result = br.readLine();
+			result = br.readLine();
 			br.close();
-			
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		catch (RuntimeException ex){
+			throw ex;
+		}
+		UserConnection onlineUser = userConnectionDataProvider.getUserConnectionTemplate(user);
+		onlineUser.setSessionId(sessionId);
+		if(result != null) {
 			String[] params = result.split(";");
 			Map<String, String> mappedParams = new HashMap<>();
 			
@@ -391,8 +400,6 @@ public class UsersService extends AbstractService {
 				mappedParams.put(split[0], split.length > 1 ? split[1] : null);
 			}
 			
-			UserConnection onlineUser = userConnectionDataProvider.getUserConnectionTemplate(user);
-	  		onlineUser.setSessionId(sessionId);
 			onlineUser.setAgentName(mappedParams.get("agent_name"));
 			onlineUser.setAgentType(mappedParams.get("agent_type"));
 			onlineUser.setAgentVersion(mappedParams.get("agent_version"));
@@ -401,19 +408,10 @@ public class UsersService extends AbstractService {
 			onlineUser.setOsType(mappedParams.get("os_type"));
 			onlineUser.setOsVersionName(mappedParams.get("os_versionName"));
 			onlineUser.setOsVersionNumber(mappedParams.get("os_versionNumber"));
-			
-	  		userConnectionDataProvider.insertNewConnection(onlineUser);
-	  		user.setUserConnectionId(onlineUser.getUserConnectionId());
-			
-			
-			
-		} catch (IOException ex) {
-			ex.printStackTrace();
-			throw new RuntimeException(ex);
 		}
-		catch (RuntimeException ex){
-			throw ex;
-		}
+		
+  		userConnectionDataProvider.insertNewConnection(onlineUser);
+  		user.setUserConnectionId(onlineUser.getUserConnectionId());
 	}
 	
 	public void setUserOffline(Users user, String sessionId) throws Exception{

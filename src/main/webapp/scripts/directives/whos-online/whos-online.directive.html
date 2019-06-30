@@ -11,9 +11,9 @@
 			</span>
 			
 			<div>
-				<span ng-repeat="($index, user) in users.onlineUsers track by $index">
-					<span class="whos-online-user member-group-{{user.primaryMemberGroup}}">
-						<a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
+				<span ng-repeat="($index, user) in users.onlineUsersDetailed">
+					<span class="whos-online-user member-group-{{user[0].primaryMemberGroup}}">
+						<a ui-sref="user-profile({userId : user[0].usersId})">{{user[0].displayName}}</a>
 					</span>
 					<span ng-show="$index < users.onlineUsers.length -1 ">, </span>
 				</span>
@@ -21,23 +21,13 @@
 		</span>
 		
 		<div class="whos-online-detail-wrapper" uib-accordion  ng-style="{ 'display' : showDetails === true ? 'block' : 'none'}">
-			<div class="whos-online" uib-accordion-group class="panel-default">
-				<div uib-accordion-heading><span class="caret-collapsed"><i class="fas fa-plus-square"></i></span> Test Username</div>
-				<div class="whos-online-session-detail col-xs-12">
+			<div class="whos-online" uib-accordion-group class="panel-default" ng-repeat="($index, user) in users.onlineUsersDetailed">
+				<div uib-accordion-heading><span class="caret-collapsed"><i class="fas fa-plus-square"></i></span> {{user[0].displayName}}</div>
+				<div class="whos-online-session-detail col-xs-12" ng-repeat="($indexU, session) in user">
 					<div class="col-xs-12 col-sm-3">
-						<div class="detail-line">192.168.1.1</div>
-						<div class="detail-line"><i class="fab fa-windows"></i>Windows 7</div>
-						<div class="detail-line"><i class="fab fa-firefox"></i>Firefox 67.0.0</div>
-					</div>
-					<div class="col-md-9">
-						<div>Viewing the profile of MG-Zero</div>
-					</div>
-				</div>
-				<div class="whos-online-session-detail col-xs-12">
-					<div class="col-xs-12 col-sm-3">
-						<div>192.168.1.1</div>
-						<div><i class="fab fa-windows"></i>Windows 7</div>
-						<div><i class="fab fa-firefox"></i>Firefox 67.0.0</div>
+						<div class="detail-line">{{session.ip.ipAddress}}</div>
+						<div class="detail-line"><i class="fab fa-windows"></i>{{session.osName === null ? 'Unknown OS' : session.osName}}</div>
+						<div class="detail-line"><i class="fab fa-firefox"></i>{{session.agentName === null ? 'Unknown Browser' : session.agentName}}</div>
 					</div>
 					<div class="col-md-9">
 						<div>Viewing the profile of MG-Zero</div>
