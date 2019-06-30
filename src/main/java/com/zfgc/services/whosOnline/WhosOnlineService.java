@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dataprovider.WhosOnlineDataProvider;
 import com.zfgc.model.online.WhosOnlineList;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.ip.IpAddressService;
 
 @Component
 public class WhosOnlineService extends AbstractService {
@@ -20,7 +21,7 @@ public class WhosOnlineService extends AbstractService {
 	}
 	
 	public WhosOnlineList getWhosOnlineDetailed() throws RuntimeException {
-		WhosOnlineList online = whosOnlineDataProvider.getWhosOnline();
+		WhosOnlineList online = whosOnlineDataProvider.getWhosOnlineDetailed();
 		
 		return online;
 	}

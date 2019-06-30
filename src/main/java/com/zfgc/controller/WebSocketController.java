@@ -35,8 +35,7 @@ public class WebSocketController extends BaseController{
 	@SendTo("/socket/whosonline")
 	public ResponseEntity createUserSession(Principal auth, SimpMessageHeaderAccessor headerAccessor) {
 		String sessionId = headerAccessor.getSessionId();
-		usersService.setUserOnline(zfgcUser(auth), sessionId);
-		WhosOnlineList online = whosOnlineService.getWhosOnline();
+		WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
 		
 		return ResponseEntity.ok(online);
 	}
