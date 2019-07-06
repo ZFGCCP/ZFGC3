@@ -47,6 +47,9 @@ public class CalendarDate extends BaseZfgcModel {
 	
 	public String getDateStampAsString() {
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcFullDateFormat();
+		if(dateStamp == null) {
+			return null;
+		}
 		
 		return sdf.format(dateStamp);
 	}

@@ -14,7 +14,15 @@
 			</div>
 			<div class="calendar-month-wrapper col-xs-10">
 				<div class="calendar-month-selector col-xs-12">
-					
+					<div>
+						<i class="fas fa-caret-square-left"></i>
+					</div>
+					<div>
+						{{vm.calendar.month}}
+					</div>
+					<div>
+						<i class="fas fa-caret-square-right"></i>
+					</div>
 				</div>
 				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week col-xs-12">
 					<span ng-repeat="day in week.daysOfWeek" class="calendar-date" ng-click="vm.changeDate(day)" ng-class="{'disabled' : day.date === null, 'selected' : day.isSelected === true}">
