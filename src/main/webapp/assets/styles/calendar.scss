@@ -1,18 +1,21 @@
 .calendar-day-details{
 	box-shadow: 5px 0px 5px black;
-	height: 519px;
-	margin-top: -19px;
+	height: 650px;
 }
 
 .calendar-month-wrapper{
 
-	padding: 0;
-    margin-top: -19px;
+	padding: 0 !important;
+	height: 650px;
+
+	.calendar-month-selector {
+		height: 50px;
+	}
 
 	.calendar-week{
 		height: 100px;
-   		width: 1120px;
    		border-bottom: 1px solid #1c3171;
+   		padding: 0 !important;
    		
    		.calendar-date{
    			cursor: pointer;
@@ -32,7 +35,7 @@
 
 			}
    		
-   			width: 160px;
+   			width: 14.28%;
     		display: inline-block;
     		height: 100px;
     		border-right: 1px solid #1c3171;

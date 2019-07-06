@@ -4,7 +4,7 @@
 			<div class="section-title">Calendar</div>
 		</div>
 	</div>
-	<div class="section-body">
+	<div class="section-body no-padding">
 		<div class="row">
 			<div class="calendar-day-details col-xs-2">
 				<div class="date-wrapper">
@@ -13,7 +13,10 @@
 				</div>
 			</div>
 			<div class="calendar-month-wrapper col-xs-10">
-				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week">
+				<div class="calendar-month-selector col-xs-12">
+					
+				</div>
+				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week col-xs-12">
 					<span ng-repeat="day in week.daysOfWeek" class="calendar-date" ng-click="vm.changeDate(day)" ng-class="{'disabled' : day.date === null, 'selected' : day.isSelected === true}">
 						<span class="date-wrapper">					
 							{{day.date}}
