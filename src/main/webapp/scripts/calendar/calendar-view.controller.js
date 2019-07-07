@@ -11,7 +11,6 @@
 		
 		vm.changeDate = function(date){
 			CalendarService.changeDate(vm, date);
-			vm.toggleDayDetails();
 		};
 		
 		vm.toggleDayDetails = function(){

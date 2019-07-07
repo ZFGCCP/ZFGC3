@@ -6,7 +6,7 @@
 	</div>
 	<div class="section-body no-padding">
 		<div class="row">
-			<div class="calendar-day-details col-md-2">
+			<div class="calendar-day-details col-sm-2">
 				<div class="date-wrapper">
 					<h3>{{vm.calendar.selectedDate.dateStampAsString}}</h3>
 					<h4>{{vm.calendar.selectedDate.dayOfWeek}}</h4>
@@ -31,7 +31,7 @@
 					</div>
 				</div>
 				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week col-xs-12">
-					<span ng-repeat="day in week.daysOfWeek" class="calendar-date" ng-click="vm.changeDate(day)" ng-class="{'disabled' : day.date === null, 'selected' : day.isSelected === true}">
+					<span ng-repeat="day in week.daysOfWeek" class="calendar-date" ng-click="vm.changeDate(day); vm.toggleDayDetails();" ng-class="{'disabled' : day.date === null, 'selected' : day.isSelected === true}">
 						<span class="date-wrapper">					
 							{{day.date}}
 						</span>
