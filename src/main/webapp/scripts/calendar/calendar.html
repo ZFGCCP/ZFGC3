@@ -6,22 +6,28 @@
 	</div>
 	<div class="section-body no-padding">
 		<div class="row">
-			<div class="calendar-day-details col-xs-2">
+			<div class="calendar-day-details col-md-2">
 				<div class="date-wrapper">
 					<h3>{{vm.calendar.selectedDate.dateStampAsString}}</h3>
 					<h4>{{vm.calendar.selectedDate.dayOfWeek}}</h4>
 				</div>
 			</div>
-			<div class="calendar-month-wrapper col-xs-10">
+			<div class="calendar-month-wrapper col-xs-12 col-md-10">
+				<div class="calendar-mobile-day-details" ng-class="{'open' : vm.showDayDetails}">
+					<h3>{{vm.calendar.selectedDate.dateStampAsString}}</h3>
+					<h4>{{vm.calendar.selectedDate.dayOfWeek}}</h4>
+					<div ng-click="vm.toggleDayDetails()">X</div>
+				</div>
+			
 				<div class="calendar-month-selector col-xs-12">
 					<div>
-						<i class="fas fa-caret-square-left"></i>
+						<i ng-click="vm.changeMonth(-1)"class="fas fa-caret-square-left"></i>
 					</div>
 					<div>
-						{{vm.calendar.month}}
+						{{vm.calendar.month}}, {{vm.calendar.year}}
 					</div>
 					<div>
-						<i class="fas fa-caret-square-right"></i>
+						<i ng-click="vm.changeMonth(1)" class="fas fa-caret-square-right"></i>
 					</div>
 				</div>
 				<div ng-repeat="week in vm.calendar.weeks" class="calendar-week col-xs-12">

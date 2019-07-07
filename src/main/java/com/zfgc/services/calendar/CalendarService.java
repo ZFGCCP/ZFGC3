@@ -65,6 +65,13 @@ public class CalendarService extends AbstractService{
 			
 			result.getWeeks().add(week);
 			
+			if(dateLoop == 1) {
+				Calendar selected = Calendar.getInstance();
+				selected.setTime(week.getDaysOfWeek().get(0).getDateStamp());
+				result.setMonthIndex(selected.get(Calendar.MONTH) + 1);
+				result.setYear(selected.get(Calendar.YEAR));
+			}
+			
 			if(week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate() != null) {
 				dateLoop = week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate() + 1;
 			}
@@ -85,9 +92,6 @@ public class CalendarService extends AbstractService{
 				if(date.getDate() != null && date.getDate().equals(selectedDate)) {
 					result.setSelectedDate(date);
 					date.setIsSelected(true);
-					Calendar selected = Calendar.getInstance();
-					selected.setTime(date.getDateStamp());
-					result.setMonthIndex(selected.get(Calendar.MONTH) + 1);
 					break;
 				}
 			}

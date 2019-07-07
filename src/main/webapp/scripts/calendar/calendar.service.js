@@ -28,6 +28,19 @@
 		         ].join('/');
 		};
 		
+		CalendarService.formatDate = function(day, month, year){
+			return [(month>9 ? '' : '0') + month,
+				(day>9 ? '' : '0') + day,
+				year
+	         ].join('/');
+		};
+		
+		CalendarService.getMonth = function(month, year){
+			var formattedDate = CalendarService.formatDate(1, month, year);
+			
+			return CalendarService.resource.get({viewTypeId: 0, startingDt: formattedDate});
+		};
+		
 		CalendarService.changeDate = function(vm, date){
 			if(date.date !== null){
 				vm.calendar.selectedDate = date;

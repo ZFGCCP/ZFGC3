@@ -12,6 +12,7 @@ public class CalendarMonth extends BaseZfgcModel {
 	private List<UpcomingCalendar> events;
 	private CalendarDate selectedDate;
 	private Integer monthIndex;
+	private Integer year;
 	
 	public CalendarDate getSelectedDate() {
 		return selectedDate;
@@ -66,6 +67,14 @@ public class CalendarMonth extends BaseZfgcModel {
 
 	public void setMonthIndex(Integer monthIndex) {
 		this.monthIndex = monthIndex;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 }

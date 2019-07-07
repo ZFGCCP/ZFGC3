@@ -51,13 +51,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
+	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	    
 	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
-	    
-	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
@@ -75,11 +75,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
@@ -87,9 +85,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
+	    
+	"./src/main/webapp/scripts/whos-online/online.module.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -102,8 +104,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/activation.controller.js",
 	    
 	"./src/main/webapp/scripts/sockets/web-socket.service.js",
-	    
-	"./src/main/webapp/scripts/whos-online/online.module.js",
 	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
@@ -127,9 +127,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
 	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
-	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
@@ -167,17 +167,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
-	"./src/main/webapp/scripts/whos-online/online.html",
-	    
 	"./src/main/webapp/scripts/users/activation.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
+	"./src/main/webapp/scripts/whos-online/online.html",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
+	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
 	    
@@ -185,11 +187,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
