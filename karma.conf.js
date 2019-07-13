@@ -75,15 +75,21 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar.module.js",
+	    
+	"./src/main/webapp/scripts/directives/event-list/event-list.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -147,11 +153,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/main.controller.js",
 	    
-	"./src/main/webapp/scripts/calendar/calendar.module.js",
-	    
 	"./src/main/webapp/scripts/calendar/calendar.service.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
+	    
+	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -181,15 +187,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
+	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    

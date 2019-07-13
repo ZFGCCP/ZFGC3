@@ -1,3 +1,7 @@
+.day-events{
+	margin-top: 10px;
+}
+
 .calendar-day-details{
 	@media(max-width: 767px){
 		display: none;
@@ -23,6 +27,23 @@
 		position: absolute;
     	width: 100%;
     	height: 350px;
+    	
+    	.mobile-header{
+    		display: flex;
+    		justify-content: space-between;
+    		padding: 5px;
+    		
+    		.fas{
+    			font-size: 35px;
+    			text-shadow: 2px 2px 3px black;
+    			cursor: pointer;
+    			
+    			&:hover{
+    				text-shadow: 0 0 0 black;
+    				color: #fff;
+    			}
+    		}
+    	}
 		
 		&.open{
 			@media(max-width: 767px){
@@ -97,9 +118,19 @@
     			margin: 20px 0 0 5px;
 			    
 			    .event{
+			    	@media(max-width: 767px){
+			    		margin-bottom: 3px;
+			    	}
+			    
 			   		margin-bottom: 5px;
 			   		
 			   		.event-circle{
+			   			@media(max-width:767px){
+			   				height: 2px;
+			   				border-radius: 0;
+			   				display: block;
+			   			}
+			   		
 			   			width: 10px;
 					    height: 10px;
 					    background-color: #ff7ff7;
@@ -108,6 +139,10 @@
 			   		}
 			   		
 			   		.event-name{
+			   			@media(max-width:767px){
+			   				display: none;
+			   			}
+			   		
 			   			display:inline-flex;
 			   		}
 			    }

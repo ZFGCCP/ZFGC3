@@ -10,13 +10,22 @@
 				<div class="date-wrapper">
 					<h3>{{vm.calendar.selectedDate.dateStampAsString}}</h3>
 					<h4>{{vm.calendar.selectedDate.dayOfWeek}}</h4>
+					
+					<event-list events="vm.calendar.selectedDate.events"></event-list>
 				</div>
 			</div>
 			<div class="calendar-month-wrapper col-xs-12 col-md-10">
 				<div class="calendar-mobile-day-details" ng-class="{'open' : vm.showDayDetails}">
-					<h3>{{vm.calendar.selectedDate.dateStampAsString}}</h3>
-					<h4>{{vm.calendar.selectedDate.dayOfWeek}}</h4>
-					<div ng-click="vm.toggleDayDetails()">X</div>
+					<div class="mobile-header">
+						<div>
+							<h3>{{vm.calendar.selectedDate.dateStampAsString}}</h3>
+							<h4>{{vm.calendar.selectedDate.dayOfWeek}}</h4>
+						</div>
+						<div ng-click="vm.toggleDayDetails()"><i class="fas fa-window-close"></i></div>
+					</div>
+					<div class="mobile-body">
+						<event-list events="vm.calendar.selectedDate.events"></event-list>
+					</div>
 				</div>
 			
 				<div class="calendar-month-selector col-xs-12">
