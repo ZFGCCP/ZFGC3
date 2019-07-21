@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($rootScope, $resource, $window, $state, $timeout, NotificationsService, vcRecaptchaService){
+	function UserService($rootScope, $resource, $window, $state, $timeout, NotificationsService, vcRecaptchaService, localStorageService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId', 'activationCode' : '@activationCode'},
@@ -92,11 +92,17 @@
 				   vcRecaptchaService.getResponse() !== "";
 		};
 		
-		UserService.register = function(user){
+		UserService.register = function(vm, user){
 			if(vcRecaptchaService.getResponse() === ""){ //if string is empty
                 return null;
             }else {
             	user.gResponseToken = vcRecaptchaService.getResponse();
+            	
+            	//generate RSA pair using the user's pmkey
+            	var userRSAPair = cryptico.generateRSAKey(vm.userPmKey,1024);
+            	var publicKey = cryptico.publicKeyString(userRSAPair);
+            	user.pmPubKey = publicKey;
+            	localStorageService.set('pmKey', sjcl.hash.sha256.hash(vm.userPmKey));
             	return UserService.resource.newUser(user);
             }
 		                                      
@@ -287,5 +293,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$rootScope','$resource','$window','$state','$timeout','NotificationsService','vcRecaptchaService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','$state','$timeout','NotificationsService','vcRecaptchaService','localStorageService',UserService])
 })();

@@ -33,7 +33,7 @@
 		
 		vm.newUser= function(){
 			vm.setDisplayNameOnSubmit();
-			var registered = UserService.register(vm.user);
+			var registered = UserService.register(vm, vm.user);
 			
 			if(registered !== null){
 				registered.$promise.then(function(data){

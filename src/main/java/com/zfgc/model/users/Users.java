@@ -81,6 +81,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Date lastLogin;
 	private Integer primaryIp;
 	private Integer userConnectionId;
+	private String pmPubKey;
 	
 	private LkupMemberGroup primaryMemberGroup;
 	
@@ -593,5 +594,13 @@ public class Users extends BaseZfgcModel implements UserDetails {
 
 	public void setUserAgent(String userAgent) {
 		this.userAgent = userAgent;
+	}
+
+	public String getPmPubKey() {
+		return pmPubKey;
+	}
+
+	public void setPmPubKey(String pmPubKey) {
+		this.pmPubKey = pmPubKey;
 	}
 }

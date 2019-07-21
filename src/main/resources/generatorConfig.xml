@@ -22,7 +22,19 @@
     
 
     <!-- tables -->
-    <!--<table schema="Zfgc3" tableName="USER_CONNECTION" domainObjectName="UserConnectionDbObj">
+    <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
+        <property name="virtualKeyColumns" value="USERS_ID" />
+    	<generatedKey column="users_id" sqlStatement="SELECT MAX(USERS_ID) + 1 FROM users"/>
+    	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="PM_EMAIL_NOTIF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <!--<table schema="Zfgc3" tableName="PERSONAL_MESSAGE" domainObjectName="PersonalMessageDbObj">
+    	<generatedKey column="PERSONAL_MESSAGE_ID" sqlStatement="SELECT COALESCE(MAX(PERSONAL_MESSAGE_ID) + 1,0) FROM PERSONAL_MESSAGE"/>
+    	<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="SEND_COPY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <table schema="Zfgc3" tableName="USER_CONNECTION" domainObjectName="UserConnectionDbObj">
     	<generatedKey column="USER_CONNECTION_ID" sqlStatement="SELECT COALESCE(MAX(USER_CONNECTION_ID) + 1,0) FROM USER_CONNECTION"/>
     </table>
     <table schema="Zfgc3" tableName="SYSTEM_DIRECTORIES" domainObjectName="SystemDirectoryDbObj">
@@ -256,10 +268,10 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="WHOS_ONLINE_DETAIL_VIEW" domainObjectName="OnlineUserDetailDbObj">
+    <!--<table schema="zfgc3" tableName="WHOS_ONLINE_DETAIL_VIEW" domainObjectName="OnlineUserDetailDbObj">
     </table>
     
-    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
