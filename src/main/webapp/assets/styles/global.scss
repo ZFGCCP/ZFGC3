@@ -1,13 +1,14 @@
 .container{
-	@media (min-width: 768px){
+	@media (min-width: 950px){
 	    width: 90%;
    		margin-left: auto;
     	padding: 0;
     	margin-right: 0;
 	}
 
-	@media(max-width:767px){
+	@media(max-width:950px){
 		padding:0 !important;
+		width: 100%;
 	}
 }
 
@@ -18,6 +19,9 @@
     
     
     .left-nav-panel{
+	    @media(max-width: 950px){
+			display:none;
+		}
     	z-index: 99;
     
     	.panel-group{

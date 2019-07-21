@@ -11,6 +11,8 @@ public class CalendarMonth extends BaseZfgcModel {
 	private Integer currentWeekIndex = 0;
 	private List<UpcomingCalendar> events;
 	private CalendarDate selectedDate;
+	private Integer monthIndex;
+	private Integer year;
 	
 	public CalendarDate getSelectedDate() {
 		return selectedDate;
@@ -48,6 +50,31 @@ public class CalendarMonth extends BaseZfgcModel {
 
 	public void setEvents(List<UpcomingCalendar> events) {
 		this.events = events;
+	}
+
+	public String getMonth() {
+		if(selectedDate != null) {
+			String month = selectedDate.getDateStampAsString().substring(0, selectedDate.getDateStampAsString().indexOf(' '));
+			return month;
+		}
+		
+		return "";
+	}
+
+	public Integer getMonthIndex() {
+		return monthIndex;
+	}
+
+	public void setMonthIndex(Integer monthIndex) {
+		this.monthIndex = monthIndex;
+	}
+
+	public Integer getYear() {
+		return year;
+	}
+
+	public void setYear(Integer year) {
+		this.year = year;
 	}
 
 }

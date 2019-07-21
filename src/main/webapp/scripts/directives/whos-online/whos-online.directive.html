@@ -7,7 +7,7 @@
 	<div class="section-body no-padding">
 		<span class="whos-online-wrapper" ng-style="{ 'display' : showDetails === true ? 'none' : 'block'}">
 			<span>
-				<label><span ng-bind="users.onlineUsers.length"></span> users online</label>
+				<label><span ng-bind="users.onlineUsersDetailed.length"></span> users online</label>
 			</span>
 			
 			<div>
@@ -15,7 +15,7 @@
 					<span class="whos-online-user member-group-{{user[0].primaryMemberGroup}}">
 						<a ui-sref="user-profile({userId : user[0].usersId})">{{user[0].displayName}}</a>
 					</span>
-					<span ng-show="$index < users.onlineUsers.length -1 ">, </span>
+					<span ng-show="$index < users.onlineUsersDetailed.length -1 ">, </span>
 				</span>
 			</div>
 		</span>

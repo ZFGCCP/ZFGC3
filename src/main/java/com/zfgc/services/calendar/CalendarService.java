@@ -28,6 +28,8 @@ public class CalendarService extends AbstractService{
 	@Autowired
 	private CalendarDataProvider calendarDataProvider;
 	
+	private final Integer WEEKS_PER_MONTH = 6;
+	
 	Logger LOGGER = LogManager.getLogger(CalendarService.class);
 	
 	public List<UpcomingCalendar> getUpcomingCalendarEvents(Boolean birthDay, Users user){
@@ -48,6 +50,7 @@ public class CalendarService extends AbstractService{
 		Integer year = cal.get(Calendar.YEAR);
 		
 		Integer numWeeks = ZfgcTimeUtils.weeksInMonth(month, year);
+		Integer blankWeeks = WEEKS_PER_MONTH - numWeeks;
 		int selectedDate = cal.get(Calendar.DATE);
 		
 		//get all events
@@ -62,9 +65,25 @@ public class CalendarService extends AbstractService{
 			
 			result.getWeeks().add(week);
 			
+			if(dateLoop == 1) {
+				Calendar selected = Calendar.getInstance();
+				selected.setTime(week.getDaysOfWeek().get(0).getDateStamp());
+				result.setMonthIndex(selected.get(Calendar.MONTH) + 1);
+				result.setYear(selected.get(Calendar.YEAR));
+			}
+			
 			if(week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate() != null) {
 				dateLoop = week.getDaysOfWeek().get(week.getDaysOfWeek().size() - 1).getDate() + 1;
 			}
+		}
+		
+		for(int i = 0; i < blankWeeks; i++) {
+			CalendarWeek week = new CalendarWeek();
+			
+			for(int j = 0; j < 7; j++) {
+				week.getDaysOfWeek().add(new CalendarDate());
+			}
+			result.getWeeks().add(week);
 		}
 		
 		//get the date object of the selected date
@@ -114,8 +133,6 @@ public class CalendarService extends AbstractService{
 		LOGGER.info(internalCal.get(Calendar.MONTH));
 		
 		for(int i = firstDayOfWeek; i <= lastDayOfWeek; i++) {
-			
-			
 			CalendarDate date = new CalendarDate();
 			
 			if(i >= 1 && i <= internalCal.getActualMaximum(Calendar.DAY_OF_MONTH)) {
