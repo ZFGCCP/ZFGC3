@@ -7,6 +7,7 @@ public class BrUserConversation extends BaseZfgcModel {
 	public Integer usersId;
 	public Integer pmConversationId;
 	public Boolean readFlag = false;
+	private String convoKeyRsaEnc;
 	
 	public Boolean getReadFlag() {
 		return readFlag;
@@ -30,6 +31,12 @@ public class BrUserConversation extends BaseZfgcModel {
 	}
 	public void setPmConversationId(Integer pmConversationId) {
 		this.pmConversationId = pmConversationId;
+	}
+	public String getConvoKeyRsaEnc() {
+		return convoKeyRsaEnc;
+	}
+	public void setConvoKeyRsaEnc(String convoKeyRsaEnc) {
+		this.convoKeyRsaEnc = convoKeyRsaEnc;
 	}
 	
 }

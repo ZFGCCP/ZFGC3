@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import javax.crypto.spec.SecretKeySpec;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,6 +40,7 @@ import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
 import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.users.Users;
+import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
@@ -78,6 +81,9 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		BrUserConversation userToConvoMapping = new BrUserConversation();
 		userToConvoMapping.setUsersId(initiator);
 		userToConvoMapping.setPmConversationId(obj.getPmConversationId());
+		SecretKeySpec aes = ZfgcSecurityUtils.generateAesKey(ZfgcSecurityUtils.generateCryptoString(128));
+		//ZfgcSecurityUtils.generateRsaPair()
+		
 		brUserConversationDao.updateOrInsert(userToConvoMapping);
 		
 		return obj;
