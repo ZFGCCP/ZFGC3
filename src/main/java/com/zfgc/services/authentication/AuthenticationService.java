@@ -14,6 +14,7 @@ import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
+import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.pm.PmKey;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.AuthToken;
@@ -26,11 +27,15 @@ import com.zfgc.services.lookups.LookupService;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
+import java.security.Key;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
+import java.security.spec.InvalidKeySpecException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 @Service
@@ -52,6 +57,8 @@ public class AuthenticationService  extends AbstractService {
 	
 	@Autowired
 	private PmKeyDataProvider pmKeyDataProvider;
+	
+	private Map<Integer, String> userPmAuthCheck = new HashMap<>();
 	
 	public String createPasswordHash(String password, String salt) throws RuntimeException{
 		String hashThis = password + salt;
@@ -235,5 +242,42 @@ public class AuthenticationService  extends AbstractService {
 		}
 		
 		return decrypted.equals(PM_PARITY_WORD);
+	}
+	
+	public String createUserPmCheck(Users zfgcUser){
+		String userString = userPmAuthCheck.containsKey(zfgcUser.getUsersId()) ? 
+						    userPmAuthCheck.get(zfgcUser.getUsersId()) : ZfgcSecurityUtils.generateCryptoString(16);
+		
+		if(userPmAuthCheck.containsKey(zfgcUser.getUsersId())) {
+			userString = userPmAuthCheck.get(zfgcUser.getUsersId());
+		}
+		else {
+			userString = ZfgcSecurityUtils.generateCryptoString(16);
+			userPmAuthCheck.put(zfgcUser.getUsersId(), userString);
+		}
+		
+		//get user's public key and ecrypt the userString
+		try {
+			Key rsa = ZfgcSecurityUtils.stringToRsaKey(pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId()).getPmPubKeyRsa());
+			return ZfgcSecurityUtils.encryptRsa(userString, rsa);
+		} catch (NoSuchAlgorithmException | InvalidKeySpecException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	
+	public Boolean checkUserPmCheck(String auth, Users zfgcUser) {
+		if(!userPmAuthCheck.containsKey(zfgcUser.getUsersId())) {
+			throw new ZfgcUnauthorizedException();
+		}
+		
+		String unencrypted = userPmAuthCheck.get(zfgcUser.getUsersId());
+		
+		if(!unencrypted.equals(auth)) {
+			throw new ZfgcInvalidAesKeyException(auth);
+		}
+
+		userPmAuthCheck.remove(zfgcUser.getUsersId());
+		return true;
+		
 	}
 }

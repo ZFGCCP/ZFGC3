@@ -72,6 +72,12 @@ public class PmController extends BaseController {
 		return ResponseEntity.ok().build();
 	}
 	
+	@RequestMapping(value="/auth/retrievePmAuth", method=RequestMethod.GET, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_USER')")
+	public ResponseEntity retrievePmAuth() {
+		return ResponseEntity.status(HttpStatus.OK).body(authenticationService.createUserPmCheck(zfgcUser()));
+	}
+	
 	@RequestMapping(value="/auth", method=RequestMethod.POST, produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity authenticatePmKey(@RequestBody TwoFactorKey aes){

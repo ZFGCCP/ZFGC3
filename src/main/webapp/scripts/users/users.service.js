@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($rootScope, $resource, $window, $state, $timeout, $cookies, NotificationsService, vcRecaptchaService){
+	function UserService($rootScope, $resource, $window, $state, $timeout, NotificationsService, vcRecaptchaService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId', 'activationCode' : '@activationCode'},
@@ -102,7 +102,8 @@
             	var userRSAPair = cryptico.generateRSAKey(vm.userPmKey,1024);
             	var publicKey = cryptico.publicKeyString(userRSAPair);
             	user.pmPubKey = publicKey;
-            	$cookies.put('pmKey',vm.userPmKey,{'samesite' : 'strict'})
+            	
+            	$window.sessionStorage.setItem('PmKey', vm.userPmKey);
 
             	return UserService.resource.newUser(user);
             }
@@ -294,5 +295,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$rootScope','$resource','$window','$state','$timeout','$cookies','NotificationsService','vcRecaptchaService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','$state','$timeout','NotificationsService','vcRecaptchaService',UserService])
 })();
