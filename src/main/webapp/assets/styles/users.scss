@@ -4,13 +4,14 @@
 		z-index: 9;
 		position: sticky;
 		top: 0;
-    	height: 75px;
     	margin-bottom: 20px;
     	box-shadow: 3px 10px 10px black;
 	}
 
 	.user-left-panel-wrap{
-		margin-left: 20px !important;
+		@media(min-width: 769px){
+			margin-left: 20px !important;
+		}
 		
 		.user-avatar-wrap{
 			.user-avatar{
@@ -303,4 +304,30 @@
 
 .reg-success{
 	padding: 5px;
+}
+
+.mobile-user-bar{
+	@media(min-width: 769px){
+		display: none;
+	}
+	
+	display: flex;
+	justify-content: space-between;
+	padding-bottom: 5px;
+    padding-top: 10px;
+	
+	.mobile-user-nav{
+		display:flex;
+		flex-direction:column;
+		align-items:center;
+	
+		i{
+			font-size:20px;
+		}
+		
+		.mobile-nav-label{
+			font-size: 9px;
+		}
+	}
+	
 }
