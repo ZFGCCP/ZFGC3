@@ -47,9 +47,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -83,15 +83,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
-	    
-	"./src/main/webapp/scripts/calendar/calendar.module.js",
-	    
-	"./src/main/webapp/scripts/directives/event-list/event-list.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
@@ -123,19 +117,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pm.service.js",
 	    
+	"./src/main/webapp/scripts/modal/modal.service.js",
+	    
+	"./src/main/webapp/scripts/modal/modal.controller.js",
+	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.service.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
-	"./src/main/webapp/scripts/modal/modal.service.js",
-	    
-	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
-	    
-	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
@@ -143,21 +135,23 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum-post.service.js",
 	    
+	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
-	    
 	"./src/main/webapp/scripts/error/error.module.js",
+	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/common/server-config.service.js",
 	    
 	"./src/main/webapp/scripts/common/main.controller.js",
 	    
+	"./src/main/webapp/scripts/calendar/calendar.module.js",
+	    
 	"./src/main/webapp/scripts/calendar/calendar.service.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
-	    
-	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -185,13 +179,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
-	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
-	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
@@ -200,6 +190,10 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
+	    
+	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
@@ -216,10 +210,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/modal/templates/modalUserTitleCard.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
-	    
-	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
-	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
@@ -253,9 +243,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
 	    

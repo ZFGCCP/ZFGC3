@@ -294,3 +294,19 @@ a:hover{
 		background-color:$midnight-row-hover;
 	}
 }
+
+.mobile-user-popover{
+	background-color:$midnight-section-body-bg-color;
+
+	.nav-item:nth-child(odd){
+		background-color:$midnight-zebra-odd;
+	}
+	
+	.nav-item:nth-child(even){
+		background-color:$midnight-zebra-even;
+	}
+	
+	.nav-item:hover{
+		background-color:$midnight-row-hover;
+	}
+}

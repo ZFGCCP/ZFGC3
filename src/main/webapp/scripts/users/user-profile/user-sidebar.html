@@ -34,7 +34,7 @@
 		<i class="fas fa-ellipsis-h"></i></span>
 	</div>
 
-	<div class="mobile-user-nav" ng-repeat="tab in vm.navTabs">
+	<div class="mobile-user-nav" ng-repeat="tab in vm.navTabs" ng-click="vm.openNav(tab)">
 		<i class="{{tab.faIcon}}"></i>
 		<div class="mobile-nav-label">{{tab.title}}</div>
 	</div>

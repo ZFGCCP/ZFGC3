@@ -331,3 +331,20 @@
 	}
 	
 }
+
+.mobile-user-popover{
+	display: block;
+    position: absolute;
+    left: 0;
+    width: 100%;
+    z-index: 8;
+    height: 100%;
+    
+    .nav-item{
+    	height: 40px;
+    	font-size: 15px;
+    	display: flex;
+    	align-items: center;
+    	cursor: pointer;
+    }
+}
