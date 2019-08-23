@@ -12,6 +12,7 @@ public class NavTab extends BaseZfgcModel {
 	private String title;
 	private Boolean active;
 	private Boolean allowSelfFlag;
+	private String faIcon;
 	
 	private List<NavTab> subTabs = new ArrayList<>();
 	
@@ -85,6 +86,16 @@ public class NavTab extends BaseZfgcModel {
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+
+	public String getFaIcon() {
+		return faIcon;
+	}
+
+
+	public void setFaIcon(String faIcon) {
+		this.faIcon = faIcon;
 	}
 
 }

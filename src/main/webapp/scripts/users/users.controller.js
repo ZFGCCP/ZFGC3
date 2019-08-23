@@ -84,6 +84,11 @@
 			return UserService.canSendPmToUser(vm);
 		};
 		
+		vm.openNav = function(tab){
+			vm.tabDropdown = tab;
+			vm.navOpen = !vm.navOpen;
+		};
+		
 		 var w = angular.element($window);
          w.bind('resize', function () {
              
