@@ -1,5 +1,7 @@
 <div class="mobile-user-popover" ng-hide="!vm.navOpen">
-	<div class="nav-item" ng-repeat="tab in vm.tabDropdown.subTabs" ng-click="vm.tabClick(vm.tabDropdown, tab); vm.navOpen = false">
+	<div ng-if="vm.showNav" class="nav-item" ng-repeat="tab in vm.tabDropdown.subTabs" ng-click="vm.tabClick(vm.tabDropdown, tab); vm.navOpen = false">
 		<span>{{tab.title}}</span>
 	</div>
+	
+	<div ng-if="vm.showDetails" ng-include="'scripts/popover/popoverUserDetails.html'"></div>
 </div>

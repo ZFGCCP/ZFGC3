@@ -1,5 +1,5 @@
 <div class="bottom-section-wrap col-xs-12 col-sm-8 col-md-12">
-	<div class="member-badge-manager-sm">Manager</div>
+	<div class="member-badge-{{vm.profile.primaryMemberGroup.groupName.toLowerCase()}}">{{vm.profile.primaryMemberGroup.groupName}}</div>
 	<div class="padded-row send-pm-icon" ng-if="!vm.profile.hidePm && vm.canSendPmToUser()"><a ui-sref="sendPm({senderId: vm.profile.usersId})"><i class="fa fa-envelope"></i></a></div>
 	<div class="padded-row send-pm-icon" ng-if="vm.profile.userContactInfo.steam !== null"><a ng-href="https://steamcommunity.com/id/{{vm.profile.userContactInfo.steam}}" target="_blank"><i class="fab fa-steam-square"></i></a></div>
 	<div class="padded-row send-pm-icon" ng-if="vm.profile.userContactInfo.facebook !== null"><a ng-href="https://www.facebook.com/{{vm.profile.userContactInfo.facebook}}" target="_blank"><i class="fab fa-facebook-square"></i></a></div>
