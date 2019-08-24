@@ -51,9 +51,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
-	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
-	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	    
+	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
@@ -77,13 +77,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
 	    
@@ -191,13 +191,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    
