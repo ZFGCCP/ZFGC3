@@ -8,6 +8,7 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.CharBuffer;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -106,22 +107,17 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public List<Users> getUsersByConversation(Integer conversationId) throws RuntimeException{
+	public List<Integer> getUsersByConversation(Integer conversationId) throws RuntimeException{
 		List<Users> result = null;
+
+		result = usersDataProvider.getUsersByConversation(conversationId);
 		
-		try{
-			result = usersDataProvider.getUsersByConversation(conversationId);
-		}
-		catch(ZfgcNotFoundException ex){
-			ex.printStackTrace();
-			throw ex;
-		}
-		catch(RuntimeException ex){
-			ex.printStackTrace();
-			throw ex;
+		List<Integer> Ids = new ArrayList<>(result.size());
+		for(Users user : result) {
+			Ids.add(user.getUsersId());
 		}
 		
-		return result;
+		return Ids;
 	}
 	
 	@Transactional

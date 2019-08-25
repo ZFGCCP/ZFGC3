@@ -59,7 +59,10 @@
 							</div>
 							<div class="message-body col-xs-12">
 								<div class="message-from col-xs-2">
-									<user-details user-id="{{convo.senderId}}"></user-details>
+									<span class="user-panel-row">
+										<user-sidebar profile="vm.participants[convo.senderId]"></user-sidebar>
+									</span>
+									<!--<user-details user-id="{{convo.senderId}}"></user-details>-->
 								</div>
 								<div class="message-message col-xs-10">
 									<div ng-bind-html="convo.message"></div>

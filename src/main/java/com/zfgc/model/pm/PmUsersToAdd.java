@@ -7,14 +7,14 @@ import com.zfgc.model.users.Users;
 
 public class PmUsersToAdd extends BaseZfgcModel{
 
-	private List<Users> users;
+	private List<Integer> users;
 	private TwoFactorKey aesKey;
 	
-	public List<Users> getUsers() {
+	public List<Integer> getUsers() {
 		return users;
 	}
 
-	public void setUsers(List<Users> users) {
+	public void setUsers(List<Integer> users) {
 		this.users = users;
 	}
 

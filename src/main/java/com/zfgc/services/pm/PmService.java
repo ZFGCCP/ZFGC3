@@ -219,7 +219,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public PmConversation sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException, RuntimeException{
+	public PmConversation sendMessageInConversation(Users user, List<Integer> receivers, PersonalMessage message) throws ZfgcNotFoundException, RuntimeException{
 		if(user.getUsersId() == null){
 			throw new ZfgcNotFoundException();
 		}
@@ -236,14 +236,14 @@ public class PmService extends AbstractService {
 			pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), user.getUsersId());
 		}
 		
-		for (Users receiver : receivers){
+		for (Integer receiver : receivers){
 			//check if the user is in this convo already. if not, add them
-			if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),receiver.getUsersId())){
-				pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiver.getUsersId());
+			if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),receiver)){
+				pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiver);
 			}
 			else{
 				//set the convo to unread
-				pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), receiver.getUsersId());
+				pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), receiver);
 			}
 		}
 		
@@ -346,15 +346,12 @@ public class PmService extends AbstractService {
 	
 	public PmConversation getConvoTemplate(Users user){
 		PmConversation convo = new PmConversation();
-		convo.setParticipants(new ArrayList<Users>());
+		convo.setParticipants(new ArrayList<>());
 		convo.setMessages(new ArrayList<PersonalMessage>());
 		convo.setInitiatorId(user.getUsersId());
 		convo.setStartDt(ZfgcTimeUtils.getToday());
 		
-		Users temp = new Users();
-		temp.setDisplayName(user.getDisplayName());
-		temp.setUsersId(user.getUsersId());
-		convo.getParticipants().add(temp);
+		convo.getParticipants().add(user.getUsersId());
 		
 		PmTemplateConfig templateConfig = new PmTemplateConfig();
 		templateConfig.setReceivers(convo.getParticipants());
@@ -605,9 +602,9 @@ public class PmService extends AbstractService {
 		pm.setMessage(user.getDisplayName() + " has invited you to their conversation! Click [url=http://zfgc.com:8080/forum/conversation/" + conversationId + "]here[/url] to join!");
 		
 		//create an invite code - using this user's private key and the receiving user's public key
-		for(Users receiver : pmUsers.getUsers()){
+		for(Integer receiver : pmUsers.getUsers()){
 			//check if the user already has an invite to this convo
-			BrPmConversationUserInvite inviteCheck = pmConversationDataProvider.getConvoInvite(conversationId, receiver.getUsersId());
+			BrPmConversationUserInvite inviteCheck = pmConversationDataProvider.getConvoInvite(conversationId, receiver);
 			if(inviteCheck != null){
 				continue;
 			}
@@ -617,7 +614,7 @@ public class PmService extends AbstractService {
 			BrPmConversationUserInvite invite = new BrPmConversationUserInvite();
 			invite.setInviteCode(inviteCode);
 			invite.setDecryptor(null);
-			invite.setUsersId(receiver.getUsersId());
+			invite.setUsersId(receiver);
 			invite.setPmConversationId(conversationId);
 			invite.setInviterId(user.getUsersId());
 			

@@ -14,7 +14,7 @@ public class PmConversation extends BaseZfgcModel {
 	private List<PersonalMessage> messages;
 	private Integer initiatorId;
 	private Boolean isSelected;
-	private List<Users> participants;
+	private List<Integer> participants;
 	private Boolean isArchived = false;
 	private Date archiveDt;
 	private String subject;
@@ -65,11 +65,11 @@ public class PmConversation extends BaseZfgcModel {
 		this.isSelected = isSelected;
 	}
 
-	public List<Users> getParticipants() {
+	public List<Integer> getParticipants() {
 		return participants;
 	}
 
-	public void setParticipants(List<Users> participants) {
+	public void setParticipants(List<Integer> participants) {
 		this.participants = participants;
 	}
 

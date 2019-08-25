@@ -26,18 +26,18 @@ public class PmConversationRules extends AbstractRulesChecker<PersonalMessage> {
 		Boolean foundCurrentUser = false;
 		Boolean foundDuplicateUser = false;
 		Map<Integer, Integer> receiverCounts = new HashMap<>();
-		for(Users receiver : model.getReceivers()) {
-			if(!receiverCounts.containsKey(receiver.getUsersId())) {
-				receiverCounts.put(receiver.getUsersId(), 0);
+		for(Integer receiver : model.getReceivers()) {
+			if(!receiverCounts.containsKey(receiver)) {
+				receiverCounts.put(receiver, 0);
 			}
 			else {
 				foundDuplicateUser = true;
 			}
 			
-			Integer count = receiverCounts.get(receiver.getUsersId());
+			Integer count = receiverCounts.get(receiver);
 			count += 1;
 			
-			if(receiver.getUsersId().equals(user.getUsersId())) {
+			if(receiver.equals(user.getUsersId())) {
 				foundCurrentUser = true;
 			}
 		}
