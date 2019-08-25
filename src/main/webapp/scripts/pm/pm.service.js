@@ -89,11 +89,19 @@
 					UserService.loadProfile(data.participants.filter(function(item){
 																		return item === data.messages[i].senderId;
 																	})[0], profileContainer);
-					vm.participants[data.messages[i].senderId] = profileContainer.profile;
+					vm.participants.push(profileContainer.profile);
 				}
 			});
 			
 			return convo;
+		};
+		
+		pmService.getParticipant = function(vm, userId){
+			if(vm.participants !== null){
+				return vm.participants.filter(function(item){
+					return item.usersId === userId;
+				})[0];
+			}
 		};
 		
 		pmService.populateUserList = function(vm,results){

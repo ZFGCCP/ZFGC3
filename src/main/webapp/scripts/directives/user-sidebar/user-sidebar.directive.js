@@ -8,7 +8,8 @@
 		directive.templateUrl = "scripts/directives/user-sidebar/user-sidebar.directive.html";
 		directive.scope = {
 				profile : '=',
-				navTabs : '=?'
+				navTabs : '=?',
+				mode : '@?'
 		}
 
 		directive.link = function ($scope, element, attrs) 

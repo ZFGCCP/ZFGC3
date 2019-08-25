@@ -13,6 +13,8 @@
 			margin-left: 20px !important;
 		}
 		
+		padding-top: 10px;
+		
 		.user-avatar-wrap{
 			.user-avatar{
 				border: 1px solid black;
@@ -308,7 +310,15 @@
 
 .mobile-user-bar{
 	@media(min-width: 769px){
-		display: none;
+		&.md{
+			display: none;
+		}
+	}
+	
+	@media(min-width: 575px){
+		&.xs{
+			display: none;
+		}
 	}
 	
 	display: flex;
