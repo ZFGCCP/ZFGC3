@@ -1,3 +1,9 @@
+.hidden-md{
+	@media(max-width: 767px){
+		display:none;
+	}
+}
+
 .container{
 	@media (min-width: 950px){
 	    width: 90%;

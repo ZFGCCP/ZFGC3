@@ -1,7 +1,7 @@
 <div class="user-left-panel-wrap row">
-	<div class="col-xs-12 col-sm-4 col-md-12">
+	<div class="user-info-wrap col-xs-12 col-sm-4 col-md-12">
 		<div class="user-displayname padded-row">{{profile.displayName}}
-			<i ng-if="vprofile.activeFlag && profile.isOnlineFlag === true" class="fas fa-user-circle is-online"></i>
+			<i ng-if="profile.activeFlag && profile.isOnlineFlag === true" class="fas fa-user-circle is-online"></i>
 			<i ng-class="{'error-text' : profile.userContactInfo.email.isSpammerFlag}" 
 			   uib-tooltip="Activate" 
 			   ng-click="userActivation()" 
@@ -14,29 +14,22 @@
 		</div>
 		
 	</div>
-	<div class="bottom-section-wrap col-xs-12 col-sm-8 col-md-12">
-	<div class="member-badge-{{profile.primaryMemberGroup.groupName.toLowerCase()}}">{{profile.primaryMemberGroup.groupName}}</div>
-	<div class="padded-row send-pm-icon" ng-if="!profile.hidePm && canSendPmToUser()"><a ui-sref="sendPm({senderId: profile.usersId})"><i class="fa fa-envelope"></i></a></div>
-	<div class="padded-row send-pm-icon" ng-if="profile.userContactInfo.steam !== null"><a ng-href="https://steamcommunity.com/id/{{profile.userContactInfo.steam}}" target="_blank"><i class="fab fa-steam-square"></i></a></div>
-	<div class="padded-row send-pm-icon" ng-if="profile.userContactInfo.facebook !== null"><a ng-href="https://www.facebook.com/{{profile.userContactInfo.facebook}}" target="_blank"><i class="fab fa-facebook-square"></i></a></div>
-	<div class="padded-row send-pm-icon" ng-if="profile.userContactInfo.email !== null"><a ng-href="mailto:{{profile.userContactInfo.email.emailAddress}}" target="_blank"><i class="fas fa-at"></i></a></div>
-	
-	<span ng-if="mode === 'profile'">
-		<div class="user-usertext paddded-row" ng-if="profile.personalInfo.personalText !== null">{{profile.personalInfo.personalText}}</div>
-		<div class="user-gender padded-row" ng-if="profile.personalInfo.genderId !== null">Gender:{{getLkupValue(lookups.GENDER,profile.personalInfo.genderId)}}</div>
-		<div class="user-age padded-row" ng-if="profile.age !== null">Age: {{profile.personalInfo.age}}</div>
-		<div class="user-birthdate padded-row" ng-if="profile.profileSummary.birthDateAsString !== null">Birthdate: {{profile.profileSummary.birthDateAsString}}</div>
-	</span>
-</div>
+	<div class="bottom-section-wrap col-xs-12 col-sm-8 col-md-12" ng-class="{ 'hidden-md' : mode !== 'profile' }">
+		<div class="member-badge-{{profile.primaryMemberGroup.groupName.toLowerCase()}}">{{profile.primaryMemberGroup.groupName}}</div>
+		<div class="padded-row send-pm-icon" ng-if="!profile.hidePm && canSendPmToUser()"><a ui-sref="sendPm({senderId: profile.usersId})"><i class="fa fa-envelope"></i></a></div>
+		<div class="padded-row send-pm-icon" ng-if="profile.userContactInfo.steam !== null"><a ng-href="https://steamcommunity.com/id/{{profile.userContactInfo.steam}}" target="_blank"><i class="fab fa-steam-square"></i></a></div>
+		<div class="padded-row send-pm-icon" ng-if="profile.userContactInfo.facebook !== null"><a ng-href="https://www.facebook.com/{{profile.userContactInfo.facebook}}" target="_blank"><i class="fab fa-facebook-square"></i></a></div>
+		<div class="padded-row send-pm-icon" ng-if="profile.userContactInfo.email !== null"><a ng-href="mailto:{{profile.userContactInfo.email.emailAddress}}" target="_blank"><i class="fas fa-at"></i></a></div>
+		
+		<span ng-if="mode === 'profile'">
+			<div class="user-usertext paddded-row" ng-if="profile.personalInfo.personalText !== null">{{profile.personalInfo.personalText}}</div>
+			<div class="user-gender padded-row" ng-if="profile.personalInfo.genderId !== null">Gender:{{getLkupValue(lookups.GENDER,profile.personalInfo.genderId)}}</div>
+			<div class="user-age padded-row" ng-if="profile.age !== null">Age: {{profile.personalInfo.age}}</div>
+			<div class="user-birthdate padded-row" ng-if="profile.profileSummary.birthDateAsString !== null">Birthdate: {{profile.profileSummary.birthDateAsString}}</div>
+		</span>
+	</div>
 </div>
 <div class="mobile-user-bar">
-
-	<div class="mobile-user-nav">
-		<i class="fas fa-ellipsis-h" ng-click="openNav(null, true)"></i></span>
-		<div class="mobile-nav-label"></div>
-		<div class="selected" ng-show="tab.active"></div>
-	</div>
-
 	<div class="mobile-user-nav" ng-repeat="tab in navTabs" ng-click="openNav(tab, false)">
 		<i class="{{tab.faIcon}}"></i>
 		<div class="mobile-nav-label">{{tab.title}}</div>
