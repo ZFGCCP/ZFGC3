@@ -17,9 +17,9 @@ public class ZfgcTimeUtils extends DateUtils {
 	@Autowired
 	private static SystemService systemService;
 	
-	public static String createDateAsString(String timeInMs){
+	public static String createDateAsString(String timeInMs, String timeZone){
 		Long result = Long.parseLong(timeInMs);
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(timeZone);
 		
 		return sdf.format(new Date(result));
 	}
