@@ -22,7 +22,7 @@ public class PersonalMessage extends BaseZfgcModel {
     private Boolean sendCopyFlag = false;
     private Integer pmConversationId;
     
-    private List<Users> receivers = new ArrayList<>();
+    private List<Integer> receivers = new ArrayList<>();
 	
 	public Integer getPersonalMessageId() {
 		return personalMessageId;
@@ -145,11 +145,11 @@ public class PersonalMessage extends BaseZfgcModel {
 		this.pmConversationId = pmConversationId;
 	}
 
-	public List<Users> getReceivers() {
+	public List<Integer> getReceivers() {
 		return receivers;
 	}
 
-	public void setReceivers(List<Users> receivers) {
+	public void setReceivers(List<Integer> receivers) {
 		this.receivers = receivers;
 	}
 

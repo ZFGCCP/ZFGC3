@@ -51,9 +51,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
-	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
-	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	    
+	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
@@ -77,9 +77,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
+	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
@@ -149,13 +151,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
-	"./src/main/webapp/scripts/common/server-config.service.js",
-	    
-	"./src/main/webapp/scripts/common/main.controller.js",
-	    
 	"./src/main/webapp/scripts/calendar/calendar.service.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
+	    
+	"./src/main/webapp/scripts/common/server-config.service.js",
+	    
+	"./src/main/webapp/scripts/common/main.controller.js",
 	    
 	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
@@ -195,9 +197,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    

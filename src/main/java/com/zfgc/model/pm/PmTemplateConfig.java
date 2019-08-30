@@ -9,7 +9,7 @@ public class PmTemplateConfig extends BaseZfgcModel{
 
 	private Integer pmConversationId;
 	private String subject;
-	private List<Users> receivers;
+	private List<Integer> receivers;
 	
 	@Override
 	public String getHMAC() throws Exception {
@@ -17,11 +17,11 @@ public class PmTemplateConfig extends BaseZfgcModel{
 		return null;
 	}
 
-	public List<Users> getReceivers() {
+	public List<Integer> getReceivers() {
 		return receivers;
 	}
 
-	public void setReceivers(List<Users> receivers) {
+	public void setReceivers(List<Integer> receivers) {
 		this.receivers = receivers;
 	}
 

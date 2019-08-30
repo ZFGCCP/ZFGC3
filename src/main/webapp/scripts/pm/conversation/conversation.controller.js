@@ -72,6 +72,10 @@
 			PmService.updateConversationSubject(vm, vm.conversation);
 		};
 		
+		vm.getParticipant = function(userId){
+			return PmService.getParticipant(vm, userId);
+		};
+		
 		if($location.search().conversationId && $location.search().conversationId !== null){
 			vm.openConversation($location.search().conversationId);
 		}

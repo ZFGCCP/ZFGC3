@@ -1,3 +1,35 @@
+.user-avatar-wrap{
+	.user-avatar{
+		border: 1px solid black;
+	    margin-bottom: 20px;
+	    
+	    width:120px;
+	    
+	    @media(max-width:767px){
+    	    margin-bottom: 0;
+   			width: 50px;
+   			border-radius: 50px;
+	    }
+	}
+	
+	@media(max-width:767px){
+		display: inline-block;
+		float: left;
+	}
+}
+	
+
+		
+.user-usertext{
+	margin-bottom:10px;
+}
+
+.user-customtitle{
+	@media(max-width:767px){
+		display:none;
+	}
+}
+
 .user-panel-row{
 	@media(max-width:767px){
 		background-color: #0f1527;
@@ -13,70 +45,53 @@
 			margin-left: 20px !important;
 		}
 		
-		.user-avatar-wrap{
-			.user-avatar{
-				border: 1px solid black;
-			    margin-bottom: 20px;
-			    
-			    width:120px;
-			    
-			    @media(max-width:767px){
-		    	    margin-bottom: 0;
-	    			width: 50px;
-	    			border-radius: 50px;
-			    }
+		padding-top: 10px;
+
+		.user-info-wrap{
+						
+			white-space: nowrap;
+						
+			@media(max-width: 767px){
+				display: inline-flex;
+				flex-direction: row-reverse;
+				justify-content: flex-end;
 			}
-			
-			@media(max-width:767px){
-				display: inline-block;
-				float: left;
-			}
-		}
-		
-		.user-displayname{
-			font-size:14px;
-			font-weight:600;
-			
-			.username-ellipses{
-				display:inline-block;
-				padding-left:7px;
-				font-size:30px;
-				position:relative;
-				top:7px;
+						
+			.user-displayname{
+				font-size:14px;
+				font-weight:600;
 				
-				@media(min-width:768px){
-					display:none;
+				.username-ellipses{
+					display:inline-block;
+					padding-left:7px;
+					font-size:30px;
+					position:relative;
+					top:7px;
+					
+					@media(min-width:768px){
+						display:none;
+					}
 				}
-			}
-			
-			@media(max-width:767px){
-				display: inline-block;
-			    position: relative;
-			    top: 10px;
-			    padding-left: 10px;
-			}
-			
-			.is-online{
-				padding-left:5px;
 				
 				@media(max-width:767px){
-					position: absolute;
-    				left: -17px;
-    				top: 25px;
+					display: inline-block;
+				    position: relative;
+				    top: 10px;
+				    padding-left: 10px;
 				}
-			}
+				
+				.is-online{
+					padding-left:5px;
+					
+					@media(max-width:767px){
+						position: absolute;
+			  				left: -17px;
+			  				top: 25px;
+					}
+				}
+			}			
 		}
-		
-		.user-usertext{
-			margin-bottom:10px;
-		}
-		
-		.user-customtitle{
-			@media(max-width:767px){
-				display:none;
-			}
-		}
-		
+
 		.bottom-section-wrap{
 			margin-top:30px;
 			margin-bottom:20px;
@@ -308,7 +323,15 @@
 
 .mobile-user-bar{
 	@media(min-width: 769px){
-		display: none;
+		&.md{
+			display: none;
+		}
+	}
+	
+	@media(min-width: 575px){
+		&.xs{
+			display: none;
+		}
 	}
 	
 	display: flex;
