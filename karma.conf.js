@@ -85,7 +85,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar.module.js",
+	    
+	"./src/main/webapp/scripts/directives/event-list/event-list.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -141,19 +147,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
+	"./src/main/webapp/scripts/filters/range.filter.js",
+	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
-	"./src/main/webapp/scripts/filters/range.filter.js",
+	"./src/main/webapp/scripts/calendar/calendar.service.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
 	    
 	"./src/main/webapp/scripts/common/server-config.service.js",
 	    
 	"./src/main/webapp/scripts/common/main.controller.js",
 	    
-	"./src/main/webapp/scripts/calendar/calendar.module.js",
-	    
-	"./src/main/webapp/scripts/calendar/calendar.service.js",
-	    
-	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
+	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -183,7 +189,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
+	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
@@ -213,10 +223,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
-	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
-	    
-	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
-	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
@@ -224,6 +230,10 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
+	    
+	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
+	    
+	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
 	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    

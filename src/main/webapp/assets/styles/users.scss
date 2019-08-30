@@ -49,6 +49,8 @@
 
 		.user-info-wrap{
 						
+			white-space: nowrap;
+						
 			@media(max-width: 767px){
 				display: inline-flex;
 				flex-direction: row-reverse;

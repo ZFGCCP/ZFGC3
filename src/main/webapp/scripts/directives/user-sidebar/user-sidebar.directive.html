@@ -14,7 +14,7 @@
 		</div>
 		
 	</div>
-	<div class="bottom-section-wrap col-xs-12 col-sm-8 col-md-12" ng-class="{ 'hidden-md' : mode !== 'profile' }">
+	<div class="bottom-section-wrap col-xs-12 col-sm-8 col-md-12" ng-class="{ 'visible-md visible-lg' : mode !== 'profile' }">
 		<div class="member-badge-{{profile.primaryMemberGroup.groupName.toLowerCase()}}">{{profile.primaryMemberGroup.groupName}}</div>
 		<div class="padded-row send-pm-icon" ng-if="!profile.hidePm && canSendPmToUser()"><a ui-sref="sendPm({senderId: profile.usersId})"><i class="fa fa-envelope"></i></a></div>
 		<div class="padded-row send-pm-icon" ng-if="profile.userContactInfo.steam !== null"><a ng-href="https://steamcommunity.com/id/{{profile.userContactInfo.steam}}" target="_blank"><i class="fab fa-steam-square"></i></a></div>
