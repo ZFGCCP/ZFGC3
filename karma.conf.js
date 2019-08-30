@@ -85,9 +85,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar.module.js",
 	    
@@ -151,13 +151,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
-	"./src/main/webapp/scripts/calendar/calendar.service.js",
-	    
-	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
-	    
 	"./src/main/webapp/scripts/common/server-config.service.js",
 	    
 	"./src/main/webapp/scripts/common/main.controller.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar.service.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
 	    
 	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
@@ -191,9 +191,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
@@ -235,8 +235,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.html",
-	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/buddy-ignore.html",
@@ -252,6 +250,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/user-profile/user-sidebar.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
 	    
