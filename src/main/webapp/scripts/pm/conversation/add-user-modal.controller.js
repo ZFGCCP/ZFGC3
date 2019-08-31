@@ -7,6 +7,7 @@
 		vm.conversationId = params.conversationId;
 		vm.conversation = params.conversation;
 		vm.modal = params.modal;
+		vm.vm = params.vm;
 		
 		vm.addUser = function(user){
 			vm.usersToAdd.push(user);
@@ -21,8 +22,19 @@
 		};
 		
 		vm.addUsers = function(){
-			vm.conversation.participants = vm.conversation.participants.concat(vm.usersToAdd);
-			vm.conversation.messages[0].receivers = vm.conversation.participants;
+			var mappedUserIds = vm.usersToAdd.map(function(item){return item.usersId;});
+			vm.conversation.participants = vm.conversation.participants.concat(mappedUserIds);
+			
+			for(var i = 0; i < mappedUserIds.length; i++){
+				//get the user from the participants
+				var profileContainer = {};
+				UserService.loadProfile(mappedUserIds[i], profileContainer);
+				vm.vm.participants.push(profileContainer.profile);
+			}
+			
+			if(vm.conversation.pmConversationId === null){
+				vm.conversation.messages[0].receivers = vm.conversation.participants;
+			}
 			vm.modal.close();
 		};
 		

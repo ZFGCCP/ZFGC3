@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function MessageEditor($window,PmService, ForumPostService){
+	function MessageEditor($window,PmService, ForumPostService, UserService){
 		var directive = {};
 		directive.restrict = 'E';
 		directive.templateUrl = "scripts/directives/forms/message-editor/message-editor.directive.html";
@@ -63,6 +63,6 @@
 	}
 	
 	angular.module("zfgc.forum")
-		   .directive("messageEditor", ['$window','PmService','ForumPostService',MessageEditor]);
+		   .directive("messageEditor", ['$window','PmService','ForumPostService','UserService', MessageEditor]);
 	
 })();
