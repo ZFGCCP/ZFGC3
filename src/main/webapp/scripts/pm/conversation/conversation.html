@@ -72,9 +72,11 @@
 					<div class="message-wrapper" ng-repeat="($index, convo) in vm.conversation.messages">
 						<div class="message-content">
 							<div class="message-subject col-xs-12">
-								<span class="pull-left"><i class="fas fa-minus-square"></i></span>
-								<span class="pull-left"><h5>On: {{convo.sentDtAsString}}</h5></span>
-								<span class="pull-right">
+								<span>
+									<span class="expand-icon"><i class="fas fa-minus-circle"></i></span>
+									<span class="timestamp">{{convo.sentDtAsString}}</span>
+								</span>
+								<span>
 									<i class="fas fa-quote-right"></i>
 									<i class="fas fa-bullhorn"></i>
 								</span>

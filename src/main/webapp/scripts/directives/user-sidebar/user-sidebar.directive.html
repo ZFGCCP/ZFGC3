@@ -1,6 +1,6 @@
 <div class="user-left-panel-wrap row">
 	<div class="user-info-wrap col-xs-12 col-sm-4 col-md-12">
-		<div class="user-displayname padded-row">{{profile.displayName}}
+		<div class="user-displayname padded-row"><a ui-sref="user-profile({userId : profile.usersId})">{{profile.displayName}}</a>
 			<i ng-if="profile.activeFlag && profile.isOnlineFlag === true" class="fas fa-user-circle is-online"></i>
 			<i ng-class="{'error-text' : profile.userContactInfo.email.isSpammerFlag}" 
 			   uib-tooltip="Activate" 

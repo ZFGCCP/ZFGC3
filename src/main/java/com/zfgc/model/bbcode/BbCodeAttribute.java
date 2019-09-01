@@ -3,9 +3,10 @@ package com.zfgc.model.bbcode;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
-public class BbCodeAttribute{
+public class BbCodeAttribute extends BaseZfgcModel{
 	private AttributeDataType dataType;
 	private String attributeIndex;
 	private String name;
@@ -34,8 +35,8 @@ public class BbCodeAttribute{
 		return result;
 	}
 	
-	private String createDate(String value){
-		return ZfgcTimeUtils.createDateAsString(value);
+	public String createDate(String value){
+		return ZfgcTimeUtils.createDateAsString(value, super.getUserTimeZone());
 	}
 
 	public String getAttributeIndex() {
@@ -52,5 +53,11 @@ public class BbCodeAttribute{
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String getHMAC() throws Exception {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

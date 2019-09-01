@@ -1,14 +1,15 @@
 (function(){
 	'use strict';
 	
-	function MessageEditor($window,PmService, ForumPostService){
+	function MessageEditor($window,PmService, ForumPostService, UserService){
 		var directive = {};
 		directive.restrict = 'E';
 		directive.templateUrl = "scripts/directives/forms/message-editor/message-editor.directive.html";
 		directive.scope = {
 				showReplyBox:'=',
 				conversation:'=',
-				getTemplate:'@?'
+				getTemplate:'@?',
+				vm:'=?'
 		}
 
 		directive.link = function ($scope, element, attrs) {
@@ -25,6 +26,10 @@
 			$scope.conversation.$promise.then(function(data){
 				if(!$scope.getTemplate || $scope.getTemplate === null || $scope.getTemplate === false){
 					$scope.personalMessage = $scope.conversation.messages[0];
+					
+					var profileContainer = {};
+					UserService.loadProfile($scope.conversation.participants[0], profileContainer);
+					$scope.vm.participants.push(profileContainer.profile);
 				}
 				else{
 					var template = {};
@@ -63,6 +68,6 @@
 	}
 	
 	angular.module("zfgc.forum")
-		   .directive("messageEditor", ['$window','PmService','ForumPostService',MessageEditor]);
+		   .directive("messageEditor", ['$window','PmService','ForumPostService','UserService', MessageEditor]);
 	
 })();

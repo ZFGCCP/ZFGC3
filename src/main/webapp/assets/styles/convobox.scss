@@ -40,9 +40,22 @@
 				min-height:200px;
 				
 				.message-subject{
-					height: 20px;
+					height: 30px;
     				border-bottom: 1px solid;
     				padding-top: 2px;
+    				display: flex;
+    				align-items: center;
+    				justify-content: space-between;
+    				
+    				.expand-icon{
+    					font-size: 15px;
+    				}
+    				
+    				.timestamp{
+    					padding-left: 10px;
+    					font-size: 13px;
+    					font-weight: bold;
+    				}
 				}
 				
 				.message-body{

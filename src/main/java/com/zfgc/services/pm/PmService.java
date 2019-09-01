@@ -225,7 +225,7 @@ public class PmService extends AbstractService {
 		}
 
 		ruleRunner.runRules(null, pmConversationRequiredFields, pmConversationRules, message, user);
-		
+		Boolean isNewConvo = message.getPmConversationId() == null;
 		sendMessage(user, message);
 		
 		if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),user.getUsersId())){
@@ -236,12 +236,8 @@ public class PmService extends AbstractService {
 			pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), user.getUsersId());
 		}
 		
-		for (Integer receiver : receivers){
-			//check if the user is in this convo already. if not, add them
-			if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),receiver)){
-				pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiver);
-			}
-			else{
+		if(!isNewConvo) {
+			for (Integer receiver : receivers){
 				//set the convo to unread
 				pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), receiver);
 			}
@@ -287,29 +283,15 @@ public class PmService extends AbstractService {
 		message.setSenderId(user.getUsersId());
 		
 		if(message.getPmConversationId() == null){
-			try{
-				PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId(), message.getSubject());
-				message.setPmConversationId(convo.getPmConversationId());
-			}
-			catch(Exception ex){
-				ex.printStackTrace();
-				throw new RuntimeException(ex);
-			}
+			PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId(), message.getReceivers(), message.getSubject());
+			message.setPmConversationId(convo.getPmConversationId());
+
 			
 		}
 		
-		PersonalMessage senderSave = (PersonalMessage)message.copy(message);
-
-		senderSave.setSentDt(new Date());
-		senderSave.setSendCopyFlag(true);
-		
-		try{
-			pmDataProvider.saveMessage(senderSave);
-		}
-		catch(RuntimeException ex){
-			ex.printStackTrace();
-			throw ex;
-		}
+		message.setSentDt(new Date());
+		message.setSendCopyFlag(true);	
+		pmDataProvider.saveMessage(message);
 		
 		return message;
 		

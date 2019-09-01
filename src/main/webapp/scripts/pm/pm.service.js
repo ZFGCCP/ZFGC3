@@ -81,14 +81,10 @@
 			var convo = pmService.resource.open({'key' : localStorageService.get('pmKey'), 'conversationId' : convoId});
 			
 			convo.$promise.then(function(data){
-				for(var i = 0; i < data.messages.length; i++){
-					//vm.participants.push(data.messages[0].receivers[i]);
-					
+				for(var i = 0; i < data.participants.length; i++){
 					//get the user from the participants
 					var profileContainer = {};
-					UserService.loadProfile(data.participants.filter(function(item){
-																		return item === data.messages[i].senderId;
-																	})[0], profileContainer);
+					UserService.loadProfile(data.participants[i], profileContainer);
 					vm.participants.push(profileContainer.profile);
 				}
 			});
@@ -246,7 +242,7 @@
 		};
 		
 		pmService.openAddUserModal = function(vm){
-			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversation : vm.conversation, conversationId : vm.conversation.pmConversationId});
+			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversation : vm.conversation, conversationId : vm.conversation.pmConversationId, vm : vm});
 		};
 		
 		pmService.openParticipantsModal = function(vm){

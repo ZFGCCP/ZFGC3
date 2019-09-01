@@ -17,15 +17,15 @@ public class ZfgcTimeUtils extends DateUtils {
 	@Autowired
 	private static SystemService systemService;
 	
-	public static String createDateAsString(String timeInMs){
+	public static String createDateAsString(String timeInMs, String timeZone){
 		Long result = Long.parseLong(timeInMs);
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(timeZone);
 		
 		return sdf.format(new Date(result));
 	}
 	
 	public static SimpleDateFormat getZfgcSimpleDateTimeFormat(){
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss");
+		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
 		sdf.setTimeZone(TimeZone.getTimeZone(SystemService.TIME_ZONE));
 		
 		return sdf;
