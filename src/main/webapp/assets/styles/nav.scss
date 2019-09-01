@@ -10,6 +10,12 @@
 		}
 	}
 	
+	@media(max-width: 576px){
+		.nav-xs{
+			visibility:hidden;
+		}
+	}
+	
 	button.navigation-icon{
 	    display: inline-block;
 	    font-size: 25px;
@@ -75,4 +81,30 @@
 			}
 		}
 	}
+}
+
+
+.mobile-nav-wrapper{
+	@media(min-width: 950px){
+		display:none;
+	}
+	height: 40px;
+    width: 100%;
+    bottom: 0;
+    position: sticky;
+    background-color: #204378;
+    z-index: 99;
+    
+    .mobile-nav{
+    	display: flex;
+    	font-size: 20px;
+    	justify-content: space-around;
+    	
+    	.mobile-nav-item{
+    		width: 40px;
+		    display: inline-flex;
+		    margin-top: 8px;
+		    margin-left: 8px;
+    	}
+    }
 }

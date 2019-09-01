@@ -39,8 +39,11 @@ import com.zfgc.model.pm.PmTemplateConfig;
 import com.zfgc.model.pm.PmUsersToAdd;
 import com.zfgc.model.pm.TwoFactorKey;
 import com.zfgc.model.users.Users;
+import com.zfgc.requiredfields.pm.PmConversationRequiredFields;
 import com.zfgc.requiredfields.pm.PmPruneRequiredFields;
+import com.zfgc.rules.pm.PmConversationRules;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.sanitization.SanitizationService;
@@ -75,6 +78,15 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	PmPruneRequiredFields pmPruneRequiredFields;
+	
+	@Autowired
+	PmConversationRequiredFields pmConversationRequiredFields;
+	
+	@Autowired
+	PmConversationRules pmConversationRules;
+	
+	@Autowired
+	RuleRunService<PersonalMessage> ruleRunner;
 	
 	private PmBox decryptPmBox(PmBox pmBox, PmKey keys, TwoFactorKey aesKey){
 		String decryptedRsa = ZfgcSecurityUtils.decryptAes(keys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
@@ -207,11 +219,13 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public PmConversation sendMessageInConversation(Users user, List<Users> receivers, PersonalMessage message) throws ZfgcNotFoundException, RuntimeException{
+	public PmConversation sendMessageInConversation(Users user, List<Integer> receivers, PersonalMessage message) throws ZfgcNotFoundException, RuntimeException{
 		if(user.getUsersId() == null){
 			throw new ZfgcNotFoundException();
 		}
 
+		ruleRunner.runRules(null, pmConversationRequiredFields, pmConversationRules, message, user);
+		Boolean isNewConvo = message.getPmConversationId() == null;
 		sendMessage(user, message);
 		
 		if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),user.getUsersId())){
@@ -222,14 +236,10 @@ public class PmService extends AbstractService {
 			pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), user.getUsersId());
 		}
 		
-		for (Users receiver : receivers){
-			//check if the user is in this convo already. if not, add them
-			if(!pmConversationDataProvider.isUserPartOfConvo(message.getPmConversationId(),receiver.getUsersId())){
-				pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiver.getUsersId());
-			}
-			else{
+		if(!isNewConvo) {
+			for (Integer receiver : receivers){
 				//set the convo to unread
-				pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), receiver.getUsersId());
+				pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), receiver);
 			}
 		}
 		
@@ -273,29 +283,15 @@ public class PmService extends AbstractService {
 		message.setSenderId(user.getUsersId());
 		
 		if(message.getPmConversationId() == null){
-			try{
-				PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId());
-				message.setPmConversationId(convo.getPmConversationId());
-			}
-			catch(Exception ex){
-				ex.printStackTrace();
-				throw new RuntimeException(ex);
-			}
+			PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId(), message.getReceivers(), message.getSubject());
+			message.setPmConversationId(convo.getPmConversationId());
+
 			
 		}
 		
-		PersonalMessage senderSave = (PersonalMessage)message.copy(message);
-
-		senderSave.setSentDt(new Date());
-		senderSave.setSendCopyFlag(true);
-		
-		try{
-			pmDataProvider.saveMessage(senderSave);
-		}
-		catch(RuntimeException ex){
-			ex.printStackTrace();
-			throw ex;
-		}
+		message.setSentDt(new Date());
+		message.setSendCopyFlag(true);	
+		pmDataProvider.saveMessage(message);
 		
 		return message;
 		
@@ -332,15 +328,12 @@ public class PmService extends AbstractService {
 	
 	public PmConversation getConvoTemplate(Users user){
 		PmConversation convo = new PmConversation();
-		convo.setParticipants(new ArrayList<Users>());
+		convo.setParticipants(new ArrayList<>());
 		convo.setMessages(new ArrayList<PersonalMessage>());
 		convo.setInitiatorId(user.getUsersId());
 		convo.setStartDt(ZfgcTimeUtils.getToday());
 		
-		Users temp = new Users();
-		temp.setDisplayName(user.getDisplayName());
-		temp.setUsersId(user.getUsersId());
-		convo.getParticipants().add(temp);
+		convo.getParticipants().add(user.getUsersId());
 		
 		PmTemplateConfig templateConfig = new PmTemplateConfig();
 		templateConfig.setReceivers(convo.getParticipants());
@@ -350,6 +343,7 @@ public class PmService extends AbstractService {
 		return convo;
 	}
 	
+	@Deprecated
 	public PmConvoBox getConvoBox(Users user){
 		try {
 			List<PmConversationView> convos = pmConversationDataProvider.getBoxViewByUsersId(user);
@@ -419,7 +413,7 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public void removeConvoFromInbox(TwoFactorKey aesKey, PmConversation convo, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, Exception{
+	public void removeConvoFromInbox(TwoFactorKey aesKey, PmConversation convo, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		aesKey.setUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
@@ -430,7 +424,7 @@ public class PmService extends AbstractService {
 		pmConversationDataProvider.deleteConversationFromBox(convo, zfgcUser);
 	}
 	
-	public void removeUserFromConvo(TwoFactorKey aesKey, Integer convoId, Users remove, Users zfgcUser) throws ZfgcSecurityException, ZfgcNotFoundException, Exception{
+	public void removeUserFromConvo(TwoFactorKey aesKey, Integer convoId, Users remove, Users zfgcUser) throws ZfgcSecurityException, ZfgcNotFoundException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		aesKey.setUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
@@ -544,7 +538,7 @@ public class PmService extends AbstractService {
 		return true;
 	}
 	
-	public void pruneConversations(PmPrune prune, Users zfgcUser) throws Exception{
+	public void pruneConversations(PmPrune prune, Users zfgcUser) throws RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!checkIfAesKeyValid(prune.getTfa(),zfgcUser)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
@@ -590,9 +584,9 @@ public class PmService extends AbstractService {
 		pm.setMessage(user.getDisplayName() + " has invited you to their conversation! Click [url=http://zfgc.com:8080/forum/conversation/" + conversationId + "]here[/url] to join!");
 		
 		//create an invite code - using this user's private key and the receiving user's public key
-		for(Users receiver : pmUsers.getUsers()){
+		for(Integer receiver : pmUsers.getUsers()){
 			//check if the user already has an invite to this convo
-			BrPmConversationUserInvite inviteCheck = pmConversationDataProvider.getConvoInvite(conversationId, receiver.getUsersId());
+			BrPmConversationUserInvite inviteCheck = pmConversationDataProvider.getConvoInvite(conversationId, receiver);
 			if(inviteCheck != null){
 				continue;
 			}
@@ -602,7 +596,7 @@ public class PmService extends AbstractService {
 			BrPmConversationUserInvite invite = new BrPmConversationUserInvite();
 			invite.setInviteCode(inviteCode);
 			invite.setDecryptor(null);
-			invite.setUsersId(receiver.getUsersId());
+			invite.setUsersId(receiver);
 			invite.setPmConversationId(conversationId);
 			invite.setInviterId(user.getUsersId());
 			
@@ -640,5 +634,9 @@ public class PmService extends AbstractService {
 	
 	private Boolean isConvoArchived(Integer pmConversationId, Users user) throws RuntimeException {
 		return pmConversationDataProvider.isConvoArchived(pmConversationId, user.getUsersId());
+	}
+	
+	public void updateConversationSubject(Integer convoId, String subject) {
+		pmConversationDataProvider.updateConversationSubject(convoId, subject);
 	}
 }

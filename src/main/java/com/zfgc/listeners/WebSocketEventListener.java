@@ -2,18 +2,20 @@ package com.zfgc.listeners;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.event.EventListener;
+import org.springframework.messaging.simp.stomp.StompHeaderAccessor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
+import com.zfgc.controller.BaseController;
 import com.zfgc.model.online.WhosOnlineList;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.users.UsersService;
 import com.zfgc.services.whosOnline.WhosOnlineService;
 
 @Component
-public class WebSocketEventListener {
+public class WebSocketEventListener extends BaseController {
 	
 	@Autowired
 	UsersService usersService;
@@ -26,8 +28,11 @@ public class WebSocketEventListener {
 		
 		
 		try {
-			WhosOnlineList online = whosOnlineService.getWhosOnline();
+			StompHeaderAccessor headers = StompHeaderAccessor.wrap(event.getMessage());
+			usersService.setUserOnline(zfgcUser(event.getUser()), headers.getSessionId());
+			WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
 			whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -40,10 +45,10 @@ public class WebSocketEventListener {
 		try {
 			if(event.getUser() != null){
 				Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
-				usersService.setUserOffline(user);
+				usersService.setUserOffline(user, event.getSessionId());
 			}
 			
-			WhosOnlineList online = whosOnlineService.getWhosOnline();
+			WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
 			whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -23,7 +23,7 @@ public class AvatarDataProvider extends AbstractDataProvider  {
 	@Autowired
 	private AvatarGalleryDao avatarGalleryDao;
 
-	public AvatarGallery getAvatarGallery(Integer galleryId) throws ZfgcNotFoundException, Exception{
+	public AvatarGallery getAvatarGallery(Integer galleryId) throws ZfgcNotFoundException, RuntimeException{
 		AvatarGalleryDbObjExample ex = avatarGalleryDao.getExample();
 		ex.createCriteria().andAvatarGalleryIdEqualTo(galleryId);
 		
@@ -50,7 +50,7 @@ public class AvatarDataProvider extends AbstractDataProvider  {
 		avatarDao.deleteByExample(null, ex);
 	}
 	
-	public Avatar createAvatarRecord(Avatar avatar) throws Exception {
+	public Avatar createAvatarRecord(Avatar avatar) throws RuntimeException {
 		avatarDao.updateOrInsert(avatar);
 		return avatar;
 	}

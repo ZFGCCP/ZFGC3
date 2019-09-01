@@ -1,23 +1,39 @@
 <div class="section-container">
 	<div class="section-header">
 		<div class="section-title-wrapper">
-			<div class="section-title"><i class="fas fa-users"></i> Who's Online</div>
+			<div class="section-title" ng-click="toggleDetails()"><i class="fas fa-users"></i> Who's Online</div>
 		</div>
 	</div>
 	<div class="section-body no-padding">
-		<span class="whos-online-wrapper">
+		<span class="whos-online-wrapper" ng-style="{ 'display' : showDetails === true ? 'none' : 'block'}">
 			<span>
-				<label><span ng-bind="users.onlineUsers.length"></span> users online</label>
+				<label><span ng-bind="users.onlineUsersDetailed.length"></span> users online</label>
 			</span>
 			
 			<div>
-				<span ng-repeat="($index, user) in users.onlineUsers track by $index">
-					<span class="whos-online-user member-group-{{user.primaryMemberGroup}}">
-						<a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
+				<span ng-repeat="($index, user) in users.onlineUsersDetailed">
+					<span class="whos-online-user member-group-{{user[0].primaryMemberGroup}}">
+						<a ui-sref="user-profile({userId : user[0].usersId})">{{user[0].displayName}}</a>
 					</span>
-					<span ng-show="$index < users.onlineUsers.length -1 ">, </span>
+					<span ng-show="$index < users.onlineUsersDetailed.length -1 ">, </span>
 				</span>
 			</div>
 		</span>
+		
+		<div class="whos-online-detail-wrapper" uib-accordion  ng-style="{ 'display' : showDetails === true ? 'block' : 'none'}">
+			<div class="whos-online" uib-accordion-group class="panel-default" ng-repeat="($index, user) in users.onlineUsersDetailed" is-open="user[0].isOpen">
+				<div uib-accordion-heading><span class="caret-collapsed"><i class="fas" ng-class="{'fa-plus-square' : !user[0].isOpen, 'fa-minus-square' : user[0].isOpen}"></i></span> {{user[0].displayName}}</div>
+				<div class="whos-online-session-detail col-xs-12" ng-repeat="($indexU, session) in user">
+					<div class="col-xs-12 col-sm-3">
+						<div class="detail-line">{{session.ip.ipAddress}}</div>
+						<div class="detail-line"><span class="icon" ng-bind-html="osTypes[session.osType]"></span><span>{{session.osName === null ? 'Unknown OS' : session.osName}}</span></div>
+						<div class="detail-line"><span class="icon" ng-bind-html="browserTypes[session.agentName].iconHtml"></span><span>{{session.agentName === null ? 'Unknown Browser' : session.agentName}}</span></div>
+					</div>
+					<div class="col-md-9">
+						<div>Viewing the profile of MG-Zero</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>

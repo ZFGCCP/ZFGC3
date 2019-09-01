@@ -55,7 +55,7 @@ public class BbCodeDataProvider extends AbstractDataProvider{
 						attributes.add(bbCodeAttribute);
 						modeString.append(attribute.getName().equals("NAMELESS") ? "=" : attribute.getName() + "=");
 						
-						if(attString.indexOf(attribute.getName()) > -1 || attString.length() == 0){
+						if(attString.indexOf(attribute.getName()) == -1 || attString.length() == 0){
 							if(attString.length() > 0){
 								attString.append(",");
 							}

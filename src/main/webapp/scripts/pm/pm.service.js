@@ -28,6 +28,10 @@
 				url : '/forum/pm/conversation/:conversationId/delete/:usersId',
 				method : 'POST'
 			},
+			newSubject : {
+				url : '/forum/pm/conversation/:conversationId/subject',
+				method : 'PUT'
+			},
 			pruneTemplate : {
 				url : '/forum/pm/convobox/prune/template',
 				method : 'GET'
@@ -77,12 +81,23 @@
 			var convo = pmService.resource.open({'key' : localStorageService.get('pmKey'), 'conversationId' : convoId});
 			
 			convo.$promise.then(function(data){
-				for(var i = 0; i < data.messages[0].receivers; i++){
-					vm.participants.push(data.messages[0].receivers[i]);
+				for(var i = 0; i < data.participants.length; i++){
+					//get the user from the participants
+					var profileContainer = {};
+					UserService.loadProfile(data.participants[i], profileContainer);
+					vm.participants.push(profileContainer.profile);
 				}
 			});
 			
 			return convo;
+		};
+		
+		pmService.getParticipant = function(vm, userId){
+			if(vm.participants !== null){
+				return vm.participants.filter(function(item){
+					return item.usersId === userId;
+				})[0];
+			}
 		};
 		
 		pmService.populateUserList = function(vm,results){
@@ -227,7 +242,7 @@
 		};
 		
 		pmService.openAddUserModal = function(vm){
-			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversation : vm.conversation, conversationId : vm.conversation.pmConversationId});
+			ModalService.createTemplatedPopup('AddUserModalCtrl','scripts/modal/templates/modalAddUserToConvo.html','add-user-modal',{conversation : vm.conversation, conversationId : vm.conversation.pmConversationId, vm : vm});
 		};
 		
 		pmService.openParticipantsModal = function(vm){
@@ -238,6 +253,13 @@
 			var usersToInvite = {'aesKey' : {'key' : localStorageService.get('pmKey')}, users : users};
 			var result = pmService.resource.invite({conversationId : conversationId},usersToInvite);
 			return result;
+		};
+		
+		pmService.updateConversationSubject = function(vm, conversation){
+			pmService.resource.newSubject({conversationId : conversation.pmConversationId}, conversation.subject).$promise.then(function(){
+				vm.editingSubject = false;
+				$rootScope.$broadcast('alertAdded',NotificationsService.createAlert('Subject updated successfully.','success'));
+			});
 		};
 
 		return pmService;

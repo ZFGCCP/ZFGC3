@@ -10,6 +10,7 @@
 		
 		directive.link = function($scope,element,attrs){
 			$scope.users = null;
+			$scope.showDetails = false;
 			
 			$scope.updateWhosOnline = function(data){
 				$scope.users = WhosOnlineService.updateWhosOnline(data);
@@ -20,6 +21,44 @@
 				WebsocketService.subscribe("/socket/whosonline", $scope.updateWhosOnline);
 				WebsocketService.send("/forum/usersocket/init",{},{});
 			});
+			
+			$scope.toggleDetails = function(){
+				$scope.showDetails = !$scope.showDetails;
+				
+				$rootScope.$broadcast("WhosOnlineDetailsToggled", $scope.showDetails);
+			};
+			
+			$scope.createBrowserType = function(browserType, iconHtml, type){
+				$scope.browserTypes[browserType] = {iconHtml : iconHtml, type : type};
+			};
+			
+			$scope.osTypes = [];
+			$scope.browserTypes = [];
+			
+			$scope.osTypes['Windows'] = '<i class="fab fa-windows"></i>';
+			$scope.osTypes['Linux'] = '<i class="fab fa-redhat"></i>';
+			$scope.osTypes['Mac'] = '<i class="fab fa-apple"></i>';
+			$scope.osTypes['Mac Os X'] = '<i class="fab fa-apple"></i>';
+			$scope.osTypes['Ios'] = '<i class="fab fa-apple"></i>';
+			$scope.osTypes['ChromeOS'] = '<i class="fab fa-google"></i>';
+			$scope.osTypes['Android'] = '<i class="fab fa-android"></i>';
+			
+			$scope.createBrowserType('Chrome', '<i class="fab fa-chrome"></i>', 'Web Browser');
+			$scope.createBrowserType('Chromium', '<i class="fab fa-chrome"></i>', 'Web Browser');
+			$scope.createBrowserType('Firefox', '<i class="fab fa-firefox"></i>', 'Web Browser');
+			$scope.createBrowserType('Safari', '<i class="fab fa-safari"></i>', 'Web Browser');
+			$scope.createBrowserType('Internet Explorer', '<i class="fab fa-internet-explorer"></i>', 'Web Browser');
+			$scope.createBrowserType('Opera', '<i class="fab fa-opera"></i>', 'Web Browser');
+			$scope.createBrowserType('Outlook', '<i class="fas fa-at"></i>', 'Web Browser');
+			$scope.createBrowserType('Thunderbird', '<i class="fab fa-firefox"></i>', 'Web Browser');
+			$scope.createBrowserType('Vivaldi', '<i class="fas fa-globe"></i>', 'Web Browser');
+			$scope.createBrowserType('Nintendo Browser', '<i class="fas fa-gamepad"></i>', 'Game Device');
+			$scope.createBrowserType('Nintendo Dsi Browser', '<i class="fas fa-gamepad"></i>', 'Game Device');
+			$scope.createBrowserType('Samsung Browser', '<i class="fab fa-android"></i>', 'Mobile');
+			$scope.createBrowserType('Uc Browser', '<i class="fas fa-globe"></i>', 'Mobile');
+			
+			
+			
 		}
 		
 		return directive;

@@ -45,8 +45,8 @@ public class PmConversationDao extends AbstractDao<PmConversationDbObjExample, P
 	@Override
 	public void updateByExample(PmConversation obj,
 			PmConversationDbObjExample ex) throws RuntimeException {
-		// TODO Auto-generated method stub
-		
+		PmConversationDbObj dbObj = mapper.map(obj, PmConversationDbObj.class);
+		pmConversationDbObjMapper.updateByExampleSelective(dbObj, ex);
 	}
 
 	@Override

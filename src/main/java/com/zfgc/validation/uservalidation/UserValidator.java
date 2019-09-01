@@ -25,8 +25,8 @@ public class UserValidator extends AbstractValidator<Users> {
 	
 	@Override
 	public void validator(Users model) throws ZfgcValidationException {
-		checkEmailFormat(model);
-		checkEmailLength(model);
+		checkEmailFormat(model.getUserContactInfo().getEmail().getEmailAddress(), model);
+		checkEmailLength(model.getUserContactInfo().getEmail().getEmailAddress(), model);
 		checkLoginNameFormat(model);
 		checkDisplayNameFormat(model);
 		checkLocationFormat(model);

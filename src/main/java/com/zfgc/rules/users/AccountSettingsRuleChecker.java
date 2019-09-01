@@ -11,13 +11,13 @@ import com.zfgc.rules.AbstractRulesChecker;
 import com.zfgc.rules.Rule;
 
 @Component
-public class AccountSettingsRuleChecker extends AbstractRulesChecker<Users>{
+public class AccountSettingsRuleChecker extends AbstractRulesChecker<UserProfileView>{
 
 	@Autowired
 	UsersDataProvider usersDataProvider;
 	
 	@Override
-	public void rulesCheck(Users model, Users user) throws RuntimeException {
+	public void rulesCheck(UserProfileView model, Users user) throws RuntimeException {
 		
 		/*if(user.getPrimaryMemberGroupId() != 2){
 			if(user.getUsersId() != model.getUsersId()){

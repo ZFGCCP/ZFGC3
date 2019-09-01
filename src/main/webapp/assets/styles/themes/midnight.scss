@@ -242,6 +242,18 @@ a:hover{
 	}
 }
 
+.calendar-month-wrapper{
+	.calendar-date{
+		&:hover{
+			background-color: $midnight-row-hover;
+		}
+	}
+	
+	.calendar-mobile-day-details{
+		background-color: $midnight-header-bg-color;
+	}
+}
+
 ._720kb-datepicker-calendar{
 
 	._720kb-datepicker-calendar-header{
@@ -265,5 +277,36 @@ a:hover{
 		a:link{
 			color: $midnight-calendar-body-text;
 		}
+	}
+}
+
+.whos-online-detail-wrapper{
+	
+	.whos-online:nth-child(odd){
+		background-color:$midnight-zebra-odd;
+	}
+	
+	.whos-online:nth-child(even){
+		background-color:$midnight-zebra-even;
+	}
+	
+	.whos-online:hover{
+		background-color:$midnight-row-hover;
+	}
+}
+
+.mobile-user-popover{
+	background-color:$midnight-section-body-bg-color;
+
+	.nav-item:nth-child(odd){
+		background-color:$midnight-zebra-odd;
+	}
+	
+	.nav-item:nth-child(even){
+		background-color:$midnight-zebra-even;
+	}
+	
+	.nav-item:hover{
+		background-color:$midnight-row-hover;
 	}
 }

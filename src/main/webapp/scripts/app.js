@@ -37,5 +37,7 @@ angular.module('zfgc.modules', [
     'zfgc.forum',
     'zfgc.error',
     'zfgc.notifications',
-    'zfgc.pm'
+    'zfgc.pm',
+    'zfgc.calendar',
+    'zfgc.online'
 ]);

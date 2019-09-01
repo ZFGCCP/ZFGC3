@@ -80,6 +80,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Avatar avatar;
 	private Date lastLogin;
 	private Integer primaryIp;
+	private Integer userConnectionId;
 	
 	private LkupMemberGroup primaryMemberGroup;
 	
@@ -105,10 +106,12 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@JsonIgnore
 	private UserProfileView savedProfile;
 	
+	@JsonIgnore
+	private String userAgent;
+	
 	//===================
 	//Permissions
 	//===================
-	
 	private boolean hasPerm(String permCode){
 		if(permissions == null){
 			return false;
@@ -574,5 +577,21 @@ public class Users extends BaseZfgcModel implements UserDetails {
 
 	public void setPrimaryMemberGroup(LkupMemberGroup primaryMemberGroup) {
 		this.primaryMemberGroup = primaryMemberGroup;
+	}
+
+	public Integer getUserConnectionId() {
+		return userConnectionId;
+	}
+
+	public void setUserConnectionId(Integer userConnectionId) {
+		this.userConnectionId = userConnectionId;
+	}
+	
+	public String getUserAgent() {
+		return userAgent;
+	}
+
+	public void setUserAgent(String userAgent) {
+		this.userAgent = userAgent;
 	}
 }

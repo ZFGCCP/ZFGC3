@@ -18,7 +18,7 @@ public class RuleRunService<M extends BaseZfgcModel> {
 			reqFields.requiredFieldsCheck(model);
 			
 			if(model.getErrors().getRequiredFieldsErrors().size() > 0){
-				throw new ZfgcValidationException(model.getClass().getName());
+				throw new ZfgcValidationException(model.getClass().getName(), model.getErrors());
 			}
 		}
 		
@@ -26,7 +26,7 @@ public class RuleRunService<M extends BaseZfgcModel> {
 			validator.validator(model);
 			
 			if(model.getErrors().getValidationErrors().size() > 0){
-				throw new ZfgcValidationException(model.getClass().getName());
+				throw new ZfgcValidationException(model.getClass().getName(), model.getErrors());
 			}
 		}
 		
@@ -34,7 +34,7 @@ public class RuleRunService<M extends BaseZfgcModel> {
 			rules.rulesCheck(model, user);
 			
 			if(model.getErrors().getRuleErrors().size() > 0){
-				throw new ZfgcValidationException(model.getClass().getName());
+				throw new ZfgcValidationException(model.getClass().getName(), model.getErrors());
 			}
 		}
 	}

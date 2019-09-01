@@ -211,9 +211,7 @@ public class ProfileSummary extends BaseZfgcModel {
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
 		return sdf.format(lastLogin);
 	}
-	public void setLastLoginAsString(Date lastLogin) {
-		
-	}
+
 	public String getPersonalText() {
 		return personalText;
 	}

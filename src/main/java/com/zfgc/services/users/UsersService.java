@@ -2,10 +2,13 @@ package com.zfgc.services.users;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.nio.CharBuffer;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -23,9 +26,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.IpDataProvider;
+import com.zfgc.dataprovider.UserConnectionDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -34,6 +39,7 @@ import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.MembersView;
+import com.zfgc.model.users.UserConnection;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
@@ -52,6 +58,7 @@ import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
 import com.zfgc.validation.uservalidation.UserValidator;
 import com.zfgc.model.avatar.Avatar;
+import com.zfgc.model.online.OnlineUser;
 
 @Service
 public class UsersService extends AbstractService {
@@ -85,6 +92,12 @@ public class UsersService extends AbstractService {
 	@Autowired
 	RuleRunService<Users> ruleRunner;
 	
+	@Autowired
+	UserConnectionDataProvider userConnectionDataProvider;
+	
+	@Autowired
+	ZfgcGeneralConfig zfgcGeneralConfig;
+
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
 	public Users getUser(Integer usersId) throws Exception{
@@ -94,22 +107,17 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public List<Users> getUsersByConversation(Integer conversationId) throws RuntimeException{
+	public List<Integer> getUsersByConversation(Integer conversationId) throws RuntimeException{
 		List<Users> result = null;
+
+		result = usersDataProvider.getUsersByConversation(conversationId);
 		
-		try{
-			result = usersDataProvider.getUsersByConversation(conversationId);
-		}
-		catch(ZfgcNotFoundException ex){
-			ex.printStackTrace();
-			throw ex;
-		}
-		catch(RuntimeException ex){
-			ex.printStackTrace();
-			throw ex;
+		List<Integer> Ids = new ArrayList<>(result.size());
+		for(Users user : result) {
+			Ids.add(user.getUsersId());
 		}
 		
-		return result;
+		return Ids;
 	}
 	
 	@Transactional
@@ -170,7 +178,7 @@ public class UsersService extends AbstractService {
 					String subject = "New Account Activation For ZFGC";
 					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
 								  "If you think you have received this email in error, please ignore it.<br><br>" +
-								  "http://localhost:8080/forum/zfgcui/useractivation?activationCode=" + user.getEmailActivationCode();
+								  zfgcGeneralConfig.getUiUrl() + "/useractivation?activationCode=" + user.getEmailActivationCode();
 					
 					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
 					zfgcEmailUtils.sendEmail(subject, body, to);
@@ -210,7 +218,7 @@ public class UsersService extends AbstractService {
 		user.getUserContactInfo().getEmail().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getUserContactInfo().getEmail()));
 	}
 	
-	public Users authenticateUserByToken(String token) throws Exception{
+	public Users authenticateUserByToken(String token) throws RuntimeException{
 		try{
 			return authenticationService.authenticateWithToken(token);
 		}
@@ -218,7 +226,7 @@ public class UsersService extends AbstractService {
 			throw new ZfgcNotFoundException(ex.getResourceName());
 		}
 		catch(Exception ex){
-			throw new Exception(ex.getMessage());
+			throw new RuntimeException(ex);
 		}
 	}
 	
@@ -337,7 +345,7 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range) throws Exception{
+	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range) throws RuntimeException{
 		//todo: add permission check
 		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range);
 		Long totalUsers = usersDataProvider.getActiveUsersCount();
@@ -350,13 +358,59 @@ public class UsersService extends AbstractService {
 		return members;
 	}
 	
-	public void setUserOnline(Users user) throws Exception{
+	public void setUserOnline(Users user, String sessionId) throws RuntimeException{
 		user.setActiveConnections(user.getActiveConnections() + 1);
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOnline(user);
+		String result = null;
+		//create a connection entry for the user
+		try {
+			URL url = new URL("http://www.useragentstring.com?uas=" + user.getUserAgent().replace(" ", "%20") + "&getText=all");
+			//URL url = new URL("http://api.userstack.com/detect?access_key=" + "198990e1212995a6e75023a0d5c0872f" + "&ua=" + user.getUserAgent().replace(" ", "%20"));
+			HttpURLConnection conn = (HttpURLConnection)url.openConnection();
+			conn.setConnectTimeout(3000);
+			conn.setRequestMethod("GET");
+			conn.setRequestProperty("Accept", "application/json");
+			conn.setRequestProperty("User-Agent", "");
+
+		    InputStream stream = conn.getInputStream();
+
+			BufferedReader br = new BufferedReader(new InputStreamReader(stream));
+			result = br.readLine();
+			br.close();
+		} catch (IOException ex) {
+			ex.printStackTrace();
+		}
+		catch (RuntimeException ex){
+			throw ex;
+		}
+		UserConnection onlineUser = userConnectionDataProvider.getUserConnectionTemplate(user);
+		onlineUser.setSessionId(sessionId);
+		if(result != null) {
+			String[] params = result.split(";");
+			Map<String, String> mappedParams = new HashMap<>();
+			
+			for(String param : params) {
+				String[] split = param.split("=");
+				
+				mappedParams.put(split[0], split.length > 1 ? split[1] : null);
+			}
+			
+			onlineUser.setAgentName(mappedParams.get("agent_name"));
+			onlineUser.setAgentType(mappedParams.get("agent_type"));
+			onlineUser.setAgentVersion(mappedParams.get("agent_version"));
+			
+			onlineUser.setOsName(mappedParams.get("os_name"));
+			onlineUser.setOsType(mappedParams.get("os_type"));
+			onlineUser.setOsVersionName(mappedParams.get("os_versionName"));
+			onlineUser.setOsVersionNumber(mappedParams.get("os_versionNumber"));
+		}
+		
+  		userConnectionDataProvider.insertNewConnection(onlineUser);
+  		user.setUserConnectionId(onlineUser.getUserConnectionId());
 	}
 	
-	public void setUserOffline(Users user) throws Exception{
+	public void setUserOffline(Users user, String sessionId) throws Exception{
 		user.setActiveConnections(user.getActiveConnections() - 1);
 		
 		if(user.getActiveConnections() < 0){
@@ -364,6 +418,8 @@ public class UsersService extends AbstractService {
 		}
 		user.setLastLogin(ZfgcTimeUtils.getToday());
 		usersDataProvider.setUserOffline(user);
+		
+		userConnectionDataProvider.deleteUserConnection(sessionId);
 	}
 
 	public Users getNewUserTemplate() {
@@ -382,11 +438,11 @@ public class UsersService extends AbstractService {
 		user.setEmailActivationCode(ZfgcSecurityUtils.generateCryptoString(32));
 	}
 	
-	public void activateUserAccount(String activationCode) throws Exception{
+	public void activateUserAccount(String activationCode) throws RuntimeException{
 		usersDataProvider.activateUser(activationCode);
 	}
 	
-	public void activateUserAccount(Integer usersId, Users zfgcUser) throws Exception{
+	public void activateUserAccount(Integer usersId, Users zfgcUser) throws RuntimeException{
 		//todo check the user role
 		usersDataProvider.activateUser(usersId);
 	}
@@ -396,6 +452,10 @@ public class UsersService extends AbstractService {
 		LOGGER.info("Resetting all active connection counts to 0...");
 		usersDataProvider.resetActiveConnectionCounts();
 		LOGGER.info("Finished resetting all active connection counts to 0.");
+		
+		LOGGER.info("Clearing out user connections...");
+		userConnectionDataProvider.deleteAllUserConnections();
+		LOGGER.info("Finished clearing out user connections.");
 		
 	}
 }

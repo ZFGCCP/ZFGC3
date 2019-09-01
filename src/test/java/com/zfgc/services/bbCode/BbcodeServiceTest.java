@@ -1,14 +1,19 @@
 package com.zfgc.services.bbCode;
 
 import static org.junit.Assert.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.lang.reflect.Field;
 
 import org.apache.commons.lang3.mutable.MutableInt;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import org.springframework.util.ReflectionUtils;
 
 import com.zfgc.model.bbcode.BbCodeAttribute;
 import com.zfgc.model.bbcode.BbCodeAttributeMode;
@@ -137,10 +142,15 @@ public class BbcodeServiceTest {
 		link.setDataType(AttributeDataType.TEXT);
 		link.setName("link=");
 		
-		BbCodeAttribute time = new BbCodeAttribute();
-		time.setAttributeIndex("{{2}}");
-		time.setDataType(AttributeDataType.TIMESTAMP);
-		time.setName("time=");
+		BbCodeAttribute time = mock(BbCodeAttribute.class);
+		when(time.getAttributeIndex()).thenReturn("{{2}}");
+		when(time.getDataType()).thenReturn(AttributeDataType.TIMESTAMP);
+		when(time.getName()).thenReturn("time=");
+		when(time.createDate(any(String.class))).thenReturn("05/12/2017 01:28:23");
+		when(time.transformValue(any(String.class))).thenCallRealMethod();
+		Field dataType = ReflectionUtils.findField(BbCodeAttribute.class, "dataType");
+		dataType.setAccessible(true);
+		ReflectionUtils.setField(dataType, time, AttributeDataType.TIMESTAMP );
 		
 		mode0Att.add(author);
 		mode0Att.add(link);

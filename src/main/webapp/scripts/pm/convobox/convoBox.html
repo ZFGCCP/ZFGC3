@@ -5,26 +5,55 @@
 				<div class="section-title">Mail Box</div>
 			</div>
 			<div class="navigation-wrapper">
-				<button class="navigation-icon" title="Leave Conversation" ng-disabled="!vm.boxesSelected || vm.filters.filterBy === 3" ng-click="vm.deleteConversations()">
-					<i class="fas fa-sign-out-alt"></i><label>Leave</label>
-				</button>
-				<button class="navigation-icon" title="Archive" ng-disabled="!vm.boxesSelected || vm.filters.filterBy === 3" ng-click="vm.archiveConversations()">
-					<i class="fas fa-archive"></i><label>Archive</label>
-				</button>
-				<button class="navigation-icon" title="Prune" ng-click="vm.prune()">
-					<i class="fas fa-comment-slash"></i><label>Prune</label>
-				</button>
-				<button class="navigation-icon" title="New" ng-click="vm.newMessage()">
-					<i class="fas fa-plus-circle"></i><label>New</label>
-				</button>
+				<span class="nav-medium">
+					<button class="navigation-icon" title="Leave Conversation" ng-disabled="!vm.boxesSelected || vm.filters.filterBy === 3" ng-click="vm.deleteConversations()">
+						<i class="fas fa-sign-out-alt"></i><label>Leave</label>
+					</button>
+					<button class="navigation-icon" title="Archive" ng-disabled="!vm.boxesSelected || vm.filters.filterBy === 3" ng-click="vm.archiveConversations()">
+						<i class="fas fa-archive"></i><label>Archive</label>
+					</button>
+					<button class="navigation-icon" title="Prune" ng-click="vm.prune()">
+						<i class="fas fa-comment-slash"></i><label>Prune</label>
+					</button>
+					<button class="navigation-icon" title="New" ng-click="vm.newMessage()">
+						<i class="fas fa-plus-circle"></i><label>New</label>
+					</button>
+				</span>
 			</div>
 		</div>
 		
 		<div class="section-body">
 			<div class="row">
 				<form name="convo-box-filters">
-					<span class="filter-wrapper">
-						<div class="col-xs-3">
+				
+					<div class="col-xs-12 mobile-user-bar md">
+						<div class="mobile-user-nav">
+							<i class="fas fa-sign-out-alt" ng-click="vm.openNav(null, true)"></i></span>
+							<div class="mobile-nav-label">Leave</div>
+							<div class="selected" ng-show="tab.active"></div>
+						</div>
+						
+						<div class="mobile-user-nav">
+							<i class="fas fa-archive" ng-click="vm.openNav(null, true)"></i></span>
+							<div class="mobile-nav-label">Archive</div>
+							<div class="selected" ng-show="tab.active"></div>
+						</div>
+						
+						<div class="mobile-user-nav">
+							<i class="fas fa-comment-slash" ng-click="vm.openNav(null, true)"></i></span>
+							<div class="mobile-nav-label">Prune</div>
+							<div class="selected" ng-show="tab.active"></div>
+						</div>
+						
+						<div class="mobile-user-nav">
+							<i class="fas fa-plus-circle" ng-click="vm.openNav(null, true)"></i></span>
+							<div class="mobile-nav-label">New</div>
+							<div class="selected" ng-show="tab.active"></div>
+						</div>
+					</div>
+				
+					<div class="filter-wrapper">
+						<div class="col-xs-12 col-md-3">
 							<label>Filter By</label>
 							<select class="small-input form-control" 
 							        ng-model="vm.filters.filterBy" 
@@ -33,7 +62,7 @@
 							</select>
 						</div>
 						
-						<div class="col-xs-3">
+						<div class="col-xs-12 col-md-3">
 							<label>Sort By</label>
 							<select class="small-input form-control"
 									ng-model="vm.filters.sortBy"
@@ -41,7 +70,7 @@
 									ng-options="sortOption.id as sortOption.value for sortOption in vm.sortOptions">
 							</select>
 						</div>
-					</span>
+					</div>
 				</form>
 				
 				<div class="col-xs-12 no-padding">

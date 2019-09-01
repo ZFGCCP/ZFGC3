@@ -103,9 +103,8 @@
 		};
 		UserService.loadProfile = function(userId,vm){
 	         var profile = UserService.resource.userProfile({'userId':userId});   
+	         vm.profile = profile;
 	         profile.$promise.then(function(data){
-	        	vm.profile = data;
-	        	
 	        	UserService.resource.profileNavigation({"usersId":userId}).$promise.then(function(data){
 					vm.navTabs = data;
 					var activeTab = UserService.activeTab && UserService.activeTab !== null ? UserService.activeTab : data[0];

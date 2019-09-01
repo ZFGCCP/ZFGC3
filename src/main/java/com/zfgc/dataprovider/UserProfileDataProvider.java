@@ -64,7 +64,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	@Autowired
 	UsersDao usersDao;
 	
-	public UserProfileView getUserProfile(Integer userId) throws Exception{
+	public UserProfileView getUserProfile(Integer userId) throws RuntimeException{
 		UserProfileViewDbObj userProfileViewDbObj = null;
 		try{
 			userProfileViewDbObj = userProfileDao.getUserProfile(userId);
@@ -95,11 +95,11 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		return result;
 	}
 	
-	public void saveNotificationSettings(Users notificationSettings) throws RuntimeException{
+	public void saveNotificationSettings(UserProfileView notificationSettings) throws RuntimeException{
 		notificationSettingsDao.updateOrInsert(notificationSettings.getNotificationSettings());
 	}
 	
-	public void saveAccountSettings(Users accountSettings) throws RuntimeException {
+	public void saveAccountSettings(UserProfileView accountSettings) throws RuntimeException {
 		//authenticationService.logEmailAddress(accountSettings.getEmailAddress());
 		//create or update email address table
 		emailAddressDao.updateOrInsert(accountSettings.getUserContactInfo().getEmail());
@@ -118,7 +118,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		}
 		
 		Users user = new Users();
-		user.setPrimaryMemberGroupId(accountSettings.getPrimaryMemberGroupId());
+		user.setPrimaryMemberGroupId(accountSettings.getPrimaryMemberGroup().getMemberGroupId());
 		UsersDbObjExample example = usersDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(accountSettings.getUsersId());
 		usersDao.updateByExample(user, example);
@@ -129,15 +129,15 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		
 	}
 	
-	public void savePmSettings(Users pmSettings) throws Exception{
+	public void savePmSettings(UserProfileView pmSettings) throws Exception{
 		pmSettingsDao.updateOrInsert(pmSettings.getPersonalMessagingSettings());
 	}
 	
-	public void saveForumProfile(Users forumProfile) throws Exception{
+	public void saveForumProfile(UserProfileView forumProfile) throws RuntimeException{
 		userPersonalInfoDao.updateOrInsert(forumProfile.getPersonalInfo());
 	}
 	
-	public void updateUserPassword(Users user, String password) throws Exception{
+	public void updateUserPassword(Users user, String password) throws RuntimeException{
 		userSecuritySettingsDao.updateUserPassword(user.getUsersId(), password);
 	}
 	
