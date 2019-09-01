@@ -18,7 +18,7 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 	public abstract void validator(T model) throws RuntimeException;
 	
 	public final String EMAIL_FORMAT = "^(?!.*--)[a-zA-Z0-9_\\-\\.]+@[a-zA-Z0-9\\.]+\\.{1,1}[a-zA-Z]+$";
-	public final String URL_FORMAT = "^(?!.*--)(https?)://[a-zA-Z0-9+&@#/%?=~_|!:,.;]*[a-zA-Z0-9+&@#/%=~_|]";
+	public final String URL_FORMAT = "^(?!.*--)(https?)://[-a-zA-Z0-9+&@#/%?=~_|!:,.;]*[-a-zA-Z0-9+&@#/%=~_|]";
 	
 	//This is the first line of defense for sql injection
 	public final String GENERAL_STRING_FORMAT = "^(?!.*--)[@a-zA-Z0-9\\.\\?_\\(\\)\\s-',:/]+$";
