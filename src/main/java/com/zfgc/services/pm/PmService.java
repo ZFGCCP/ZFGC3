@@ -236,12 +236,7 @@ public class PmService extends AbstractService {
 			pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), user.getUsersId());
 		}
 		
-		if(isNewConvo) {
-			for (Integer receiver : receivers){
-				pmConversationDataProvider.addUserMappingToConvo(message.getPmConversationId(), receiver);
-			}
-		}
-		else{
+		if(!isNewConvo) {
 			for (Integer receiver : receivers){
 				//set the convo to unread
 				pmConversationDataProvider.setConvoToUnRead(message.getPmConversationId(), receiver);
@@ -288,15 +283,16 @@ public class PmService extends AbstractService {
 		message.setSenderId(user.getUsersId());
 		
 		if(message.getPmConversationId() == null){
-			PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId(), message.getSubject());
+			PmConversation convo = pmConversationDataProvider.createConversation(user.getUsersId(), message.getReceivers(), message.getSubject());
 			message.setPmConversationId(convo.getPmConversationId());
 
-			message.setSentDt(new Date());
-			message.setSendCopyFlag(true);
-			
-			pmDataProvider.saveMessage(message);
 			
 		}
+		
+		message.setSentDt(new Date());
+		message.setSendCopyFlag(true);	
+		pmDataProvider.saveMessage(message);
+		
 		return message;
 		
 	}

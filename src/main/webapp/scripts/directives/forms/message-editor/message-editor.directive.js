@@ -8,7 +8,8 @@
 		directive.scope = {
 				showReplyBox:'=',
 				conversation:'=',
-				getTemplate:'@?'
+				getTemplate:'@?',
+				vm:'=?'
 		}
 
 		directive.link = function ($scope, element, attrs) {
@@ -25,6 +26,10 @@
 			$scope.conversation.$promise.then(function(data){
 				if(!$scope.getTemplate || $scope.getTemplate === null || $scope.getTemplate === false){
 					$scope.personalMessage = $scope.conversation.messages[0];
+					
+					var profileContainer = {};
+					UserService.loadProfile($scope.conversation.participants[0], profileContainer);
+					$scope.vm.participants.push(profileContainer.profile);
 				}
 				else{
 					var template = {};

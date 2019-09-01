@@ -67,7 +67,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 	}
 	
 	@Transactional
-	public PmConversation createConversation(Integer initiator, String subject){
+	public PmConversation createConversation(Integer initiator, List<Integer> participants, String subject){
 		PmConversation obj = new PmConversation();
 		obj.setStartDt(ZfgcTimeUtils.getToday());
 		obj.setSubject(subject);
@@ -75,10 +75,12 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		
 		pmConversationDao.updateOrInsert(obj);
 		
-		BrUserConversation userToConvoMapping = new BrUserConversation();
-		userToConvoMapping.setUsersId(initiator);
-		userToConvoMapping.setPmConversationId(obj.getPmConversationId());
-		brUserConversationDao.updateOrInsert(userToConvoMapping);
+		for(Integer participant : participants) {
+			BrUserConversation userToConvoMapping = new BrUserConversation();
+			userToConvoMapping.setUsersId(participant);
+			userToConvoMapping.setPmConversationId(obj.getPmConversationId());
+			brUserConversationDao.updateOrInsert(userToConvoMapping);
+		}
 		
 		return obj;
 	}

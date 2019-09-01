@@ -45,9 +45,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
@@ -87,15 +87,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar.module.js",
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
@@ -131,11 +129,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -158,8 +156,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/calendar/calendar.service.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
-	    
-	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -185,13 +181,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
+	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
-	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
 	    
@@ -235,6 +229,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
+	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/buddy-ignore.html",
@@ -251,17 +247,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
 	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.html",
-	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/mobile/user-profile-mobile-nav.html"
 	    
