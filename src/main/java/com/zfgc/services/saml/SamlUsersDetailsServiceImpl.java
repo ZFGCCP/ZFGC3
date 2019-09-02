@@ -21,6 +21,7 @@ import com.zfgc.dataprovider.UserConnectionDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.lkup.LkupMemberGroup;
+import com.zfgc.model.users.Hostname;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.Permissions;
 import com.zfgc.model.users.UserConnection;
@@ -90,6 +91,28 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
 				e.printStackTrace();
 			}
         	catch (Exception ex) {
+        		ex.printStackTrace();
+        	}
+        }
+        
+        //did the user's primary hostname change since last log in?
+        Hostname primaryHostname = user.getPrimaryHostname();
+        if(!user.getCurrentHostname().equals(primaryHostname.getHostname())) {
+        	//does this hostname exist already?
+        	try {
+        		Hostname hostCheck = ipService.getHostname(user.getCurrentHostname());
+        		
+        		user.setPrimaryHostname(hostCheck);
+        		user.setPrimaryHostnameId(hostCheck.getHostnameId());
+        	}
+        	catch(ZfgcNotFoundException e) {
+        		Hostname newHost = ipService.createHostname(user.getCurrentHostname());
+        		user.setPrimaryHostname(newHost);
+        		user.setPrimaryHostnameId(newHost.getHostnameId());
+        		
+        		e.printStackTrace();
+        	}
+        	catch(Exception ex) {
         		ex.printStackTrace();
         	}
         }

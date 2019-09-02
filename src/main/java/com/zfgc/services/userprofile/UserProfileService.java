@@ -114,6 +114,7 @@ public class UserProfileService extends AbstractService{
 			//vm.profile.primaryIpAddress.ipAddress
 			
 			profileView.setPrimaryIpAddress(null);
+			profileView.setPrimaryHostname(null);
 			
 			//if you're not one of the user's buddies
 			//hide contact fields with the hidden flag
