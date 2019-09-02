@@ -22,11 +22,26 @@
     
 
     <!-- tables -->
+    <!--<table schema="Zfgc3" tableName="HOSTNAME" domainObjectName="HostnameDbObj">
+    	<generatedKey column="HOSTNAME_ID" sqlStatement="SELECT COALESCE(MAX(HOSTNAME_ID) + 1,0) FROM HOSTNAME"/>
+    </table>
+    
+    <table schema="Zfgc3" tableName="BR_USERS_HOSTNAME" domainObjectName="BrUsersHostnameDbObj">
+    </table>
+    
+    <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
+        <property name="virtualKeyColumns" value="USERS_ID" />
+    	<generatedKey column="users_id" sqlStatement="SELECT MAX(USERS_ID) + 1 FROM users"/>
+    	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="PM_EMAIL_NOTIF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
     <table schema="Zfgc3" tableName="NAV_TAB" domainObjectName="NavTabDbObj">
     	<generatedKey column="NAV_TAB_ID" sqlStatement="SELECT COALESCE(MAX(NAV_TAB_ID) + 1,0) FROM NAV_TAB"/>
     </table>
     
-    <!--<table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
+    <table schema="zfgc3" tableName="users" domainObjectName="UsersDbObj">
         <property name="virtualKeyColumns" value="USERS_ID" />
     	<generatedKey column="users_id" sqlStatement="SELECT MAX(USERS_ID) + 1 FROM users"/>
     	<columnOverride column="SHOW_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
@@ -272,10 +287,15 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
+    <!--<table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
-    <!--<table schema="zfgc3" tableName="WHOS_ONLINE_DETAIL_VIEW" domainObjectName="OnlineUserDetailDbObj">
+    <table schema="zfgc3" tableName="WHOS_ONLINE_DETAIL_VIEW" domainObjectName="OnlineUserDetailDbObj">
     </table>
     
     <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">

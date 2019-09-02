@@ -66,6 +66,9 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private IpAddress primaryIpAddress = new IpAddress();
 	private List<IpAddress> secondaryIpAddresses = new ArrayList<>();
 	
+	private Hostname primaryHostname = new Hostname();
+	private List<Hostname> secondaryHostnames = new ArrayList<>();
+	
 	private EmailAddress emailAddress;
 	private Boolean hideEmailFlag;
 	private String signature;
@@ -81,6 +84,7 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	private Date lastLogin;
 	private Integer primaryIp;
 	private Integer userConnectionId;
+	private Integer primaryHostnameId;
 	
 	private LkupMemberGroup primaryMemberGroup;
 	
@@ -558,6 +562,10 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	public String getCurrentIpAddress() {
 		return super.getUserIp();
 	}
+	@JsonIgnore
+	public String getCurrentHostname() {
+		return super.getUserHostname();
+	}
 	public SecondaryMemberGroups getSecondaryMemberGroups() {
 		return secondaryMemberGroups;
 	}
@@ -593,5 +601,29 @@ public class Users extends BaseZfgcModel implements UserDetails {
 
 	public void setUserAgent(String userAgent) {
 		this.userAgent = userAgent;
+	}
+
+	public Hostname getPrimaryHostname() {
+		return primaryHostname;
+	}
+
+	public void setPrimaryHostname(Hostname primaryHostname) {
+		this.primaryHostname = primaryHostname;
+	}
+
+	public List<Hostname> getSecondaryHostnames() {
+		return secondaryHostnames;
+	}
+
+	public void setSecondaryHostnames(List<Hostname> secondaryHostnames) {
+		this.secondaryHostnames = secondaryHostnames;
+	}
+
+	public Integer getPrimaryHostnameId() {
+		return primaryHostnameId;
+	}
+
+	public void setPrimaryHostnameId(Integer primaryHostnameId) {
+		this.primaryHostnameId = primaryHostnameId;
 	}
 }

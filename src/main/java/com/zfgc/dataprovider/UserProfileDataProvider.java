@@ -20,6 +20,7 @@ import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.bridge.BrMemberGroupUser;
 import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
+import com.zfgc.model.users.Hostname;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
@@ -91,6 +92,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		result.setPersonalMessagingSettings(mapper.map(userProfileViewDbObj, PersonalMessagingSettings.class));
 		result.setPrimaryMemberGroup(mapper.map(userProfileViewDbObj, LkupMemberGroup.class));
 		result.setPrimaryIpAddress(mapper.map(userProfileViewDbObj, IpAddress.class));
+		result.setPrimaryHostname(mapper.map(userProfileViewDbObj, Hostname.class));
 		
 		return result;
 	}
