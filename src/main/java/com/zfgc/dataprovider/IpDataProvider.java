@@ -32,53 +32,7 @@ public class IpDataProvider extends AbstractDataProvider{
 		return mapper.map(dbObj.get(0), IpAddress.class);
 	}
 	
-	public IpAddress logIpAddress(IpAddress ip) throws RuntimeException{
-		IpAddressDbObj dbObj = ipDao.logIpAddress(ip);
-		return mapper.map(dbObj, IpAddress.class);
-	}
-	
 	public void saveIpAddress(IpAddress ip) {
 		ipDao.updateOrInsert(ip);
-	}
-	
-	public IpAddress getPrimaryIpByToken(String token){
-		IpAddressDbObj dbObj = ipDao.getPrimaryIpByToken(token);
-		return mapper.map(dbObj, IpAddress.class);
-	}
-	
-	public void lockIp(IpAddress ipAddress, Date lockTime) throws RuntimeException{
-		try{
-			ipDao.lockIpAddress(ipAddress, lockTime);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
-	public Date getLockTime(IpAddress ipAddress) throws RuntimeException{
-		try{
-			return ipDao.getIpLockTime(ipAddress);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
-	public void unlockIp(IpAddress ipAddress) throws RuntimeException{
-		try{
-			ipDao.unlockIp(ipAddress);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
-	public Integer incrementLoginFailCount(IpAddress ipAddress) throws RuntimeException{
-		try{
-			return ipDao.incrementLoginFails(ipAddress);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
 	}
 }
