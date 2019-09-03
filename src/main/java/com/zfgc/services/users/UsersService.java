@@ -230,55 +230,6 @@ public class UsersService extends AbstractService {
 		}
 	}
 	
-	@Transactional
-	public Users authenticateUser(Users user, String sourceIp) throws RuntimeException{
-		IpAddress ipAddress = ipAddressService.createIpAddress(sourceIp);
-		Boolean doesUserExist = doesLoginNameExist(user.getLoginName());
-		if(isAccountLocked(user) || ipAddressService.isIpLocked(ipAddress)){
-			loggingService.logAction(7, "Login failed for user " + user.getLoginName() + ". Account is locked.", null, sourceIp);
-			user.getErrors().getGeneralErrors().add("You have exceeded the allowed number of login attempts.  Please try again later.");
-		}
-		else if (doesUserExist && authenticationService.checkUserPassword(user)){
-			Users authenticatedUser = usersDataProvider.getUserByLoginName(user.getLoginName());
-			loggingService.logAction(7, "Login success for user " + user.getLoginName(), authenticatedUser.getUsersId(), sourceIp);
-			setPrimaryIp(authenticatedUser,sourceIp);
-			String token = authenticationService.generateAuthenticationToken(authenticatedUser, authenticatedUser.getTtlLogin());
-			authenticatedUser.setAuthToken(token);
-			return authenticatedUser;
-		}
-		else{
-			Integer attempts = 0;
-			if(doesUserExist){
-				attempts = usersDataProvider.incrementLoginFailCount(user.getLoginName());
-			}
-			Integer ipAttempts = ipAddressService.incrementLoginFailCount(ipAddress);
-
-			user.getErrors().getGeneralErrors().add("Login failed for user " + user.getLoginName() + ". Incorrect username or password.  " + (5 - ipAttempts) + " attempts remaining.");
-			loggingService.logAction(3, "Login failed for user " + user.getLoginName() + ". " + (5 - ipAttempts) + " attempts remaining.", null, sourceIp);
-			
-			if(attempts >= 5){
-				lockAccount(user.getLoginName(), sourceIp);
-			}
-			if(ipAttempts >= 5){
-				ipAddressService.lockIp(ipAddress);
-			}
-		}
-		return user;
-	}
-	
-	private Boolean lockAccount(String loginName, String sourceIp){
-		Date lockTime = ZfgcTimeUtils.getToday();
-		lockTime = DateUtils.addMinutes(lockTime, 10);
-		try {
-			usersDataProvider.lockAccount(loginName,lockTime);
-			loggingService.logAction(3, "Account for " + loginName + " locked.", null, sourceIp);
-		} catch (Exception e) {
-			e.printStackTrace();
-			return false;
-		}
-		return true;
-	}
-	
 	public Boolean isAccountLocked(Users user){
 		try{
 			Date lockTime = usersDataProvider.getLockTime(user.getLoginName());
