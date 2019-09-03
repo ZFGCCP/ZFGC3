@@ -9,6 +9,7 @@ import java.util.List;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.lkup.LkupMemberGroup;
+import com.zfgc.model.users.Hostname;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.SecondaryMemberGroups;
 import com.zfgc.model.users.UserContactInfo;
@@ -34,6 +35,7 @@ public class UserProfileView extends BaseZfgcModel {
 	private LkupMemberGroup primaryMemberGroup;
 	private SecondaryMemberGroups secondaryMemberGroups;
 	private IpAddress primaryIpAddress;
+	private Hostname primaryHostname;
 	private Boolean hidePm = false;
 	
 	private Date lastLogin;
@@ -228,6 +230,14 @@ public class UserProfileView extends BaseZfgcModel {
 
 	public void setHidePm(Boolean hidePm) {
 		this.hidePm = hidePm;
+	}
+
+	public Hostname getPrimaryHostname() {
+		return primaryHostname;
+	}
+
+	public void setPrimaryHostname(Hostname primaryHostname) {
+		this.primaryHostname = primaryHostname;
 	}
 	
 }

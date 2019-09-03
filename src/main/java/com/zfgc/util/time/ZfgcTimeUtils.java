@@ -35,6 +35,7 @@ public class ZfgcTimeUtils extends DateUtils {
 		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy hh:mm:ss a");
 		sdf.setTimeZone(TimeZone.getTimeZone(timezone));
 		
+		
 		return sdf;
 	}
 	
