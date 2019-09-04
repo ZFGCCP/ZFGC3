@@ -12,7 +12,7 @@ public class ActivityLog {
 	private String description;
 	private Date logDate;
 	private String ipAddress;
-	private Integer userId;
+	private Integer usersId;
 	public Integer getActivityLogId() {
 		return activityLogId;
 	}
@@ -43,11 +43,11 @@ public class ActivityLog {
 	public void setIpAddress(String ipAddress) {
 		this.ipAddress = ipAddress;
 	}
-	public Integer getUserId() {
-		return userId;
+	public Integer getUsersId() {
+		return usersId;
 	}
-	public void setUserId(Integer userId) {
-		this.userId = userId;
+	public void setUsersId(Integer usersId) {
+		this.usersId = usersId;
 	}
 	public void setLogDateAsString(String logDateAsString){
 		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat();
