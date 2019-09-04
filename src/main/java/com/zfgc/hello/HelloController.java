@@ -22,9 +22,4 @@ class GreetingController {
     String hello(@PathVariable String name) {
         return "Hello, " + name + "!";
     }
-    
-    @RequestMapping("/hello/passTest/{userName}/{password}")
-    String passTest(@PathVariable String userName, @PathVariable String password){
-    	return usersService.checkUserPassword(password, userName).toString();
-    }
 } 
