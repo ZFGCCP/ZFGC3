@@ -13,6 +13,7 @@ import com.zfgc.dbobj.BrBuddyIgnoreListDbObjExample;
 import com.zfgc.dbobj.UserProfileViewDbObj;
 import com.zfgc.dbobj.UserProfileViewDbObjExample;
 import com.zfgc.dbobj.UsersDbObj;
+import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
@@ -65,7 +66,9 @@ public class BuddyDataProvider extends AbstractDataProvider{
 		List<Integer> buddyIds = buddyDao.getIgnoreIds(usersId);
 		
 		if(buddyIds.size() > 0){
-			List<UsersDbObj> users = usersDao.getUsersById(buddyIds);
+			UsersDbObjExample ex = usersDao.getExample();
+			ex.createCriteria().andUsersIdIn(buddyIds);
+			List<UsersDbObj> users = usersDao.get(ex);
 			
 			for(UsersDbObj dbObj : users){
 				Buddy buddy = mapper.map(dbObj, Buddy.class);
