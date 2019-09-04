@@ -142,37 +142,6 @@ public class AuthenticationService  extends AbstractService {
 		return false;
 	}
 	
-	public Boolean checkUserPassword(Users user) throws RuntimeException{
-		try {
-			UserHashInfo hashInfo = usersDao.getUserPasswordAndSaltByName(user.getLoginName());
-			
-			return checkPassword(user.getPassword(),hashInfo);
-		} catch (Exception e) {
-			throw new RuntimeException(e.getMessage());
-		}
-	}
-	
-	public Users authenticateWithToken(String authToken) throws RuntimeException{
-		try{
-			Boolean isTokenValid = checkToken(authToken);
-
-			if(isTokenValid){
-				Users user = usersDataProvider.getUserByToken(authToken);
-				user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
-				return user;
-			}
-			else{
-				return null;
-			}
-		}
-		catch(ZfgcNotFoundException e){
-			throw new ZfgcNotFoundException(e.getResourceName());
-		}
-		catch(RuntimeException e){
-			throw e;
-		}
-	}
-	
 	public Boolean checkToken(String authToken) throws RuntimeException{
 		try{
 			AuthToken token = authenticationDataProvider.getAuthToken(authToken);

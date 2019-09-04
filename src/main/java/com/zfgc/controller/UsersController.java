@@ -94,29 +94,6 @@ class UsersController extends BaseController{
 		return ResponseEntity.status(HttpStatus.OK).build();
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
-	public ResponseEntity authenticateUser(@RequestBody Users user, HttpServletRequest request){
-		user = usersService.authenticateUser(user, request.getRemoteAddr());
-		
-		if(user.getErrors().hasErrors()){
-			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(user.getErrors());
-		}
-
-		return ResponseEntity.status(HttpStatus.OK).body(new String[]{user.getAuthToken()});
-	}
-	
-	@RequestMapping(value="/tokenauth", method=RequestMethod.POST, produces="application/json")
-	@ResponseBody
-	public ResponseEntity authenticateUser(HttpServletRequest request){
-		Users user = usersService.authenticateUserByToken(request.getHeader("authorization"));
-		if(user == null){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
-		}
-		
-		return ResponseEntity.status(HttpStatus.OK).body(user);
-	}
-	
 	@RequestMapping(value="/profile/{userId}", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){

@@ -21,33 +21,10 @@ public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLog
 	ActivityLogDbObjMapper activityLogDbObjMapper;
 	
 	private Logger LOGGER = LogManager.getLogger(LoggingDao.class);
-	
-	public void logAction(Integer logType, String description, Integer usersId, String ipAddress) throws Exception{
-		ActivityLogDbObj activityLogDbObj = new ActivityLogDbObj();
-		
-		activityLogDbObj.setLogTypeId(logType);
-		activityLogDbObj.setDescription(description);
-		activityLogDbObj.setUsersId(usersId);
-		activityLogDbObj.setIpAddress(ipAddress);
-		activityLogDbObj.setLogDate(ZfgcTimeUtils.getToday());
-
-		try{
-			activityLogDbObjMapper.insertSelective(activityLogDbObj);
-		}
-		catch(Exception ex){
-			logDbInsertError(LOGGER, "ACTIVITY_LOG");
-			throw new Exception(ex.getMessage());
-		}
-	}
-	
-	public List<ActivityLogDbObj> getLogs(ActivityLogDbObjExample example){
-		return activityLogDbObjMapper.selectByExample(example);
-	}
 
 	@Override
 	public List<ActivityLogDbObj> get(ActivityLogDbObjExample ex) throws RuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		return activityLogDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
@@ -58,8 +35,7 @@ public class LoggingDao extends AbstractDao<ActivityLogDbObjExample, ActivityLog
 
 	@Override
 	public void updateOrInsert(ActivityLog obj) throws RuntimeException {
-		// TODO Auto-generated method stub
-		
+		activityLogDbObjMapper.insert(mapper.map(obj, ActivityLogDbObj.class));
 	}
 
 	@Override

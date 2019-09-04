@@ -46,6 +46,14 @@ public abstract class BaseZfgcModel implements Comparable{
 		return request.getRemoteAddr();
 	}
 	
+	protected String getUserHostname() {
+		HttpServletRequest request = 
+				((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())
+				.getRequest();
+		
+		return request.getRemoteHost();
+	}
+	
 	protected Integer getUserId(){
 		HttpServletRequest request = 
 				((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())

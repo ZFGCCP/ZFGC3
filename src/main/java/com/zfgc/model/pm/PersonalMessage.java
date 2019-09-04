@@ -51,7 +51,7 @@ public class PersonalMessage extends BaseZfgcModel {
 	}
 	
 	public void setSentDtAsString(String sentDtAsString){
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat();
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(getUserTimeZone());
 		
 		if(sentDtAsString == null || sentDtAsString.equals("")){
 			sentDt = null;
