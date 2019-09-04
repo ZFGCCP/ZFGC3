@@ -25,6 +25,7 @@ import com.zfgc.dbobj.MemberListingViewDbObjExample;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.pm.BrUserConversation;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.MemberListingView;
@@ -41,9 +42,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	@Autowired 
 	private UsersDao usersDao;
-	
-	@Autowired
-	private IpDataProvider ipDataProvider;
 	
 	@Autowired 
 	private AuthenticationDataProvider authenticationDataProvider;
@@ -69,6 +67,9 @@ public class UsersDataProvider extends AbstractDataProvider {
 	@Autowired
 	private NotificationSettingsDao notificationSettingsDao;
 	
+	@Autowired
+	private PmConversationDataProvider pmConversationDataProvider;
+	
 	private Logger LOGGER = LogManager.getLogger(UsersDataProvider.class);
 	
 	public Users getUser(Integer usersId) throws Exception{
@@ -79,19 +80,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 		
 	}
 	
-	public Users getUserByToken(String token) throws RuntimeException{
-		try{
-			UsersDbObj dbObj = usersDao.getUserByToken(token);
-			return mapper.map(dbObj, Users.class);
-		}
-		catch(ZfgcNotFoundException ex){
-			throw new ZfgcNotFoundException(ex.getResourceName());
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
 	public void saveUser(Users user) {
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(user.getUsersId());
@@ -100,10 +88,10 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	public List<Users> getUsersByConversation(Integer conversationId) throws ZfgcNotFoundException, RuntimeException{
 		try{
-			List<UsersDbObj> dbObj = usersDao.getUsersByConversation(conversationId);
+			List<BrUserConversation> dbObj = pmConversationDataProvider.getUsersByConversation(conversationId);
 			List<Users> users = new ArrayList<>();
 			
-			for(UsersDbObj db : dbObj){
+			for(BrUserConversation db : dbObj){
 				users.add(mapper.map(db, Users.class));
 			}
 			
@@ -171,95 +159,36 @@ public class UsersDataProvider extends AbstractDataProvider {
 	}
 	
 	public Boolean doesLoginNameExist(String loginName) throws RuntimeException{
-		return usersDao.doesLoginNameExist(loginName);
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andLoginNameEqualTo(loginName);
+		
+		return usersDao.countByExample(null, ex) > 0;
 	}
 	
 	public Boolean doesDisplayNameExist(String displayName) throws RuntimeException{
-		return usersDao.doesDisplayNameExist(displayName);
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andDisplayNameEqualTo(displayName);
+		
+		return usersDao.countByExample(null, ex) > 0;
 	}
 	
 	public Users getUserByLoginName(String loginName) throws RuntimeException{
 		try{
-			return usersDao.getUserByLoginName(loginName);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
-	public Integer incrementLoginFailCount(String loginName) throws RuntimeException{
-		try{
-			return usersDao.incrementLoginFails(loginName);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
-	public void lockAccount(String loginName, Date lockTime) throws RuntimeException{
-		try{
-			usersDao.lockAccount(loginName, lockTime);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
-	public void unlockAccount(String loginName) throws RuntimeException{
-		try{
-			usersDao.unlockAccount(loginName);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
-	public Date getLockTime(String loginName) throws RuntimeException{
-		try{
-			return usersDao.getAccountLockTime(loginName);
+			UsersDbObjExample ex = usersDao.getExample();
+			ex.createCriteria().andLoginNameEqualTo(loginName);
+			List<UsersDbObj> result = usersDao.get(ex);
+			
+			if(result.size() == 0) {
+				throw new ZfgcNotFoundException("loginName " + loginName);
+			}
+			
+			return mapper.map(result.get(0), Users.class);
 		}
 		catch(RuntimeException ex){
 			throw ex;
 		}
 	}
 
-	public void linkUserToIp(Users user, IpAddress ipAddress, Boolean setPrimary) throws RuntimeException {
-		try{
-			usersDao.linkUserToIp(user,ipAddress,setPrimary);
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
-	public String getLoginNameByToken(String token){
-		return usersDao.getLoginNameByToken(token);
-	}
-	
-	public Boolean getActiveFlagByToken(String token){
-		return usersDao.getActiveFlagByToken(token);
-	}
-	
-	public List<String> getMemberGroupNames(Integer usersId){
-		return usersDao.getMemberGroups(usersId);
-	}
-	
-	public List<Integer> getMemberGroupsByToken(String token){
-		return usersDao.getMemberGroupsByToken(token);
-	}
-	
-	public Integer getPrimaryMemberGroupByToken(String token){
-		return usersDao.getPrimaryMemberGroupByToken(token);
-	}
-	
-	public Integer getUsersIdByToken(String token){
-		return usersDao.getUsersIdByToken(token);
-	}
-
-	public Integer getPrimaryMemberGroupIdByToken(String token) {
-		return usersDao.getPrimaryMemberGroupIdByToken(token);
-	}
-	
 	public List<Users> simpleUserSearch(String displayNameQuery, Integer start, Integer length){
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andDisplayNameLike("%" + displayNameQuery + "%").andActiveFlagEqualTo(true);

@@ -85,6 +85,21 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return obj;
 	}
 	
+	public List<BrUserConversation> getUsersByConversation(Integer conversationId){
+		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
+		ex.createCriteria().andPmConversationIdEqualTo(conversationId);
+		
+		List<BrUserConversationDbObj> dbRes = brUserConversationDao.get(ex);
+		List<BrUserConversation> res = new ArrayList<>();
+		
+		for(BrUserConversationDbObj db : dbRes) {
+			res.add(mapper.map(db, BrUserConversation.class));
+		}
+		
+		return res;
+		
+	}
+	
 	public void addUserMappingToConvo(Integer conversationId, Integer usersId) {
 		BrUserConversation mapping = new BrUserConversation();
 		mapping.setPmConversationId(conversationId);
