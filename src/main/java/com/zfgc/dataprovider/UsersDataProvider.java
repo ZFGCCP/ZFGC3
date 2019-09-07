@@ -80,6 +80,19 @@ public class UsersDataProvider extends AbstractDataProvider {
 		
 	}
 	
+	public Users getUser(String username) {
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andLoginNameEqualTo(username);
+		
+		List<UsersDbObj> result = usersDao.get(ex);
+		
+		if(result.size() == 0) {
+			throw new ZfgcNotFoundException("user " + username);
+		}
+		
+		return mapper.map(result.get(0), Users.class);
+	}
+	
 	public void saveUser(Users user) {
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(user.getUsersId());

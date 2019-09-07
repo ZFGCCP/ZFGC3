@@ -22,7 +22,15 @@
     
 
     <!-- tables -->
+    <table schema="Zfgc3" tableName="PASSWORD_RESET_CODE" domainObjectName="PasswordResetCodeDbObj">
+    	<generatedKey column="PASSWORD_RESET_CODE_ID" sqlStatement="SELECT COALESCE(MAX(PASSWORD_RESET_CODE_ID) + 1,0) FROM PASSWORD_RESET_CODE"/>
+    </table>
+    
     <!--<table schema="Zfgc3" tableName="HOSTNAME" domainObjectName="HostnameDbObj">
+    	<generatedKey column="HOSTNAME_ID" sqlStatement="SELECT COALESCE(MAX(HOSTNAME_ID) + 1,0) FROM HOSTNAME"/>
+    </table>
+    
+    <table schema="Zfgc3" tableName="HOSTNAME" domainObjectName="HostnameDbObj">
     	<generatedKey column="HOSTNAME_ID" sqlStatement="SELECT COALESCE(MAX(HOSTNAME_ID) + 1,0) FROM HOSTNAME"/>
     </table>
     
