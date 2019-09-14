@@ -17,10 +17,14 @@ import com.zfgc.controller.LegacyController;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.PasswordResetCodeDataProvider;
 import com.zfgc.dataprovider.UserEmailViewDataProvider;
+import com.zfgc.dataprovider.UserSecuritySettingsDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.exception.security.ZfgcUnauthorizedException;
+import com.zfgc.model.users.NewPassword;
 import com.zfgc.model.users.PasswordResetCode;
 import com.zfgc.model.users.UserEmailView;
+import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
 import com.zfgc.util.ZfgcEmailUtils;
@@ -43,8 +47,19 @@ public class PasswordResetCodeService extends AbstractService {
 	@Autowired
 	private ZfgcGeneralConfig zfgcGeneralConfig;
 	
+	@Autowired
+	private UserSecuritySettingsDataProvider userSecuritySettingsDataProvider;
+	
+	@Autowired
+	private UsersDataProvider usersDataProvider;
+	
 	@Transactional
-	public void createNewResetCode(String username) {
+	public void createNewResetCode(String username, Users zfgcUser) {
+		//a user should not be logged in when doing this
+		if(zfgcUser.getUsersId() != null) {
+			throw new ZfgcUnauthorizedException();
+		}
+		
 		try {
 			UserEmailView user = userEmailViewDataProvider.getActiveUserEmail(username);
 			
@@ -67,6 +82,51 @@ public class PasswordResetCodeService extends AbstractService {
 			LOGGER.error(ex.getMessage());
 		} catch (UnsupportedEncodingException e) {
 			throw new RuntimeException(e);
+		}
+	}
+	
+	@Transactional
+	private PasswordResetCode checkResetCode(String resetCode, Users zfgcUser) {
+		//a user should not be logged in when doing this
+		if(zfgcUser.getUsersId() != null) {
+			throw new ZfgcUnauthorizedException();
+		}
+		
+		PasswordResetCode check = passwordResetCodeDataProvider.getPasswordResetCodeByCode(resetCode);
+		
+		//check if the code is expired
+		Date today = new Date();
+		if(check.getExpirationTs().compareTo(today) <= 0) {
+			passwordResetCodeDataProvider.deleteResetCode(check);
+			return null;
+		}
+		
+		return check;
+		
+	}
+	
+	public NewPassword createPasswordResetModel(String resetCode, Users zfgcUser){
+		PasswordResetCode code = checkResetCode(resetCode, zfgcUser);
+		if(code != null){
+			NewPassword newPassword = new NewPassword();
+			Users user = usersDataProvider.getUser(code.getUsersId());
+			
+			newPassword.setUsersId(user.getUsersId());
+			newPassword.setDisplayName(user.getDisplayName());
+			newPassword.setResetCode(code.getCode());
+			
+			return newPassword;
+		}
+		
+		return null;
+	}
+	
+	
+	
+	@Transactional
+	public void resetUserPassword(NewPassword newPassword, Users zfgcUser) {
+		if(checkResetCode(newPassword.getResetCode(), zfgcUser) != null) {
+			userSecuritySettingsDataProvider.updatePassword(newPassword.getUsersId(), newPassword.getNewPassword());
 		}
 	}
 	

@@ -72,7 +72,7 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	private Logger LOGGER = LogManager.getLogger(UsersDataProvider.class);
 	
-	public Users getUser(Integer usersId) throws Exception{
+	public Users getUser(Integer usersId) {
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(usersId);
 		
