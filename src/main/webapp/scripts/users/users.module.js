@@ -18,6 +18,14 @@ angular.module('zfgc.users',['zfgc.config'])
 			.state('activation', {
 				url: baseRouter + '/useractivation?:activationCode',
 				templateUrl: basePath + '/activation.html'
+			})
+			.state('password-reset', {
+				url: baseRouter + '/password-reset',
+				templateUrl: basePath + '/password-reset/password-reset-request.html'
+			})
+			.state('password-reset.reset',{
+				url: baseRouter + '/password-reset/reset?:resetCode',
+				templateUrl: basePath + '/password-reset/reset.html'
 			});
 		
 		$stateProvider
