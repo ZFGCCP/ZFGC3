@@ -80,62 +80,19 @@ table.widget-table{
 }
 
 .responsive-table{
-	@media(max-width:767px){
-		display:block;
-	}
-
-	display:table;
-	width:100%;
 
 	.responsive-table-header{
-		@media(max-width:767px){
+		@media(max-width:992px){
 			display:none;
 		}
-	
-		display:table-header-group;
 		
-		.responsive-table-cell{
-			@media(max-width:767px){
-				display:block;
-			}
-		
-			display: table-cell;
-    		padding: 15px;
-		}
+		height:20px;
 	}
 	
 	.responsive-table-body{
-		@media(max-width:767px){
-			display:block;
-		}
-	
-		display:table-row-group;
-	
+		
 		.responsive-table-row{
-			@media(max-width:767px){
-				display:block;
-			}
-		
-			display:table-row;
-		
-			.responsive-table-cell{
-				@media(max-width:767px){
-					&.hidden-cell{
-						display:none;
-					}
-				
-					display:block;
-				}
-			
-				display:table-cell;
-				padding: 15px;
-				border-right-style:solid;
-				border-right-width:thin;
-			}
-			
-			.responsive-table-cell:last{
-				border-right:0px;
-			}
+			height: 34px;
 		}
 		
 		.responsive-table-row:hover{

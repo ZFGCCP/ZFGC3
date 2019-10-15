@@ -77,22 +77,25 @@
 					<form name="convoBoxForm" class="convo-box-form">
 						<div class="responsive-table convo-box-table">
 							<div class="responsive-table-header">
-								<span class="responsive-col-del responsive-table-cell"></span>
-								<span class="responsive-col-title responsive-table-cell">Conversation</span>
-								<span class="responsive-col-last-updated responsive-table-cell">Started By</span>
+								<span class="col-md-9">Conversation</span>
+								<span class="col-md-3">Started By</span>
 							</div>
 							<div class="responsive-table-body" ng-if="vm.convoBox.conversations.length > 0">
 								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
-									<span class="responsive-col-del responsive-table-cell"><input type="checkbox" ng-model="convo.isSelected" value="true" ng-change="vm.checkForCheckedBoxes()"/></span>
-									<span class="responsive-col-title responsive-table-cell">
-										<a ui-sref="convo({conversationId:convo.pmConversationId})">
-											<span><i ng-class="{'fas fa-archive' : convo.boxType === 'ARCHIVE', 'fas fa-inbox' : convo.boxType === 'INBOX', 'fas fa-share-square' : convo.boxType === 'OUTBOX'}"></i></span>
-											<span class="convo-box-subject" ng-bind-html="convo.subject"></span>
-											<span class="convo-box-subject"> - Last Message By: {{convo.senderName}} On : {{convo.sentDtAsString}}</span>
-										</a>
-										<div class="convo-box-message">{{vm.stripHtml(convo.message)}}</div>
+									<span class="col-xs-12 col-md-9">
+										<span>
+											<input type="checkbox" ng-model="convo.isSelected" value="true" ng-change="vm.checkForCheckedBoxes()"/>
+										</span>
+										<span class="message-content">
+											<a ui-sref="convo({conversationId:convo.pmConversationId})">
+												<span><i ng-class="{'fas fa-archive' : convo.boxType === 'ARCHIVE', 'fas fa-inbox' : convo.boxType === 'INBOX', 'fas fa-share-square' : convo.boxType === 'OUTBOX'}"></i></span>
+												<span class="convo-box-subject" ng-bind-html="convo.subject"></span>
+												<span class="convo-box-subject"> - Last Message By: {{convo.senderName}} On : {{convo.sentDtAsString}}</span>
+											</a>
+											<div class="convo-box-message">{{vm.stripHtml(convo.message)}}</div>
+										</span>
 									</span>
-									<span class="responsive-col-last-updated responsive-table-cell">
+									<span class="col-xs-12 col-md-3">
 										<span class="from-user">
 											{{convo.initiatorName}}
 										</span>
@@ -100,7 +103,6 @@
 											{{convo.startDtAsString}}
 										</div>
 									</span>
-									</a>
 								</div>
 							</div>
 						</div>

@@ -17,8 +17,14 @@
 		font-weight:bold;
 	}
 	
-	.convo-box-message{
-		padding-top:5px;
+	.message-content{
+		position: relative;
+    	top: -5px;
+	
+		.convo-box-message{
+			padding-top: 5px;
+    		padding-left: 20px;
+		}
 	}
 }
 
