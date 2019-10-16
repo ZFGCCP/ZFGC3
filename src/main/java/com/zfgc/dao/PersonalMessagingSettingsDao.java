@@ -19,8 +19,7 @@ public class PersonalMessagingSettingsDao extends AbstractDao<PersonalMessagingS
 	@Override
 	public List<PersonalMessagingSettingsDbObj> get(
 			PersonalMessagingSettingsDbObjExample ex) throws RuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		return personalMessagingSettingsDbObjMapper.selectByExample(ex);
 	}
 
 	@Override
