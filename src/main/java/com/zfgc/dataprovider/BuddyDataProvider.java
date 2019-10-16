@@ -32,7 +32,7 @@ public class BuddyDataProvider extends AbstractDataProvider{
 	@Autowired
 	UserProfileDao userProfileDao;
 	
-	public List<Buddy> getBuddiesByUserId(Integer usersId) throws Exception{
+	public List<Buddy> getBuddiesByUserId(Integer usersId) throws RuntimeException{
 		List<Buddy> results = new ArrayList<>();
 		List<Integer> buddyIds = buddyDao.getBuddyIds(usersId);
 		
