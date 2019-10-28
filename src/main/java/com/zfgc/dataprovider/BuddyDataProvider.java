@@ -91,6 +91,13 @@ public class BuddyDataProvider extends AbstractDataProvider{
 		buddyDao.deleteByExample(null, ex);
 	}
 	
+	public void deleteIgnoresByUser(Integer usersId) {
+		BrBuddyIgnoreListDbObjExample ex = buddyDao.getExample();
+		ex.createCriteria().andUserAIdEqualTo(usersId).andBuddyFlagEqualTo(false);
+		
+		buddyDao.deleteByExample(null, ex);
+	}
+	
 	public void deleteBuddy(Buddy buddy){
 		buddyDao.hardDelete(buddy);
 	}
@@ -99,10 +106,24 @@ public class BuddyDataProvider extends AbstractDataProvider{
 		buddyDao.updateOrInsert(buddy);
 	}
 	
+	public Buddy getIgnoreTemplate(Integer usersA, Integer usersB) throws RuntimeException {
+		Buddy buddy = setupCoreBuddy(usersA, usersB);
+		buddy.setBuddyFlag(false);
+		buddy.setIgnoreFlag(true);
+
+		return buddy;
+	}
+	
 	public Buddy getBuddyTemplate(Integer usersA, Integer usersB) throws RuntimeException{
-		Buddy buddy = new Buddy();
+		Buddy buddy = setupCoreBuddy(usersA, usersB);
 		buddy.setBuddyFlag(true);
 		buddy.setIgnoreFlag(false);
+
+		return buddy;
+	}
+	
+	private Buddy setupCoreBuddy(Integer usersA, Integer usersB) throws RuntimeException {
+		Buddy buddy = new Buddy();
 		buddy.setUserAId(usersA);
 		buddy.setUserBId(usersB);
 		

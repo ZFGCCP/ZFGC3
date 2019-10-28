@@ -60,6 +60,10 @@
 				url : '/forum/users/buddy',
 				method : 'GET'
 			},
+			getIgnoreTemplate : {
+				url : '/forum/users/ignore',
+				method : 'GET'
+			},
 			adminUserActivate : {
 				url : '/forum/users/:userId/activation',
 				method : 'POST'
@@ -231,6 +235,10 @@
 			vm.profile.buddyList.splice(index,1);
 		};
 		
+		UserService.deleteIgnore = function(vm, index){
+			vm.profile.ignoreList.splice(index,1);
+		};
+		
 		UserService.addBuddy = function(vm,buddy){
 			var newBuddy = UserService.resource.getBuddyTemplate({userAId : vm.profile.usersId, userBId : buddy.usersId});
 			
@@ -239,10 +247,30 @@
 			});
 		};
 		
+		UserService.addIgnore = function(vm,buddy){
+			var newBuddy = UserService.resource.getIgnoreTemplate({userAId : vm.profile.usersId, userBId : buddy.usersId});
+			
+			newBuddy.$promise.then(function(data){
+				vm.profile.ignoreList.push(data);
+			});
+		};
+		
 		UserService.isUserOnBuddyList = function(vm){
 			if(vm.profile && vm.profile !== null){
 				for(var i = 0; i < vm.profile.buddyList.length; i++){
 					if(vm.profile.buddyList[i].userBId === vm.profile.usersId){
+						return true;
+					}
+				}
+			}
+			
+			return false;
+		}
+		
+		UserService.isUserOnIgnoreList = function(vm){
+			if(vm.profile && vm.profile !== null){
+				for(var i = 0; i < vm.profile.ignoreList.length; i++){
+					if(vm.profile.ignoreList[i].userBId === vm.profile.usersId){
 						return true;
 					}
 				}

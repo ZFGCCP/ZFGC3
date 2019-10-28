@@ -31,6 +31,7 @@ public class UserProfileView extends BaseZfgcModel {
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
 	private List<Buddy> buddyList = new ArrayList<>();
+	private List<Buddy> ignoreList = new ArrayList();
 	private Avatar avatar = new Avatar();
 	private LkupMemberGroup primaryMemberGroup;
 	private SecondaryMemberGroups secondaryMemberGroups;
@@ -238,6 +239,14 @@ public class UserProfileView extends BaseZfgcModel {
 
 	public void setPrimaryHostname(Hostname primaryHostname) {
 		this.primaryHostname = primaryHostname;
+	}
+
+	public List<Buddy> getIgnoreList() {
+		return ignoreList;
+	}
+
+	public void setIgnoreList(List<Buddy> ignoreList) {
+		this.ignoreList = ignoreList;
 	}
 	
 }
