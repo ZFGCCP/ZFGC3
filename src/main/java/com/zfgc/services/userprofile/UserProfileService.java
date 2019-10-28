@@ -106,6 +106,7 @@ public class UserProfileService extends AbstractService{
 		
 		//get buddy and ignore list
 		profileView.setBuddyList(buddyService.getBuddies(userId));
+		profileView.setIgnoreList(buddyService.getIgnores(userId));
 		
 		//if you're not the owner if this profile, and you're not an admin
 		if(currentUserId == null || (!currentUserId.equals(userId) && 
@@ -321,7 +322,9 @@ public class UserProfileService extends AbstractService{
 		
 		//save buddy and ignore list
 		buddyService.deleteBuddies(buddyIgnore.getUsersId());
+		buddyService.deleteIgnores(buddyIgnore.getUsersId());
 		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getBuddyList(), zfgcUser);
+		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getIgnoreList(), zfgcUser);
 		
 		return buddyIgnore;
 	}

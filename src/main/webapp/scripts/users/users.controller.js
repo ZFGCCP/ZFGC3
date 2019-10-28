@@ -60,8 +60,16 @@
 			UserService.deleteBuddy(vm,index);
 		};
 		
+		vm.deleteIgnore = function(index){
+			UserService.deleteIgnore(vm,index);
+		};
+		
 		vm.selectBuddy = function(buddy){
 			UserService.addBuddy(vm,buddy);
+		};
+		
+		vm.selectIgnore = function(buddy){
+			UserService.addIgnore(vm,buddy);
 		};
 		
 		vm.isUserAdmin = function(){

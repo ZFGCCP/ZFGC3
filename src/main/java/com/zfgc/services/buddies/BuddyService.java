@@ -53,6 +53,10 @@ public class BuddyService extends AbstractService {
 		buddyDataProvider.deletBuddiesByUser(usersId);
 	}
 	
+	public void deleteIgnores(Integer usersId) {
+		buddyDataProvider.deleteIgnoresByUser(usersId);
+	}
+	
 	@Transactional
 	public void saveBuddies(Integer userId, List<Buddy> buddies, Users zfgcUser) throws RuntimeException{
 		List<Buddy> savedBuddies = getBuddies(userId);
@@ -65,6 +69,13 @@ public class BuddyService extends AbstractService {
 	
 	public Buddy getBuddyTemplate(Integer usersA, Integer usersB, Users zfgcUser) throws RuntimeException{
 		Buddy buddy = buddyDataProvider.getBuddyTemplate(usersA, usersB);
+		ruleRunner.runRules(buddyListValidator, null, null, buddy, zfgcUser);
+		
+		return buddy;
+	}
+	
+	public Buddy getIgnoreTemplate(Integer usersA, Integer usersB, Users zfgcUser) throws RuntimeException{
+		Buddy buddy = buddyDataProvider.getIgnoreTemplate(usersA, usersB);
 		ruleRunner.runRules(buddyListValidator, null, null, buddy, zfgcUser);
 		
 		return buddy;
