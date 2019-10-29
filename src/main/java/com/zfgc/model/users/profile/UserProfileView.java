@@ -13,6 +13,7 @@ import com.zfgc.model.users.Hostname;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.SecondaryMemberGroups;
 import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserPermissionView;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
@@ -45,6 +46,8 @@ public class UserProfileView extends BaseZfgcModel {
 	
 	private String timeZone;
 	private Integer timeOffset;
+	
+	private UserPermissionView userPermissionView;
 	
 	@JsonIgnore
 	private UserProfileView savedProfile;
@@ -247,6 +250,14 @@ public class UserProfileView extends BaseZfgcModel {
 
 	public void setIgnoreList(List<Buddy> ignoreList) {
 		this.ignoreList = ignoreList;
+	}
+
+	public UserPermissionView getUserPermissionView() {
+		return userPermissionView;
+	}
+
+	public void setUserPermissionView(UserPermissionView userPermissionView) {
+		this.userPermissionView = userPermissionView;
 	}
 	
 }

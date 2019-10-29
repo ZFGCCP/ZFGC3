@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.LkupMemberGroupDataProvider;
+import com.zfgc.dataprovider.UserPermissionViewDataProvider;
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -84,6 +85,9 @@ public class UserProfileService extends AbstractService{
 	@Autowired
 	MemberGroupService memberGroupService;
 	
+	@Autowired
+	UserPermissionViewDataProvider userPermissionViewDataProvider;
+	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
 	}
@@ -107,6 +111,11 @@ public class UserProfileService extends AbstractService{
 		//get buddy and ignore list
 		profileView.setBuddyList(buddyService.getBuddies(userId));
 		profileView.setIgnoreList(buddyService.getIgnores(userId));
+		
+		//moderation staff can see the user's permissions
+		if(zfgcUser.isModerationStaff()) {
+			profileView.setUserPermissionView(userPermissionViewDataProvider.getUserPermissions(userId));
+		}
 		
 		//if you're not the owner if this profile, and you're not an admin
 		if(currentUserId == null || (!currentUserId.equals(userId) && 
