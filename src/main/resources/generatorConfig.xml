@@ -287,12 +287,15 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <table schema="zfgc3" tableName="USER_PERMISSION_VIEW" domainObjectName="UserPermissionViewDbObj">
+    </table>
+    
+    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <!--<table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     <table schema="zfgc3" tableName="WHOS_ONLINE_DETAIL_VIEW" domainObjectName="OnlineUserDetailDbObj">
