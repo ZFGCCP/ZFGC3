@@ -45,11 +45,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -75,15 +75,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
@@ -98,6 +96,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/whos-online/online.module.js",
 	    
@@ -183,6 +183,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/whos-online/online.html",
 	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
@@ -195,15 +197,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
-	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
@@ -235,8 +235,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.html",
-	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/buddy-ignore.html",
@@ -244,6 +242,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/user-profile/modify-profile.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/notification-settings.html",
+	    
+	"./src/main/webapp/scripts/users/user-profile/permissions-view.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/pm-settings.html",
 	    
@@ -253,15 +253,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
 	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
+	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
-	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/mobile/user-profile-mobile-nav.html"
 	    

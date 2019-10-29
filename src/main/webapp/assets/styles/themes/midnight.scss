@@ -310,3 +310,23 @@ a:hover{
 		background-color:$midnight-row-hover;
 	}
 }
+
+.permissions-wrapper{
+	
+	.permissions-row{
+	
+		&:nth-child(even){
+			background-color:$midnight-zebra-even;
+		}
+		
+		&:nth-child(odd){
+			background-color:$midnight-zebra-odd;
+		}
+		
+		&:hover{
+			background-color:$midnight-row-hover;
+		}
+		
+	}
+	
+}
