@@ -61,7 +61,7 @@ public class BuddyDataProvider extends AbstractDataProvider{
 		return results;
 	}
 	
-	public List<Buddy> getIgnoresByUserId(Integer usersId) throws Exception{
+	public List<Buddy> getIgnoresByUserId(Integer usersId){
 		List<Buddy> results = new ArrayList<>();
 		List<Integer> buddyIds = buddyDao.getIgnoreIds(usersId);
 		
