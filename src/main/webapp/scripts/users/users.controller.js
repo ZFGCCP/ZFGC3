@@ -1,12 +1,22 @@
 (function(){
 	'use strict';
 	
-	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService){
+	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService, FileUploader){
 		var vm = this;
-		UserService.loadProfile($location.search().userId,vm);
+		UserService.loadProfile($location.search().userId,vm, $scope);
 		
 		vm.lookups = LookupsService.getLookupsList("MEMBER_GROUP,AVATAR_TYPE,AVATAR_GALLERY,GENDER,NOTIFICATION_FREQUENCY,LKUP_RECEIVE_MESSAGES,LKUP_PM_NOTIF");
 		vm.getLkupValue = LookupsService.getLkupValue;
+		
+		vm.uploader = new FileUploader({
+			url : 'http://localhost:8080/forum/contentstream/avatar/81',
+			autoUpload: true,
+			alias: 'avatarFile'
+		});
+		
+		vm.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+			vm.profile.stagedAvatar = response;
+		}
 		
 		vm.userActivation = function(){
 			UserService.adminUserActivate(vm.profile.usersId);
@@ -100,6 +110,10 @@
 			vm.showNav = !showDetails;
 		};
 		
+		vm.stageAvatar = function(){
+			UserService.stageAvatar(vm);
+		};
+
 		 var w = angular.element($window);
          w.bind('resize', function () {
              
@@ -125,5 +139,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', UsersCtrl])
+		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', 'FileUploader', UsersCtrl])
 })();

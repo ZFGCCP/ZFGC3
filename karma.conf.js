@@ -17,6 +17,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/node_modules/angular-animate/angular-animate.js",
 	    
+	"./src/main/webapp/node_modules/angular-file-upload/dist/angular-file-upload.min.js",
+	    
 	"./src/main/webapp/node_modules/angular-local-storage/dist/angular-local-storage.js",
 	    
 	"./src/main/webapp/node_modules/angular-recaptcha/release/angular-recaptcha.js",
@@ -47,17 +49,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
-	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
 	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
 	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
+	    
+	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
@@ -79,9 +81,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
@@ -99,8 +101,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
-	"./src/main/webapp/scripts/whos-online/online.module.js",
-	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.controller.js",
@@ -110,6 +110,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/registration.controller.js",
 	    
 	"./src/main/webapp/scripts/users/activation.controller.js",
+	    
+	"./src/main/webapp/scripts/whos-online/online.module.js",
 	    
 	"./src/main/webapp/scripts/sockets/web-socket.service.js",
 	    
@@ -175,13 +177,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/sendPm.html",
 	    
+	"./src/main/webapp/scripts/whos-online/online.html",
+	    
 	"./src/main/webapp/scripts/users/activation.html",
 	    
 	"./src/main/webapp/scripts/users/registration.html",
 	    
 	"./src/main/webapp/scripts/users/users.html",
-	    
-	"./src/main/webapp/scripts/whos-online/online.html",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
@@ -197,9 +199,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
 	    
@@ -223,6 +225,10 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
+	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
+	    
+	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
+	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
@@ -231,9 +237,7 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
 	    
-	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
-	    
-	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
@@ -253,15 +257,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/user-profile/user-summary.html",
 	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.html",
-	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/contact-data.html",
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    

@@ -71,8 +71,18 @@
 			activate : {
 				url : '/forum/users/newuser/activation?activationCode=:activationCode',
 				method : 'POST'
+			},
+			stageAvatar : {
+				url : '/forum/contentstream/avatar/:userId',
+				method : 'POST'
 			}
 		});
+		
+		UserService.stageAvatar = function(vm){
+			UserService.resource.stageAvatar({userId : vm.profile.usersId}, vm.profile.userAvatarHandle[0]).$promise.then(function(data){
+				vm.profile.stagedAvatar = data;
+			});
+		};
 		
 		UserService.adminUserActivate = function(userId){
 			UserService.resource.adminUserActivate({userId : userId}).$promise.then(function(data){
@@ -105,7 +115,7 @@
             }
 		                                      
 		};
-		UserService.loadProfile = function(userId,vm){
+		UserService.loadProfile = function(userId,vm, scope){
 	         var profile = UserService.resource.userProfile({'userId':userId});   
 	         vm.profile = profile;
 	         profile.$promise.then(function(data){
@@ -123,6 +133,7 @@
 	        	NotificationsService.getThreadSubs(userId,1,10).$promise.then(function(data){
 	        		vm.threadSubs = data;
 	        	});
+
 	         });
 	         	                                      
 		};

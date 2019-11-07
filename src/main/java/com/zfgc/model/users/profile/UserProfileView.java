@@ -8,6 +8,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.avatar.AvatarStaging;
 import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.Hostname;
 import com.zfgc.model.users.IpAddress;
@@ -34,6 +35,7 @@ public class UserProfileView extends BaseZfgcModel {
 	private List<Buddy> buddyList = new ArrayList<>();
 	private List<Buddy> ignoreList = new ArrayList();
 	private Avatar avatar = new Avatar();
+	private AvatarStaging stagedAvatar;
 	private LkupMemberGroup primaryMemberGroup;
 	private SecondaryMemberGroups secondaryMemberGroups;
 	private IpAddress primaryIpAddress;
@@ -258,6 +260,14 @@ public class UserProfileView extends BaseZfgcModel {
 
 	public void setUserPermissionView(UserPermissionView userPermissionView) {
 		this.userPermissionView = userPermissionView;
+	}
+
+	public AvatarStaging getStagedAvatar() {
+		return stagedAvatar;
+	}
+
+	public void setStagedAvatar(AvatarStaging stagedAvatar) {
+		this.stagedAvatar = stagedAvatar;
 	}
 	
 }

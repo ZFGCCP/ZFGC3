@@ -5,7 +5,7 @@ import com.zfgc.model.BaseZfgcModel;
 public class Avatar extends BaseZfgcModel {
 	
 	private Integer avatarId;
-	private String avatarFileName;
+	private String avatarFilename;
 	private String avatarUrl;
 	private Integer avatarGalleryId;
 	private Integer avatarTypeId;
@@ -14,12 +14,12 @@ public class Avatar extends BaseZfgcModel {
 		return avatarId;
 	}
 
-	public String getAvatarFileName() {
-		return avatarFileName;
+	public String getAvatarFilename() {
+		return avatarFilename;
 	}
 
-	public void setAvatarFileName(String avatarFileName) {
-		this.avatarFileName = avatarFileName;
+	public void setAvatarFilename(String avatarFileName) {
+		this.avatarFilename = avatarFileName;
 	}
 
 	public void setAvatarId(Integer avatarId) {

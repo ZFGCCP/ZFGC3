@@ -22,6 +22,10 @@
     
 
     <!-- tables -->
+    <table schema="Zfgc3" tableName="AVATAR_STAGING" domainObjectName="AvatarStagingDbObj">
+    	<generatedKey column="AVATAR_STAGING_ID" sqlStatement="SELECT COALESCE(MAX(AVATAR_STAGING_ID) + 1,0) FROM AVATAR_STAGING"/>
+    </table>
+    
     <!--<table schema="Zfgc3" tableName="HOSTNAME" domainObjectName="HostnameDbObj">
     	<generatedKey column="HOSTNAME_ID" sqlStatement="SELECT COALESCE(MAX(HOSTNAME_ID) + 1,0) FROM HOSTNAME"/>
     </table>
@@ -287,10 +291,10 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="USER_PERMISSION_VIEW" domainObjectName="UserPermissionViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PERMISSION_VIEW" domainObjectName="UserPermissionViewDbObj">
     </table>
     
-    <!--<table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
