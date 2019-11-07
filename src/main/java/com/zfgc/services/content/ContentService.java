@@ -1,5 +1,6 @@
 package com.zfgc.services.content;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -45,34 +46,31 @@ public class ContentService extends AbstractService{
 		return contentDataProvider.getFileHandler(avatarDataProvider.getAvatarGallery(galleryId).getFilePath());
 	}
 	
-	public void saveAvatar(MultipartFile file, Integer userId, Users zfgcUser) throws RuntimeException{
-		validateFile(file);
-		
-		writeFile(file, zfgcUser);											   
-	}
-	
-	private void writeFile(MultipartFile file, Users zfgcUser) throws RuntimeException{
+	public String writeFile(MultipartFile file, String filePath, Users zfgcUser) throws RuntimeException{
 		FileOutputStream stream;
-		String extension = StringUtils.substring(file.getOriginalFilename(), StringUtils.lastIndexOf(file.getOriginalFilename(), '.'),file.getOriginalFilename().length() - 1);
+		String extension = StringUtils.substring(file.getOriginalFilename(), StringUtils.lastIndexOf(file.getOriginalFilename(), '.'),file.getOriginalFilename().length());
 		byte[] bytes;
 		try {
 			bytes = file.getBytes();
-		
+			//"/assets/images/avatar/"
 			String newFileName = ZfgcSecurityUtils.generateCryptoString(16) + "-" + zfgcUser.getUsersId() + extension;
-			stream = new FileOutputStream("/assets/images/avatar/" + newFileName);
+			
+			File yourFile = new File(filePath + newFileName);
+			yourFile.createNewFile();
+			stream = new FileOutputStream(filePath + newFileName, false);
 			
 			stream.write(bytes);
 			
 			stream.close();
 			
-			fileUploadTempDataProvider.createTempRecord(newFileName, zfgcUser.getUsersId());
+			return newFileName;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			throw new RuntimeException(e.getMessage());
 		}
 	}
 	
-	private void validateFile(MultipartFile file) throws ZfgcInvalidFileException{
+	/*private void validateFile(MultipartFile file) throws ZfgcInvalidFileException{
 		String mimeType = file.getContentType();
 		String fileName = file.getOriginalFilename();
 		
@@ -81,5 +79,5 @@ public class ContentService extends AbstractService{
 		   !mimeType.equals(MediaType.IMAGE_PNG)){
 			throw new ZfgcInvalidFileException(fileName, ZfgcInvalidFileException.INVALID_FILE_EXT, ".jpg",".jpeg",".gif",".png");
 		}
-	}
+	}*/
 }

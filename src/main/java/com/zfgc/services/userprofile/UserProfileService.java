@@ -14,6 +14,7 @@ import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
+import com.zfgc.model.avatar.AvatarStaging;
 import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
@@ -348,6 +349,11 @@ public class UserProfileService extends AbstractService{
 		forumProfile.getPersonalInfo().setSignature(sanitizationService.sanitizeMessage(forumProfile.getPersonalInfo().getSignature()));
 		
 		//avatar logic
+		if(forumProfile.getStagedAvatar() != null) {
+			AvatarStaging staged = avatarService.getAvatarStagingRecord(forumProfile.getStagedAvatar().getMac());
+			forumProfile.getPersonalInfo().getAvatar().setAvatarFilename("G:\\ZFGC3\\ZFGC3 git\\ZFGC3\\src\\main\\webapp\\assets\\images\\avatar\\" + staged.getFilename());
+		}
+		
 		avatarService.createAvatarRecordFromExternal(forumProfile.getPersonalInfo().getAvatar());
 		
 		userProfileDataProvider.saveForumProfile(forumProfile);
