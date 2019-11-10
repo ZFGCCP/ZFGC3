@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.model.avatar.AvatarStaging;
 import com.zfgc.rules.Rule;
+import com.zfgc.util.ZfgcCollectionUtils;
 import com.zfgc.validation.AbstractValidator;
 
 @Component
@@ -33,7 +34,7 @@ public class AvatarValidator extends AbstractValidator<AvatarStaging> {
 		        model.getErrors().getValidationErrors().add(invalidFile);
 		        return;
 		    }
-			
+
 			BufferedImage image = ImageIO.read(iis);
 		    
 		    if(image == null) {
@@ -47,10 +48,7 @@ public class AvatarValidator extends AbstractValidator<AvatarStaging> {
 			ImageReader reader = (ImageReader) iter.next();
 		    
 		    String formatName = reader.getFormatName().toLowerCase();
-		    if(!formatName.equals("jpg") &&
-		       !formatName.equals("jpeg") &&
-		       !formatName.equals("png") &&
-		       !formatName.equals("gif")) {
+		    if(!ZfgcCollectionUtils.CoalesceEquals(formatName, "jpg", "jpeg", "png", "gif")) {
 		    	Rule invalidFile = new Rule();
 				invalidFile.setRuleName("INVALID_IMAGE_FORMAT");
 				invalidFile.setErrorMessage("You may only upload a png, jpg, jpeg or gif.");
