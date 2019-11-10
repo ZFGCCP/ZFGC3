@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService, FileUploader, ServerConfigService){
+	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService, FileUploader, ServerConfigService, NotificationsService){
 		var vm = this;
 		UserService.loadProfile($location.search().userId,vm, $scope);
 		
@@ -14,8 +14,33 @@
 			alias: 'avatarFile'
 		});
 		
+		vm.uploader.onBeforeUploadItem = function(item){
+			vm.savingAvatar = true;
+		};
+		
 		vm.uploader.onSuccessItem = function(fileItem, response, status, headers) {
 			vm.profile.stagedAvatar = response;
+
+			NotificationsService.addSuccessAlert("successfully uploaded avatar");
+		}
+		
+		vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
+			vm.profile.stagedAvatar = response;
+
+			var message = "";
+			for(var i = 0; i < response.validationErrors.length; i++){
+				message += response.validationErrors[i].errorMessage + "\n";
+			}
+			
+			NotificationsService.addErrorAlert(message);
+		}
+		
+		vm.uploader.onCompleteItem = function(fileItem, response, status, headers){
+			vm.savingAvatar = false;
+		};
+		
+		vm.saveProfileDisabled = function(){
+			return vm.savingAvatar;
 		}
 		
 		vm.userActivation = function(){
@@ -139,5 +164,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', 'FileUploader', 'ServerConfigService', UsersCtrl])
+		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', 'FileUploader', 'ServerConfigService', 'NotificationsService', UsersCtrl])
 })();
