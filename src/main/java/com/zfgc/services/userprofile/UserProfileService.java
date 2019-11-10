@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.LkupMemberGroupDataProvider;
 import com.zfgc.dataprovider.UserPermissionViewDataProvider;
@@ -88,6 +89,9 @@ public class UserProfileService extends AbstractService{
 	
 	@Autowired
 	UserPermissionViewDataProvider userPermissionViewDataProvider;
+	
+	@Autowired
+	ZfgcGeneralConfig zfgcGeneralConfig;
 	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
@@ -351,7 +355,7 @@ public class UserProfileService extends AbstractService{
 		//avatar logic
 		if(forumProfile.getStagedAvatar() != null) {
 			AvatarStaging staged = avatarService.getAvatarStagingRecord(forumProfile.getStagedAvatar().getMac());
-			forumProfile.getPersonalInfo().getAvatar().setAvatarFilename("G:\\ZFGC3\\ZFGC3 git\\ZFGC3\\src\\main\\webapp\\assets\\images\\avatar\\" + staged.getFilename());
+			forumProfile.getPersonalInfo().getAvatar().setAvatarFilename(zfgcGeneralConfig.getAvatarDirectory() + staged.getFilename());
 		}
 		
 		avatarService.createAvatarRecordFromExternal(forumProfile.getPersonalInfo().getAvatar());
