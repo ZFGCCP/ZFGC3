@@ -12,7 +12,9 @@ import com.zfgc.model.avatar.Avatar;
 import com.zfgc.model.avatar.AvatarStaging;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.services.content.ContentService;
+import com.zfgc.validation.avatar.AvatarValidator;
 
 @Component
 public class AvatarService extends AbstractService {
@@ -24,6 +26,12 @@ public class AvatarService extends AbstractService {
 	
 	@Autowired
 	private ContentService contentService;
+	
+	@Autowired
+	private AvatarValidator avatarValidator;
+	
+	@Autowired
+	private RuleRunService<AvatarStaging> ruleRunService;
 	
 	public String getAvatarFileName(Integer avatarId) throws ZfgcNotFoundException{
 		try{
@@ -65,6 +73,10 @@ public class AvatarService extends AbstractService {
 	
 	@Transactional
 	public AvatarStaging stageAvatar(MultipartFile file, Users zfgcUser) {
+		AvatarStaging validatorRecord = new AvatarStaging();
+		validatorRecord.setFile(file);
+		ruleRunService.runRules(avatarValidator, null, null, validatorRecord, zfgcUser);
+		
 		String fileName = contentService.writeFile(file, "G:\\ZFGC3\\ZFGC3 git\\ZFGC3\\src\\main\\webapp\\assets\\images\\avatar\\", zfgcUser);
 		AvatarStaging staged = avatarStagingDataProvider.createStagedRecord(fileName, zfgcUser.getUsersId());
 		

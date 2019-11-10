@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService, FileUploader){
+	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService, FileUploader, ServerConfigService){
 		var vm = this;
 		UserService.loadProfile($location.search().userId,vm, $scope);
 		
@@ -139,5 +139,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', 'FileUploader', UsersCtrl])
+		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', 'FileUploader', 'ServerConfigService', UsersCtrl])
 })();

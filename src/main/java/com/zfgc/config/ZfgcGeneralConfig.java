@@ -8,6 +8,7 @@ public class ZfgcGeneralConfig {
 	private String recaptchaV2Key;
 	private String uiUrl;
 	private String userStackApiKey;
+	private String avatarDirectory;
 
 	public String getRecaptchaV2Key() {
 		return recaptchaV2Key;
@@ -31,6 +32,14 @@ public class ZfgcGeneralConfig {
 
 	public void setUserStackApiKey(String userStackApiKey) {
 		this.userStackApiKey = userStackApiKey;
+	}
+
+	public String getAvatarDirectory() {
+		return avatarDirectory;
+	}
+
+	public void setAvatarDirectory(String avatarDirectory) {
+		this.avatarDirectory = avatarDirectory;
 	}
 	
 }
