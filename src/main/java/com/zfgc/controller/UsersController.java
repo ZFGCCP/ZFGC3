@@ -178,6 +178,12 @@ class UsersController extends BaseController{
 		return ResponseEntity.status(HttpStatus.OK).body(buddyService.getBuddyTemplate(userAId, userBId, zfgcUser()));
 	}
 	
+	@RequestMapping(value="/ignore", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getIgnoreTemplate(@RequestParam Integer userAId, @RequestParam Integer userBId){
+		return ResponseEntity.status(HttpStatus.OK).body(buddyService.getIgnoreTemplate(userAId, userBId, zfgcUser()));
+	}
+	
 	@RequestMapping(value="/requestPasswordReset", method=RequestMethod.POST, produces="application/json")
 	@ResponseBody
 	public ResponseEntity requestPasswordReset(@RequestBody String userName){

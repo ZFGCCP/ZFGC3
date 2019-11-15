@@ -6,4 +6,11 @@ public final class PmConstants {
 		OUTBOX,
 		ARCHIVE
 	}
+	
+	public enum PmSettingFrequencies {
+		NEVER,
+		DAILY,
+		WEEKLY,
+		MONTHLY
+	}
 }

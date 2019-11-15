@@ -7,12 +7,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.LkupMemberGroupDataProvider;
+import com.zfgc.dataprovider.UserPermissionViewDataProvider;
 import com.zfgc.dataprovider.UserProfileDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
+import com.zfgc.model.avatar.AvatarStaging;
 import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Users;
@@ -84,6 +87,12 @@ public class UserProfileService extends AbstractService{
 	@Autowired
 	MemberGroupService memberGroupService;
 	
+	@Autowired
+	UserPermissionViewDataProvider userPermissionViewDataProvider;
+	
+	@Autowired
+	ZfgcGeneralConfig zfgcGeneralConfig;
+	
 	public List<NavTab> getProfileNavTabs(Users user, Integer usersId){
 		return navTabService.getUserProfileNavTabs(user, usersId);
 	}
@@ -106,6 +115,12 @@ public class UserProfileService extends AbstractService{
 		
 		//get buddy and ignore list
 		profileView.setBuddyList(buddyService.getBuddies(userId));
+		profileView.setIgnoreList(buddyService.getIgnores(userId));
+		
+		//moderation staff can see the user's permissions
+		if(zfgcUser.isModerationStaff()) {
+			profileView.setUserPermissionView(userPermissionViewDataProvider.getUserPermissions(userId));
+		}
 		
 		//if you're not the owner if this profile, and you're not an admin
 		if(currentUserId == null || (!currentUserId.equals(userId) && 
@@ -321,7 +336,9 @@ public class UserProfileService extends AbstractService{
 		
 		//save buddy and ignore list
 		buddyService.deleteBuddies(buddyIgnore.getUsersId());
+		buddyService.deleteIgnores(buddyIgnore.getUsersId());
 		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getBuddyList(), zfgcUser);
+		buddyService.saveBuddies(buddyIgnore.getUsersId(), buddyIgnore.getIgnoreList(), zfgcUser);
 		
 		return buddyIgnore;
 	}
@@ -336,6 +353,11 @@ public class UserProfileService extends AbstractService{
 		forumProfile.getPersonalInfo().setSignature(sanitizationService.sanitizeMessage(forumProfile.getPersonalInfo().getSignature()));
 		
 		//avatar logic
+		if(forumProfile.getStagedAvatar() != null) {
+			AvatarStaging staged = avatarService.getAvatarStagingRecord(forumProfile.getStagedAvatar().getMac());
+			forumProfile.getPersonalInfo().getAvatar().setAvatarFilename(zfgcGeneralConfig.getAvatarDirectory() + staged.getFilename());
+		}
+		
 		avatarService.createAvatarRecordFromExternal(forumProfile.getPersonalInfo().getAvatar());
 		
 		userProfileDataProvider.saveForumProfile(forumProfile);

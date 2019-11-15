@@ -21,6 +21,14 @@
 			return notificationsService.resource.getThreadSubs({'userId' : userId, 'pageNo' : pageNo, 'itemsPerPage' : itemsPerPage});
 		};
 		
+		notificationsService.addSuccessAlert = function(message){
+			notificationsService.addAlert(message, "success");
+		};
+		
+		notificationsService.addErrorAlert = function(message){
+			notificationsService.addAlert(message, "error");
+		};
+		
 		notificationsService.addAlert = function(message,type){
 			$rootScope.$broadcast('alertAdded',notificationsService.createAlert(message,type));
 		};

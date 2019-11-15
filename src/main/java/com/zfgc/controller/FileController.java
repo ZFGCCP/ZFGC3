@@ -25,7 +25,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.filesys.ZfgcInvalidFileException;
+import com.zfgc.model.avatar.AvatarStaging;
 import com.zfgc.model.content.InputStreamWrapper;
+import com.zfgc.services.avatar.AvatarService;
 import com.zfgc.services.content.ContentService;
 
 @Controller
@@ -34,6 +36,9 @@ public class FileController extends BaseController{
 	
 	@Autowired
 	ContentService contentService;
+	
+	@Autowired
+	AvatarService avatarService;
 	
 	@RequestMapping(value="/avatar/{avatarId}", method=RequestMethod.GET)
 	public ResponseEntity getAvatar(@PathVariable("avatarId") Integer avatarId, HttpServletResponse response){
@@ -59,12 +64,12 @@ public class FileController extends BaseController{
 				             .body(new InputStreamResource(is.getIs()));
 	}
 	
-	@RequestMapping(value="/avatar/{usersId}", method=RequestMethod.POST)
+	@RequestMapping(value="/avatar/{usersId}", method=RequestMethod.POST, consumes=MediaType.MULTIPART_FORM_DATA_VALUE)
 	@PreAuthorize("hasRole('ZFGC_USER')")
 	public ResponseEntity uploadAvatar(@PathVariable("usersId") Integer usersId, @RequestParam("avatarFile") MultipartFile file){
-		contentService.saveAvatar(file, usersId, super.zfgcUser());
+		AvatarStaging staged = avatarService.stageAvatar(file, zfgcUser());
 
-		return ResponseEntity.status(HttpStatus.OK).build();
+		return ResponseEntity.ok(staged);
 	}
 	
 	

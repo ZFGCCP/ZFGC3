@@ -8,11 +8,13 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.model.avatar.AvatarStaging;
 import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.Hostname;
 import com.zfgc.model.users.IpAddress;
 import com.zfgc.model.users.SecondaryMemberGroups;
 import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserPermissionView;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
@@ -31,7 +33,9 @@ public class UserProfileView extends BaseZfgcModel {
 	private NotificationSettings notificationSettings = new NotificationSettings();
 	private PersonalMessagingSettings personalMessagingSettings = new PersonalMessagingSettings();
 	private List<Buddy> buddyList = new ArrayList<>();
+	private List<Buddy> ignoreList = new ArrayList();
 	private Avatar avatar = new Avatar();
+	private AvatarStaging stagedAvatar;
 	private LkupMemberGroup primaryMemberGroup;
 	private SecondaryMemberGroups secondaryMemberGroups;
 	private IpAddress primaryIpAddress;
@@ -44,6 +48,8 @@ public class UserProfileView extends BaseZfgcModel {
 	
 	private String timeZone;
 	private Integer timeOffset;
+	
+	private UserPermissionView userPermissionView;
 	
 	@JsonIgnore
 	private UserProfileView savedProfile;
@@ -238,6 +244,30 @@ public class UserProfileView extends BaseZfgcModel {
 
 	public void setPrimaryHostname(Hostname primaryHostname) {
 		this.primaryHostname = primaryHostname;
+	}
+
+	public List<Buddy> getIgnoreList() {
+		return ignoreList;
+	}
+
+	public void setIgnoreList(List<Buddy> ignoreList) {
+		this.ignoreList = ignoreList;
+	}
+
+	public UserPermissionView getUserPermissionView() {
+		return userPermissionView;
+	}
+
+	public void setUserPermissionView(UserPermissionView userPermissionView) {
+		this.userPermissionView = userPermissionView;
+	}
+
+	public AvatarStaging getStagedAvatar() {
+		return stagedAvatar;
+	}
+
+	public void setStagedAvatar(AvatarStaging stagedAvatar) {
+		this.stagedAvatar = stagedAvatar;
 	}
 	
 }
