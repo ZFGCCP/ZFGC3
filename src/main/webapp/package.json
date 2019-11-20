@@ -7,7 +7,7 @@
   "author": "MGZero",
   "license": "MIT",
   "dependencies": {
-    "angular": "1.7.0",
+    "angular": "1.7.9",
     "angular-animate": "1.7.0",
     "angular-local-storage": "0.7.1",
     "angular-recaptcha": "^4.2.0",

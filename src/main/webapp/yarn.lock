@@ -44,10 +44,10 @@ angular-ui-router@1.0.20:
   dependencies:
     "@uirouter/core" "5.0.21"
 
-angular@1.7.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/angular/-/angular-1.7.0.tgz#e45d679fc8d81040a4894c7ccc16a4e1ad0a9ca6"
-  integrity sha512-3LboCLjrOuC7dWh953O0+dI3dJ7PexYRSCIrfqoN5qoHyja/wak3eWoxPKb2Sl2qwiPbrUV5KJXwgpUQ48McBQ==
+angular@1.7.9:
+  version "1.7.9"
+  resolved "https://registry.yarnpkg.com/angular/-/angular-1.7.9.tgz#e52616e8701c17724c3c238cfe4f9446fd570bc4"
+  integrity sha512-5se7ZpcOtu0MBFlzGv5dsM1quQDoDeUTwZrWjGtTNA7O88cD8TEk5IEKCTDa3uECV9XnvKREVUr7du1ACiWGFQ==
 
 angularjs-datepicker@^2.1.23:
   version "2.1.23"
