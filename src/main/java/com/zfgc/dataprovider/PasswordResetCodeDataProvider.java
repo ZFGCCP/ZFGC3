@@ -43,6 +43,19 @@ public class PasswordResetCodeDataProvider extends AbstractDataProvider {
 		return mapper.map(result.get(0), PasswordResetCode.class);
 	}
 	
+	public PasswordResetCode getPasswordResetCode(Integer usersId) {
+		PasswordResetCodeDbObjExample ex = passwordResetCodeDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId);
+		
+		List<PasswordResetCodeDbObj> result = passwordResetCodeDao.get(ex);
+		
+		if(result.size() == 0) {
+			throw new ZfgcNotFoundException("password reset code " + usersId);
+		}
+		
+		return mapper.map(result.get(0), PasswordResetCode.class);
+	}
+	
 	public PasswordResetCode createResetCode(PasswordResetCode code) {
 		passwordResetCodeDao.updateOrInsert(code);
 		return code;

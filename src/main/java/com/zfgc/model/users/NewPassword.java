@@ -4,7 +4,7 @@ import com.zfgc.model.BaseZfgcModel;
 
 public class NewPassword extends BaseZfgcModel {
 
-	private String resetCode;
+	private String code;
 	private String displayName;
 	private Integer usersId;
 	private String newPassword;
@@ -16,13 +16,7 @@ public class NewPassword extends BaseZfgcModel {
 		return null;
 	}
 
-	public String getResetCode() {
-		return resetCode;
-	}
-
-	public void setResetCode(String resetCode) {
-		this.resetCode = resetCode;
-	}
+	
 
 	public String getDisplayName() {
 		return displayName;
@@ -54,6 +48,18 @@ public class NewPassword extends BaseZfgcModel {
 
 	public void setUsersId(Integer usersId) {
 		this.usersId = usersId;
+	}
+
+
+
+	public String getCode() {
+		return code;
+	}
+
+
+
+	public void setCode(String code) {
+		this.code = code;
 	}
 	
 }

@@ -25,6 +25,7 @@ import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.MembersView;
 import com.zfgc.model.users.NewPassword;
+import com.zfgc.model.users.PasswordResetCode;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
@@ -190,6 +191,17 @@ class UsersController extends BaseController{
 		passwordResetCodeService.createNewResetCode(userName, zfgcUser());
 		
 		return ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(value="/requestPasswordReset", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getPasswordReset(@RequestParam String key) {
+		NewPassword code = passwordResetCodeService.getNewPasswordModel(key, zfgcUser());
+		if(code == null) {
+			throw new ZfgcNotFoundException();
+		}
+		
+		return ResponseEntity.ok(code);
 	}
 	
 	@RequestMapping(value="/resetPassword", method=RequestMethod.POST, produces="application/json")

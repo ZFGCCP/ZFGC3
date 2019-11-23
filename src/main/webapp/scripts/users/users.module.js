@@ -23,7 +23,7 @@ angular.module('zfgc.users',['zfgc.config'])
 				url: baseRouter + '/password-reset',
 				templateUrl: basePath + '/password-reset/password-reset-request.html'
 			})
-			.state('password-reset.reset',{
+			.state('password-reset-form',{
 				url: baseRouter + '/password-reset/reset?:resetCode',
 				templateUrl: basePath + '/password-reset/reset.html'
 			});

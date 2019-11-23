@@ -3,6 +3,8 @@
 	function PasswordResetRequestCtrl($scope, PasswordResetService){
 		var vm = this;
 		
+		vm.responseReceived = false;
+		
 		vm.submitRequest = function(){
 			PasswordResetService.requestPasswordReset(vm);
 		};

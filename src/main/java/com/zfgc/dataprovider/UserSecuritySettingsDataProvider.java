@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.UserSecuritySettingsDao;
+import com.zfgc.model.users.NewPassword;
 import com.zfgc.model.users.UserSecurityInfo;
 
 @Component
@@ -16,8 +17,8 @@ public class UserSecuritySettingsDataProvider extends AbstractDataProvider {
 		userSecuritySettingsDao.updateOrInsert(securitySettings);
 	}
 	
-	public void updatePassword(Integer usersId, String password) {
-		userSecuritySettingsDao.updateUserPassword(usersId, password);
+	public void updatePassword(NewPassword newPassword) {
+		userSecuritySettingsDao.updateUserPassword(newPassword.getUsersId(), newPassword.getNewPassword());
 	}
 	
 }

@@ -22,6 +22,7 @@ import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Hostname;
 import com.zfgc.model.users.IpAddress;
+import com.zfgc.model.users.NewPassword;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
@@ -136,6 +137,13 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	}
 	
 	public void updateUserPassword(Users user, String password) throws RuntimeException{
-		userSecuritySettingsDataProvider.updatePassword(user.getUsersId(), password);
+		NewPassword newPassword = new NewPassword();
+		newPassword.setUsersId(user.getUsersId());
+		newPassword.setNewPassword(password);
+		updateUserPassword(newPassword);
+	}
+	
+	public void updateUserPassword(NewPassword password) throws RuntimeException{
+		userSecuritySettingsDataProvider.updatePassword(password);
 	}
 }
