@@ -207,6 +207,7 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 "/zfgcui/registration",
 	        									 "/zfgcui/useractivation",
 	        									 "/zfgcui/userprofile",
+	        									 "/zfgcui/password-reset/**",
 	        									 "/socket/whosonline",
 	        									 "/lookups/**",
 	        									 "/contentstream/**",
@@ -217,6 +218,8 @@ public class ForumApplication extends SpringBootServletInitializer {
 	        									 "/users/profile/{{\\d+}}",
 	        									 "/users/navigation",
 	        									 "/users/loggedInUser",
+	        									 "/users/requestPasswordReset",
+	        									 "/users/resetPassword",
 	        									 "/users/newuser/**").permitAll();
 	        	//.authorizeRequests().antMatchers("/scripts/**","/assets/**","/node_modules/**","/images/**","/users/**","/ws/**","/lookups/**","/userprofile").permitAll();
 	        	//.authorizeRequests().antMatchers("/pm/**").fullyAuthenticated()
