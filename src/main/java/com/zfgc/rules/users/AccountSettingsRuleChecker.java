@@ -34,6 +34,15 @@ public class AccountSettingsRuleChecker extends AbstractRulesChecker<UserProfile
 				model.getErrors().getRuleErrors().add(wrongPassword);
 			}
 		}
+		
+		if(!StringUtils.isEmpty(model.getUserSecurityInfo().getNewPassword())) {
+			if(!model.getUserSecurityInfo().getConfirmNewPassword().equals(model.getUserSecurityInfo().getNewPassword())){
+				Rule coppaViolation = new Rule();
+				coppaViolation.setRuleName("UMATCHED_PASSWORD");
+				coppaViolation.setErrorMessage("The password you entered did not match the confirmation.");
+				model.getErrors().getRuleErrors().add(coppaViolation);
+			}
+		}
 	}
 	
 	/*private void loginNameChanged(Users model){

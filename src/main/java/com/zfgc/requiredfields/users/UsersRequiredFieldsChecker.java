@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.users.Users;
 import com.zfgc.requiredfields.AbstractRequiredFieldsChecker;
+import com.zfgc.requiredfields.RequiredField;
 
 @Component
 public class UsersRequiredFieldsChecker extends AbstractRequiredFieldsChecker<Users>{
@@ -21,7 +22,7 @@ public class UsersRequiredFieldsChecker extends AbstractRequiredFieldsChecker<Us
 		checkRequiredField(model.getUserContactInfo().getEmail().getEmailAddress(), "emailAddress", "Email Address" + IS_REQUIRED_FIELD,model.getErrors().getRequiredFieldsErrors());
 		checkRequiredField(model.getPersonalInfo().getBirthDate(), "birthDate", "Birth Date" + IS_REQUIRED_FIELD, model.getErrors().getRequiredFieldsErrors());
 		checkRequiredField(model.getTimeOffset(), "timeOffset", "Timezone" + IS_REQUIRED_FIELD, model.getErrors().getRequiredFieldsErrors());
-		
+		checkRequiredField(model.getUserSecurityInfo().getConfirmNewPassword(), "Confirm Password" + IS_REQUIRED_FIELD,"You must confirm your password.",model.getErrors().getRequiredFieldsErrors());
 		//super.checkErrorsFound("Users", model);
 	}
 	

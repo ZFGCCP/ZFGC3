@@ -28,7 +28,10 @@ import com.zfgc.model.users.PasswordResetCode;
 import com.zfgc.model.users.UserEmailView;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
+import com.zfgc.requiredfields.passwordreset.PasswordResetRequiredFields;
+import com.zfgc.rules.passwordreset.PasswordResetRules;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
 import com.zfgc.util.ZfgcEmailUtils;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 
@@ -57,6 +60,15 @@ public class PasswordResetCodeService extends AbstractService {
 	
 	@Autowired
 	private UserPasswordResetViewDataProvider userPasswordResetViewDataProvider;
+	
+	@Autowired
+	private RuleRunService<NewPassword> ruleRunner;
+	
+	@Autowired
+	private PasswordResetRequiredFields requiredFields;
+	
+	@Autowired
+	private PasswordResetRules rules;
 	
 	@Transactional
 	public void createNewResetCode(String username, Users zfgcUser) {
@@ -167,6 +179,8 @@ public class PasswordResetCodeService extends AbstractService {
 	
 	@Transactional
 	public void resetUserPassword(NewPassword newPassword, Users zfgcUser) {
+		ruleRunner.runRules(null, requiredFields, rules, newPassword, zfgcUser);
+		
 		PasswordResetCode code = checkResetCode(newPassword.getCode(), zfgcUser);
 		if(code != null) {
 			userSecuritySettingsDataProvider.updatePassword(newPassword);
