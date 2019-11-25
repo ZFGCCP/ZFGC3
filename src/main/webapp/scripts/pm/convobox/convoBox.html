@@ -24,7 +24,7 @@
 		
 		<div class="section-body">
 			<div class="row">
-				<form name="convo-box-filters">
+				<form name="convo-box-filters" class="convo-box-filters">
 				
 					<div class="col-xs-12 mobile-user-bar md">
 						<div class="mobile-user-nav">
@@ -82,17 +82,20 @@
 								<span class="responsive-col-last-updated responsive-table-cell">Started By</span>
 							</div>
 							<div class="responsive-table-body" ng-if="vm.convoBox.conversations.length > 0">
-								<div class="responsive-table-row" ng-repeat="convo in vm.convoBox.conversations">
-									<span class="responsive-col-del responsive-table-cell"><input type="checkbox" ng-model="convo.isSelected" value="true" ng-change="vm.checkForCheckedBoxes()"/></span>
-									<span class="responsive-col-title responsive-table-cell">
-										<a ui-sref="convo({conversationId:convo.pmConversationId})">
-											<span><i ng-class="{'fas fa-archive' : convo.boxType === 'ARCHIVE', 'fas fa-inbox' : convo.boxType === 'INBOX', 'fas fa-share-square' : convo.boxType === 'OUTBOX'}"></i></span>
-											<span class="convo-box-subject" ng-bind-html="convo.subject"></span>
-											<span class="convo-box-subject"> - Last Message By: {{convo.senderName}} On : {{convo.sentDtAsString}}</span>
+								<div class="responsive-table-row flex-row-xs" ng-repeat="convo in vm.convoBox.conversations">
+									<span class="responsive-table-cell"><input type="checkbox" ng-model="convo.isSelected" value="true" ng-change="vm.checkForCheckedBoxes()"/></span>
+									<span class="convo-details-wrapper responsive-table-cell">
+										<a class="flex-column-xs" ui-sref="convo({conversationId:convo.pmConversationId})">
+											<span class="icon-row-xs">
+												<span><i ng-class="{'fas fa-archive' : convo.boxType === 'ARCHIVE', 'fas fa-inbox' : convo.boxType === 'INBOX', 'fas fa-share-square' : convo.boxType === 'OUTBOX'}"></i></span>
+												<span class="convo-box-subject" ng-bind-html="convo.subject"></span>
+											</span>
+											<span class="convo-detail convo-box-subject">From {{convo.senderName}} on {{convo.sentDtAsString}}</span>
+											<span class="hidden-sm hidden-md hidden-lg convo-detail">Started By {{convo.initiatorName}} on {{convo.startDtAsString}}</span>
 										</a>
 										<div class="convo-box-message">{{vm.stripHtml(convo.message)}}</div>
 									</span>
-									<span class="responsive-col-last-updated responsive-table-cell">
+									<span class="hidden-xs responsive-col-last-updated responsive-table-cell">
 										<span class="from-user">
 											{{convo.initiatorName}}
 										</span>
