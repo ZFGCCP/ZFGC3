@@ -1,0 +1,32 @@
+.flex-row{
+	display: flex;
+}
+
+.flex-column{
+	display: flex;
+	flex-direction: column;
+}
+
+@media(max-width: 767px){
+	
+	.flex-row-xs{
+		display: flex;
+	}
+	
+	.flex-column-xs{
+	display: flex;
+	flex-direction: column;
+}
+}
+
+@media(min-width: 768px){
+	
+	.flex-row-sm{
+		display: flex;
+	}
+	
+	.flex-column-sm{
+		display: flex;
+		flex-direction: column;
+	}
+}

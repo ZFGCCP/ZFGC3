@@ -112,12 +112,11 @@ table.widget-table{
 		display:table-row-group;
 	
 		.responsive-table-row{
-			@media(max-width:767px){
-				display:block;
+
+			@media(min-width: 768px){
+				display: table-row;
 			}
-		
-			display:table-row;
-		
+	
 			.responsive-table-cell{
 				@media(max-width:767px){
 					&.hidden-cell{
