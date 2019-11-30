@@ -22,6 +22,9 @@
     
 
     <!-- tables -->
+    <table schema="Zfgc3" tableName="UNREAD_CONVERSATION" domainObjectName="UnreadConversationDbObj">
+    	<generatedKey column="UNREAD_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(UNREAD_CONVERSATION_ID) + 1,0) FROM UNREAD_CONVERSATION_CODE"/>
+    </table>
     <!--<table schema="Zfgc3" tableName="PASSWORD_RESET_CODE" domainObjectName="PasswordResetCodeDbObj">
     	<generatedKey column="PASSWORD_RESET_CODE_ID" sqlStatement="SELECT COALESCE(MAX(PASSWORD_RESET_CODE_ID) + 1,0) FROM PASSWORD_RESET_CODE"/>
     </table>
@@ -298,9 +301,9 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="USER_PASSWORD_RESET_VIEW" domainObjectName="UserPasswordResetViewDbObj">
+    <!--<table schema="zfgc3" tableName="USER_PASSWORD_RESET_VIEW" domainObjectName="UserPasswordResetViewDbObj">
     </table>
-    <!--<table schema="zfgc3" tableName="USER_PERMISSION_VIEW" domainObjectName="UserPermissionViewDbObj">
+    <table schema="zfgc3" tableName="USER_PERMISSION_VIEW" domainObjectName="UserPermissionViewDbObj">
     </table>
     
     <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">

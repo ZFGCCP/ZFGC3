@@ -442,9 +442,9 @@ public class Users extends BaseZfgcModel implements UserDetails {
 		//return Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
 	}
 	@Override
+	@JsonIgnore
 	public String getUsername() {
-		// TODO Auto-generated method stub
-		return null;
+		return this.getUsersId().toString();
 	}
 	@Override
 	public boolean isAccountNonExpired() {

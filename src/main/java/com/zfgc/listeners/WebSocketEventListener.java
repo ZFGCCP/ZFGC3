@@ -30,9 +30,6 @@ public class WebSocketEventListener extends BaseController {
 		try {
 			StompHeaderAccessor headers = StompHeaderAccessor.wrap(event.getMessage());
 			usersService.setUserOnline(zfgcUser(event.getUser()), headers.getSessionId());
-			WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
-			whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
-			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -50,6 +47,7 @@ public class WebSocketEventListener extends BaseController {
 			
 			WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
 			whosOnlineService.websocketMessaging.convertAndSend("/socket/whosonline", online);
+					
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

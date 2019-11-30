@@ -25,6 +25,7 @@ import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PersonalMessagingSettingsDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
+import com.zfgc.dataprovider.UnreadConversationDataProvider;
 import com.zfgc.dataprovider.UserContactInfoDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -276,6 +277,15 @@ public class PmService extends AbstractService {
 		//notify users that they received a pm
 		CompletableFuture.runAsync(() -> {
 			for(Integer receiver : receivers) {
+				
+				//don't notify the sending user
+				if(receiver.equals(user.getUsersId())) {
+					continue;
+				}
+				
+				Long unreadCount = pmConversationDataProvider.countUnread(receiver);
+				this.websocketMessaging.convertAndSendToUser(receiver.toString(), "/socket/pmNotif", unreadCount);
+				
 				//get their settings
 				PersonalMessagingSettings pmSettings = pmSettingsDataProvider.getPmSettings(receiver);
 				
