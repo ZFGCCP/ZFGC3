@@ -29,6 +29,10 @@
 			notificationsService.addAlert(message, "error");
 		};
 		
+		notificationsService.addInfoAlert = function(message){
+			notificationsService.addAlert(message, "info");
+		};
+		
 		notificationsService.addAlert = function(message,type){
 			$rootScope.$broadcast('alertAdded',notificationsService.createAlert(message,type));
 		};
