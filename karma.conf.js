@@ -59,13 +59,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
+	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset.service.js",
 	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset.controller.js",
 	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset-request.controller.js",
-	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
@@ -127,17 +127,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
-	"./src/main/webapp/scripts/pm/pmSend.controller.js",
-	    
-	"./src/main/webapp/scripts/pm/pmComparator.service.js",
-	    
-	"./src/main/webapp/scripts/pm/pm.service.js",
-	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.service.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/pmSend.controller.js",
+	    
+	"./src/main/webapp/scripts/pm/pmComparator.service.js",
+	    
+	"./src/main/webapp/scripts/pm/pm.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
@@ -159,13 +159,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
-	"./src/main/webapp/scripts/common/server-config.service.js",
-	    
-	"./src/main/webapp/scripts/common/main.controller.js",
-	    
 	"./src/main/webapp/scripts/calendar/calendar.service.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
+	    
+	"./src/main/webapp/scripts/common/server-config.service.js",
+	    
+	"./src/main/webapp/scripts/common/main.controller.js",
 	    
 	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
@@ -229,8 +229,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
-	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
-	    
 	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
@@ -239,15 +237,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
 	    
+	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
+	    
 	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
 	    
 	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.html",
-	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset-request.html",
 	    
 	"./src/main/webapp/scripts/users/password-reset/reset.html",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
