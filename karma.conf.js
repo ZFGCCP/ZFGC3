@@ -47,11 +47,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -101,9 +101,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
@@ -193,9 +193,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
+	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
 	    
@@ -271,11 +271,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/mobile/user-profile-mobile-nav.html"
 	    

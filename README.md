@@ -1,6 +1,5 @@
 # ZFGC3
 It's a secret to everyone.  
-[![Build Status](https://api.travis-ci.org/ZFGCCP/ZFGC3.png)](http://travis-ci.org/ZFGCCP/ZFGC3)
 
 ## Installation
 Install Node 6.11.0
@@ -12,6 +11,8 @@ Install Yarn 1.12.3 https://yarnpkg.com/en/docs/install#windows-stable
 `cd src/main/webapp`
 `yarn install`
 
+Install Tomcat 9 https://tomcat.apache.org/download-90.cgi
+
 ## Development Tools
 
 Gulp is used to compile sass and inject CSS/JS files into the index.html.  
@@ -21,6 +22,5 @@ To run tests, use:
 `gulp test`
 
 ## Navigating the app
-Use the following URLs to begin navigating:
-`http://localhost:8080/forum/bbs/index - forum index`
-`http://localhost:8080/forum/userprofile?userId=81 - access account with ID 81 (MG-Zero)`
+Use the following URL to begin navigating:
+`http://localhost:8080/forum/zfgcui/bbs/index - forum index`
