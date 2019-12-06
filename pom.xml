@@ -5,7 +5,7 @@
 
 	<groupId>com.zfgc</groupId>
 	<artifactId>forum</artifactId>
-	<version>1.2.0-MIDO</version>
+	<version>2.0.0-Armos</version>
 	<packaging>war</packaging>
 
 	<name>forum</name>
