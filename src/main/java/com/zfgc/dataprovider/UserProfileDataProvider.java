@@ -22,6 +22,7 @@ import com.zfgc.model.lkup.LkupMemberGroup;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.Hostname;
 import com.zfgc.model.users.IpAddress;
+import com.zfgc.model.users.NewPassword;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
@@ -45,7 +46,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	UserContactSettingsDao userContactSettingsDao;
 	
 	@Autowired
-	UserSecuritySettingsDao userSecuritySettingsDao;
+	UserSecuritySettingsDataProvider userSecuritySettingsDataProvider;
 	
 	@Autowired
 	UserPersonalInfoDao userPersonalInfoDao;
@@ -107,7 +108,7 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		emailAddressDao.updateOrInsert(accountSettings.getUserContactInfo().getEmail());
 		
 		userContactSettingsDao.updateOrInsert(accountSettings.getUserContactInfo());
-		userSecuritySettingsDao.updateOrInsert(accountSettings.getUserSecurityInfo());
+		userSecuritySettingsDataProvider.saveSecuritySettings(accountSettings.getUserSecurityInfo());
 		
 		BrMemberGroupUserDbObjExample ex = brMemberGroupUserDao.getExample();
 		brMemberGroupUserDao.deleteByExample(null, ex);
@@ -127,10 +128,6 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 		
 	}
 	
-	private void updateEmailAddress(Integer usersId, String email) throws Exception {
-		
-	}
-	
 	public void savePmSettings(UserProfileView pmSettings) throws Exception{
 		pmSettingsDao.updateOrInsert(pmSettings.getPersonalMessagingSettings());
 	}
@@ -140,22 +137,13 @@ public class UserProfileDataProvider extends AbstractDataProvider {
 	}
 	
 	public void updateUserPassword(Users user, String password) throws RuntimeException{
-		userSecuritySettingsDao.updateUserPassword(user.getUsersId(), password);
+		NewPassword newPassword = new NewPassword();
+		newPassword.setUsersId(user.getUsersId());
+		newPassword.setNewPassword(password);
+		updateUserPassword(newPassword);
 	}
 	
-	private void transformProfileAvatarData(Users user, UserProfileViewDbObj profile){
-		//todo: add constants for urls
-		//if they have a gallery avatar, use that as the filename
-		/*Avatar avatar = new Avatar();
-		avatar.setAvatarTypeId(profile.getAvatarTypeId());
-		avatar.setAvatarGalleryId(profile.getAvatarGalleryId());
-		avatar.setAvatarId(profile.getAvatarId());
-
-		//if they have a custom avatar uploaded elsewhere, use that as the filename
-		if(profile.getAvatarTypeId() == 3 && profile.getAvatarUrl() != null){
-			avatar.setAvatarFileName(profile.getAvatarUrl());
-		}
-		
-		user.setAvatar(avatar);*/
+	public void updateUserPassword(NewPassword password) throws RuntimeException{
+		userSecuritySettingsDataProvider.updatePassword(password);
 	}
 }

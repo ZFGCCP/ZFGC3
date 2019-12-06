@@ -72,12 +72,25 @@ public class UsersDataProvider extends AbstractDataProvider {
 	
 	private Logger LOGGER = LogManager.getLogger(UsersDataProvider.class);
 	
-	public Users getUser(Integer usersId) throws Exception{
+	public Users getUser(Integer usersId) {
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(usersId);
 		
 		return mapper.map(usersDao.get(ex).get(0), Users.class);
 		
+	}
+	
+	public Users getUser(String username) {
+		UsersDbObjExample ex = usersDao.getExample();
+		ex.createCriteria().andLoginNameEqualTo(username);
+		
+		List<UsersDbObj> result = usersDao.get(ex);
+		
+		if(result.size() == 0) {
+			throw new ZfgcNotFoundException("user " + username);
+		}
+		
+		return mapper.map(result.get(0), Users.class);
 	}
 	
 	public void saveUser(Users user) {

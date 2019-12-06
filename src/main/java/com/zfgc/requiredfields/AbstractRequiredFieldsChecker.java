@@ -13,6 +13,7 @@ public abstract class AbstractRequiredFieldsChecker<T extends BaseZfgcModel> {
 	
 	public abstract void requiredFieldsCheck(T model) throws ZfgcValidationException;
 	
+	//todo use IS_REQUIRED_FIELD here
 	protected <V> void checkRequiredField(V field, String fieldName, String errorMessage, List<RequiredField> errors ){
 		if(field == null){
 			RequiredField requiredField = new RequiredField();

@@ -40,15 +40,9 @@ public class AuthenticationService  extends AbstractService {
 	private final int SALT_LENGTH = 128;
 	public final String PM_PARITY_WORD = "ZFGC3";
 	private Logger LOGGER = LogManager.getLogger(AuthenticationService.class);
-	
-	@Autowired
-	private UsersDao usersDao;
-	
+
 	@Autowired
 	private AuthenticationDataProvider authenticationDataProvider;
-	
-	@Autowired
-	private UsersDataProvider usersDataProvider;
 	
 	@Autowired
 	private PmKeyDataProvider pmKeyDataProvider;

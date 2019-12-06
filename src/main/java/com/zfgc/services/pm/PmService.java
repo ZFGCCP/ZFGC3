@@ -1,23 +1,32 @@
 package com.zfgc.services.pm;
 
+import java.io.UnsupportedEncodingException;
 import java.security.Key;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 
 import javax.crypto.spec.SecretKeySpec;
+import javax.mail.internet.InternetAddress;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.zfgc.config.ZfgcGeneralConfig;
+import com.zfgc.constants.pm.PmConstants;
 import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dao.BrPmConversationUserInviteDao;
+import com.zfgc.dataprovider.BuddyDataProvider;
 import com.zfgc.dataprovider.PersonalMessageDataProvider;
+import com.zfgc.dataprovider.PersonalMessagingSettingsDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
+import com.zfgc.dataprovider.UnreadConversationDataProvider;
+import com.zfgc.dataprovider.UserContactInfoDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
@@ -38,7 +47,10 @@ import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.pm.PmTemplateConfig;
 import com.zfgc.model.pm.PmUsersToAdd;
 import com.zfgc.model.pm.TwoFactorKey;
+import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.Users;
+import com.zfgc.model.users.profile.Buddy;
+import com.zfgc.model.users.profile.PersonalMessagingSettings;
 import com.zfgc.requiredfields.pm.PmConversationRequiredFields;
 import com.zfgc.requiredfields.pm.PmPruneRequiredFields;
 import com.zfgc.rules.pm.PmConversationRules;
@@ -48,6 +60,7 @@ import com.zfgc.services.authentication.AuthenticationService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.services.sanitization.SanitizationService;
 import com.zfgc.services.users.UsersService;
+import com.zfgc.util.ZfgcEmailUtils;
 import com.zfgc.util.security.RsaKeyPair;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 import com.zfgc.util.time.ZfgcTimeUtils;
@@ -87,6 +100,21 @@ public class PmService extends AbstractService {
 	
 	@Autowired
 	RuleRunService<PersonalMessage> ruleRunner;
+	
+	@Autowired
+	PersonalMessagingSettingsDataProvider pmSettingsDataProvider;
+	
+	@Autowired
+	BuddyDataProvider buddyDataProvider;
+	
+	@Autowired
+	UserContactInfoDataProvider userContactInfoDataProvider;
+	
+	@Autowired
+	ZfgcEmailUtils zfgcEmailUtils;
+	
+	@Autowired
+	ZfgcGeneralConfig zfgcGeneralConfig;
 	
 	private PmBox decryptPmBox(PmBox pmBox, PmKey keys, TwoFactorKey aesKey){
 		String decryptedRsa = ZfgcSecurityUtils.decryptAes(keys.getPmPrivKeyRsaEncrypted(), aesKey.getKey());
@@ -245,6 +273,55 @@ public class PmService extends AbstractService {
 		
 		PmConversation convo = new PmConversation();
 		convo.setPmConversationId(message.getPmConversationId());
+		
+		//notify users that they received a pm
+		CompletableFuture.runAsync(() -> {
+			for(Integer receiver : receivers) {
+				
+				//don't notify the sending user
+				if(receiver.equals(user.getUsersId())) {
+					continue;
+				}
+				
+				Long unreadCount = pmConversationDataProvider.countUnread(receiver);
+				this.websocketMessaging.convertAndSendToUser(receiver.toString(), "/socket/pmNotif", unreadCount);
+				
+				//get their settings
+				PersonalMessagingSettings pmSettings = pmSettingsDataProvider.getPmSettings(receiver);
+				
+				if(!pmSettings.getReceiveFromId().equals(2)) {
+					Boolean send = true;
+					
+					if(pmSettings.getReceiveFromId().equals(3)) {
+						send = false;
+						//make sure we're on the user's buddy list
+						List<Buddy> buddies =buddyDataProvider.getBuddiesByUserId(receiver);
+						for(Buddy buddy : buddies) {
+							if(buddy.getUserBId().equals(user.getUsersId())) {
+								send = true;
+								break;
+							}
+						}
+					}
+					
+					if(send) {
+						UserContactInfo contactInfo = userContactInfoDataProvider.getUserContactInfo(receiver);
+						InternetAddress address = new InternetAddress();
+						address.setAddress(contactInfo.getEmail().getEmailAddress());
+						
+						try {
+							zfgcEmailUtils.sendEmail("New Personal Message", 
+													 "You have received a new personal message. Click " +  
+													 zfgcGeneralConfig.getUiUrl() + "/mailBox/conversation?conversationId=" + message.getPmConversationId() + " to view it!", address);
+						} catch (UnsupportedEncodingException e) {
+							e.printStackTrace();
+						}
+					}
+					
+				}
+			}
+		});
+		
 		
 		return convo;
 	}

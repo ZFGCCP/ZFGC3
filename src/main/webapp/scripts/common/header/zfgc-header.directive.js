@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function zfgcHeader($rootScope, UserService, $q, $window, $location, $resource, $state, $timeout, ServerConfigService, WebsocketService, WhosOnlineService) {
+	function zfgcHeader($rootScope, UserService, $q, $window, $location, $resource, $state, $timeout, ServerConfigService, WebsocketService, WhosOnlineService, NotificationsService) {
     	return {
     		restrict: 'E',
     		transclude: true,
@@ -38,6 +38,18 @@
     			
 			    WebsocketService.openWebsocket("/forum/ws", scope.startListener);
     			
+			    $rootScope.$on("WebsocketConnected", function(data){
+					WebsocketService.subscribe("/user/socket/pmNotif", scope.pmNotifReceived);
+				});
+			    
+			    scope.pmNotifReceived = function(data){
+			    	console.log("pmNotif received");
+			    	scope.user.unreadPmCount = data.body * 1;
+			    	NotificationsService.addInfoAlert("Received a new personal message");
+			    	
+			    	scope.$apply();
+			    };
+			    
     			scope.user = UserService.resource.loggedInUser();
     			UserService.loggedInUser = scope.user;
     			
@@ -51,5 +63,5 @@
 	
 	angular
 	    .module("zfgc.forum")
-	    .directive("zfgcHeader", ['$rootScope','UserService', '$q', '$window', '$location', '$resource', '$state', '$timeout', 'ServerConfigService', 'WebsocketService', 'WhosOnlineService', zfgcHeader]);
+	    .directive("zfgcHeader", ['$rootScope','UserService', '$q', '$window', '$location', '$resource', '$state', '$timeout', 'ServerConfigService', 'WebsocketService', 'WhosOnlineService', 'NotificationsService', zfgcHeader]);
 })();

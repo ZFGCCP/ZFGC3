@@ -1,12 +1,47 @@
 (function(){
 	'use strict';
 	
-	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService){
+	function UsersCtrl(LookupsService, UserService, $scope,$location,$sce,$window, ModalService, FileUploader, ServerConfigService, NotificationsService){
 		var vm = this;
-		UserService.loadProfile($location.search().userId,vm);
+		UserService.loadProfile($location.search().userId,vm, $scope);
 		
 		vm.lookups = LookupsService.getLookupsList("MEMBER_GROUP,AVATAR_TYPE,AVATAR_GALLERY,GENDER,NOTIFICATION_FREQUENCY,LKUP_RECEIVE_MESSAGES,LKUP_PM_NOTIF");
 		vm.getLkupValue = LookupsService.getLkupValue;
+		
+		vm.uploader = new FileUploader({
+			url : 'http://localhost:8080/forum/contentstream/avatar/81',
+			autoUpload: true,
+			alias: 'avatarFile'
+		});
+		
+		vm.uploader.onBeforeUploadItem = function(item){
+			vm.savingAvatar = true;
+		};
+		
+		vm.uploader.onSuccessItem = function(fileItem, response, status, headers) {
+			vm.profile.stagedAvatar = response;
+
+			NotificationsService.addSuccessAlert("successfully uploaded avatar");
+		}
+		
+		vm.uploader.onErrorItem = function(fileItem, response, status, headers) {
+			vm.profile.stagedAvatar = response;
+
+			var message = "";
+			for(var i = 0; i < response.validationErrors.length; i++){
+				message += response.validationErrors[i].errorMessage + "\n";
+			}
+			
+			NotificationsService.addErrorAlert(message);
+		}
+		
+		vm.uploader.onCompleteItem = function(fileItem, response, status, headers){
+			vm.savingAvatar = false;
+		};
+		
+		vm.saveProfileDisabled = function(){
+			return vm.savingAvatar;
+		}
 		
 		vm.userActivation = function(){
 			UserService.adminUserActivate(vm.profile.usersId);
@@ -60,8 +95,16 @@
 			UserService.deleteBuddy(vm,index);
 		};
 		
+		vm.deleteIgnore = function(index){
+			UserService.deleteIgnore(vm,index);
+		};
+		
 		vm.selectBuddy = function(buddy){
 			UserService.addBuddy(vm,buddy);
+		};
+		
+		vm.selectIgnore = function(buddy){
+			UserService.addIgnore(vm,buddy);
 		};
 		
 		vm.isUserAdmin = function(){
@@ -92,6 +135,10 @@
 			vm.showNav = !showDetails;
 		};
 		
+		vm.stageAvatar = function(){
+			UserService.stageAvatar(vm);
+		};
+
 		 var w = angular.element($window);
          w.bind('resize', function () {
              
@@ -117,5 +164,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', UsersCtrl])
+		.controller('UsersCtrl', ['LookupsService','UserService','$scope','$location','$sce','$window', 'ModalService', 'FileUploader', 'ServerConfigService', 'NotificationsService', UsersCtrl])
 })();

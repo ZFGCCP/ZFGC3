@@ -1,3 +1,12 @@
+.convo-box-filters{
+	padding-bottom: 1em;
+    	position: sticky;
+    	top: 0;
+    	z-index: 9;
+    	background-color: #0f1527;
+    	box-shadow: 2px 0px 2px black;
+}
+
 .convo-box-table{
 	.responsive-col-del{
 		width:4%;
@@ -13,12 +22,27 @@
 }
 
 .convo-box-form{
-	.convo-box-subject{
-		font-weight:bold;
+
+	@media(max-width: 767px){
+		.convo-details-wrapper{
+			width: 100%;
+			
+			.convo-detail{
+				font-size: .8em;
+    			font-weight: normal;
+			}
+		}
 	}
+
+
+	@media(min-width: 768px){
+		.convo-box-subject{
+			font-weight:bold;
+		}
 	
-	.convo-box-message{
-		padding-top:5px;
+		.convo-box-message{
+			padding-top:5px;
+		}
 	}
 }
 

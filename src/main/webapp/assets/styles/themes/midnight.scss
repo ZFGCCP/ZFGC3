@@ -192,6 +192,10 @@ a:hover{
 	&.toast-error {
 		background-color: $midnight-btn-danger;
 	}
+	
+	&.toast-info {
+		background-color: $midnight-btn-caution;
+	}
 
     .toast-icon{
 	    background-color: $midnight-color;
@@ -309,4 +313,24 @@ a:hover{
 	.nav-item:hover{
 		background-color:$midnight-row-hover;
 	}
+}
+
+.permissions-wrapper{
+	
+	.permissions-row{
+	
+		&:nth-child(even){
+			background-color:$midnight-zebra-even;
+		}
+		
+		&:nth-child(odd){
+			background-color:$midnight-zebra-odd;
+		}
+		
+		&:hover{
+			background-color:$midnight-row-hover;
+		}
+		
+	}
+	
 }

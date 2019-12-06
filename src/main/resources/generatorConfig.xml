@@ -22,7 +22,21 @@
     
 
     <!-- tables -->
-    <!--<table schema="Zfgc3" tableName="HOSTNAME" domainObjectName="HostnameDbObj">
+    <table schema="Zfgc3" tableName="UNREAD_CONVERSATION" domainObjectName="UnreadConversationDbObj">
+    	<generatedKey column="UNREAD_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(UNREAD_CONVERSATION_ID) + 1,0) FROM UNREAD_CONVERSATION_CODE"/>
+    </table>
+    <!--<table schema="Zfgc3" tableName="PASSWORD_RESET_CODE" domainObjectName="PasswordResetCodeDbObj">
+    	<generatedKey column="PASSWORD_RESET_CODE_ID" sqlStatement="SELECT COALESCE(MAX(PASSWORD_RESET_CODE_ID) + 1,0) FROM PASSWORD_RESET_CODE"/>
+    </table>
+    <table schema="Zfgc3" tableName="AVATAR_STAGING" domainObjectName="AvatarStagingDbObj">
+    	<generatedKey column="AVATAR_STAGING_ID" sqlStatement="SELECT COALESCE(MAX(AVATAR_STAGING_ID) + 1,0) FROM AVATAR_STAGING"/>
+    </table>
+    
+    <table schema="Zfgc3" tableName="HOSTNAME" domainObjectName="HostnameDbObj">
+    	<generatedKey column="HOSTNAME_ID" sqlStatement="SELECT COALESCE(MAX(HOSTNAME_ID) + 1,0) FROM HOSTNAME"/>
+    </table>
+    
+    <table schema="Zfgc3" tableName="HOSTNAME" domainObjectName="HostnameDbObj">
     	<generatedKey column="HOSTNAME_ID" sqlStatement="SELECT COALESCE(MAX(HOSTNAME_ID) + 1,0) FROM HOSTNAME"/>
     </table>
     
@@ -287,12 +301,22 @@
     </table>-->
     
     <!-- views -->
+    <!--<table schema="zfgc3" tableName="USER_PASSWORD_RESET_VIEW" domainObjectName="UserPasswordResetViewDbObj">
+    </table>
+    <table schema="zfgc3" tableName="USER_PERMISSION_VIEW" domainObjectName="UserPermissionViewDbObj">
+    </table>
+    
+    <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
+    <table schema="zfgc3" tableName="USER_EMAIL_VIEW" domainObjectName="UserEmailViewDbObj">
+    	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    
     <table schema="zfgc3" tableName="USER_PROFILE_VIEW" domainObjectName="UserProfileViewDbObj">
     	<columnOverride column="IS_ONLINE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <!--<table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
+    <table schema="zfgc3" tableName="NAV_TAB_VIEW" domainObjectName="NavTabViewDbObj">
     	<columnOverride column="ALLOW_SELF_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     <table schema="zfgc3" tableName="WHOS_ONLINE_DETAIL_VIEW" domainObjectName="OnlineUserDetailDbObj">

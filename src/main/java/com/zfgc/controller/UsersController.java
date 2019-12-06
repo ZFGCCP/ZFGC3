@@ -24,10 +24,13 @@ import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
 import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.MembersView;
+import com.zfgc.model.users.NewPassword;
+import com.zfgc.model.users.PasswordResetCode;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.NavTab;
 import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.authentication.PasswordResetCodeService;
 import com.zfgc.services.buddies.BuddyService;
 import com.zfgc.services.subscription.SubscriptionService;
 import com.zfgc.services.userprofile.UserProfileService;
@@ -46,6 +49,9 @@ class UsersController extends BaseController{
 	
 	@Autowired
 	BuddyService buddyService;
+	
+	@Autowired
+	private PasswordResetCodeService passwordResetCodeService;
 
 	@RequestMapping(value="/displayName/{usersId}", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
@@ -171,5 +177,38 @@ class UsersController extends BaseController{
 	@ResponseBody
 	public ResponseEntity getBuddyTemplate(@RequestParam Integer userAId, @RequestParam Integer userBId){
 		return ResponseEntity.status(HttpStatus.OK).body(buddyService.getBuddyTemplate(userAId, userBId, zfgcUser()));
+	}
+	
+	@RequestMapping(value="/ignore", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getIgnoreTemplate(@RequestParam Integer userAId, @RequestParam Integer userBId){
+		return ResponseEntity.status(HttpStatus.OK).body(buddyService.getIgnoreTemplate(userAId, userBId, zfgcUser()));
+	}
+	
+	@RequestMapping(value="/requestPasswordReset", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity requestPasswordReset(@RequestBody String userName){
+		passwordResetCodeService.createNewResetCode(userName, zfgcUser());
+		
+		return ResponseEntity.ok().build();
+	}
+	
+	@RequestMapping(value="/requestPasswordReset", method=RequestMethod.GET, produces="application/json")
+	@ResponseBody
+	public ResponseEntity getPasswordReset(@RequestParam String key) {
+		NewPassword code = passwordResetCodeService.getNewPasswordModel(key, zfgcUser());
+		if(code == null) {
+			throw new ZfgcNotFoundException();
+		}
+		
+		return ResponseEntity.ok(code);
+	}
+	
+	@RequestMapping(value="/resetPassword", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity resetPassword(@RequestBody NewPassword newPassword){
+		passwordResetCodeService.resetUserPassword(newPassword, zfgcUser());
+		
+		return ResponseEntity.ok().build();
 	}
 }

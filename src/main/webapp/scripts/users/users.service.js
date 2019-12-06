@@ -60,6 +60,10 @@
 				url : '/forum/users/buddy',
 				method : 'GET'
 			},
+			getIgnoreTemplate : {
+				url : '/forum/users/ignore',
+				method : 'GET'
+			},
 			adminUserActivate : {
 				url : '/forum/users/:userId/activation',
 				method : 'POST'
@@ -67,8 +71,18 @@
 			activate : {
 				url : '/forum/users/newuser/activation?activationCode=:activationCode',
 				method : 'POST'
+			},
+			stageAvatar : {
+				url : '/forum/contentstream/avatar/:userId',
+				method : 'POST'
 			}
 		});
+		
+		UserService.stageAvatar = function(vm){
+			UserService.resource.stageAvatar({userId : vm.profile.usersId}, vm.profile.userAvatarHandle[0]).$promise.then(function(data){
+				vm.profile.stagedAvatar = data;
+			});
+		};
 		
 		UserService.adminUserActivate = function(userId){
 			UserService.resource.adminUserActivate({userId : userId}).$promise.then(function(data){
@@ -101,7 +115,7 @@
             }
 		                                      
 		};
-		UserService.loadProfile = function(userId,vm){
+		UserService.loadProfile = function(userId,vm, scope){
 	         var profile = UserService.resource.userProfile({'userId':userId});   
 	         vm.profile = profile;
 	         profile.$promise.then(function(data){
@@ -119,6 +133,7 @@
 	        	NotificationsService.getThreadSubs(userId,1,10).$promise.then(function(data){
 	        		vm.threadSubs = data;
 	        	});
+
 	         });
 	         	                                      
 		};
@@ -231,6 +246,10 @@
 			vm.profile.buddyList.splice(index,1);
 		};
 		
+		UserService.deleteIgnore = function(vm, index){
+			vm.profile.ignoreList.splice(index,1);
+		};
+		
 		UserService.addBuddy = function(vm,buddy){
 			var newBuddy = UserService.resource.getBuddyTemplate({userAId : vm.profile.usersId, userBId : buddy.usersId});
 			
@@ -239,10 +258,30 @@
 			});
 		};
 		
+		UserService.addIgnore = function(vm,buddy){
+			var newBuddy = UserService.resource.getIgnoreTemplate({userAId : vm.profile.usersId, userBId : buddy.usersId});
+			
+			newBuddy.$promise.then(function(data){
+				vm.profile.ignoreList.push(data);
+			});
+		};
+		
 		UserService.isUserOnBuddyList = function(vm){
 			if(vm.profile && vm.profile !== null){
 				for(var i = 0; i < vm.profile.buddyList.length; i++){
 					if(vm.profile.buddyList[i].userBId === vm.profile.usersId){
+						return true;
+					}
+				}
+			}
+			
+			return false;
+		}
+		
+		UserService.isUserOnIgnoreList = function(vm){
+			if(vm.profile && vm.profile !== null){
+				for(var i = 0; i < vm.profile.ignoreList.length; i++){
+					if(vm.profile.ignoreList[i].userBId === vm.profile.usersId){
 						return true;
 					}
 				}

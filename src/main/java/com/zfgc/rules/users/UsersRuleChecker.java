@@ -50,6 +50,13 @@ public class UsersRuleChecker extends AbstractRulesChecker<Users>{
 			model.getErrors().getRuleErrors().add(coppaViolation);
 		}
 		
+		if(!model.getUserSecurityInfo().getNewPassword().equals(model.getUserSecurityInfo().getConfirmNewPassword())) {
+			Rule coppaViolation = new Rule();
+			coppaViolation.setRuleName("UMATCHED_PASSWORD");
+			coppaViolation.setErrorMessage("The password you entered did not match the confirmation.");
+			model.getErrors().getRuleErrors().add(coppaViolation);
+		}
+		
 		checkAgreeToTerms(model);
 	}
 	
