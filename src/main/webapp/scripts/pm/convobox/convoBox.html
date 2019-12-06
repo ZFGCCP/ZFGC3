@@ -28,25 +28,25 @@
 				
 					<div class="col-xs-12 mobile-user-bar md">
 						<div class="mobile-user-nav">
-							<i class="fas fa-sign-out-alt" ng-click="vm.openNav(null, true)"></i></span>
+							<i class="fas fa-sign-out-alt" ng-click="vm.deleteConversations()"></i></span>
 							<div class="mobile-nav-label">Leave</div>
 							<div class="selected" ng-show="tab.active"></div>
 						</div>
 						
 						<div class="mobile-user-nav">
-							<i class="fas fa-archive" ng-click="vm.openNav(null, true)"></i></span>
+							<i class="fas fa-archive" ng-click="vm.archiveConversations()"></i></span>
 							<div class="mobile-nav-label">Archive</div>
 							<div class="selected" ng-show="tab.active"></div>
 						</div>
 						
 						<div class="mobile-user-nav">
-							<i class="fas fa-comment-slash" ng-click="vm.openNav(null, true)"></i></span>
+							<i class="fas fa-comment-slash" ng-click="vm.prune()"></i></span>
 							<div class="mobile-nav-label">Prune</div>
 							<div class="selected" ng-show="tab.active"></div>
 						</div>
 						
 						<div class="mobile-user-nav">
-							<i class="fas fa-plus-circle" ng-click="vm.openNav(null, true)"></i></span>
+							<i class="fas fa-plus-circle" ng-click="vm.newMessage()"></i></span>
 							<div class="mobile-nav-label">New</div>
 							<div class="selected" ng-show="tab.active"></div>
 						</div>

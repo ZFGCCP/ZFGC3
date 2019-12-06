@@ -192,6 +192,10 @@ a:hover{
 	&.toast-error {
 		background-color: $midnight-btn-danger;
 	}
+	
+	&.toast-info {
+		background-color: $midnight-btn-caution;
+	}
 
     .toast-icon{
 	    background-color: $midnight-color;
