@@ -71,6 +71,10 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pm-two-factor.controller.js",
 	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.service.js",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
+	    
 	"./src/main/webapp/scripts/pm/conversation/remove-user-modal.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/conversation/prune-convo-modal.controller.js",
@@ -78,10 +82,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/pm/conversation/conversation.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
-	    
-	"./src/main/webapp/scripts/pm/convobox/convoBox.service.js",
-	    
-	"./src/main/webapp/scripts/pm/convobox/convoBox.controller.js",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
@@ -139,11 +139,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -155,9 +155,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
-	"./src/main/webapp/scripts/filters/range.filter.js",
-	    
 	"./src/main/webapp/scripts/error/error.module.js",
+	    
+	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
 	"./src/main/webapp/scripts/common/server-config.service.js",
 	    
@@ -231,11 +231,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
-	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
 	    
