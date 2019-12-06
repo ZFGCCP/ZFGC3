@@ -218,7 +218,7 @@
 					case 1:
 					case 2:
 					case 4:
-						return "http://localhost:8080/forum/contentstream/avatar/" + avatar.avatarId;
+						return "http://zfgc.com:8080/forum/contentstream/avatar/" + avatar.avatarId;
 						break;
 						
 					case 3:
