@@ -1,6 +1,23 @@
 .forum-wrapper{
-	.category{
-		margin-left:0 !important;
-		margin-right:0 !important;
+
+}
+
+.board-wrapper{
+	
+	margin: 2em;
+	
+	.entire-inside{
+		border-top: 0;
+		
+		div {
+			margin: 1.2em 0;
+			line-height: normal;
+		}
+		
+		.messages-indicator{
+			font-size: 2.5em;
+    		padding-top: .2em;
+    		padding-left: .4em;
+		}
 	}
 }
