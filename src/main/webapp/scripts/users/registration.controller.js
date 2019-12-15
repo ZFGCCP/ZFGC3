@@ -5,7 +5,7 @@
 		var vm = this;
 		vm.complete = false;
 		vm.lookups = LookupsService.getLookupsList("TIMEZONE");
-		vm.pubKey = "6Lde4o4UAAAAAI0Nkg5Gymqa6l3o9Is7g9-0OYOn";
+		vm.pubKey = "6Ldo4o4UAAAAALPKi9eVnhq_q2lCXxeJaEuf5joT";
 		
 		vm.getCurrentTimeZone = function(){
 			var tz = jstz.determine();

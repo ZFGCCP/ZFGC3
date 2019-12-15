@@ -5,10 +5,10 @@
                      entityID="zfgc-sp">
     <md:SPSSODescriptor AuthnRequestsSigned="false" WantAssertionsSigned="false" protocolSupportEnumeration="urn:oasis:names:tc:SAML:2.0:protocol">
         <md:SingleLogoutService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-Redirect"
-                                Location="http://localhost:8080/saml/logout" />
+                                Location="http://zfgc.com:8080/saml/logout" />
         <md:NameIDFormat>urn:oasis:names:tc:SAML:1.1:nameid-format:unspecified</md:NameIDFormat>
         <md:AssertionConsumerService Binding="urn:oasis:names:tc:SAML:2.0:bindings:HTTP-POST"
-                                     Location="http://localhost:8080/saml/acs"
+                                     Location="http://zfgc.com:8080/saml/acs"
                                      index="1" />
         
     </md:SPSSODescriptor>
