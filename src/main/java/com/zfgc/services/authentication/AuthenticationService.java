@@ -185,7 +185,7 @@ public class AuthenticationService  extends AbstractService {
 	}
 	
 	public Boolean isValidAesKey(TwoFactorKey aes) throws ZfgcInvalidAesKeyException{
-		PmKey pmKey = pmKeyDataProvider.getPmKeyByUsersId(aes.getUsersId());
+		/*PmKey pmKey = pmKeyDataProvider.getPmKeyByUsersId(aes.getUsersId());
 		
 		if(aes.getKey() == null){
 			throw new ZfgcInvalidAesKeyException(pmKey.getParityWord());
@@ -197,6 +197,8 @@ public class AuthenticationService  extends AbstractService {
 			throw new ZfgcInvalidAesKeyException(pmKey.getParityWord());
 		}
 		
-		return decrypted.equals(PM_PARITY_WORD);
+		return decrypted.equals(PM_PARITY_WORD);*/
+		//temporarily disable encryption
+		return true;
 	}
 }

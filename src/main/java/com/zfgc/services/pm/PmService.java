@@ -221,7 +221,7 @@ public class PmService extends AbstractService {
 	private List<PmConversationView> decryptAndPrepareConvoBox(List<PmConversationView> convoView, PmKey key, TwoFactorKey tfa){
 		List<PmConversationView> result = new ArrayList<>();
 		
-		String decryptedRsa = ZfgcSecurityUtils.decryptAes(key.getPmPrivKeyRsaEncrypted(), tfa.getKey());
+		/*String decryptedRsa = ZfgcSecurityUtils.decryptAes(key.getPmPrivKeyRsaEncrypted(), tfa.getKey());
 		Key senderKey = null;
 		
 		try {
@@ -229,7 +229,7 @@ public class PmService extends AbstractService {
 		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
-		}
+		}*/
 
 		for(PmConversationView view : convoView){
 			try {
