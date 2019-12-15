@@ -296,18 +296,10 @@ a:hover{
 }
 
 .mobile-user-popover{
-	background-color:$midnight-section-body-bg-color;
-
-	.nav-item:nth-child(odd){
-		background-color:$midnight-zebra-odd;
-	}
+	background-color: $midnight-section-body-bg-color;
 	
-	.nav-item:nth-child(even){
-		background-color:$midnight-zebra-even;
-	}
-	
-	.nav-item:hover{
-		background-color:$midnight-row-hover;
+	.nav-item{
+		background-color: $midnight-bg-color;
 	}
 }
 

@@ -369,12 +369,21 @@
     z-index: 8;
     height: 100%;
     
+    &.collapsing{
+    	transition: none !important;
+    }
+    
     .nav-item{
     	height: 40px;
     	font-size: 15px;
     	display: flex;
     	align-items: center;
     	cursor: pointer;
+    	padding-left: 1em;
+    	
+    	&:last-child {
+    		box-shadow: 0em .9em 1em black;
+    	}
     }
 }
 

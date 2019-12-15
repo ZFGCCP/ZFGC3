@@ -49,23 +49,23 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
-	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
 	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
-	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
 	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset.service.js",
 	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset.controller.js",
 	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset-request.controller.js",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
+	    
+	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
@@ -139,11 +139,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
+	"./src/main/webapp/scripts/lookups/lookups.service.js",
+	    
 	"./src/main/webapp/scripts/modal/modal.service.js",
 	    
 	"./src/main/webapp/scripts/modal/modal.controller.js",
-	    
-	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -243,11 +243,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
+	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset-request.html",
 	    
 	"./src/main/webapp/scripts/users/password-reset/reset.html",
-	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    
@@ -271,9 +271,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
 	    
