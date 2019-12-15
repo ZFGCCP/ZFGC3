@@ -25,7 +25,6 @@ import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PersonalMessagingSettingsDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
-import com.zfgc.dataprovider.UnreadConversationDataProvider;
 import com.zfgc.dataprovider.UserContactInfoDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
