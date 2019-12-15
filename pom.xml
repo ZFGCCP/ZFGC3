@@ -5,7 +5,7 @@
 
 	<groupId>com.zfgc</groupId>
 	<artifactId>forum</artifactId>
-	<version>1.3.0-NAVI</version>
+	<version>1.3.1-Skull-Kid</version>
 	<packaging>war</packaging>
 
 	<name>forum</name>

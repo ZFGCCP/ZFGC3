@@ -25,7 +25,6 @@ import com.zfgc.dataprovider.PersonalMessageDataProvider;
 import com.zfgc.dataprovider.PersonalMessagingSettingsDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
-import com.zfgc.dataprovider.UnreadConversationDataProvider;
 import com.zfgc.dataprovider.UserContactInfoDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -221,7 +220,7 @@ public class PmService extends AbstractService {
 	private List<PmConversationView> decryptAndPrepareConvoBox(List<PmConversationView> convoView, PmKey key, TwoFactorKey tfa){
 		List<PmConversationView> result = new ArrayList<>();
 		
-		String decryptedRsa = ZfgcSecurityUtils.decryptAes(key.getPmPrivKeyRsaEncrypted(), tfa.getKey());
+		/*String decryptedRsa = ZfgcSecurityUtils.decryptAes(key.getPmPrivKeyRsaEncrypted(), tfa.getKey());
 		Key senderKey = null;
 		
 		try {
@@ -229,7 +228,7 @@ public class PmService extends AbstractService {
 		} catch (InvalidKeySpecException | NoSuchAlgorithmException e) {
 			e.printStackTrace();
 			return null;
-		}
+		}*/
 
 		for(PmConversationView view : convoView){
 			try {
