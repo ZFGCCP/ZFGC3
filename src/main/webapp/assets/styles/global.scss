@@ -131,15 +131,15 @@
 }
 
 .section-container{
-	border:1px solid;
-    margin: 0 auto 20px auto;
+	border: .2em solid;
+    margin: 2em auto 1em auto;
 	
 	@media(max-width:767px){
 		margin: 0;
 	}
 	
 	.section-header{
-		border-bottom:1px solid;	
+		border-bottom: .2em solid;	
 		padding-left:20px;
 		min-height:40px;
 		height:40px;
@@ -323,13 +323,25 @@ button:disabled{
 
 .forum-header{
 	
-	height: 75px;
-    border-left: 1px solid;
-    border-right: 1px solid;
+	&.logged-in{
+		height: 4em;
+	}
+	
+	&.logged-out{
+		height: 6em;
+	}
+	
+    margin-left: 2em;
+    font-weight: bold;
 
 	.user-header-wrapper{
-		padding-top: 50px;
-    	padding-left: 5px;
+		padding-top: 1em;
+    	padding-left: .3em;
+    	font-size: 1.5em;
+    	
+    	.text-content{
+    		padding-bottom: .7em;
+    	}
 	}
 
 }
