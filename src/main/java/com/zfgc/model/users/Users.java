@@ -610,6 +610,19 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	public void setPrimaryHostname(Hostname primaryHostname) {
 		this.primaryHostname = primaryHostname;
 	}
+	
+	public List<Integer> getMemberGroupIds(){
+		List<Integer> memberGroupIds = new ArrayList<>();
+        memberGroupIds.add(getPrimaryMemberGroupId());
+        
+        if(getSecondaryMemberGroups() != null){
+	        for(LkupMemberGroup group : getSecondaryMemberGroups().getMemberGroups()){
+	        	memberGroupIds.add(group.getMemberGroupId());
+	        }
+        }
+        
+        return memberGroupIds;
+	}
 
 	public List<Hostname> getSecondaryHostnames() {
 		return secondaryHostnames;

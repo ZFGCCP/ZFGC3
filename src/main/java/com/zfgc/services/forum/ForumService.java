@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -36,9 +38,12 @@ public class ForumService extends AbstractService {
 			List<Category> cats = categoryService.getCategories();
 			
 			//get all forums for at the top level
-			List<Forum> forums = forumDataProvider.getForumsByParent(Arrays.asList(new Short[]{null}), user);
+			List<Forum> forums = forumDataProvider.getForumsByParent(new ArrayList<Short>(), user);
+			
+			List<Short> forumIds = forums.stream().map(f -> f.getForumId()).collect(Collectors.toList());
 			
 			//map the results
+			List<Forum> subForums = forumDataProvider.getForumsByParent(forumIds, user);
 			Map<Integer,Category> results = new HashMap<>();
 			
 			for(Category cat : cats){
@@ -47,22 +52,15 @@ public class ForumService extends AbstractService {
 			
 			for(Forum forum : forums){
 				results.get(forum.getCategoryId()).getForums().add(forum);
+				
+				for(Forum subForum : subForums) {
+					if(subForum.getParentForumId().equals(forum.getForumId())) {
+						forum.getSubForums().add(subForum);
+					}
+				}
 			}
 			
-			List<Short> forumIds = getForumIds(forums);
-			List<Forum> subForums = forumDataProvider.getForumsByParent(forumIds, user);
-			Map<Short,Forum> forumResults = new HashMap<>();
 			
-			for(Forum forum : forums){
-				forumResults.put(forum.getForumId(), forum);
-			}
-			
-			for(Forum subForum : subForums){
-				forumResults.get(subForum.getParentForumId()).getSubForums().add(subForum);
-			}
-			
-			List<Category> mappedCategories = new ArrayList<Category>(results.values());
-			index.setCategories(categoryService.removeEmptyCategories(mappedCategories));
 		}
 		catch(Exception ex){
 			ex.printStackTrace();

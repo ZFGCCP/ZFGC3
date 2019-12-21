@@ -147,8 +147,7 @@ public class ForumDao extends AbstractDao<ForumDbObjExample, ForumDbObj, Forum> 
 
 	@Override
 	public List<ForumDbObj> get(ForumDbObjExample ex) throws RuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		return forumDbObjMapper.selectByExample(ex);
 	}
 
 	@Override

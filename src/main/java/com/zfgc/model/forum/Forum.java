@@ -1,8 +1,12 @@
 package com.zfgc.model.forum;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zfgc.constants.Forum.ForumConstants;
 import com.zfgc.model.BaseZfgcModel;
 
 public class Forum extends BaseZfgcModel {
@@ -20,6 +24,9 @@ public class Forum extends BaseZfgcModel {
 	
 	private List<Topic> stickyThreads = new ArrayList<>();
 	private List<Topic> threads = new ArrayList<>();
+	
+	private Boolean canRead = false;
+	private Boolean canWrite = false;
 	
 	public Short getForumId() {
 		return forumId;
@@ -108,5 +115,17 @@ public class Forum extends BaseZfgcModel {
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Boolean getCanRead() {
+		return canRead;
+	}
+	public void setCanRead(Boolean canRead) {
+		this.canRead = canRead;
+	}
+	public Boolean getCanWrite() {
+		return canWrite;
+	}
+	public void setCanWrite(Boolean canWrite) {
+		this.canWrite = canWrite;
 	}
 }
