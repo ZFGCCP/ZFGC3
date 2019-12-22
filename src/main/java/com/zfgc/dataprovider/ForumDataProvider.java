@@ -15,7 +15,9 @@ import com.zfgc.dao.ForumPermissionsViewDao;
 import com.zfgc.dbobj.ForumDbObj;
 import com.zfgc.dbobj.ForumPermissionsViewDbObj;
 import com.zfgc.dbobj.ForumPermissionsViewDbObjExample;
+import com.zfgc.dbobj.ForumPermissionsViewDbObjExample.Criteria;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.mappers.ForumPermissionsViewDbObjMapper;
 import com.zfgc.model.forum.Forum;
 import com.zfgc.model.users.Users;
 
@@ -33,13 +35,12 @@ public class ForumDataProvider extends AbstractDataProvider {
 		
 		permissionIds.addAll(user.getMemberGroupIds());
 		ForumPermissionsViewDbObjExample ex = forumPermissionsViewDao.getExample();
-		ex.createCriteria().andMemberGroupIdIn(permissionIds);
-		
+	
 		if(parentId.isEmpty()) {
-			ex.createCriteria().andParentForumIdIsNull();
+			ex.createCriteria().andMemberGroupIdIn(permissionIds).andParentForumIdIsNull();
 		}
 		else {
-			ex.createCriteria().andParentForumIdIn(parentId);
+			ex.createCriteria().andMemberGroupIdIn(permissionIds).andParentForumIdIn(parentId);
 		}
 		
 		forumDbs = forumPermissionsViewDao.get(ex);
@@ -77,45 +78,18 @@ public class ForumDataProvider extends AbstractDataProvider {
 		return result;
 	}
 	
-	public List<Forum> getForumsByCategory(Integer categoryId) throws Exception{
-		List<ForumPermissionsViewDbObj> forumsDb = null;
-		ForumPermissionsViewDbObjExample ex = forumPermissionsViewDao.getExample();
-		ex.createCriteria().andCategoryIdEqualTo(categoryId);
-		
-		forumsDb = forumPermissionsViewDao.get(ex);
-		
-		List<Forum> forums = new ArrayList<Forum>();
-		for(ForumPermissionsViewDbObj forum : forumsDb){
-			forums.add(mapper.map(forum,Forum.class));
-		}
-		
-		return forums;
-	}
-	
-	public List<Forum> getForumsByCategory(List<Integer> categoryId) throws Exception{
-		List<ForumPermissionsViewDbObj> forumsDb = null;
-		ForumPermissionsViewDbObjExample ex = forumPermissionsViewDao.getExample();
-		ex.createCriteria().andCategoryIdIn(categoryId);
-		
-		forumsDb = forumPermissionsViewDao.get(ex);
-		
-		List<Forum> forums = new ArrayList<Forum>();
-		for(ForumPermissionsViewDbObj forum : forumsDb){
-			forums.add(mapper.map(forum,Forum.class));
-		}
-		
-		return forums;
-	}
-	
 	public Forum getForum(Short forumId, Users user) throws ZfgcNotFoundException, Exception{
-		try{
-			return mapper.map(forumDao.getForum(forumId, user), Forum.class);
+		ForumPermissionsViewDbObjExample ex = new ForumPermissionsViewDbObjExample();
+		List<Integer> permissionIds = new ArrayList<>();
+		permissionIds.addAll(user.getMemberGroupIds());
+		
+		ex.createCriteria().andForumIdEqualTo(forumId).andMemberGroupIdIn(permissionIds);
+		List<ForumPermissionsViewDbObj> result = forumPermissionsViewDao.get(ex);
+		
+		if(result.size() == 0) {
+			throw new ZfgcNotFoundException("ForumId : " + forumId);
 		}
-		catch(ZfgcNotFoundException ex){
-			throw new ZfgcNotFoundException("Forum Id " + forumId);
-		}
-		catch(Exception ex){
-			throw new Exception(ex.getMessage());
-		}
+		
+		return mapper.map(result.get(0), Forum.class);
 	}
 }

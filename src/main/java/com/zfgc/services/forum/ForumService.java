@@ -60,7 +60,7 @@ public class ForumService extends AbstractService {
 				}
 			}
 			
-			
+			index.setCategories(new ArrayList<>(results.values()));
 		}
 		catch(Exception ex){
 			ex.printStackTrace();

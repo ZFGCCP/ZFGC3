@@ -1,6 +1,6 @@
 <div ng-controller="ForumController as vm" class="forum-wrapper">
 
-	<div ng-repeat="category in vm.categories" class="category board-wrapper">
+	<div ng-repeat="category in vm.categories" class="category board-wrapper" ng-if="category.forums.length > 0">
 	
 		<collapsible-widget widget-title="{{category.name}}">
 			<div class="category">
