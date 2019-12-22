@@ -39,6 +39,10 @@
     "stomp-websocket": {
       "main": "./lib/stomp.min.js",
       "dependencies": null
+    },
+    "@fortawesome/fontawesome-free": {
+      "main": "./js/all.min.js",
+      "dependencies": null
     }
   }
 }

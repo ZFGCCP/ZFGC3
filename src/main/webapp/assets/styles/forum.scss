@@ -6,6 +6,28 @@
 	
 	margin: 2em;
 	
+	.category{
+		.thread-headers{
+			box-shadow: 0 .5em .5em black;
+		}
+	
+		.thread-section{
+			padding-top: 1.2em;
+		}
+	
+		.status-icon{
+			font-size: 1.7em;
+    		margin-right: 1em;
+    		margin-bottom: 1em;
+    		position: relative;
+    		bottom: .3em;
+		}
+		
+		.subject{
+			word-break: break-word;
+		}
+	}
+	
 	.entire-inside{
 		border-top: 0;
 		
