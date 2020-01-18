@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dataprovider.ForumDataProvider;
+import com.zfgc.dataprovider.ThreadDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.Category;
 import com.zfgc.model.forum.Forum;
@@ -83,7 +84,7 @@ public class ForumService extends AbstractService {
 		try{
 			//nah, fuck you
 			if(itemsPerPage == 0){
-				return null;
+				throw new IllegalArgumentException();
 			}
 			
 			Forum forum = forumDataProvider.getForum(forumId, user);
@@ -93,7 +94,9 @@ public class ForumService extends AbstractService {
 			
 			forum.setThreadsCount(threadService.getThreadsInForum(forumId));
 			
-			Integer totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
+			forum.setSubForums(forumDataProvider.getForumsByParent(forumId, user));
+			
+			Long totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
 			Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());
 			forum.setTotalPages(totalPages);
 			

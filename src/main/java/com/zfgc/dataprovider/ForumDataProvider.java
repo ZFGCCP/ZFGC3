@@ -29,7 +29,14 @@ public class ForumDataProvider extends AbstractDataProvider {
 	@Autowired
 	private ForumPermissionsViewDao forumPermissionsViewDao;
 	
-	public List<Forum> getForumsByParent(List<Short> parentId, Users user) throws Exception{
+	public List<Forum> getForumsByParent(Short parentId, Users user) {
+		List<Short> id = new ArrayList<>();
+		id.add(parentId);
+		
+		return getForumsByParent(id, user);
+	}
+	
+	public List<Forum> getForumsByParent(List<Short> parentId, Users user) {
 		List<ForumPermissionsViewDbObj> forumDbs = null;
 		List<Integer> permissionIds = new ArrayList<>();
 		
@@ -78,7 +85,7 @@ public class ForumDataProvider extends AbstractDataProvider {
 		return result;
 	}
 	
-	public Forum getForum(Short forumId, Users user) throws ZfgcNotFoundException, Exception{
+	public Forum getForum(Short forumId, Users user) {
 		ForumPermissionsViewDbObjExample ex = new ForumPermissionsViewDbObjExample();
 		List<Integer> permissionIds = new ArrayList<>();
 		permissionIds.addAll(user.getMemberGroupIds());

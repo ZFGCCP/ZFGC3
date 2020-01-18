@@ -16,7 +16,7 @@ public class Forum extends BaseZfgcModel {
 	private Integer seqNo;
 	private String name;
 	private String description;
-	private Integer threadsCount;
+	private Long threadsCount;
 	private Integer totalThreadsCount;
 	private Integer totalPages;
 	
@@ -82,14 +82,8 @@ public class Forum extends BaseZfgcModel {
 	public void setStickyThreads(List<Topic> stickyThreads) {
 		this.stickyThreads = stickyThreads;
 	}
-	public Integer getThreadsCount() {
-		return threadsCount;
-	}
-	public void setThreadsCount(Integer threadsCount) {
-		this.threadsCount = threadsCount;
-	}
-	public Integer getTotalThreadsCount() {
-		Integer total = threadsCount == null ? 0 : threadsCount;
+	public Long getTotalThreadsCount() {
+		Long total = threadsCount == null ? 0 : threadsCount;
 		
 		for(Forum forum : subForums){
 			total += forum.getTotalThreadsCount() == null ? 0 : forum.getTotalThreadsCount();
@@ -127,5 +121,11 @@ public class Forum extends BaseZfgcModel {
 	}
 	public void setCanWrite(Boolean canWrite) {
 		this.canWrite = canWrite;
+	}
+	public Long getThreadsCount() {
+		return threadsCount;
+	}
+	public void setThreadsCount(Long threadsCount) {
+		this.threadsCount = threadsCount;
 	}
 }

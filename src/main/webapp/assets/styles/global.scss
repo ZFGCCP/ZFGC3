@@ -235,6 +235,10 @@
 .row{
 	margin-left:0;
 	margin-right:0;
+
+	&.selectable{
+		cursor: pointer;
+	}
 }
     
 .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, 
@@ -360,4 +364,16 @@ ol{
 
 .display-inline-flex{
 	display: inline-flex;
+}
+
+.hidden-xxs{
+	@media(max-width: 572px){
+		display: none !important;
+	}
+}
+
+.d-block-xxs{
+	@media(max-width: 572px){
+		display: block !important;
+	}	
 }
