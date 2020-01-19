@@ -22,6 +22,10 @@
     
 
     <!-- tables -->
+    <table schema="Zfgc3" tableName="USER_CONNECTION" domainObjectName="UserConnectionDbObj">
+    	<generatedKey column="USER_CONNECTION_ID" sqlStatement="SELECT COALESCE(MAX(USER_CONNECTION_ID) + 1,0) FROM USER_CONNECTION"/>
+    </table>
+    
     <!--<table schema="Zfgc3" tableName="UNREAD_CONVERSATION" domainObjectName="UnreadConversationDbObj">
     	<generatedKey column="UNREAD_CONVERSATION_ID" sqlStatement="SELECT COALESCE(MAX(UNREAD_CONVERSATION_ID) + 1,0) FROM UNREAD_CONVERSATION_CODE"/>
     </table>
