@@ -9,7 +9,7 @@
 						<i class="messages-indicator fas fa-folder-open"></i>
 					</div>
 					<div class="col-xs-6 col-sm-5 forum">
-						{{forum.name}}
+						<a ui-sref="board({boardId : forum.forumId})">{{forum.name}}</a>
 						<br>
 						{{forum.description}}
 						<br/>

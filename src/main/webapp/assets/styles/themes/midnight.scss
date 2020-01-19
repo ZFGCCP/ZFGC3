@@ -41,6 +41,16 @@
 			}
 		}
 	}
+	
+	.forum-wrapper{
+		.board-wrapper{
+			.category{
+				.thread-headers{
+					background-color:$midnight-header-bg-color;
+				}
+			}
+		}
+	}
 }
 
 .btn{

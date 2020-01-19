@@ -6,5 +6,9 @@ angular.module('zfgc.forum',['zfgc.config'])
 		.state('forum', {
 			url: baseRouter + '/bbs/index',
 			templateUrl: basePath + '/forum.html'
+		})
+		.state('board', {
+			url: baseRouter + '/board?boardId',
+			templateUrl: basePath + '/board.html'
 		});
 }]);
