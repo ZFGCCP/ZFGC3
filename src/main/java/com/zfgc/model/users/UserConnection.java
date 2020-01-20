@@ -20,7 +20,7 @@ public class UserConnection extends BaseZfgcModel {
     
     private IpAddress ipAddress;
     
-    private Integer userActionId = 7;
+    private Integer userActionId;
 	
 	public Integer getUserConnectionId() {
 		return userConnectionId;
