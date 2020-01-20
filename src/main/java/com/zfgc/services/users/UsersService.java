@@ -31,6 +31,7 @@ import com.zfgc.dao.LookupDao;
 import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UserConnectionDataProvider;
+import com.zfgc.dataprovider.UserCurrentActionDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -41,6 +42,7 @@ import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.MembersView;
 import com.zfgc.model.users.UserConnection;
 import com.zfgc.model.users.UserContactInfo;
+import com.zfgc.model.users.UserCurrentAction;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.PersonalInfo;
@@ -94,6 +96,9 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	UserConnectionDataProvider userConnectionDataProvider;
+	
+	@Autowired
+	UserCurrentActionDataProvider userCurrentActionDataProvider;
 	
 	@Autowired
 	ZfgcGeneralConfig zfgcGeneralConfig;
@@ -290,8 +295,27 @@ public class UsersService extends AbstractService {
 			onlineUser.setOsVersionNumber(mappedParams.get("os_versionNumber"));
 		}
 		
+		UserCurrentAction currentAction = new UserCurrentAction();
+		currentAction.setUsersId(user.getUsersId());
+		currentAction.setLocationId(7);
+		userCurrentActionDataProvider.updateUserAction(currentAction);
+		onlineUser.setUserActionId(currentAction.getUserCurrentActionId());
   		userConnectionDataProvider.insertNewConnection(onlineUser);
   		user.setUserConnectionId(onlineUser.getUserConnectionId());
+	}
+	
+	@Transactional
+	public void updateUserActions(String sessionId, Integer actionId, Users zfgcUser, String ... param) {
+		UserCurrentAction action = new UserCurrentAction();
+		action.setLocationId(actionId);
+		action.setUsersId(zfgcUser.getUsersId());
+		
+		userCurrentActionDataProvider.updateUserAction(action);
+		
+		//get their existing connection
+		UserConnection onlineUser = userConnectionDataProvider.getUserConnectionBySessionId(sessionId);
+		onlineUser.setUserActionId(action.getUserCurrentActionId());
+		userConnectionDataProvider.insertNewConnection(onlineUser);
 	}
 	
 	public void setUserOffline(Users user, String sessionId) throws Exception{
@@ -304,6 +328,7 @@ public class UsersService extends AbstractService {
 		usersDataProvider.setUserOffline(user);
 		
 		userConnectionDataProvider.deleteUserConnection(sessionId);
+		
 	}
 
 	public Users getNewUserTemplate() {
@@ -339,6 +364,7 @@ public class UsersService extends AbstractService {
 		
 		LOGGER.info("Clearing out user connections...");
 		userConnectionDataProvider.deleteAllUserConnections();
+		userCurrentActionDataProvider.deleteAllUserActions();
 		LOGGER.info("Finished clearing out user connections.");
 		
 	}

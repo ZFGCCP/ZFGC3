@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.zfgc.model.online.WhosOnlineList;
+import com.zfgc.model.users.UserAction;
+import com.zfgc.model.users.Users;
 import com.zfgc.services.users.UsersService;
 import com.zfgc.services.whosOnline.WhosOnlineService;
 
@@ -38,6 +40,14 @@ public class WebSocketController extends BaseController{
 		WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
 		
 		return ResponseEntity.ok(online);
+	}
+	
+	@MessageMapping("/usersocket/updateUserAction")
+	public ResponseEntity updateUserAction(Principal auth, SimpMessageHeaderAccessor headerAccessor, UserAction action) {
+		Users user = zfgcUser(auth);
+		String sessionId = headerAccessor.getSessionId();
+		usersService.updateUserActions(sessionId, action.getCurrentActionId(), user);
+		return ResponseEntity.ok().build();
 	}
 	
 }

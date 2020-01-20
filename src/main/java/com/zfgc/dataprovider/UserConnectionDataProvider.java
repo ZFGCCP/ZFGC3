@@ -46,6 +46,19 @@ public class UserConnectionDataProvider extends AbstractDataProvider {
 		return result;
 	}
 	
+	public UserConnection getUserConnectionBySessionId(String sessionId){
+		UserConnectionDbObjExample ex = userConnectionDao.getExample();
+		ex.createCriteria().andSessionIdEqualTo(sessionId);
+		
+		List<UserConnection> result = new ArrayList<>();
+		
+		if(result.size() > 0) {
+			return mapper.map(result.get(0), UserConnection.class);
+		}
+
+		throw new ZfgcNotFoundException(sessionId);
+	}
+	
 	public void insertNewConnection(UserConnection connection){
 		userConnectionDao.updateOrInsert(connection);
 	}
