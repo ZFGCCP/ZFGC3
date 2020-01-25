@@ -19,7 +19,7 @@
 			
 			$rootScope.$on("WebsocketConnected", function(data){
 				WebsocketService.subscribe("/socket/whosonline", $scope.updateWhosOnline);
-				WebsocketService.send("/forum/usersocket/init",{},{});
+				WebsocketService.send("/usersocket/init",{},{});
 			});
 			
 			$scope.toggleDetails = function(){
