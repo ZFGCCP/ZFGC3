@@ -22,8 +22,12 @@
 			subscription.unsubscribe();
 		};
 		
-		service.send = function(destination,headers,body){
-			socket.stomp.send(destination,headers,body);
+		service.send = function(destination,body,headers){
+			if(headers === undefined || headers === null){
+				headers = {};
+			}
+			
+			socket.stomp.send("/forum" + destination,headers,body);
 		};
 		
 		return service;

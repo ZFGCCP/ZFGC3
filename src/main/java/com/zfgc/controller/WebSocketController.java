@@ -43,10 +43,13 @@ public class WebSocketController extends BaseController{
 	}
 	
 	@MessageMapping("/usersocket/updateUserAction")
-	public ResponseEntity updateUserAction(Principal auth, SimpMessageHeaderAccessor headerAccessor, UserAction action) {
+	public ResponseEntity updateUserAction(Principal auth, SimpMessageHeaderAccessor headerAccessor, String action) {
+		UserAction userAction = new UserAction();
+		userAction.setCurrentActionId(Integer.parseInt(action));
 		Users user = zfgcUser(auth);
+		userAction.setUsersId(user.getUsersId());
 		String sessionId = headerAccessor.getSessionId();
-		usersService.updateUserActions(sessionId, action.getCurrentActionId(), user);
+		usersService.updateUserActions(sessionId, userAction.getCurrentActionId(), user);
 		return ResponseEntity.ok().build();
 	}
 	

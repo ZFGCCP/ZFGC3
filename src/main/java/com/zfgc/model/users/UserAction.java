@@ -4,8 +4,8 @@ import com.zfgc.model.BaseZfgcModel;
 
 public class UserAction extends BaseZfgcModel {
 	
-	Integer usersId;
-	Integer currentActionId;
+	private Integer usersId;
+	private Integer currentActionId;
 	
 	public Integer getUsersId() {
 		return usersId;

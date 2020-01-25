@@ -50,7 +50,7 @@ public class UserConnectionDataProvider extends AbstractDataProvider {
 		UserConnectionDbObjExample ex = userConnectionDao.getExample();
 		ex.createCriteria().andSessionIdEqualTo(sessionId);
 		
-		List<UserConnection> result = new ArrayList<>();
+		List<UserConnectionDbObj> result = userConnectionDao.get(ex);
 		
 		if(result.size() > 0) {
 			return mapper.map(result.get(0), UserConnection.class);
