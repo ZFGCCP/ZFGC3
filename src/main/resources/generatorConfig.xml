@@ -11,21 +11,21 @@
     				password="${mbg.jdbc.password}"
     				userId="${mbg.jdbc.username}"/>
     				
-    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="forum">
+    <javaModelGenerator targetPackage="com.zfgc.dbobj" targetProject="ZFGC3">
     	<property name="enableSubPackages" value="true" />
     </javaModelGenerator>
-    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="forum">
+    <sqlMapGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3">
     	<property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
-    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="forum" type="XMLMAPPER" />
+    <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="ZFGC3" type="XMLMAPPER" />
     
     
 
     <!-- tables -->
-    <table schema="Zfgc3" tableName="USER_CURRENT_ACTION" domainObjectName="UserCurrentActionDbObj">
+    <!--<table schema="Zfgc3" tableName="USER_CURRENT_ACTION" domainObjectName="UserCurrentActionDbObj">
     	<generatedKey column="USER_CURRENT_ACTION_ID" sqlStatement="SELECT COALESCE(MAX(USER_CURRENT_ACTION_ID) + 1,0) FROM USER_CURRENT_ACTION"/>
     </table>
-    <!--<table schema="Zfgc3" tableName="USER_CONNECTION" domainObjectName="UserConnectionDbObj">
+    <table schema="Zfgc3" tableName="USER_CONNECTION" domainObjectName="UserConnectionDbObj">
     	<generatedKey column="USER_CONNECTION_ID" sqlStatement="SELECT COALESCE(MAX(USER_CONNECTION_ID) + 1,0) FROM USER_CONNECTION"/>
     </table>
     
@@ -308,10 +308,13 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="FORUM_PERMISSIONS_VIEW" domainObjectName="ForumPermissionsViewDbObj">
+    <table schema="zfgc3" tableName="USER_VIEWING_FORUM_VIEW" domainObjectName="UserViewingForumViewDbObj">
     </table>
     
-    <!--<table schema="zfgc3" tableName="USER_PASSWORD_RESET_VIEW" domainObjectName="UserPasswordResetViewDbObj">
+    <!--<table schema="zfgc3" tableName="FORUM_PERMISSIONS_VIEW" domainObjectName="ForumPermissionsViewDbObj">
+    </table>
+    
+    <table schema="zfgc3" tableName="USER_PASSWORD_RESET_VIEW" domainObjectName="UserPasswordResetViewDbObj">
     </table>
     <table schema="zfgc3" tableName="USER_PERMISSION_VIEW" domainObjectName="UserPermissionViewDbObj">
     </table>

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.dao.UserConnectionDao;
+import com.zfgc.dao.UserViewingForumViewDao;
 import com.zfgc.dbobj.UserConnectionDbObj;
 import com.zfgc.dbobj.UserConnectionDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -18,6 +19,11 @@ public class UserConnectionDataProvider extends AbstractDataProvider {
 
 	@Autowired
 	UserConnectionDao userConnectionDao;
+	
+	@Autowired
+	UserViewingForumViewDao userViewingForumViewDao;
+	
+	//public UserViewingForumView getUsersViewingForum
 	
 	public UserConnection getUserConnection(Integer userConnectionId){
 		UserConnectionDbObjExample ex = userConnectionDao.getExample();
