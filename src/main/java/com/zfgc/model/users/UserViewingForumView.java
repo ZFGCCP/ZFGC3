@@ -1,26 +1,21 @@
 package com.zfgc.model.users;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.zfgc.model.BaseZfgcModel;
 
 public class UserViewingForumView extends BaseZfgcModel {
 
-	private Integer usersId;
-	private Integer displayName;
-	
-	public Integer getUsersId() {
-		return usersId;
+	private List<Users> users = new ArrayList<>();
+	private Integer forumId;
+
+	public List<Users> getUsers() {
+		return users;
 	}
 
-	public void setUsersId(Integer usersId) {
-		this.usersId = usersId;
-	}
-
-	public Integer getDisplayName() {
-		return displayName;
-	}
-
-	public void setDisplayName(Integer displayName) {
-		this.displayName = displayName;
+	public void setUsers(List<Users> users) {
+		this.users = users;
 	}
 
 	@Override
@@ -28,5 +23,14 @@ public class UserViewingForumView extends BaseZfgcModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	public Integer getForumId() {
+		return forumId;
+	}
+
+	public void setForumId(Integer forumId) {
+		this.forumId = forumId;
+	}
+
 	
 }

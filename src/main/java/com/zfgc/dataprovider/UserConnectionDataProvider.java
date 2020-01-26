@@ -10,8 +10,11 @@ import com.zfgc.dao.UserConnectionDao;
 import com.zfgc.dao.UserViewingForumViewDao;
 import com.zfgc.dbobj.UserConnectionDbObj;
 import com.zfgc.dbobj.UserConnectionDbObjExample;
+import com.zfgc.dbobj.UserViewingForumViewDbObj;
+import com.zfgc.dbobj.UserViewingForumViewDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.users.UserConnection;
+import com.zfgc.model.users.UserViewingForumView;
 import com.zfgc.model.users.Users;
 
 @Component
@@ -23,7 +26,22 @@ public class UserConnectionDataProvider extends AbstractDataProvider {
 	@Autowired
 	UserViewingForumViewDao userViewingForumViewDao;
 	
-	//public UserViewingForumView getUsersViewingForum
+	public UserViewingForumView getUsersViewingForum(Integer forumId){
+		UserViewingForumViewDbObjExample ex = userViewingForumViewDao.getExample();
+		ex.createCriteria().andForumIdEqualTo(forumId);
+		
+		List<UserViewingForumViewDbObj> dbObj = userViewingForumViewDao.get(ex);
+		
+		UserViewingForumView result = new UserViewingForumView();
+		result.setForumId(forumId);
+		for(UserViewingForumViewDbObj db : dbObj) {
+			Users user = new Users();
+			user.setUsersId(db.getUsersId());
+			user.setDisplayName(db.getDisplayName());
+		}
+		
+		return result;
+	}
 	
 	public UserConnection getUserConnection(Integer userConnectionId){
 		UserConnectionDbObjExample ex = userConnectionDao.getExample();

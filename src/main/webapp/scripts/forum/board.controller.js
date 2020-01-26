@@ -1,6 +1,6 @@
 (function(){
 	
-	function BoardController($location, ForumService){
+	function BoardController($scope, $location, ForumService){
 		var vm = this;
 		
 		vm.getBoard = function(){
@@ -10,9 +10,17 @@
 		
 		vm.getBoard();
 		
+		vm.updateWhosViewing = function(){
+			
+		};
+		
+		$scope.$on('$locationChangeStart', function( event ) {
+			vm.usersViewingSub.unsubscribe();
+		});
+		
 	}
 	
 	angular.module('zfgc.forum')
-		   .controller("BoardCtrl",['$location', 'ForumService', BoardController]);
+		   .controller("BoardCtrl",['$scope', '$location', 'ForumService', BoardController]);
 	
 })();
