@@ -7,16 +7,16 @@
 			var boardId = $location.search().boardId;
 			ForumService.getBoard(vm, boardId);
 		};
-		
-		vm.getBoard();
-		
+
 		vm.updateWhosViewing = function(){
-			
+			console.log("got back who's viewing");
 		};
 		
 		$scope.$on('$locationChangeStart', function( event ) {
 			vm.usersViewingSub.unsubscribe();
 		});
+		
+		vm.getBoard();
 		
 	}
 	
