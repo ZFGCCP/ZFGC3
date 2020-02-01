@@ -16,7 +16,7 @@
 			vm.board = ForumService.resource.get({forumId : boardId, itemsPerPage : 10, pageNo : 1});
 			vm.usersViewingSub = WebsocketService.subscribe("/socket/viewingForum/" + boardId, vm.updateWhosViewing);
 			vm.board.$promise.then(function(data){
-				WebsocketService.send("/usersocket/updateUserAction", "3");
+				WebsocketService.send("/usersocket/updateUserAction", "2:" + boardId);
 				
 			});
 		};
