@@ -10,6 +10,7 @@ public class UserCurrentAction extends BaseZfgcModel {
 	private Integer locationId;
 	private Date createdTs;
 	private Date updatedTs;
+	private Integer param;
 	public Integer getUserCurrentActionId() {
 		return userCurrentActionId;
 	}
@@ -44,5 +45,11 @@ public class UserCurrentAction extends BaseZfgcModel {
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Integer getParam() {
+		return param;
+	}
+	public void setParam(Integer param) {
+		this.param = param;
 	}
 }

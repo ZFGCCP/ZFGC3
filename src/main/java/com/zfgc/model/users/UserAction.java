@@ -6,6 +6,7 @@ public class UserAction extends BaseZfgcModel {
 	
 	private Integer usersId;
 	private Integer currentActionId;
+	private Integer param;
 	
 	public Integer getUsersId() {
 		return usersId;
@@ -23,6 +24,12 @@ public class UserAction extends BaseZfgcModel {
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Integer getParam() {
+		return param;
+	}
+	public void setParam(Integer param) {
+		this.param = param;
 	}
 	
 }

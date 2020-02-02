@@ -309,6 +309,7 @@ public class UsersService extends AbstractService {
 		UserCurrentAction action = new UserCurrentAction();
 		action.setLocationId(actionId);
 		action.setUsersId(zfgcUser.getUsersId());
+		action.setParam(Integer.parseInt(param[0]));
 		
 		userCurrentActionDataProvider.updateUserAction(action);
 		

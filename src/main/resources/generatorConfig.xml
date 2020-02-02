@@ -308,10 +308,13 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="FORUM_PERMISSIONS_VIEW" domainObjectName="ForumPermissionsViewDbObj">
+    <table schema="zfgc3" tableName="USER_VIEWING_FORUM_VIEW" domainObjectName="UserViewingForumViewDbObj">
     </table>
     
-    <!--<table schema="zfgc3" tableName="USER_PASSWORD_RESET_VIEW" domainObjectName="UserPasswordResetViewDbObj">
+    <!--<table schema="zfgc3" tableName="FORUM_PERMISSIONS_VIEW" domainObjectName="ForumPermissionsViewDbObj">
+    </table>
+    
+    <table schema="zfgc3" tableName="USER_PASSWORD_RESET_VIEW" domainObjectName="UserPasswordResetViewDbObj">
     </table>
     <table schema="zfgc3" tableName="USER_PERMISSION_VIEW" domainObjectName="UserPermissionViewDbObj">
     </table>

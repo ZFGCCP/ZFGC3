@@ -13,10 +13,12 @@ import org.springframework.stereotype.Component;
 
 import com.zfgc.dataprovider.ForumDataProvider;
 import com.zfgc.dataprovider.ThreadDataProvider;
+import com.zfgc.dataprovider.UserViewingForumViewDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.Category;
 import com.zfgc.model.forum.Forum;
 import com.zfgc.model.forum.ForumIndex;
+import com.zfgc.model.users.UserViewingForumView;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
 
@@ -30,6 +32,9 @@ public class ForumService extends AbstractService {
 	
 	@Autowired 
 	ThreadService threadService;
+	
+	@Autowired
+	UserViewingForumViewDataProvider userViewingForumViewDataProvider;
 	
 	public ForumIndex getForumIndex(Users user){
 		ForumIndex index = new ForumIndex();
@@ -99,6 +104,16 @@ public class ForumService extends AbstractService {
 			Long totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
 			Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());
 			forum.setTotalPages(totalPages);
+			
+			List<UserViewingForumView> usersViewing = userViewingForumViewDataProvider.getUsersViewingForum(forum.getForumId().intValue());
+			UserViewingForumView result = new UserViewingForumView();
+			for(UserViewingForumView viewing : usersViewing) {
+				Users viewingUser = new Users();
+				viewingUser.setUsersId(viewing.getUsersId());
+				viewingUser.setDisplayName(viewing.getDisplayName());
+				result.getUsers().add(viewingUser);
+			}
+			super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
 			
 			return forum;
 		}
