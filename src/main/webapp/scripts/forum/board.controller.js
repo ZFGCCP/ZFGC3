@@ -5,15 +5,11 @@
 		
 		vm.getBoard = function(){
 			var boardId = $location.search().boardId;
-			ForumService.getBoard(vm, boardId);
-		};
-
-		vm.updateWhosViewing = function(){
-			console.log("got back who's viewing");
+			ForumService.getBoard(vm, boardId, $scope);
 		};
 		
 		$scope.$on('$locationChangeStart', function( event ) {
-			vm.usersViewingSub.unsubscribe();
+			//vm.usersViewingSub.unsubscribe();
 		});
 		
 		vm.getBoard();

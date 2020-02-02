@@ -12,9 +12,13 @@
 			}
 		});
 		
-		ForumService.getBoard = function(vm, boardId){
+		ForumService.getBoard = function(vm, boardId, scope){
 			vm.board = ForumService.resource.get({forumId : boardId, itemsPerPage : 10, pageNo : 1});
-			vm.usersViewingSub = WebsocketService.subscribe("/socket/viewingForum/" + boardId, vm.updateWhosViewing);
+			vm.usersViewingSub = WebsocketService.subscribe("/socket/viewingForum/" + boardId,
+					function(data){
+						vm.viewingUsers = JSON.parse(data.body);
+						scope.$digest();
+					});
 			vm.board.$promise.then(function(data){
 				WebsocketService.send("/usersocket/updateUserAction", "2:" + boardId);
 				

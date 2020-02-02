@@ -1,5 +1,32 @@
 .forum-wrapper{
+	.forum-title-wrapper{
+		border-bottom: 1px solid;
+	    padding-top: 2rem;
+	    position: sticky;
+	    top: 0;
+	    background-color: #204378;
+	    z-index: 9;
+	    box-shadow: 0 0.7rem 0.4rem black;
 
+    	h3{
+    		margin-left: 2rem !important;
+    	}
+    	.nav-wrapper{
+    		padding-left: 2rem;
+    		padding-bottom: 1rem;
+    		font-size: 2rem;
+    	}
+    	
+    	.users-viewing-wrapper{
+    		height: 2.4rem;
+		    background-color: #0b1a37;
+		    display: flex;
+		    flex-direction: row;
+		    align-items: center;
+		    padding-left: 1rem;
+		    border-top: 1px solid;
+    	}
+	}
 }
 
 .board-wrapper{
