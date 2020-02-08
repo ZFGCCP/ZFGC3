@@ -21,6 +21,7 @@ import com.zfgc.model.forum.ForumIndex;
 import com.zfgc.model.users.UserViewingForumView;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.users.UsersService;
 
 @Component
 public class ForumService extends AbstractService {
@@ -35,6 +36,9 @@ public class ForumService extends AbstractService {
 	
 	@Autowired
 	UserViewingForumViewDataProvider userViewingForumViewDataProvider;
+	
+	@Autowired
+	UsersService usersService;
 	
 	public ForumIndex getForumIndex(Users user){
 		ForumIndex index = new ForumIndex();
