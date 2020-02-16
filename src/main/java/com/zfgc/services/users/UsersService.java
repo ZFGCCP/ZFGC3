@@ -274,7 +274,7 @@ public class UsersService extends AbstractService {
 			throw ex;
 		}
 		UserConnection onlineUser = userConnectionDataProvider.getUserConnectionTemplate(user);
-		onlineUser.setSessionId(sessionId);
+		onlineUser.setSessionId(user.getSessionMatchup());
 		if(result != null) {
 			String[] params = result.split(";");
 			Map<String, String> mappedParams = new HashMap<>();

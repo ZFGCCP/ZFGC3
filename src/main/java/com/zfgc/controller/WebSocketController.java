@@ -36,7 +36,7 @@ public class WebSocketController extends BaseController{
 	@MessageMapping("/usersocket/init")
 	@SendTo("/socket/whosonline")
 	public ResponseEntity createUserSession(Principal auth, SimpMessageHeaderAccessor headerAccessor) {
-		String sessionId = headerAccessor.getSessionId();
+		//String sessionId = headerAccessor.getSessionId();
 		WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
 		
 		return ResponseEntity.ok(online);
@@ -53,7 +53,7 @@ public class WebSocketController extends BaseController{
 		
 		Users user = zfgcUser(auth);
 		userAction.setUsersId(user.getUsersId());
-		String sessionId = headerAccessor.getSessionId();
+		String sessionId = user.getSessionMatchup();
 		usersService.updateUserActions(sessionId, userAction.getCurrentActionId(), user, actionComponent[1]);
 		return ResponseEntity.ok().build();
 	}

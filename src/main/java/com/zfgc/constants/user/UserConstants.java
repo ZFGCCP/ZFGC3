@@ -18,4 +18,15 @@ public final class UserConstants {
 		public static final String ZFGC_ADMINISTRATION_STAFF = "ZFGC_ADMINISTRATION_STAFF";
 		
 	}
+	
+	public final class userActions {
+		public static final int VIEWING_INDEX = 1;
+		public static final int VIEWING_BOARD = 2;
+		public static final int VIEWING_PROFILE = 3;
+		public static final int VIEWING_OWN_PROFILE = 4;
+		public static final int VIEWING_CONVO_BOX = 5;
+		public static final int READING_CONVO = 6;
+		public static final int LOGGING_IN = 7;
+		
+	}
 }

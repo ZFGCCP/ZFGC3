@@ -59,13 +59,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
+	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset.service.js",
 	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset.controller.js",
 	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset-request.controller.js",
-	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
@@ -85,15 +85,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
+	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
 	    
@@ -169,8 +167,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
 	    
-	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
-	    
 	"./src/main/webapp/scripts/app.js",
 	    
 	"./src/main/webapp/scripts/app.config.js",
@@ -205,15 +201,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
-	    
-	"./src/main/webapp/scripts/directives/paginator/paginator.html",
-	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
+	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    
@@ -233,9 +227,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
+	    
+	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    
@@ -243,15 +241,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
 	    
-	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
-	    
-	"./src/main/webapp/scripts/popover/templates/popoverUserDetails.html",
-	    
-	"./src/main/webapp/scripts/users/member-search/member-listing.html",
-	    
 	"./src/main/webapp/scripts/users/password-reset/password-reset-request.html",
 	    
 	"./src/main/webapp/scripts/users/password-reset/reset.html",
+	    
+	"./src/main/webapp/scripts/users/member-search/member-listing.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/account-settings.html",
 	    

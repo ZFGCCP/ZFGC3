@@ -113,6 +113,9 @@ public class Users extends BaseZfgcModel implements UserDetails {
 	@JsonIgnore
 	private String userAgent;
 	
+	@JsonIgnore
+	private String sessionMatchup;
+	
 	//===================
 	//Permissions
 	//===================
@@ -638,5 +641,13 @@ public class Users extends BaseZfgcModel implements UserDetails {
 
 	public void setPrimaryHostnameId(Integer primaryHostnameId) {
 		this.primaryHostnameId = primaryHostnameId;
+	}
+
+	public String getSessionMatchup() {
+		return sessionMatchup;
+	}
+
+	public void setSessionMatchup(String sessionMatchup) {
+		this.sessionMatchup = sessionMatchup;
 	}
 }

@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.ForumDataProvider;
 import com.zfgc.dataprovider.ThreadDataProvider;
 import com.zfgc.dataprovider.UserViewingForumViewDataProvider;
@@ -118,6 +119,8 @@ public class ForumService extends AbstractService {
 				result.getUsers().add(viewingUser);
 			}
 			super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
+			
+			usersService.updateUserActions(user.getSessionMatchup(), UserConstants.userActions.VIEWING_BOARD, user, forumId + "");
 			
 			return forum;
 		}
