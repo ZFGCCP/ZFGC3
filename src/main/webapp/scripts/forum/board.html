@@ -1,11 +1,13 @@
 <div class="forum-wrapper" ng-controller="BoardCtrl as vm">
 
 	<div class="forum-title-wrapper">
-		<h3>{{vm.board.name}}</h3>
-		<div class="nav-wrapper"><i class="fas fa-arrow-alt-circle-left"></i></div>
+		<h3><i class="fas fa-arrow-alt-circle-left"></i> {{vm.board.name}}</h3>
+		<div class="nav-wrapper"></div>
 		<div class="users-viewing-wrapper">
 			<span ng-repeat="($index, user) in vm.viewingUsers.users track by $index">
-				<a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a><span ng-if="$index < vm.viewingUsers.users.length - 1">, </span>
+				<a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
+				<span ng-if="$index < vm.viewingUsers.users.length - 1">, </span>
+				<span ng-if="$index === vm.viewingUsers.users.length - 1"> and 0 guests viewing this board</span>
 			</span>
 		</div>
 	</div>

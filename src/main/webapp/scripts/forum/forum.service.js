@@ -20,7 +20,6 @@
 						scope.$digest();
 					});
 			vm.board.$promise.then(function(data){
-				WebsocketService.send("/usersocket/updateUserAction", "2:" + boardId);
 				
 			});
 		};

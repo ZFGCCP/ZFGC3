@@ -53,9 +53,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
-	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
-	    
 	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
+	    
+	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
@@ -93,6 +93,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/list-view/list-view.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar.module.js",
@@ -101,13 +103,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
-	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
-	"./src/main/webapp/scripts/whos-online/online.module.js",
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
-	"./src/main/webapp/scripts/sockets/web-socket.service.js",
+	"./src/main/webapp/scripts/whos-online/online.module.js",
 	    
 	"./src/main/webapp/scripts/users/users.service.js",
 	    
@@ -119,15 +119,19 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/activation.controller.js",
 	    
+	"./src/main/webapp/scripts/sockets/web-socket.service.js",
+	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
-	"./src/main/webapp/scripts/modal/modal.service.js",
+	"./src/main/webapp/scripts/pm/pmSend.controller.js",
 	    
-	"./src/main/webapp/scripts/modal/modal.controller.js",
+	"./src/main/webapp/scripts/pm/pmComparator.service.js",
+	    
+	"./src/main/webapp/scripts/pm/pm.service.js",
 	    
 	"./src/main/webapp/scripts/notifications/notifications.module.js",
 	    
@@ -135,13 +139,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/notifications/notifications.controller.js",
 	    
+	"./src/main/webapp/scripts/modal/modal.service.js",
+	    
+	"./src/main/webapp/scripts/modal/modal.controller.js",
+	    
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
-	    
-	"./src/main/webapp/scripts/pm/pmSend.controller.js",
-	    
-	"./src/main/webapp/scripts/pm/pmComparator.service.js",
-	    
-	"./src/main/webapp/scripts/pm/pm.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
@@ -159,13 +161,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
+	"./src/main/webapp/scripts/common/server-config.service.js",
+	    
+	"./src/main/webapp/scripts/common/main.controller.js",
+	    
 	"./src/main/webapp/scripts/calendar/calendar.service.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
 	    
-	"./src/main/webapp/scripts/common/server-config.service.js",
-	    
-	"./src/main/webapp/scripts/common/main.controller.js",
+	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
 	"./src/main/webapp/scripts/app.js",
 	    
@@ -191,15 +195,17 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/whos-online/online.html",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.html",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/list-view/list-view.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/paginator/paginator.html",
 	    
@@ -210,16 +216,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
-	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
-	    
-	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
-	    
-	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
-	    
-	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
-	    
-	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
@@ -236,6 +232,16 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/modal/templates/modalUserTitleCard.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
+	    
+	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
+	    
+	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
+	    
+	"./src/main/webapp/scripts/pm/convobox/prune-convos.html",
+	    
+	"./src/main/webapp/scripts/pm/pmTwoFactor/pmTwoFactor.html",
 	    
 	"./src/main/webapp/scripts/popover/templates/popoverMemberGroups.html",
 	    

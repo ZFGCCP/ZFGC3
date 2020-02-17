@@ -11,6 +11,7 @@ import java.util.stream.IntStream;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.ForumDataProvider;
 import com.zfgc.dataprovider.ThreadDataProvider;
 import com.zfgc.dataprovider.UserViewingForumViewDataProvider;
@@ -21,6 +22,7 @@ import com.zfgc.model.forum.ForumIndex;
 import com.zfgc.model.users.UserViewingForumView;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.users.UsersService;
 
 @Component
 public class ForumService extends AbstractService {
@@ -35,6 +37,9 @@ public class ForumService extends AbstractService {
 	
 	@Autowired
 	UserViewingForumViewDataProvider userViewingForumViewDataProvider;
+	
+	@Autowired
+	UsersService usersService;
 	
 	public ForumIndex getForumIndex(Users user){
 		ForumIndex index = new ForumIndex();
@@ -85,44 +90,38 @@ public class ForumService extends AbstractService {
 		return ids;
 	}
 	
-	public Forum getForum(Short forumId, Integer itemsPerPage, Integer pageNo, Users user) throws ZfgcNotFoundException{
-		try{
-			//nah, fuck you
-			if(itemsPerPage == 0){
-				throw new IllegalArgumentException();
-			}
-			
-			Forum forum = forumDataProvider.getForum(forumId, user);
-			
-			forum.setStickyThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, true, user));
-			forum.setThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, false, user));
-			
-			forum.setThreadsCount(threadService.getThreadsInForum(forumId));
-			
-			forum.setSubForums(forumDataProvider.getForumsByParent(forumId, user));
-			
-			Long totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
-			Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());
-			forum.setTotalPages(totalPages);
-			
-			List<UserViewingForumView> usersViewing = userViewingForumViewDataProvider.getUsersViewingForum(forum.getForumId().intValue());
-			UserViewingForumView result = new UserViewingForumView();
-			for(UserViewingForumView viewing : usersViewing) {
-				Users viewingUser = new Users();
-				viewingUser.setUsersId(viewing.getUsersId());
-				viewingUser.setDisplayName(viewing.getDisplayName());
-				result.getUsers().add(viewingUser);
-			}
-			super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
-			
-			return forum;
+	public Forum getForum(Short forumId, Integer itemsPerPage, Integer pageNo, Users user){
+		//nah, fuck you
+		if(itemsPerPage == 0){
+			throw new IllegalArgumentException();
 		}
-		catch(ZfgcNotFoundException ex){
-			throw new ZfgcNotFoundException("Forum Id " + forumId);
+		
+		Forum forum = forumDataProvider.getForum(forumId, user);
+		
+		forum.setStickyThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, true, user));
+		forum.setThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, false, user));
+		
+		forum.setThreadsCount(threadService.getThreadsInForum(forumId));
+		
+		forum.setSubForums(forumDataProvider.getForumsByParent(forumId, user));
+		
+		Long totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
+		Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());
+		forum.setTotalPages(totalPages);
+		
+		usersService.updateUserActions(user.getSessionMatchup(), UserConstants.userActions.VIEWING_BOARD, user, forumId + "");
+		
+		List<UserViewingForumView> usersViewing = userViewingForumViewDataProvider.getUsersViewingForum(forum.getForumId().intValue());
+		UserViewingForumView result = new UserViewingForumView();
+		for(UserViewingForumView viewing : usersViewing) {
+			Users viewingUser = new Users();
+			viewingUser.setUsersId(viewing.getUsersId());
+			viewingUser.setDisplayName(viewing.getDisplayName());
+			result.getUsers().add(viewingUser);
 		}
-		catch(Exception ex){
-			ex.printStackTrace();
-			return null;
-		}
+		
+		super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
+		
+		return forum;
 	}
 }

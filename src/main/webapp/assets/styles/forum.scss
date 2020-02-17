@@ -1,4 +1,6 @@
 .forum-wrapper{
+	padding-top: 1em;
+	
 	.forum-title-wrapper{
 		border-bottom: 1px solid;
 	    padding-top: 2rem;
@@ -10,6 +12,10 @@
 
     	h3{
     		margin-left: 2rem !important;
+    		
+    		.fa-arrow-alt-circle-left{
+    			text-shadow: .1em .1em .1em black;
+    		}
     	}
     	.nav-wrapper{
     		padding-left: 2rem;
