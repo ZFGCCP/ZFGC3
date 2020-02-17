@@ -90,46 +90,38 @@ public class ForumService extends AbstractService {
 		return ids;
 	}
 	
-	public Forum getForum(Short forumId, Integer itemsPerPage, Integer pageNo, Users user) throws ZfgcNotFoundException{
-		try{
-			//nah, fuck you
-			if(itemsPerPage == 0){
-				throw new IllegalArgumentException();
-			}
-			
-			Forum forum = forumDataProvider.getForum(forumId, user);
-			
-			forum.setStickyThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, true, user));
-			forum.setThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, false, user));
-			
-			forum.setThreadsCount(threadService.getThreadsInForum(forumId));
-			
-			forum.setSubForums(forumDataProvider.getForumsByParent(forumId, user));
-			
-			Long totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
-			Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());
-			forum.setTotalPages(totalPages);
-			
-			List<UserViewingForumView> usersViewing = userViewingForumViewDataProvider.getUsersViewingForum(forum.getForumId().intValue());
-			UserViewingForumView result = new UserViewingForumView();
-			for(UserViewingForumView viewing : usersViewing) {
-				Users viewingUser = new Users();
-				viewingUser.setUsersId(viewing.getUsersId());
-				viewingUser.setDisplayName(viewing.getDisplayName());
-				result.getUsers().add(viewingUser);
-			}
-			super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
-			
-			usersService.updateUserActions(user.getSessionMatchup(), UserConstants.userActions.VIEWING_BOARD, user, forumId + "");
-			
-			return forum;
+	public Forum getForum(Short forumId, Integer itemsPerPage, Integer pageNo, Users user){
+		//nah, fuck you
+		if(itemsPerPage == 0){
+			throw new IllegalArgumentException();
 		}
-		catch(ZfgcNotFoundException ex){
-			throw new ZfgcNotFoundException("Forum Id " + forumId);
+		
+		Forum forum = forumDataProvider.getForum(forumId, user);
+		
+		forum.setStickyThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, true, user));
+		forum.setThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, false, user));
+		
+		forum.setThreadsCount(threadService.getThreadsInForum(forumId));
+		
+		forum.setSubForums(forumDataProvider.getForumsByParent(forumId, user));
+		
+		Long totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
+		Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());
+		forum.setTotalPages(totalPages);
+		
+		usersService.updateUserActions(user.getSessionMatchup(), UserConstants.userActions.VIEWING_BOARD, user, forumId + "");
+		
+		List<UserViewingForumView> usersViewing = userViewingForumViewDataProvider.getUsersViewingForum(forum.getForumId().intValue());
+		UserViewingForumView result = new UserViewingForumView();
+		for(UserViewingForumView viewing : usersViewing) {
+			Users viewingUser = new Users();
+			viewingUser.setUsersId(viewing.getUsersId());
+			viewingUser.setDisplayName(viewing.getDisplayName());
+			result.getUsers().add(viewingUser);
 		}
-		catch(Exception ex){
-			ex.printStackTrace();
-			return null;
-		}
+		
+		super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
+		
+		return forum;
 	}
 }

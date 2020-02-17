@@ -1,6 +1,6 @@
 (function(){
 	
-	function BoardController($scope, $location, ForumService){
+	function BoardController($scope, $location, $transitions, ForumService){
 		var vm = this;
 		
 		vm.getBoard = function(){
@@ -8,8 +8,10 @@
 			ForumService.getBoard(vm, boardId, $scope);
 		};
 		
-		$scope.$on('$locationChangeStart', function( event ) {
-			//vm.usersViewingSub.unsubscribe();
+		vm.deregisterTransition = $transitions.onStart({}, function(transition) {
+			vm.usersViewingSub.unsubscribe();
+			vm.usersViewingSub = null;
+			vm.deregisterTransition();
 		});
 		
 		vm.getBoard();
@@ -17,6 +19,6 @@
 	}
 	
 	angular.module('zfgc.forum')
-		   .controller("BoardCtrl",['$scope', '$location', 'ForumService', BoardController]);
+		   .controller("BoardCtrl",['$scope', '$location', '$transitions', 'ForumService', BoardController]);
 	
 })();
