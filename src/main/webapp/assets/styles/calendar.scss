@@ -84,6 +84,8 @@
 
 			&.disabled {
 				background-color: #040810;
+				border-bottom: 1px solid #1c3171;
+    			cursor: not-allowed;
 			}
 			
 			&.selected{
