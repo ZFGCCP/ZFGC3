@@ -33,5 +33,9 @@ public class WhosOnlineList extends BaseZfgcModel {
 	public void setOnlineUsersDetailed(Map<Integer, List<OnlineUser>> onlineUsersDetailed) {
 		this.onlineUsersDetailed = onlineUsersDetailed;
 	}
+	
+	public Integer getCount() {
+		return onlineUsersDetailed.size();
+	}
 
 }
