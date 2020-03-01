@@ -17,6 +17,10 @@
 					</span>
 					<span ng-show="$index < users.onlineUsersDetailed.length -1 ">, </span>
 				</span>
+				
+				<div>
+					<label>Latest Member:</label> <a ui-sref="user-profile({userId : mostRecent.usersId})">{{mostRecent.displayName}}</a>
+				</div>
 			</div>
 		</span>
 		

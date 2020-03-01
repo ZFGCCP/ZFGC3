@@ -17,8 +17,14 @@
 				$scope.$apply();
 			};
 			
+			$scope.updateRecentMember = function(data){
+				$scope.mostRecent = JSON.parse(data.body);
+				$scope.$apply();
+			};
+			
 			$rootScope.$on("WebsocketConnected", function(data){
 				WebsocketService.subscribe("/socket/whosonline", $scope.updateWhosOnline);
+				WebsocketService.subscribe("/socket/members/recentMember", $scope.updateRecentMember);
 				WebsocketService.send("/usersocket/init",{},{});
 			});
 			

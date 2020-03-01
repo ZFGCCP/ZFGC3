@@ -93,4 +93,8 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		return usersDbObjMapper.validateUserPassword(usersId, password);
 	}
 	
+	public UsersDbObj getMostRecentMember() {
+		return usersDbObjMapper.getMostRecentActivatedMember();
+	}
+	
 }
