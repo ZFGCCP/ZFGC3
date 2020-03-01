@@ -42,7 +42,7 @@ public class WebSocketEventListener extends BaseController {
 		try {
 			if(event.getUser() != null){
 				Users user = (Users) ((Authentication) event.getUser()).getPrincipal();
-				usersService.setUserOffline(user, event.getSessionId());
+				usersService.setUserOffline(user, user.getSessionMatchup());
 			}
 			
 			WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
