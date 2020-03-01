@@ -335,4 +335,8 @@ public class UsersDataProvider extends AbstractDataProvider {
 		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
 		return memberListingViewDao.countByExample(null, ex);
 	}
+	
+	public Users getMostRecentMember() {
+		return mapper.map(usersDao.getMostRecentMember(), Users.class);
+	}
 }

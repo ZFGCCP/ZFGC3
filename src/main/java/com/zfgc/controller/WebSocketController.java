@@ -38,6 +38,7 @@ public class WebSocketController extends BaseController{
 	public ResponseEntity createUserSession(Principal auth, SimpMessageHeaderAccessor headerAccessor) {
 		//String sessionId = headerAccessor.getSessionId();
 		WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
+		usersService.getMostRecentUser();
 		
 		return ResponseEntity.ok(online);
 	}

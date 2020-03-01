@@ -350,11 +350,23 @@ public class UsersService extends AbstractService {
 	
 	public void activateUserAccount(String activationCode) throws RuntimeException{
 		usersDataProvider.activateUser(activationCode);
+		getMostRecentUser();
 	}
 	
 	public void activateUserAccount(Integer usersId, Users zfgcUser) throws RuntimeException{
 		//todo check the user role
 		usersDataProvider.activateUser(usersId);
+		getMostRecentUser();
+	}
+	
+	public Users getMostRecentUser() {
+		Users recent = usersDataProvider.getMostRecentMember();
+		
+		if(recent != null) {
+			super.websocketMessaging.convertAndSend("/socket/members/recentMember", recent);
+		}
+		
+		return recent;
 	}
 	
 	@PostConstruct
