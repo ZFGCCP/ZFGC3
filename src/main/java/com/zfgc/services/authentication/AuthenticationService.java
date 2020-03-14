@@ -168,10 +168,6 @@ public class AuthenticationService  extends AbstractService {
 		}
 	}
 	
-	public void logEmailAddress(EmailAddress emailAddress) throws RuntimeException{
-		authenticationDataProvider.logEmailAddress(emailAddress);
-	}
-	
 	public Boolean checkIpIsSpammer(IpAddress ipAddress) throws RuntimeException{
 		return authenticationDataProvider.getIpSpamInfo(ipAddress).getIsSpammerFlag();
 	}

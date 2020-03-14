@@ -53,9 +53,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
-	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
-	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
+	    
+	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
 	"./src/main/webapp/scripts/users/users.module.js",
 	    
@@ -103,9 +103,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/whos-online/online.module.js",
 	    
@@ -147,8 +147,6 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
 	    
-	"./src/main/webapp/scripts/forms/forms.controller.js",
-	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.controller.js",
@@ -156,6 +154,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/forum/forum-post.service.js",
 	    
 	"./src/main/webapp/scripts/forum/board.controller.js",
+	    
+	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
 	    
@@ -195,9 +195,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/whos-online/online.html",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
-	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	    
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
@@ -233,9 +233,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/modal/templates/modalValidationError.html",
 	    
-	"./src/main/webapp/scripts/pm/conversation/conversation.html",
-	    
 	"./src/main/webapp/scripts/notifications/templates/alert-template.html",
+	    
+	"./src/main/webapp/scripts/pm/conversation/conversation.html",
 	    
 	"./src/main/webapp/scripts/pm/convobox/convoBox.html",
 	    

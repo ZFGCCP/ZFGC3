@@ -10,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dbobj.AuthTokenDbObj;
 import com.zfgc.dbobj.AuthTokenDbObjExample;
 import com.zfgc.dbobj.EmailAddressDbObj;
+import com.zfgc.dbobj.EmailAddressDbObjExample;
 import com.zfgc.dbobj.IpAddressDbObj;
 import com.zfgc.exception.ZfgcDataExistsException;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -28,7 +29,7 @@ public class AuthenticationDao extends AbstractDao{
 	private IpAddressDbObjMapper ipAddressDbObjMapper;
 	
 	@Autowired
-	private EmailAddressDbObjMapper emailAddressDbObjMapper;
+	private EmailAddressDao emailAddressDao;
 	
 	@Autowired
 	private AuthTokenDbObjMapper authTokenDbObjMapper;
@@ -47,24 +48,16 @@ public class AuthenticationDao extends AbstractDao{
 		}
 	}
 	
-	public void logEmailAddress(EmailAddress emailAddress) throws ZfgcDataExistsException, RuntimeException{
-		if(getEmailAddress(emailAddress.getEmailAddress()) != null){
-			throw new ZfgcDataExistsException("EmailAddress: " + emailAddress.getEmailAddress());
-		}
-		
-		try{
-			EmailAddressDbObj emailAddressDbObj = mapper.map(emailAddress, EmailAddressDbObj.class);
-			emailAddressDbObjMapper.insertSelective(emailAddressDbObj);
-		}
-		catch(RuntimeException ex){
-			LOGGER.error("Unable to log Email Address " + emailAddress.getEmailAddress());
-			throw ex;
-		}
-	}
-	
 	public EmailAddressDbObj getEmailAddress(String emailAddress) throws RuntimeException{
 		try{
-			//return emailAddressDbObjMapper.selectByPrimaryKey(emailAddress);
+			EmailAddressDbObjExample ex = emailAddressDao.getExample();
+			ex.createCriteria().andEmailAddressEqualTo(emailAddress);
+			
+			List<EmailAddressDbObj> dbObj = emailAddressDao.get(ex);
+			if(dbObj.size() > 0) {
+				return dbObj.get(0);
+			}
+			
 			return null;
 		}
 		catch(RuntimeException ex){
