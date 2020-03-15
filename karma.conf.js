@@ -47,11 +47,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
+	    
+	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/users/whos-online/whos-online.service.js",
 	    
@@ -64,8 +66,6 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/users/password-reset/password-reset-request.controller.js",
 	    
 	"./src/main/webapp/scripts/users/member-search/member-listing.controller.js",
-	    
-	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
 	"./src/main/webapp/scripts/pm/pm.module.js",
 	    
@@ -119,11 +119,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/users/activation.controller.js",
 	    
+	"./src/main/webapp/scripts/sockets/web-socket.service.js",
+	    
 	"./src/main/webapp/scripts/searches/userSearches.service.js",
 	    
 	"./src/main/webapp/scripts/searches/searches.controller.js",
-	    
-	"./src/main/webapp/scripts/sockets/web-socket.service.js",
 	    
 	"./src/main/webapp/scripts/potm/potm.module.js",
 	    
@@ -153,6 +153,8 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum-post.service.js",
 	    
+	"./src/main/webapp/scripts/forum/board.controller.js",
+	    
 	"./src/main/webapp/scripts/forms/forms.controller.js",
 	    
 	"./src/main/webapp/scripts/filters/range.filter.js",
@@ -178,6 +180,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/error/internalServerError.html",
 	    
 	"./src/main/webapp/scripts/error/notFound.html",
+	    
+	"./src/main/webapp/scripts/forum/board.html",
 	    
 	"./src/main/webapp/scripts/forum/forum.html",
 	    
@@ -271,11 +275,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
-	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/mobile/user-profile-mobile-nav.html"
 	    

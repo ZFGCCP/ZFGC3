@@ -1,7 +1,7 @@
 (function(){
 	'use strict';
 	
-	function UserService($rootScope, $resource, $window, $state, $timeout, NotificationsService, vcRecaptchaService){
+	function UserService($rootScope, $resource, $window, $state, $timeout, NotificationsService, vcRecaptchaService, WebsocketService){
 		var UserService = {};
 		
 		UserService.resource = $resource('/forum/users/newuser', {'userId' : '@userId', 'activationCode' : '@activationCode'},
@@ -119,6 +119,9 @@
 	         var profile = UserService.resource.userProfile({'userId':userId});   
 	         vm.profile = profile;
 	         profile.$promise.then(function(data){
+	        	var action = userId === data.usersId ? "4" : "3";
+	        	WebsocketService.send("/usersocket/updateUserAction", "3");
+	        	 
 	        	UserService.resource.profileNavigation({"usersId":userId}).$promise.then(function(data){
 					vm.navTabs = data;
 					var activeTab = UserService.activeTab && UserService.activeTab !== null ? UserService.activeTab : data[0];
@@ -325,5 +328,5 @@
 	
 	angular
 		.module('zfgc.users')
-		.service('UserService', ['$rootScope','$resource','$window','$state','$timeout','NotificationsService','vcRecaptchaService',UserService])
+		.service('UserService', ['$rootScope','$resource','$window','$state','$timeout','NotificationsService','vcRecaptchaService','WebsocketService',UserService])
 })();

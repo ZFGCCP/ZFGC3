@@ -35,18 +35,6 @@ public class AuthenticationDataProvider extends AbstractDataProvider{
 		}
 	}
 	
-	public void logEmailAddress(EmailAddress emailAddress) throws RuntimeException{
-		try{
-			authenticationDao.logEmailAddress(emailAddress);
-		}
-		catch(ZfgcDataExistsException ex){
-			
-		}
-		catch(RuntimeException ex){
-			throw ex;
-		}
-	}
-	
 	public IpAddress getIpSpamInfo(IpAddress ipAddress) throws RuntimeException{
 		IpAddress ipSpamInfo = new IpAddress();
 		ipSpamInfo.setIpAddress(ipAddress.getIpAddress());

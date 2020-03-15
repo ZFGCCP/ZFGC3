@@ -1,8 +1,12 @@
 package com.zfgc.model.forum;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.zfgc.constants.Forum.ForumConstants;
 import com.zfgc.model.BaseZfgcModel;
 
 public class Forum extends BaseZfgcModel {
@@ -12,7 +16,7 @@ public class Forum extends BaseZfgcModel {
 	private Integer seqNo;
 	private String name;
 	private String description;
-	private Integer threadsCount;
+	private Long threadsCount;
 	private Integer totalThreadsCount;
 	private Integer totalPages;
 	
@@ -20,6 +24,9 @@ public class Forum extends BaseZfgcModel {
 	
 	private List<Topic> stickyThreads = new ArrayList<>();
 	private List<Topic> threads = new ArrayList<>();
+	
+	private Boolean canRead = false;
+	private Boolean canWrite = false;
 	
 	public Short getForumId() {
 		return forumId;
@@ -75,14 +82,8 @@ public class Forum extends BaseZfgcModel {
 	public void setStickyThreads(List<Topic> stickyThreads) {
 		this.stickyThreads = stickyThreads;
 	}
-	public Integer getThreadsCount() {
-		return threadsCount;
-	}
-	public void setThreadsCount(Integer threadsCount) {
-		this.threadsCount = threadsCount;
-	}
-	public Integer getTotalThreadsCount() {
-		Integer total = threadsCount == null ? 0 : threadsCount;
+	public Long getTotalThreadsCount() {
+		Long total = threadsCount == null ? 0 : threadsCount;
 		
 		for(Forum forum : subForums){
 			total += forum.getTotalThreadsCount() == null ? 0 : forum.getTotalThreadsCount();
@@ -108,5 +109,23 @@ public class Forum extends BaseZfgcModel {
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Boolean getCanRead() {
+		return canRead;
+	}
+	public void setCanRead(Boolean canRead) {
+		this.canRead = canRead;
+	}
+	public Boolean getCanWrite() {
+		return canWrite;
+	}
+	public void setCanWrite(Boolean canWrite) {
+		this.canWrite = canWrite;
+	}
+	public Long getThreadsCount() {
+		return threadsCount;
+	}
+	public void setThreadsCount(Long threadsCount) {
+		this.threadsCount = threadsCount;
 	}
 }

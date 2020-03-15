@@ -5,17 +5,24 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.constants.user.UserConstants;
 import com.zfgc.dataprovider.ForumDataProvider;
+import com.zfgc.dataprovider.ThreadDataProvider;
+import com.zfgc.dataprovider.UserViewingForumViewDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.Category;
 import com.zfgc.model.forum.Forum;
 import com.zfgc.model.forum.ForumIndex;
+import com.zfgc.model.users.UserViewingForumView;
 import com.zfgc.model.users.Users;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.users.UsersService;
 
 @Component
 public class ForumService extends AbstractService {
@@ -28,6 +35,12 @@ public class ForumService extends AbstractService {
 	@Autowired 
 	ThreadService threadService;
 	
+	@Autowired
+	UserViewingForumViewDataProvider userViewingForumViewDataProvider;
+	
+	@Autowired
+	UsersService usersService;
+	
 	public ForumIndex getForumIndex(Users user){
 		ForumIndex index = new ForumIndex();
 
@@ -36,9 +49,12 @@ public class ForumService extends AbstractService {
 			List<Category> cats = categoryService.getCategories();
 			
 			//get all forums for at the top level
-			List<Forum> forums = forumDataProvider.getForumsByParent(Arrays.asList(new Short[]{null}), user);
+			List<Forum> forums = forumDataProvider.getForumsByParent(new ArrayList<Short>(), user);
+			
+			List<Short> forumIds = forums.stream().map(f -> f.getForumId()).collect(Collectors.toList());
 			
 			//map the results
+			List<Forum> subForums = forumDataProvider.getForumsByParent(forumIds, user);
 			Map<Integer,Category> results = new HashMap<>();
 			
 			for(Category cat : cats){
@@ -47,22 +63,15 @@ public class ForumService extends AbstractService {
 			
 			for(Forum forum : forums){
 				results.get(forum.getCategoryId()).getForums().add(forum);
+				
+				for(Forum subForum : subForums) {
+					if(subForum.getParentForumId().equals(forum.getForumId())) {
+						forum.getSubForums().add(subForum);
+					}
+				}
 			}
 			
-			List<Short> forumIds = getForumIds(forums);
-			List<Forum> subForums = forumDataProvider.getForumsByParent(forumIds, user);
-			Map<Short,Forum> forumResults = new HashMap<>();
-			
-			for(Forum forum : forums){
-				forumResults.put(forum.getForumId(), forum);
-			}
-			
-			for(Forum subForum : subForums){
-				forumResults.get(subForum.getParentForumId()).getSubForums().add(subForum);
-			}
-			
-			List<Category> mappedCategories = new ArrayList<Category>(results.values());
-			index.setCategories(categoryService.removeEmptyCategories(mappedCategories));
+			index.setCategories(new ArrayList<>(results.values()));
 		}
 		catch(Exception ex){
 			ex.printStackTrace();
@@ -81,32 +90,38 @@ public class ForumService extends AbstractService {
 		return ids;
 	}
 	
-	public Forum getForum(Short forumId, Integer itemsPerPage, Integer pageNo, Users user) throws ZfgcNotFoundException{
-		try{
-			//nah, fuck you
-			if(itemsPerPage == 0){
-				return null;
-			}
-			
-			Forum forum = forumDataProvider.getForum(forumId, user);
-			
-			forum.setStickyThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, true, user));
-			forum.setThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, false, user));
-			
-			forum.setThreadsCount(threadService.getThreadsInForum(forumId));
-			
-			Integer totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
-			Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());
-			forum.setTotalPages(totalPages);
-			
-			return forum;
+	public Forum getForum(Short forumId, Integer itemsPerPage, Integer pageNo, Users user){
+		//nah, fuck you
+		if(itemsPerPage == 0){
+			throw new IllegalArgumentException();
 		}
-		catch(ZfgcNotFoundException ex){
-			throw new ZfgcNotFoundException("Forum Id " + forumId);
+		
+		Forum forum = forumDataProvider.getForum(forumId, user);
+		
+		forum.setStickyThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, true, user));
+		forum.setThreads(threadService.getThreadsByParentForumId(forumId, itemsPerPage, pageNo, false, user));
+		
+		forum.setThreadsCount(threadService.getThreadsInForum(forumId));
+		
+		forum.setSubForums(forumDataProvider.getForumsByParent(forumId, user));
+		
+		Long totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
+		Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());
+		forum.setTotalPages(totalPages);
+		
+		usersService.updateUserActions(user.getSessionMatchup(), UserConstants.userActions.VIEWING_BOARD, user, forumId + "");
+		
+		List<UserViewingForumView> usersViewing = userViewingForumViewDataProvider.getUsersViewingForum(forum.getForumId().intValue());
+		UserViewingForumView result = new UserViewingForumView();
+		for(UserViewingForumView viewing : usersViewing) {
+			Users viewingUser = new Users();
+			viewingUser.setUsersId(viewing.getUsersId());
+			viewingUser.setDisplayName(viewing.getDisplayName());
+			result.getUsers().add(viewingUser);
 		}
-		catch(Exception ex){
-			ex.printStackTrace();
-			return null;
-		}
+		
+		super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
+		
+		return forum;
 	}
 }

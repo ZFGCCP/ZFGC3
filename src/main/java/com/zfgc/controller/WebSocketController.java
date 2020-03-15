@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.zfgc.model.online.WhosOnlineList;
+import com.zfgc.model.users.UserAction;
+import com.zfgc.model.users.Users;
 import com.zfgc.services.users.UsersService;
 import com.zfgc.services.whosOnline.WhosOnlineService;
 
@@ -34,10 +36,27 @@ public class WebSocketController extends BaseController{
 	@MessageMapping("/usersocket/init")
 	@SendTo("/socket/whosonline")
 	public ResponseEntity createUserSession(Principal auth, SimpMessageHeaderAccessor headerAccessor) {
-		String sessionId = headerAccessor.getSessionId();
+		//String sessionId = headerAccessor.getSessionId();
 		WhosOnlineList online = whosOnlineService.getWhosOnlineDetailed();
+		usersService.getMostRecentUser();
 		
 		return ResponseEntity.ok(online);
+	}
+	
+	@MessageMapping("/usersocket/updateUserAction")
+	public ResponseEntity updateUserAction(Principal auth, SimpMessageHeaderAccessor headerAccessor, String action) {
+		UserAction userAction = new UserAction();
+		String[] actionComponent = action.split(":");
+		userAction.setCurrentActionId(Integer.parseInt(actionComponent[0]));
+		if(actionComponent.length > 1) {
+			userAction.setParam(Integer.parseInt(actionComponent[1]));
+		}
+		
+		Users user = zfgcUser(auth);
+		userAction.setUsersId(user.getUsersId());
+		String sessionId = user.getSessionMatchup();
+		usersService.updateUserActions(sessionId, userAction.getCurrentActionId(), user, actionComponent[1]);
+		return ResponseEntity.ok().build();
 	}
 	
 }

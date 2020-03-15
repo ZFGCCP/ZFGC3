@@ -19,6 +19,8 @@ public class UserConnection extends BaseZfgcModel {
 	private String osVersionNumber;
     
     private IpAddress ipAddress;
+    
+    private Integer userActionId;
 	
 	public Integer getUserConnectionId() {
 		return userConnectionId;
@@ -120,6 +122,14 @@ public class UserConnection extends BaseZfgcModel {
 
 	public void setOsVersionNumber(String osVersionNumber) {
 		this.osVersionNumber = osVersionNumber;
+	}
+
+	public Integer getUserActionId() {
+		return userActionId;
+	}
+
+	public void setUserActionId(Integer userActionId) {
+		this.userActionId = userActionId;
 	}
 	
 }

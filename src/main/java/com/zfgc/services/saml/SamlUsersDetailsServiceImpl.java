@@ -29,6 +29,7 @@ import com.zfgc.model.users.Users;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.users.PermissionsService;
 import com.zfgc.services.users.UsersService;
+import com.zfgc.util.security.ZfgcSecurityUtils;
 
 @Service
 public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
@@ -145,6 +146,8 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         user.setPermissions(permissionsService.getPermissionsByMemberGroup(memberGroupIds.toArray(new Integer[memberGroupIds.size()])));
         
         usersDataProvider.saveUser(user);
+        
+        user.setSessionMatchup(ZfgcSecurityUtils.generateCryptoString(8));
         
         return user;
 	}

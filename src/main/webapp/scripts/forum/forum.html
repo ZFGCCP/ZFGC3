@@ -1,34 +1,32 @@
 <div ng-controller="ForumController as vm" class="forum-wrapper">
 
-	<div ng-repeat="category in vm.categories" class="category row">
-		<div class="col-xs-12 category">
-			<div class="row">
-				<div class="col-xs-12 title">
-					{{category.name}}
+	<div ng-repeat="category in vm.categories" class="category board-wrapper" ng-if="category.forums.length > 0">
+	
+		<collapsible-widget widget-title="{{category.name}}">
+			<div class="category">
+				<div ng-repeat="forum in category.forums" class="row entire-inside">
+					<div class="col-xs-2 col-sm-1 forum">
+						<i class="messages-indicator fas fa-folder-open"></i>
+					</div>
+					<div class="col-xs-6 col-sm-5 forum">
+						<a ui-sref="board({boardId : forum.forumId})">{{forum.name}}</a>
+						<br>
+						{{forum.description}}
+						<br/>
+						childboards:
+						<span ng-repeat="subforum in forum.subForums">
+							<a ng-href="/forum/#/forum?forumId={{subforum.forumId}}">{{subforum.name}}</a>
+						</span>
+					</div>
+					<div class="col-xs-4 col-sm-3">
+						{{forum.totalThreadsCount}} threads
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						Latest post by<br>
+						in<br>
+					</div>	
 				</div>
 			</div>
-			<div ng-repeat="forum in category.forums" class="row entire-inside">
-				<div class="col-xs-2 col-sm-1 forum">
-					<img src="http://zfgc.com/forum/Themes/midnight/images/off.gif"/>
-				</div>
-				<div class="col-xs-6 col-sm-5 forum">
-					{{forum.name}}
-					<br>
-					{{forum.description}}
-					<br/>
-					childboards:
-					<span ng-repeat="subforum in forum.subForums">
-						<a ng-href="/forum/#/forum?forumId={{subforum.forumId}}">{{subforum.name}}</a>
-					</span>
-				</div>
-				<div class="col-xs-4 col-sm-3">
-					{{forum.totalThreadsCount}} threads
-				</div>
-				<div class="col-xs-12 col-sm-3">
-					Latest post by<br>
-					in<br>
-				</div>	
-			</div>
-		</div>
+		</collapsible-widget>
 	</div>
 </div>

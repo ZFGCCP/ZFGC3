@@ -161,16 +161,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 		}
 	}
 	
-	private  void logEmailAddress(EmailAddress emailAddress) throws RuntimeException{
-		try{
-			authenticationDataProvider.logEmailAddress(emailAddress);
-		}
-		catch(RuntimeException ex){
-			LOGGER.info("Email Address " + emailAddress.getEmailAddress() + " already exists.");
-			throw new RuntimeException("Email Address " + emailAddress.getEmailAddress() + " already exists.");
-		}
-	}
-	
 	public Boolean doesLoginNameExist(String loginName) throws RuntimeException{
 		UsersDbObjExample ex = usersDao.getExample();
 		ex.createCriteria().andLoginNameEqualTo(loginName);
@@ -334,5 +324,9 @@ public class UsersDataProvider extends AbstractDataProvider {
 	public Long getActiveUsersCount() throws RuntimeException {
 		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
 		return memberListingViewDao.countByExample(null, ex);
+	}
+	
+	public Users getMostRecentMember() {
+		return mapper.map(usersDao.getMostRecentMember(), Users.class);
 	}
 }

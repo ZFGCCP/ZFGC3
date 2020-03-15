@@ -1,0 +1,119 @@
+<div class="forum-wrapper" ng-controller="BoardCtrl as vm">
+
+	<div class="forum-title-wrapper">
+		<h3><i class="fas fa-arrow-alt-circle-left"></i> {{vm.board.name}}</h3>
+		<div class="nav-wrapper"></div>
+		<div class="users-viewing-wrapper">
+			<span ng-repeat="($index, user) in vm.viewingUsers.users track by $index">
+				<a ui-sref="user-profile({userId : user.usersId})">{{user.displayName}}</a>
+				<span ng-if="$index < vm.viewingUsers.users.length - 1">, </span>
+				<span ng-if="$index === vm.viewingUsers.users.length - 1"> and 0 guests viewing this board</span>
+			</span>
+		</div>
+	</div>
+
+	<div class="category board-wrapper">
+	
+		<collapsible-widget widget-title="Child Boards">
+			<div class="category">
+				<div ng-repeat="forum in vm.board.subForums" class="row entire-inside">
+					<div class="col-xs-2 col-sm-1 forum">
+						<i class="messages-indicator fas fa-folder-open"></i>
+					</div>
+					<div class="col-xs-6 col-sm-5 forum">
+						<a ui-sref="board({boardId : forum.forumId})">{{forum.name}}</a>
+						<br>
+						{{forum.description}}
+						<br/>
+						childboards:
+						<span ng-repeat="subforum in forum.subForums">
+							<a ng-href="/forum/#/forum?forumId={{subforum.forumId}}">{{subforum.name}}</a>
+						</span>
+					</div>
+					<div class="col-xs-4 col-sm-3">
+						{{forum.totalThreadsCount}} threads
+					</div>
+					<div class="col-xs-12 col-sm-3">
+						Latest post by<br>
+						in<br>
+					</div>	
+				</div>
+			</div>
+		</collapsible-widget>
+	
+		<collapsible-widget widget-title="Sticky Threads" ng-if="vm.board.stickyThreads !== null && vm.board.stickyThreads.length > 0">
+			<div class="category" ng-repeat="($index, board) in vm.board.stickyThreads track by $index">
+				<div class="hidden-xxs row entire-inside thread-headers">
+					<div class="col-xs-8 col-sm-5">Subject</div>
+					<div class="col-xs-2">Replies</div>
+					<div class="col-xs-2">Views</div>
+					<div class="hidden-xs col-sm-3">Last Post</div>
+				</div>
+				<div class="row selectable">
+					<div class="thread-section">
+						<div class="col-xs-8 col-sm-5">
+							<div class="flex-row">
+								<div class="status-icon" uib-tooltip="New Posts"><i class="fas fa-folder-open"></i></div>
+								<div class="status-icon" uib-tooltip="Hot Thread"><i class="fab fa-hotjar"></i></div>
+								<div class="subject">
+									{{board.name}}
+									<div class="d-block-xxs hidden-xs hidden-sm hidden-md hidden-lg">
+										<label>Replies:</label>
+										<span>100</span>
+										<label>Views:</label>
+										<span>{{board.views}}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="hidden-xxs col-xs-2">100</div>
+						<div class="hidden-xxs col-xs-2">{{board.views}}</div>
+						<div class="last-post col-xs-12 col-sm-3">
+							<span class="hidden-sm hidden-md hidden-lg">Last Post: </span>
+							12/12/99 12:12PM<br>By MG-Zero
+						</div>
+					</div>
+				</div>
+			</div>
+		</collapsible-widget>
+	
+		<collapsible-widget widget-title="{{vm.board.name}}">
+			<div class="category">
+				<div class="hidden-xxs row entire-inside thread-headers">
+					<div class="col-xs-8 col-sm-5">Subject</div>
+					<div class="col-xs-2">Replies</div>
+					<div class="col-xs-2">Views</div>
+					<div class="hidden-xs col-sm-3">Last Post</div>
+				</div>
+				<div>
+					<div class="row selectable" ng-repeat="($index, board) in vm.board.threads track by $index">
+						<div class="thread-section">
+							<div class="col-xs-8 col-sm-5">
+								<div class="flex-row">
+									<div class="status-icon" uib-tooltip="New Posts"><i class="fas fa-folder-open"></i></div>
+									<div class="status-icon" uib-tooltip="Hot Thread"><i class="fab fa-hotjar"></i></div>
+									<div class="subject">
+										{{board.name}}
+										<div class="d-block-xxs hidden-xs hidden-sm hidden-md hidden-lg">
+											<label>Replies:</label>
+											<span>100</span>
+											<label>Views:</label>
+											<span>{{board.views}}</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="hidden-xxs col-xs-2">100</div>
+							<div class="hidden-xxs col-xs-2">{{board.views}}</div>
+							<div class="last-post col-xs-12 col-sm-3">
+								<span class="hidden-sm hidden-md hidden-lg">Last Post: </span>
+								12/12/99 12:12PM<br>By MG-Zero
+							</div>
+						</div>
+					</div>
+					
+				</div>
+			</div>
+		</collapsible-widget>
+	</div>
+</div>

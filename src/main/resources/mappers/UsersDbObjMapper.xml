@@ -765,4 +765,11 @@
   		  U.PASSWORD = SHA2(CONCAT((SELECT P.PASS_SALT FROM users P WHERE P.USERS_ID = #{usersId,jdbcType=INTEGER}), #{password,jdbcType=VARCHAR}),
                                           256)
   </select>
+  
+  <select id="getMostRecentActivatedMember" resultMap="BaseResultMap">
+  	select
+  	<include refid="Base_Column_List" />
+    from users
+    WHERE DATE_REGISTERED = (SELECT MAX(DATE_REGISTERED) FROM users WHERE ACTIVE_FLAG = 1) LIMIT 1
+  </select>
 </mapper>
