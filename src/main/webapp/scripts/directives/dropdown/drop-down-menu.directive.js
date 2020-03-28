@@ -29,7 +29,6 @@
 				
 				var elmDdm = element.find("ul");
 				angular.element(elmDdm[0]).css('width', $scope.width);
-				$scope.$apply();
 			}, 0);
 			
 		};
