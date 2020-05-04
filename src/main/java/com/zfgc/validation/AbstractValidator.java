@@ -100,4 +100,13 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 
 		}
 	}
+	
+	protected String sanitizeString(String theString) {
+		theString = StringUtils.replace(theString, "<", "&lt;");
+		theString = StringUtils.replace(theString, ">", "&gt;");
+		theString = StringUtils.replace(theString, "\"", "&quot;");
+		theString = StringUtils.replace(theString, "&", "&amp;");
+
+		return theString;
+	}
 }

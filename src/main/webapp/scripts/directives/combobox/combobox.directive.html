@@ -1,0 +1,9 @@
+<span class="zfgc-combobox-wrapper">
+	<input ng-show="showInput" type="text" id="{group-id}" class="form-control small-input" ng-model="cvm.selectedValue" ng-click="toggleDropdown($event)" tab-index="{tab-index}"/>
+	<div ng-show="!showInput" class="selected-content" ng-click="toggleDropdown($event)"></div>
+	<div uib-dropdown is-open="isOpen" class="zfgc-combobox-items">
+		<div uib-dropdown-menu role="menu">
+			<div ng-transclude></div>
+		</div>
+	</div>
+</span>

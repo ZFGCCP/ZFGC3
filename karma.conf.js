@@ -83,6 +83,10 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
+	"./src/main/webapp/scripts/forum/thread/thread.controller.js",
+	    
+	"./src/main/webapp/scripts/forum/thread/new-thread.controller.js",
+	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
@@ -101,9 +105,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	"./src/main/webapp/scripts/directives/dropdown/drop-down-menu.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/combobox/combobox.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
@@ -146,6 +156,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
+	"./src/main/webapp/scripts/forum/message-editor.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
@@ -197,9 +209,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
+	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
+	"./src/main/webapp/scripts/directives/combobox/combobox.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/dropdown/drop-down-menu.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
 	    
@@ -216,6 +234,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
+	    
+	"./src/main/webapp/scripts/forum/thread/new-thread.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    

@@ -1,7 +1,7 @@
 <form>
 	<div class="message-text-area">
 		<div class="col-xs-12">
-			<button class="btn btn-def btn-editor" uib-tooltip="Bold" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.bold)">B</button>
+			<button class="btn btn-def btn-editor" uib-tooltip="Bold" ng-click="insertShortcut(vm.getConstants().bbCodes.bold)">B</button>
 			<button class="btn btn-def btn-editor" uib-tooltip="Italic" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.italic)">I</button>
 			<button class="btn btn-def btn-editor" uib-tooltip="Underline" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.underline)">U</button>
 			<button class="btn btn-def btn-editor" uib-tooltip="Strikethrough" ng-click="vm.insertShortcut(vm.getConstants().bbCodes.strikethrough)">S</button>
@@ -21,14 +21,10 @@
 			<button class="btn btn-def btn-editor" uib-tooltip="Hyperlink"><span class="fas fa-globe"></span></button>
 			<button class="btn btn-def btn-editor" uib-tooltip="FTP Link"><span class="far fa-file"></span></button>
 		</div>
-		<textarea ng-model="personalMessage.message" 
+		<textarea ng-model="ngModel" 
 				  class="form-control" 
 				  rows="10"
-				  ng-focus="vm.getLastCursorPos()"
-				  ng-change="vm.getLastCursorPos()"/>
-	</div>
-	<div class="message-buttons-wrapper">
-		<button class="btn btn-confirm" ng-click="reply()">Send</button>
-		<button class="btn btn-def" ng-click="toggleReplyBox()">Cancel</button>
+				  ng-focus="getLastCursorPos()"
+				  ng-change="getLastCursorPos()"/>
 	</div>
 </form>

@@ -9,9 +9,9 @@
 		};
 		
 		vm.deregisterTransition = $transitions.onStart({}, function(transition) {
-			vm.usersViewingSub.unsubscribe();
+			/*vm.usersViewingSub.unsubscribe();
 			vm.usersViewingSub = null;
-			vm.deregisterTransition();
+			vm.deregisterTransition();*/
 		});
 		
 		vm.getBoard();
