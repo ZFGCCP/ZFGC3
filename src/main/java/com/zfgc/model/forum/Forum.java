@@ -22,8 +22,8 @@ public class Forum extends BaseZfgcModel {
 	
 	private List<Forum> subForums = new ArrayList<>();
 	
-	private List<Topic> stickyThreads = new ArrayList<>();
-	private List<Topic> threads = new ArrayList<>();
+	private List<Thread> stickyThreads = new ArrayList<>();
+	private List<Thread> threads = new ArrayList<>();
 	
 	private Boolean canRead = false;
 	private Boolean canWrite = false;
@@ -70,16 +70,16 @@ public class Forum extends BaseZfgcModel {
 	public void setSubForums(List<Forum> subForums) {
 		this.subForums = subForums;
 	}
-	public List<Topic> getThreads() {
+	public List<Thread> getThreads() {
 		return threads;
 	}
-	public void setThreads(List<Topic> threads) {
+	public void setThreads(List<Thread> threads) {
 		this.threads = threads;
 	}
-	public List<Topic> getStickyThreads() {
+	public List<Thread> getStickyThreads() {
 		return stickyThreads;
 	}
-	public void setStickyThreads(List<Topic> stickyThreads) {
+	public void setStickyThreads(List<Thread> stickyThreads) {
 		this.stickyThreads = stickyThreads;
 	}
 	public Long getTotalThreadsCount() {

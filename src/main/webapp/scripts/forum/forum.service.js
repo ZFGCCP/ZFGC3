@@ -9,6 +9,10 @@
 			ForumIndex:{
 			         url: '/forum/forum/index',
 			         method: 'GET'
+			},
+			threadTemplate: {
+				url: '/forum/forum/:forumId/thread/template',
+				method: 'GET'
 			}
 		});
 		
@@ -22,6 +26,10 @@
 			vm.board.$promise.then(function(data){
 				
 			});
+		};
+		
+		ForumService.getThreadTemplate = function(boardId){
+			return ForumService.resource.threadTemplate({forumId: boardId});
 		};
 		
 		return ForumService;

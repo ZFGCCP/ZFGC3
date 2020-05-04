@@ -40,8 +40,9 @@ public class BbcodeService{
 	
 	public String parseText(String input) throws NoSuchFieldException, SecurityException, IllegalArgumentException, IllegalAccessException{
 		
-		final char[] inputChar = ZfgcStringUtils.getUnderlyingStringArray(input);
-		final int length = input.length();
+		
+		final char[] inputChar = ZfgcStringUtils.getUnderlyingStringArray(input.replace("\n", "<br/>"));
+		final int length = inputChar.length;
 		final MutableInt NEG = new MutableInt(-1);
 		final MutableInt ZERO = new MutableInt(0);
 		StringBuilder output = new StringBuilder();
@@ -57,6 +58,7 @@ public class BbcodeService{
 		Stack<String> states = new Stack<>();
 		Stack<String> codes = new Stack<>();
 		MutableInt contentAttPos = new MutableInt(-1);
+		
 		
 		
 		for(i = 0; i < length; i++){

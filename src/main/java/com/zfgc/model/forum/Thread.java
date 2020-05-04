@@ -1,8 +1,11 @@
 package com.zfgc.model.forum;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.zfgc.model.BaseZfgcModel;
 
-public class Topic extends BaseZfgcModel {
+public class Thread extends BaseZfgcModel {
 	private Integer threadId;
 	private String name;
 	private Integer threadStarterId;
@@ -16,6 +19,16 @@ public class Topic extends BaseZfgcModel {
 	private Boolean pollFlag;
 	private Integer parentForumId;
 	private Integer postCount;
+	private String title;
+	
+	private List<ThreadPost> posts = new ArrayList<>();
+	
+	public List<ThreadPost> getPosts() {
+		return posts;
+	}
+	public void setPosts(List<ThreadPost> posts) {
+		this.posts = posts;
+	}
 	public Integer getThreadId() {
 		return threadId;
 	}
@@ -105,5 +118,26 @@ public class Topic extends BaseZfgcModel {
 		return null;
 	}
 	
+	public ThreadPost getHeadPost() {
+		if(posts.isEmpty()) {
+			return null;
+		}
+		
+		return posts.get(0);
+	}
 	
+	public ThreadPost getTailPost() {
+		if(posts.isEmpty()) {
+			return null;
+		}
+
+		return posts.get(posts.size() - 1);
+
+	}
+	public String getTitle() {
+		return title;
+	}
+	public void setTitle(String title) {
+		this.title = title;
+	}
 }

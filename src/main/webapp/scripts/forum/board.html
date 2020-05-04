@@ -1,7 +1,7 @@
 <div class="forum-wrapper" ng-controller="BoardCtrl as vm">
 
 	<div class="forum-title-wrapper">
-		<h3><i class="fas fa-arrow-alt-circle-left"></i> {{vm.board.name}}</h3>
+		<h3><i class="fas fa-arrow-alt-circle-left"></i><span ng-bind="vm.board.name"></span></h3>
 		<div class="nav-wrapper"></div>
 		<div class="users-viewing-wrapper">
 			<span ng-repeat="($index, user) in vm.viewingUsers.users track by $index">
@@ -79,7 +79,7 @@
 	
 		<div class="board-controls">
 			<drop-down-menu default-label="New Thread" info-type="new">
-				<li role="menuitem"><a href="#"><i class="far fa-comments"></i> Thread</a></li>
+				<li role="menuitem"><a ui-sref="new-thread({boardId : vm.board.forumId})"><i class="far fa-comments"></i> Thread</a></li>
 				<li role="menuitem"><a href="#"><i class="fas fa-poll"></i> Poll</a></li>
 			</drop-down-menu>
 		</div>

@@ -40,6 +40,7 @@
     			
 			    $rootScope.$on("WebsocketConnected", function(data){
 					WebsocketService.subscribe("/user/socket/pmNotif", scope.pmNotifReceived);
+					$state.reload();
 				});
 			    
 			    scope.pmNotifReceived = function(data){

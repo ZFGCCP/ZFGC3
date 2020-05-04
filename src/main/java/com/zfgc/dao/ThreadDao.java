@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.model.forum.Thread;
 import com.zfgc.dbobj.ForumDbObj;
 import com.zfgc.dbobj.ThreadDbObj;
 import com.zfgc.dbobj.ThreadDbObjExample;
@@ -37,7 +38,15 @@ public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj, Thre
 
 	@Override
 	public void updateOrInsert(Thread obj) throws RuntimeException {
-		// TODO Auto-generated method stub
+		ThreadDbObj dbObj = mapper.map(obj, ThreadDbObj.class);
+		if(dbObj.getThreadId() == null || dbObj.equals(-1)) {
+			threadDbObjMapper.insert(dbObj);
+		}
+		else {
+			threadDbObjMapper.updateByPrimaryKey(dbObj);
+		}
+		
+		obj = mapper.map(dbObj, Thread.class);
 		
 	}
 

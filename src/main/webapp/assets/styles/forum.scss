@@ -92,3 +92,40 @@
 		}
 	}
 }
+
+.new-thread{
+	.thread-reply-title-wrapper{
+		.section-title{
+			.fa-arrow-alt-circle-left{
+				cursor: pointer;
+			}
+		}
+	}
+}
+
+.thread-icon-item{
+	display: flex;
+    height: 100%;
+    align-items: center;
+	
+	.thread-icon-text{
+		color: black;
+    	margin-left: .5rem;
+    	padding-right: .5rem;
+	}
+}
+
+.preview-wrapper{
+    display: inline-block;
+    padding: 3em;
+    width: 100%;
+	
+	.preview-content{
+	    display: inline-block;
+	    min-height: 3em;
+	    width: 100%;
+	    background-color: #204378;
+	    border: .1em solid;
+	    padding: 1em;
+	}
+}
