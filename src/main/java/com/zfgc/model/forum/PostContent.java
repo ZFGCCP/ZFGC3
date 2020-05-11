@@ -13,7 +13,10 @@ public class PostContent extends BaseZfgcModel {
 	private String subject;
 	private String icon;
 	private Integer postContentId;
-	private Integer author;
+	private Integer authorId;
+	private Integer threadPostId;
+	private String postData;
+	private Boolean currentFlag;
 	
 	@JsonIgnore
 	private Date createdTs;
@@ -50,14 +53,6 @@ public class PostContent extends BaseZfgcModel {
 		this.postContentId = postContentId;
 	}
 
-	public Integer getAuthor() {
-		return author;
-	}
-
-	public void setAuthor(Integer author) {
-		this.author = author;
-	}
-
 	public Date getCreatedTs() {
 		return createdTs;
 	}
@@ -79,6 +74,38 @@ public class PostContent extends BaseZfgcModel {
 	public String getHMAC() throws Exception {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public Integer getThreadPostId() {
+		return threadPostId;
+	}
+
+	public void setThreadPostId(Integer threadPostId) {
+		this.threadPostId = threadPostId;
+	}
+
+	public Integer getAuthorId() {
+		return authorId;
+	}
+
+	public void setAuthorId(Integer authorId) {
+		this.authorId = authorId;
+	}
+
+	public String getPostData() {
+		return postData;
+	}
+
+	public void setPostData(String postData) {
+		this.postData = postData;
+	}
+
+	public Boolean getCurrentFlag() {
+		return currentFlag;
+	}
+
+	public void setCurrentFlag(Boolean currentFlag) {
+		this.currentFlag = currentFlag;
 	}
 
 }

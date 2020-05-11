@@ -6,13 +6,17 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dao.PostContentDao;
 import com.zfgc.dao.ThreadDao;
 import com.zfgc.dao.ThreadPostDao;
+import com.zfgc.dbobj.PostContentDbObj;
+import com.zfgc.dbobj.PostContentDbObjExample;
 import com.zfgc.dbobj.ThreadDbObj;
 import com.zfgc.dbobj.ThreadDbObjExample;
 import com.zfgc.dbobj.ThreadPostDbObj;
 import com.zfgc.dbobj.ThreadPostDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.forum.PostContent;
 import com.zfgc.model.forum.Thread;
 import com.zfgc.model.forum.ThreadPost;
 import com.zfgc.model.users.Users;
@@ -24,6 +28,9 @@ public class ThreadDataProvider extends AbstractDataProvider {
 
 	@Autowired
 	private ThreadPostDao threadPostDao;
+	
+	@Autowired
+	private PostContentDao postContentDao;
 	
 	public Long getNumberOfThreads(Short forumId){
 		ThreadDbObjExample ex = threadDao.getExample();
@@ -86,5 +93,33 @@ public class ThreadDataProvider extends AbstractDataProvider {
 		}
 		
 		return result;
+	}
+	
+	public List<PostContent> getPostContent(Integer postId){
+		List<PostContent> result = new ArrayList<>();
+		PostContentDbObjExample ex = postContentDao.getExample();
+		ex.createCriteria().andThreadPostIdEqualTo(postId);
+		
+		List<PostContentDbObj> dbObj = postContentDao.get(ex);
+		
+		for(PostContentDbObj db : dbObj) {
+			result.add(mapper.map(db, PostContent.class));
+		}
+		
+		return result;
+	}
+	
+	public PostContent savePostContent(PostContent content) {
+		postContentDao.updateOrInsert(content);
+		
+		return content;
+	}
+	
+	public void resetPostContentCurrentFlags(Integer threadPostId) {
+		PostContent content = new PostContent();
+		content.setThreadPostId(threadPostId);
+		content.setCurrentFlag(false);
+		
+		postContentDao.updateByExample(content, null);
 	}
 }
