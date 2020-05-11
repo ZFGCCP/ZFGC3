@@ -7,6 +7,10 @@
 			preview : {
 				url : '/forum/forum/:forumId/thread/preview',
 				method : 'POST'
+			},
+			saveThread : {
+				url: '/forum/forum/:forumId/thread',
+				method : 'POST'
 			}
 		});
 		
@@ -16,6 +20,10 @@
 		
 		service.getThreadPreview = function(thread){
 			return service.threadResource.preview({forumId: thread.parentForumId}, thread);
+		};
+		
+		service.saveThread = function(thread){
+			return service.threadResource.saveThread({forumId : thread.parentForumId}, thread);
 		};
 		
 		service.lookups = LookupsService.getLookupsList("BBCODE");

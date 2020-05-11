@@ -5,10 +5,12 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dataprovider.ForumDataProvider;
 import com.zfgc.dataprovider.ThreadDataProvider;
 import com.zfgc.model.users.Users;
+import com.zfgc.requiredfields.forum.ThreadRequiredFields;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.RuleRunService;
 import com.zfgc.services.bbcode.BbcodeService;
@@ -30,6 +32,9 @@ public class ThreadService extends AbstractService {
 	
 	@Autowired
 	private ThreadValidator threadValidator;
+	
+	@Autowired
+	private ThreadRequiredFields threadRequiredFields;
 	
 	@Autowired
 	private RuleRunService<Thread> ruleRunner;
@@ -64,32 +69,40 @@ public class ThreadService extends AbstractService {
 		ThreadPost post = new ThreadPost();
 		post.setAuthorId(user.getUsersId());
 		post.getContent().add(new PostContent());
-		post.getContent().get(0).setAuthor(user.getUsersId());
+		post.getHeadContent().setAuthorId(user.getUsersId());
+		post.getHeadContent().setCurrentFlag(true);
 		
 		topic.getPosts().add(post);
 		
 		return topic;
 	}
 	
+	@Transactional
 	public Thread saveNewThread(Thread thread, Users user) {
+		ruleRunner.runRules(threadValidator, threadRequiredFields, null, thread, user);
+		
 		threadDataProvider.saveThread(thread);
 		
-		thread.getHeadPost().setThreadId(thread.getThreadId());
-		threadDataProvider.postToThread(thread.getHeadPost());
+		//save the last post
+		thread.getTailPost().setThreadId(thread.getThreadId());
+		threadDataProvider.postToThread(thread.getTailPost());
+		
+		thread.getTailPost().getHeadContent().setThreadPostId(thread.getTailPost().getThreadPostId());
+		threadDataProvider.savePostContent(thread.getTailPost().getHeadContent());
 		
 		return thread;
 		
 	}
 	
 	public Thread previewThread(Thread thread, Users zfgcUser) {
-		ruleRunner.runRules(threadValidator, null, null, thread, zfgcUser);
+		ruleRunner.runRules(threadValidator, threadRequiredFields, null, thread, zfgcUser);
 		
 		return prepareThreadForView(thread);
 	}
 	
 	public Thread prepareThreadForView(Thread thread) {
 		for(ThreadPost post : thread.getPosts()) {
-			String content = post.getContent().get(0).getBody();
+			String content = post.getHeadContent().getPostData();
 			
 			try {
 				content = bbcodeService.parseText(content);
@@ -97,7 +110,7 @@ public class ThreadService extends AbstractService {
 				throw new RuntimeException(e);
 			}
 			
-			post.getContent().get(0).setBody(content);
+			post.getHeadContent().setBody(content);
 		}
 		
 		return thread;

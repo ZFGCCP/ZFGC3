@@ -81,4 +81,9 @@ public class ForumController extends BaseController {
 		return ResponseEntity.ok(threadService.previewThread(thread, zfgcUser()));
 	}
 	
+	@RequestMapping(value="/{forumId}/thread", method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ZFGC_THREAD_CREATOR')")
+	public ResponseEntity saveThread(@PathVariable("forumId") Integer forumId, @RequestBody Thread thread) {
+		return ResponseEntity.ok(threadService.saveNewThread(thread, zfgcUser()));
+	}
 }

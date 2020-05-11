@@ -38,7 +38,7 @@ public class ThreadPostDao extends AbstractDao<ThreadPostDbObjExample, ThreadPos
 			threadPostDbObjMapper.updateByPrimaryKey(dbObj);
 		}
 		
-		obj = mapper.map(dbObj, ThreadPost.class);
+		obj.setThreadPostId(dbObj.getThreadPostId());
 		
 	}
 

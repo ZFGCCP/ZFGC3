@@ -10,16 +10,16 @@ public class Thread extends BaseZfgcModel {
 	private String name;
 	private Integer threadStarterId;
 	private String authorName;
-	private Integer views;
+	private Integer views = 0;
 	private Integer postIconId;
-	private Integer postStatusId;
-	private Boolean newPostsFlag;
-	private Boolean lockedFlag;
-	private Boolean stickyFlag;
-	private Boolean pollFlag;
+	private Integer postStatusId = 0;
+	private Boolean newPostsFlag = false;
+	private Boolean lockedFlag = false;
+	private Boolean stickyFlag = false;
+	private Boolean pollFlag = false;
 	private Integer parentForumId;
+	private Integer latestPostId = 0;
 	private Integer postCount;
-	private String title;
 	
 	private List<ThreadPost> posts = new ArrayList<>();
 	
@@ -134,10 +134,10 @@ public class Thread extends BaseZfgcModel {
 		return posts.get(posts.size() - 1);
 
 	}
-	public String getTitle() {
-		return title;
+	public Integer getLatestPostId() {
+		return latestPostId;
 	}
-	public void setTitle(String title) {
-		this.title = title;
+	public void setLatestPostId(Integer latestPostId) {
+		this.latestPostId = latestPostId;
 	}
 }

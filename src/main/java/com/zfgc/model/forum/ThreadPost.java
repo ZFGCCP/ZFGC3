@@ -117,5 +117,13 @@ public class ThreadPost extends BaseZfgcModel {
 	public void setContent(List<PostContent> content) {
 		this.content = content;
 	}
+	
+	public PostContent getHeadContent() {
+		return content.get(0);
+	}
+	
+	public PostContent getTailContent() {
+		return content.get(content.size() - 1);
+	}
 
 }

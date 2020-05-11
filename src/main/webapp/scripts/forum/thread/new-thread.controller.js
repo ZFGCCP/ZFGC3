@@ -23,6 +23,12 @@
 			});
 		};
 		
+		vm.postThread = function(){
+			MessageEditorService.saveThread(vm.newThread).$promise.then(function(data){
+				
+			});
+		}
+		
 		vm.isOpen = false;
 		
 	}

@@ -46,7 +46,7 @@ public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj, Thre
 			threadDbObjMapper.updateByPrimaryKey(dbObj);
 		}
 		
-		obj = mapper.map(dbObj, Thread.class);
+		obj.setThreadId(dbObj.getThreadId());
 		
 	}
 
