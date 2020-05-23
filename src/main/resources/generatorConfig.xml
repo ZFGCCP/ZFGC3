@@ -22,18 +22,18 @@
     
 
     <!-- tables -->
-    <table schema="Zfgc3" tableName="BR_FORUM_PERMISSIONS" domainObjectName="BrForumPermissionsDbObj">
+    <table schema="Zfgc3" tableName="THREAD_POST" domainObjectName="ThreadPostDbObj">
+    	<generatedKey column="THREAD_POST_ID" sqlStatement="MySql" identity="true" />
+    </table>
+    
+    <!--<table schema="Zfgc3" tableName="BR_FORUM_PERMISSIONS" domainObjectName="BrForumPermissionsDbObj">
     	<generatedKey column="BR_FORUM_PERMISSIONS_FLAG" sqlStatement="MySql" identity="true" />
     	<columnOverride column="READ_ONLY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <!--<table schema="Zfgc3" tableName="POST_CONTENT" domainObjectName="PostContentDbObj">
+    <table schema="Zfgc3" tableName="POST_CONTENT" domainObjectName="PostContentDbObj">
     	<generatedKey column="POST_CONTENT_ID" sqlStatement="MySql" identity="true" />
     	<columnOverride column="CURRENT_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
-    </table>
-    
-    <table schema="Zfgc3" tableName="THREAD_POST" domainObjectName="ThreadPostDbObj">
-    	<generatedKey column="THREAD_POST_ID" sqlStatement="MySql" identity="true" />
     </table>
     
     <table schema="Zfgc3" tableName="USER_CURRENT_ACTION" domainObjectName="UserCurrentActionDbObj">

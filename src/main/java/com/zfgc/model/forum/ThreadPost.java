@@ -20,10 +20,25 @@ public class ThreadPost extends BaseZfgcModel {
     
     @JsonIgnore
     private Date createdTs;
-    
-    @JsonIgnore
-    private Date updatedTs;
 	
+    @JsonIgnore
+    public Date getUpdatedTs() {
+    	if(content.isEmpty() || getHeadContent().getCreatedTs() == null) {
+    		return null;
+    	}
+    	
+    	return this.getHeadContent().getCreatedTs();
+    }
+    
+    public String getUpdatedTsAsString() {
+    	if(content.isEmpty() || getHeadContent().getCreatedTs() == null) {
+    		return "";
+    	}
+    	
+    	SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(super.getUserTimeZone());
+    	return sdf.format(this.getHeadContent().getCreatedTs());
+    }
+    
 	public Integer getThreadPostId() {
 		return threadPostId;
 	}
@@ -71,34 +86,6 @@ public class ThreadPost extends BaseZfgcModel {
 		
 		try {
 			createdTs = sdf.parse(createdTsAsString);
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public Date getUpdatedTs() {
-		return updatedTs;
-	}
-
-	public void setUpdatedTs(Date updatedTs) {
-		this.updatedTs = updatedTs;
-	}
-	
-	public String getUpdatedTsAsString() {
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(super.getUserTimeZone());
-		
-		if(updatedTs == null) {
-			return "";
-		}
-		
-		return sdf.format(updatedTs);
-	}
-
-	public void setUpdatedTsAsString(String updatedTsAsString) {
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(super.getUserTimeZone());
-		
-		try {
-			updatedTs = sdf.parse(updatedTsAsString);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
