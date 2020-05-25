@@ -12,7 +12,17 @@
 		</div>
 	</div>
 
+	<form>
 	<div class="category board-wrapper">
+	
+		<div class="board-controls">
+			<drop-down-menu default-label="Moderation" info-type="moderation" ng-disabled="!vm.checked">
+				<li role="menuitem" ng-click="vm.stickyUnstickyThreads()"><a><i class="fas fa-thumbtack"></i> Sticky/Unsticky Selected</a></li>
+				<li role="menuitem"><a ui-sref="new-thread({boardId : vm.board.forumId})"><i class="fas fa-lock"></i> Lock Selected</a></li>
+				<li role="menuitem"><a ui-sref="new-thread({boardId : vm.board.forumId})"><i class="fas fa-truck-moving"></i> Move Selected</a></li>
+				<li role="menuitem"><a ui-sref="new-thread({boardId : vm.board.forumId})"><i class="fas fa-trash-alt"></i> Delete Selected</a></li>
+			</drop-down-menu>
+		</div>
 	
 		<collapsible-widget widget-title="Child Boards">
 			<div class="category">
@@ -42,17 +52,20 @@
 		</collapsible-widget>
 	
 		<collapsible-widget widget-title="Sticky Threads" ng-if="vm.board.stickyThreads !== null && vm.board.stickyThreads.length > 0">
-			<div class="category" ng-repeat="($index, board) in vm.board.stickyThreads track by $index">
+			<div class="category">
 				<div class="hidden-xxs row entire-inside thread-headers">
 					<div class="col-xs-8 col-sm-5">Subject</div>
 					<div class="col-xs-2">Replies</div>
 					<div class="col-xs-2">Views</div>
 					<div class="hidden-xs col-sm-3">Last Post</div>
 				</div>
-				<div class="row selectable">
+				<div class="row selectable" ng-repeat="($index, board) in vm.board.stickyThreads track by $index">
 					<div class="thread-section">
 						<div class="col-xs-8 col-sm-5">
 							<div class="flex-row">
+								<div class="checkbox-wrapper thread-checkbox">
+									<input type="checkbox" ng-model="board.isChecked" ng-value="board.threadId" ng-change="vm.threadChecked()"/>
+								</div>
 								<div class="status-icon" uib-tooltip="New Posts"><i class="fas fa-folder-open"></i></div>
 								<div class="status-icon" uib-tooltip="Hot Thread"><i class="fab fa-hotjar"></i></div>
 								<div class="subject">
@@ -97,6 +110,9 @@
 						<div class="thread-section">
 							<div class="col-xs-8 col-sm-5">
 								<div class="flex-row">
+									<div class="checkbox-wrapper thread-checkbox">
+										<input type="checkbox" ng-model="board.isChecked" ng-value="board.threadId" ng-change="vm.threadChecked()"/>
+									</div>
 									<div class="status-icon" uib-tooltip="New Posts"><i class="fas fa-folder-open"></i></div>
 									<div class="status-icon" uib-tooltip="Hot Thread"><i class="fab fa-hotjar"></i></div>
 									<div class="subject">
@@ -123,4 +139,5 @@
 			</div>
 		</collapsible-widget>
 	</div>
+	</form>
 </div>

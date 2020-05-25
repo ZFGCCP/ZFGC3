@@ -1,6 +1,7 @@
 package com.zfgc.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -69,21 +70,28 @@ public class ForumController extends BaseController {
 	}
 	
 	@RequestMapping(value="/{forumId}/thread/template", method=RequestMethod.GET,produces="application/json")
-	@PreAuthorize("hasRole('ZFGC_THREAD_CREATOR')")
+	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_CREATOR')")
 	public ResponseEntity getNewThreadTemplate(@PathVariable("forumId") Integer forumId) {
 		Thread thread = threadService.getThreadTemplate(forumId, zfgcUser());
 		return ResponseEntity.ok(thread);
 	}
 	
 	@RequestMapping(value="/{forumId}/thread/preview", method=RequestMethod.POST, produces="application/json")
-	@PreAuthorize("hasRole('ZFGC_THREAD_CREATOR')")
+	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_CREATOR')")
 	public ResponseEntity previewThread(@PathVariable("forumId") Integer forumId, @RequestBody Thread thread) {
 		return ResponseEntity.ok(threadService.previewThread(thread, zfgcUser()));
 	}
 	
 	@RequestMapping(value="/{forumId}/thread", method=RequestMethod.POST, produces="application/json")
-	@PreAuthorize("hasRole('ZFGC_THREAD_CREATOR')")
+	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_CREATOR')")
 	public ResponseEntity saveThread(@PathVariable("forumId") Integer forumId, @RequestBody Thread thread) {
 		return ResponseEntity.ok(threadService.saveNewThread(thread, zfgcUser()));
+	}
+	
+	@RequestMapping(value="/{forumId}/stickyUnsticky", method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ROLE_ZFGC_MODERATION_STAFF')")
+	public ResponseEntity stickyUnsticyThreads(@PathVariable("forumId") Integer forumId, @RequestBody List<Integer> threadIds) {
+		threadService.stickyUnstickyThreads(threadIds, zfgcUser());
+		return ResponseEntity.ok().build();
 	}
 }
