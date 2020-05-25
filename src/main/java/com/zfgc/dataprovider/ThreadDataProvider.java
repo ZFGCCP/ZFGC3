@@ -55,6 +55,22 @@ public class ThreadDataProvider extends AbstractDataProvider {
 		return result;
 	}
 	
+	public List<Thread> getThreadsById(List<Integer> threadId) {
+		ThreadDbObjExample ex = threadDao.getExample();
+		ex.createCriteria().andThreadIdIn(threadId);
+					
+		
+		List<ThreadDbObj> threads = threadDao.get(ex);
+		List<Thread> result = new ArrayList<>();
+		
+		for(ThreadDbObj thread : threads) {
+			Thread topic = mapper.map(thread, Thread.class);
+			result.add(topic);
+		}
+		
+		return result;
+	}
+	
 	public Thread saveThread(Thread thread) {
 		threadDao.updateOrInsert(thread);
 		

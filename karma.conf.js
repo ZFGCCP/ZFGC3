@@ -111,9 +111,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/combobox/combobox.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
@@ -209,9 +209,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
 	    
-	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
+	    
+	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
 	"./src/main/webapp/scripts/directives/combobox/combobox.directive.html",
 	    
