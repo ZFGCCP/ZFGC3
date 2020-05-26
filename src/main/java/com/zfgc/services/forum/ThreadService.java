@@ -132,4 +132,17 @@ public class ThreadService extends AbstractService {
 		
 	}
 	
+	public void lockUnlockThreads(List<Integer> threadIds, Users zfgcUser) {
+		//get all the threads
+		List<Thread> threads = threadDataProvider.getThreadsById(threadIds);
+		
+		//ensure the user actually has permissions to modify these threads
+		
+		//swap their lock flags and save
+		for(Thread thread : threads) {
+			thread.setLockedFlag(!thread.getLockedFlag());
+			threadDataProvider.saveThread(thread);
+		}
+	}
+	
 }

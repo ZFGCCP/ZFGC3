@@ -17,6 +17,10 @@
 			stickyUnsticky: {
 				url: '/forum/forum/:forumId/stickyUnsticky',
 				method: 'POST'
+			},
+			lockUnlock: {
+				url: '/forum/forum/:forumId/lockUnlock',
+				method: 'POST'
 			}
 		});
 		
@@ -25,11 +29,25 @@
 			ModalService.createConfirmDialog(null, "This will sticky/unsticky all selected threads.", ForumService.stickyUnstickyConfirm, params);
 		};
 		
+		ForumService.lockUnlockThreads = function(vm, boardId, threadIds){
+			var params = {boardId : boardId, threadIds : threadIds, vm: vm};
+			ModalService.createConfirmDialog(null, "This will lock/unlock all selected threads.", ForumService.lockUnlockConfirm, params);
+		};
+		
 		ForumService.stickyUnstickyConfirm = function(params){
 			ForumService.resource.stickyUnsticky({forumId : params.boardId}, params.threadIds).$promise.then(function(data){
 				//reload the board
 				//todo: load in the user's current page no
 				NotificationsService.addSuccessAlert("Threads stickied/unstickied successfully");
+				params.vm.board = ForumService.resource.get({forumId : params.boardId, itemsPerPage : 10, pageNo : 1});
+			});
+		};
+		
+		ForumService.lockUnlockConfirm = function(params){
+			ForumService.resource.lockUnlock({forumId : params.boardId}, params.threadIds).$promise.then(function(data){
+				//reload the board
+				//todo: load in the user's current page no
+				NotificationsService.addSuccessAlert("Threads locked/unlocked successfully");
 				params.vm.board = ForumService.resource.get({forumId : params.boardId, itemsPerPage : 10, pageNo : 1});
 			});
 		};
