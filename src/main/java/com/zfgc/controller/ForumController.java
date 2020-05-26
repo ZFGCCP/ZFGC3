@@ -89,9 +89,18 @@ public class ForumController extends BaseController {
 	}
 	
 	@RequestMapping(value="/{forumId}/stickyUnsticky", method=RequestMethod.POST, produces="application/json")
-	@PreAuthorize("hasRole('ROLE_ZFGC_MODERATION_STAFF')")
+	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_STICKIER')")
 	public ResponseEntity stickyUnsticyThreads(@PathVariable("forumId") Integer forumId, @RequestBody List<Integer> threadIds) {
 		threadService.stickyUnstickyThreads(threadIds, zfgcUser());
 		return ResponseEntity.ok().build();
 	}
+	
+	@RequestMapping(value="/{forumId}/lockUnlock", method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_STICKIER')")
+	public ResponseEntity lockUnlockThreads(@PathVariable("forumId") Integer forumId, @RequestBody List<Integer> threadIds) {
+		threadService.lockUnlockThreads(threadIds, zfgcUser());
+		return ResponseEntity.ok().build();
+	}
+	
+	
 }

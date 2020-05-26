@@ -107,9 +107,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/dropdown/drop-down-menu.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/combobox/combobox.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -173,13 +173,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
-	"./src/main/webapp/scripts/common/server-config.service.js",
-	    
-	"./src/main/webapp/scripts/common/main.controller.js",
-	    
 	"./src/main/webapp/scripts/calendar/calendar.service.js",
 	    
 	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
+	    
+	"./src/main/webapp/scripts/common/server-config.service.js",
+	    
+	"./src/main/webapp/scripts/common/main.controller.js",
 	    
 	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
@@ -213,9 +213,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/combobox/combobox.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/combobox/combobox.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/dropdown/drop-down-menu.directive.html",
 	    

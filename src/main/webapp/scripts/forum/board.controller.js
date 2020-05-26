@@ -33,22 +33,32 @@
 			}
 		};
 		
+		function getCheckedThreads(threads){
+			var threadIds = threads.map(function(x){
+				if(x.isChecked === true){
+					return x.threadId;
+				}
+			});
+
+			return threadIds;
+		}
+		
 		vm.stickyUnstickyThreads = function(){
-			var threadIds = vm.board.threads.map(function(x){
-				if(x.isChecked === true){
-					return x.threadId;
-				}
-			});
-			
-			var stickyThreadIds = vm.board.stickyThreads.map(function(x){
-				if(x.isChecked === true){
-					return x.threadId;
-				}
-			});
+			var threadIds = getCheckedThreads(vm.board.threads);
+			var stickyThreadIds = getCheckedThreads(vm.board.stickyThreads);
 			
 			threadIds = threadIds.concat(stickyThreadIds);
 			
 			ForumService.stickyUnstickyThreads(vm, vm.board.forumId, threadIds);
+		};
+		
+		vm.lockUnlockThreads = function(){
+			var threadIds = getCheckedThreads(vm.board.threads);
+			var stickyThreadIds = getCheckedThreads(vm.board.stickyThreads);
+			
+			threadIds = threadIds.concat(stickyThreadIds);
+			
+			ForumService.lockUnlockThreads(vm, vm.board.forumId, threadIds);
 		};
 		
 		vm.getBoard();
