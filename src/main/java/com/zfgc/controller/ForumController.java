@@ -96,7 +96,7 @@ public class ForumController extends BaseController {
 	}
 	
 	@RequestMapping(value="/{forumId}/lockUnlock", method=RequestMethod.POST, produces="application/json")
-	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_STICKIER')")
+	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_LOCKER')")
 	public ResponseEntity lockUnlockThreads(@PathVariable("forumId") Integer forumId, @RequestBody List<Integer> threadIds) {
 		threadService.lockUnlockThreads(threadIds, zfgcUser());
 		return ResponseEntity.ok().build();
