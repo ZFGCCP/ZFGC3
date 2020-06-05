@@ -69,6 +69,11 @@ public class ForumController extends BaseController {
 		return ResponseEntity.ok(forum);
 	}
 	
+	/*@RequestMapping(value="/{categoryId}/forums", method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity getForumNames(@PathVariable("categroyId") Integer categoryId) {
+		
+	}*/
+	
 	@RequestMapping(value="/{forumId}/thread/template", method=RequestMethod.GET,produces="application/json")
 	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_CREATOR')")
 	public ResponseEntity getNewThreadTemplate(@PathVariable("forumId") Integer forumId) {
@@ -102,5 +107,10 @@ public class ForumController extends BaseController {
 		return ResponseEntity.ok().build();
 	}
 	
-	
+	@RequestMapping(value="/{forumId}/moveThreads/{moveToId}", method=RequestMethod.POST, produces="application/json")
+	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_MOVER')")
+	public ResponseEntity moveThreads(@PathVariable("forumId") Integer forumId, @PathVariable("moveToId") Integer moveToId, @RequestBody List<Integer> threadIds) {
+		threadService.moveThreads(threadIds, moveToId, zfgcUser());
+		return ResponseEntity.ok().build();
+	}
 }

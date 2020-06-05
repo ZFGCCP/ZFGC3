@@ -45,9 +45,13 @@
 	}
 	
 	.category{
+	
+		.no-threads{
+			padding: 2em;
+		}
 		
 		.thread-headers{
-			box-shadow: 0 .5em .5em black;
+			box-shadow: 0 0.5em 0.5em -0.19em black;
 			font-size: 1.2em;
 			font-weight: bold;
 		}

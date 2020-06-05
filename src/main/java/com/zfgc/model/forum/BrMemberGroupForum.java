@@ -4,7 +4,7 @@ import com.zfgc.model.BaseZfgcModel;
 
 public class BrMemberGroupForum extends BaseZfgcModel{
 	private Integer forumId;
-	private Integer memberGroupId;
+	private Integer permissionId;
 	private Boolean readFlag;
 	private Boolean writeFlag;
 	public Integer getForumId() {
@@ -12,12 +12,6 @@ public class BrMemberGroupForum extends BaseZfgcModel{
 	}
 	public void setForumId(Integer forumId) {
 		this.forumId = forumId;
-	}
-	public Integer getMemberGroupId() {
-		return memberGroupId;
-	}
-	public void setMemberGroupId(Integer memberGroupId) {
-		this.memberGroupId = memberGroupId;
 	}
 	public Boolean getReadFlag() {
 		return readFlag;
@@ -40,5 +34,11 @@ public class BrMemberGroupForum extends BaseZfgcModel{
 	public BaseZfgcModel copy(BaseZfgcModel other) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	public Integer getPermissionId() {
+		return permissionId;
+	}
+	public void setPermissionId(Integer permissionId) {
+		this.permissionId = permissionId;
 	}
 }
