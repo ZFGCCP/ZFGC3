@@ -24,7 +24,7 @@
 			</drop-down-menu>
 		</div>
 	
-		<collapsible-widget widget-title="Child Boards">
+		<collapsible-widget widget-title="Child Boards" ng-if="vm.board.subForums.length > 0">
 			<div class="category">
 				<div ng-repeat="forum in vm.board.subForums" class="row entire-inside">
 					<div class="col-xs-2 col-sm-1 forum">
@@ -109,6 +109,9 @@
 					<div class="hidden-xs col-sm-3">Last Post</div>
 				</div>
 				<div>
+					<div class="no-threads" ng-if="vm.board.threads.length === 0">
+						There are no threads in this board
+					</div>
 					<div class="row selectable" ng-repeat="($index, board) in vm.board.threads track by $index">
 						<div class="thread-section">
 							<div class="col-xs-8 col-sm-5">

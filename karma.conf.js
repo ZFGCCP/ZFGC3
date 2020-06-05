@@ -89,9 +89,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
@@ -105,11 +105,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.js",
 	    
+	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/dropdown/drop-down-menu.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/combobox/combobox.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -173,13 +173,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/error/error.module.js",
 	    
-	"./src/main/webapp/scripts/calendar/calendar.service.js",
-	    
-	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
-	    
 	"./src/main/webapp/scripts/common/server-config.service.js",
 	    
 	"./src/main/webapp/scripts/common/main.controller.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar.service.js",
+	    
+	"./src/main/webapp/scripts/calendar/calendar-view.controller.js",
 	    
 	"./src/main/webapp/scripts/ui-bootstrap-tpls.js",
 	    
@@ -213,11 +213,11 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
-	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/combobox/combobox.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/dropdown/drop-down-menu.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
 	    
@@ -229,9 +229,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    
@@ -300,6 +300,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
+	    
+	"./src/main/webapp/scripts/forum/thread/move/move-thread.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/mobile/user-profile-mobile-nav.html"
 	    

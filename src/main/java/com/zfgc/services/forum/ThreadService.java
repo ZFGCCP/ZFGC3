@@ -145,4 +145,14 @@ public class ThreadService extends AbstractService {
 		}
 	}
 	
+	public void moveThreads(List<Integer> threadIds, Integer newForumId, Users zfgcUser) {
+		//get all the threads
+		List<Thread> threads = threadDataProvider.getThreadsById(threadIds);
+		
+		for(Thread thread : threads) {
+			thread.setParentForumId(newForumId);
+			threadDataProvider.saveThread(thread);
+		}
+	}
+	
 }

@@ -3,6 +3,7 @@ package com.zfgc.services.forum;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -123,5 +124,17 @@ public class ForumService extends AbstractService {
 		super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
 		
 		return forum;
+	}
+	
+	public List<Forum> getForumsFromCategory(Short categoryId, Users user){
+		List<Forum> forums = forumDataProvider.getForumPermissions(categoryId, user);
+		
+		Iterator<Forum> forumItr = forums.iterator();
+		
+		while(forumItr.hasNext()) {
+			Forum forum = forumItr.next();
+		}
+		
+		return forums;
 	}
 }
