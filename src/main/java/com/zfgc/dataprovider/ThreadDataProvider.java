@@ -9,16 +9,20 @@ import org.springframework.stereotype.Component;
 import com.zfgc.dao.PostContentDao;
 import com.zfgc.dao.ThreadDao;
 import com.zfgc.dao.ThreadPostDao;
+import com.zfgc.dao.TopicViewDao;
 import com.zfgc.dbobj.PostContentDbObj;
 import com.zfgc.dbobj.PostContentDbObjExample;
 import com.zfgc.dbobj.ThreadDbObj;
 import com.zfgc.dbobj.ThreadDbObjExample;
 import com.zfgc.dbobj.ThreadPostDbObj;
 import com.zfgc.dbobj.ThreadPostDbObjExample;
+import com.zfgc.dbobj.TopicViewDbObj;
+import com.zfgc.dbobj.TopicViewDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.PostContent;
 import com.zfgc.model.forum.Thread;
 import com.zfgc.model.forum.ThreadPost;
+import com.zfgc.model.forum.Topic;
 import com.zfgc.model.users.Users;
 
 @Component
@@ -32,6 +36,9 @@ public class ThreadDataProvider extends AbstractDataProvider {
 	@Autowired
 	private PostContentDao postContentDao;
 	
+	@Autowired
+	private TopicViewDao topicViewDao;
+	
 	public Long getNumberOfThreads(Short forumId){
 		ThreadDbObjExample ex = threadDao.getExample();
 		ex.createCriteria().andParentForumIdEqualTo(forumId);
@@ -39,32 +46,32 @@ public class ThreadDataProvider extends AbstractDataProvider {
 		return threadDao.countByExample(null, ex);
 	}
 	
-	public List<Thread> getThreadsByParentForumId(Short parentForumId, Boolean isStickyFlag) {
-		ThreadDbObjExample ex = threadDao.getExample();
+	public List<Topic> getThreadsByParentForumId(Short parentForumId, Boolean isStickyFlag) {
+		TopicViewDbObjExample ex = topicViewDao.getExample();
 		ex.createCriteria().andParentForumIdEqualTo(parentForumId)
 						   .andStickyFlagEqualTo(isStickyFlag);
 		
-		List<ThreadDbObj> threads = threadDao.get(ex);
-		List<Thread> result = new ArrayList<>();
+		List<TopicViewDbObj> threads = topicViewDao.get(ex);
+		List<Topic> result = new ArrayList<>();
 		
-		for(ThreadDbObj thread : threads) {
-			Thread topic = mapper.map(thread, Thread.class);
+		for(TopicViewDbObj thread : threads) {
+			Topic topic = mapper.map(thread, Topic.class);
 			result.add(topic);
 		}
 		
 		return result;
 	}
 	
-	public List<Thread> getThreadsById(List<Integer> threadId) {
-		ThreadDbObjExample ex = threadDao.getExample();
+	public List<Topic> getThreadsById(List<Integer> threadId) {
+		TopicViewDbObjExample ex = topicViewDao.getExample();
 		ex.createCriteria().andThreadIdIn(threadId);
 					
 		
-		List<ThreadDbObj> threads = threadDao.get(ex);
-		List<Thread> result = new ArrayList<>();
+		List<TopicViewDbObj> threads = topicViewDao.get(ex);
+		List<Topic> result = new ArrayList<>();
 		
-		for(ThreadDbObj thread : threads) {
-			Thread topic = mapper.map(thread, Thread.class);
+		for(TopicViewDbObj thread : threads) {
+			Topic topic = mapper.map(thread, Topic.class);
 			result.add(topic);
 		}
 		

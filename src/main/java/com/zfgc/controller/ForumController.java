@@ -69,6 +69,12 @@ public class ForumController extends BaseController {
 		return ResponseEntity.ok(forum);
 	}
 	
+	
+	@RequestMapping(value="/{forumId}/metadata", method=RequestMethod.GET, produces="application/json")
+	public ResponseEntity getForumMetadata(@PathVariable("forumId") Short forumId) {
+		return ResponseEntity.ok(forumService.getForumMetadata(forumId, zfgcUser()));
+	}
+	
 	/*@RequestMapping(value="/{categoryId}/forums", method=RequestMethod.GET, produces="application/json")
 	public ResponseEntity getForumNames(@PathVariable("categroyId") Integer categoryId) {
 		

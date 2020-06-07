@@ -61,6 +61,10 @@
 			ForumService.lockUnlockThreads(vm, vm.board.forumId, threadIds);
 		};
 		
+		vm.goToThreadMove = function(){
+			ForumService.goToThreadMove(vm);
+		};
+		
 		vm.getBoard();
 		
 		vm.checkedThreads = {};

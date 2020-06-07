@@ -21,8 +21,14 @@
 			lockUnlock: {
 				url: '/forum/forum/:forumId/lockUnlock',
 				method: 'POST'
+			},
+			metadata: {
+				url: '/forum/forum/:forumId/metadata',
+				method: 'GET'
 			}
 		});
+		
+		ForumService.threadsToMove = [];
 		
 		ForumService.stickyUnstickyThreads = function(vm, boardId, threadIds){
 			var params = {boardId : boardId, threadIds : threadIds, vm: vm};
@@ -32,6 +38,10 @@
 		ForumService.lockUnlockThreads = function(vm, boardId, threadIds){
 			var params = {boardId : boardId, threadIds : threadIds, vm: vm};
 			ModalService.createConfirmDialog(null, "This will lock/unlock all selected threads.", ForumService.lockUnlockConfirm, params);
+		};
+		
+		ForumService.getThreadMetadata = function(vm, boardId){
+			return ForumService.resource.metadata({'forumId' : boardId});
 		};
 		
 		ForumService.stickyUnstickyConfirm = function(params){
@@ -66,6 +76,22 @@
 		
 		ForumService.getThreadTemplate = function(boardId){
 			return ForumService.resource.threadTemplate({forumId: boardId});
+		};
+		
+		ForumService.getCheckedThreads = function(threads){
+			var threads = threads.filter(function(x){
+				return x.isChecked === true;
+			});
+
+			return threads;
+		};
+		
+		ForumService.goToThreadMove = function(vm){
+			var threads = ForumService.getCheckedThreads(vm.board.threads);
+			threads = threads.concat(ForumService.getCheckedThreads(vm.board.stickyThreads));
+			
+			ForumService.threadsToMove = threads;
+			$state.go('move-threads',{fromBoardId : vm.board.forumId});
 		};
 		
 		return ForumService;

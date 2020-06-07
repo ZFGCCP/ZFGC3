@@ -112,7 +112,15 @@ public class ForumService extends AbstractService {
 		
 		usersService.updateUserActions(user.getSessionMatchup(), UserConstants.userActions.VIEWING_BOARD, user, forumId + "");
 		
-		List<UserViewingForumView> usersViewing = userViewingForumViewDataProvider.getUsersViewingForum(forum.getForumId().intValue());
+		UserViewingForumView result = getUsersViewingForum(forumId, user);
+		
+		super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
+		
+		return forum;
+	}
+	
+	public UserViewingForumView getUsersViewingForum(Short boardId, Users zfgcUser) {
+		List<UserViewingForumView> usersViewing = userViewingForumViewDataProvider.getUsersViewingForum(boardId.intValue());
 		UserViewingForumView result = new UserViewingForumView();
 		for(UserViewingForumView viewing : usersViewing) {
 			Users viewingUser = new Users();
@@ -121,7 +129,12 @@ public class ForumService extends AbstractService {
 			result.getUsers().add(viewingUser);
 		}
 		
-		super.websocketMessaging.convertAndSend("/socket/viewingForum/" + forumId, result);
+		return result;
+	}
+	
+	public Forum getForumMetadata(Short forumId, Users zfgcUser) {
+		Forum forum = forumDataProvider.getForum(forumId, zfgcUser);
+		forum.setThreadsCount(threadService.getThreadsInForum(forumId));
 		
 		return forum;
 	}
