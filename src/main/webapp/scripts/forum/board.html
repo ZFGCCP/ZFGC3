@@ -19,7 +19,7 @@
 			<drop-down-menu default-label="Moderation" info-type="moderation" ng-disabled="!vm.checked">
 				<li role="menuitem" ng-click="vm.stickyUnstickyThreads()"><a><i class="fas fa-thumbtack"></i> Sticky/Unsticky Selected</a></li>
 				<li role="menuitem" ng-click="vm.lockUnlockThreads()"><a><i class="fas fa-lock"></i> Lock/Unlock Selected</a></li>
-				<li role="menuitem"><a ui-sref="new-thread({boardId : vm.board.forumId})"><i class="fas fa-truck-moving"></i> Move Selected</a></li>
+				<li role="menuitem" ng-click="vm.goToThreadMove()"><a><i class="fas fa-truck-moving"></i> Move Selected</a></li>
 				<li role="menuitem"><a ui-sref="new-thread({boardId : vm.board.forumId})"><i class="fas fa-trash-alt"></i> Delete Selected</a></li>
 			</drop-down-menu>
 		</div>

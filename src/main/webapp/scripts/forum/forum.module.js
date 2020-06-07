@@ -16,7 +16,7 @@ angular.module('zfgc.forum',['zfgc.config'])
 			templateUrl: basePath + '/thread/new-thread.html'
 		})
 		.state('move-threads', {
-			url: baseRouter + '/board/thread/move',
+			url: baseRouter + '/board/thread/move?fromBoardId',
 			templateUrl: basePath + '/thread/move/move-thread.html'
 		});
 }]);

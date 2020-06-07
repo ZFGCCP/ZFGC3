@@ -19,6 +19,7 @@ import com.zfgc.model.forum.BrMemberGroupForum;
 import com.zfgc.model.forum.PostContent;
 import com.zfgc.model.forum.Thread;
 import com.zfgc.model.forum.ThreadPost;
+import com.zfgc.model.forum.Topic;
 
 @Component
 public class ThreadService extends AbstractService {
@@ -45,11 +46,11 @@ public class ThreadService extends AbstractService {
 		return threadDataProvider.getNumberOfThreads(forumId);
 	}
 	
-	public List<Thread> getThreadsByParentForumId(Short forumId, Integer itemsPerPage, Integer pageNo, Boolean isStickyFlag, Users user){
+	public List<Topic> getThreadsByParentForumId(Short forumId, Integer itemsPerPage, Integer pageNo, Boolean isStickyFlag, Users user){
 		//permission check
 		forumDataProvider.getForum(forumId.shortValue(), user);
 		
-		List<Thread> threads = threadDataProvider.getThreadsByParentForumId(forumId, isStickyFlag);
+		List<Topic> threads = threadDataProvider.getThreadsByParentForumId(forumId, isStickyFlag);
 		
 		Integer start = itemsPerPage * (pageNo - 1);
 		
@@ -120,38 +121,38 @@ public class ThreadService extends AbstractService {
 	
 	public void stickyUnstickyThreads(List<Integer> threadIds, Users zfgcUser) {
 		//get all the threads
-		List<Thread> threads = threadDataProvider.getThreadsById(threadIds);
+		List<Topic> threads = threadDataProvider.getThreadsById(threadIds);
 		
 		//ensure the user actually has permissions to modify these threads
 		
 		//swap their sticky flags and save
-		for(Thread thread : threads) {
+		for(Topic thread : threads) {
 			thread.setStickyFlag(!thread.getStickyFlag());
-			threadDataProvider.saveThread(thread);
+			threadDataProvider.saveThread((Thread)thread);
 		}
 		
 	}
 	
 	public void lockUnlockThreads(List<Integer> threadIds, Users zfgcUser) {
 		//get all the threads
-		List<Thread> threads = threadDataProvider.getThreadsById(threadIds);
+		List<Topic> threads = threadDataProvider.getThreadsById(threadIds);
 		
 		//ensure the user actually has permissions to modify these threads
 		
 		//swap their lock flags and save
-		for(Thread thread : threads) {
+		for(Topic thread : threads) {
 			thread.setLockedFlag(!thread.getLockedFlag());
-			threadDataProvider.saveThread(thread);
+			threadDataProvider.saveThread((Thread)thread);
 		}
 	}
 	
 	public void moveThreads(List<Integer> threadIds, Integer newForumId, Users zfgcUser) {
 		//get all the threads
-		List<Thread> threads = threadDataProvider.getThreadsById(threadIds);
+		List<Topic> threads = threadDataProvider.getThreadsById(threadIds);
 		
-		for(Thread thread : threads) {
+		for(Topic thread : threads) {
 			thread.setParentForumId(newForumId);
-			threadDataProvider.saveThread(thread);
+			threadDataProvider.saveThread((Thread)thread);
 		}
 	}
 	

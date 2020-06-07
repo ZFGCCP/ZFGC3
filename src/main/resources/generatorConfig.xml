@@ -324,10 +324,16 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="FORUM_PERMISSIONS_VIEW" domainObjectName="ForumPermissionsViewDbObj">
+    <table schema="zfgc3" tableName="TOPIC_VIEW" domainObjectName="TopicViewDbObj">
+    	<columnOverride column="NEW_POSTS_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="LOCKED_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="STICKY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="POLL_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+    <!--<table schema="zfgc3" tableName="FORUM_PERMISSIONS_VIEW" domainObjectName="ForumPermissionsViewDbObj">
     </table>
     
-    <!--<table schema="zfgc3" tableName="USER_VIEWING_FORUM_VIEW" domainObjectName="UserViewingForumViewDbObj">
+    <table schema="zfgc3" tableName="USER_VIEWING_FORUM_VIEW" domainObjectName="UserViewingForumViewDbObj">
     </table>
     
     <table schema="zfgc3" tableName="USER_PASSWORD_RESET_VIEW" domainObjectName="UserPasswordResetViewDbObj">
