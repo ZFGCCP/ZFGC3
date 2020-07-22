@@ -40,10 +40,10 @@ public class ThreadDataProvider extends AbstractDataProvider {
 	private TopicViewDao topicViewDao;
 	
 	public Long getNumberOfThreads(Short forumId){
-		ThreadDbObjExample ex = threadDao.getExample();
+		TopicViewDbObjExample ex = topicViewDao.getExample();
 		ex.createCriteria().andParentForumIdEqualTo(forumId);
 		
-		return threadDao.countByExample(null, ex);
+		return topicViewDao.countByExample(null, ex);
 	}
 	
 	public List<Topic> getThreadsByParentForumId(Short parentForumId, Boolean isStickyFlag) {

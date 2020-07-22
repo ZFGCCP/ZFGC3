@@ -64,10 +64,12 @@ public class ForumService extends AbstractService {
 			
 			for(Forum forum : forums){
 				results.get(forum.getCategoryId()).getForums().add(forum);
+				forum.setThreadsCount(threadService.getThreadsInForum(forum.getForumId()));
 				
 				for(Forum subForum : subForums) {
 					if(subForum.getParentForumId().equals(forum.getForumId())) {
 						forum.getSubForums().add(subForum);
+						subForum.setThreadsCount(threadService.getThreadsInForum(subForum.getForumId()));
 					}
 				}
 			}
@@ -105,6 +107,10 @@ public class ForumService extends AbstractService {
 		forum.setThreadsCount(threadService.getThreadsInForum(forumId));
 		
 		forum.setSubForums(forumDataProvider.getForumsByParent(forumId, user));
+		
+		for(Forum sub : forum.getSubForums()) {
+			sub.setThreadsCount(threadService.getThreadsInForum(sub.getForumId()));
+		}
 		
 		Long totalsWithoutSticky = forum.getThreadsCount() - forum.getStickyThreads().size();
 		Integer totalPages = Math.floorDiv(totalsWithoutSticky.intValue(), itemsPerPage.intValue());

@@ -16,7 +16,7 @@ public class Topic extends BaseZfgcModel {
 	protected Boolean stickyFlag = false;
 	protected Boolean pollFlag = false;
 	protected Integer parentForumId;
-	protected Integer latestPostId = 0;
+	protected Integer latestPostId = null;
 	protected Integer postCount;
 	protected String latestPostData;
 	

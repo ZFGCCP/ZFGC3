@@ -47,8 +47,7 @@ public class TopicViewDao extends AbstractDao<TopicViewDbObjExample, TopicViewDb
 
 	@Override
 	public Long countByExample(Topic obj, TopicViewDbObjExample ex) throws RuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		return topicViewDbObjMapper.countByExample(ex);
 	}
 	
 }
