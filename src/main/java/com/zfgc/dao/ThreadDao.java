@@ -39,7 +39,7 @@ public class ThreadDao extends AbstractDao<ThreadDbObjExample, ThreadDbObj, Thre
 	@Override
 	public void updateOrInsert(Thread obj) throws RuntimeException {
 		ThreadDbObj dbObj = mapper.map(obj, ThreadDbObj.class);
-		if(dbObj.getThreadId() == null || dbObj.equals(-1)) {
+		if(dbObj.getThreadId() == null || dbObj.getThreadId().equals(-1)) {
 			threadDbObjMapper.insert(dbObj);
 		}
 		else {
