@@ -82,8 +82,8 @@ public class ForumController extends BaseController {
 	
 	@RequestMapping(value="/{forumId}/thread/template", method=RequestMethod.GET,produces="application/json")
 	@PreAuthorize("hasRole('ROLE_ZFGC_THREAD_CREATOR')")
-	public ResponseEntity getNewThreadTemplate(@PathVariable("forumId") Integer forumId) {
-		Thread thread = threadService.getThreadTemplate(forumId, zfgcUser());
+	public ResponseEntity getNewThreadTemplate(@PathVariable("forumId") Integer forumId, @RequestParam("isPoll") Boolean isPoll) {
+		Thread thread = threadService.getThreadTemplate(forumId, isPoll, zfgcUser());
 		return ResponseEntity.ok(thread);
 	}
 	

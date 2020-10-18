@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dao.PollDao;
 import com.zfgc.dao.PostContentDao;
 import com.zfgc.dao.ThreadDao;
 import com.zfgc.dao.ThreadPostDao;
@@ -19,6 +20,7 @@ import com.zfgc.dbobj.ThreadPostDbObjExample;
 import com.zfgc.dbobj.TopicViewDbObj;
 import com.zfgc.dbobj.TopicViewDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
+import com.zfgc.model.forum.Poll;
 import com.zfgc.model.forum.PostContent;
 import com.zfgc.model.forum.Thread;
 import com.zfgc.model.forum.ThreadPost;
@@ -38,6 +40,9 @@ public class ThreadDataProvider extends AbstractDataProvider {
 	
 	@Autowired
 	private TopicViewDao topicViewDao;
+	
+	@Autowired
+	private PollDao pollDao;
 	
 	public Long getNumberOfThreads(Short forumId){
 		TopicViewDbObjExample ex = topicViewDao.getExample();
@@ -80,8 +85,12 @@ public class ThreadDataProvider extends AbstractDataProvider {
 	
 	public Thread saveThread(Thread thread) {
 		threadDao.updateOrInsert(thread);
-		
 		return thread;
+	}
+	
+	public Poll savePoll(Poll poll) {
+		pollDao.updateOrInsert(poll);
+		return poll;
 	}
 	
 	public ThreadPost postToThread(ThreadPost post) {

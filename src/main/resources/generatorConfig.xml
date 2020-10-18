@@ -22,6 +22,12 @@
     
 
     <!-- tables -->
+   	<table schema="Zfgc3" tableName="POLL" domainObjectName="PollDbObj">
+    	<generatedKey column="POLL_ID" sqlStatement="MySql" identity="true" />
+    	<columnOverride column="ALLOW_CHANGE" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    	<columnOverride column="MULTIPLE_CHOICE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
+    </table>
+   
    
     <!-- <table schema="zfgc3" tableName="BR_MEMBER_GROUP_FORUM" domainObjectName="brMemberGroupForumDbObj">
 		<columnOverride column="READ_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>

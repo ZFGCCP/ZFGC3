@@ -16,6 +16,7 @@ import com.zfgc.services.RuleRunService;
 import com.zfgc.services.bbcode.BbcodeService;
 import com.zfgc.validation.forum.ThreadValidator;
 import com.zfgc.model.forum.BrMemberGroupForum;
+import com.zfgc.model.forum.Poll;
 import com.zfgc.model.forum.PostContent;
 import com.zfgc.model.forum.Thread;
 import com.zfgc.model.forum.ThreadPost;
@@ -63,7 +64,7 @@ public class ThreadService extends AbstractService {
 		return threads;
 	}
 	
-	public Thread getThreadTemplate(Integer forumId, Users user) {
+	public Thread getThreadTemplate(Integer forumId, Boolean isPoll, Users user) {
 		Thread topic = new Thread();
 		topic.setThreadStarterId(user.getUsersId());
 		topic.setAuthorName(user.getDisplayName());
@@ -76,6 +77,10 @@ public class ThreadService extends AbstractService {
 		post.getHeadContent().setCurrentFlag(true);
 		
 		topic.getPosts().add(post);
+		
+		if(isPoll) {
+			topic.setPoll(new Poll());
+		}
 		
 		return topic;
 	}
@@ -92,6 +97,11 @@ public class ThreadService extends AbstractService {
 		
 		thread.getTailPost().getHeadContent().setThreadPostId(thread.getTailPost().getThreadPostId());
 		threadDataProvider.savePostContent(thread.getTailPost().getHeadContent());
+		
+		if(thread.getPollFlag() != null) {
+			thread.getPoll().setThreadId(thread.getThreadId());
+			threadDataProvider.savePoll(thread.getPoll());
+		}
 		
 		return thread;
 		

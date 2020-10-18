@@ -20,6 +20,16 @@ public class Topic extends BaseZfgcModel {
 	protected Integer postCount;
 	protected String latestPostData;
 	
+	protected Poll poll;
+	
+	public Poll getPoll() {
+		return poll;
+	}
+
+	public void setPoll(Poll poll) {
+		this.poll = poll;
+	}
+
 	public String getLatestPostData() {
 		return latestPostData;
 	}
