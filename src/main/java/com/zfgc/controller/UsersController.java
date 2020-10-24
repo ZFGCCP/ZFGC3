@@ -4,13 +4,13 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang.exception.ExceptionUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcUnauthorizedException;
+import com.zfgc.model.users.AuthCredentials;
 import com.zfgc.model.users.MemberListingView;
 import com.zfgc.model.users.MembersView;
 import com.zfgc.model.users.NewPassword;
@@ -53,6 +54,14 @@ class UsersController extends BaseController{
 	@Autowired
 	private PasswordResetCodeService passwordResetCodeService;
 
+	@RequestMapping(value="/auth/login", method=RequestMethod.POST, produces="application/json")
+	@ResponseBody
+	public ResponseEntity login(@RequestBody AuthCredentials credentials) {
+		String result = usersService.getLoginToken(credentials);
+		return ResponseEntity.status(HttpStatus.OK).body(result);
+		
+	}
+	
 	@RequestMapping(value="/displayName/{usersId}", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getUserDisplayName(@PathVariable("usersId") Integer usersId){

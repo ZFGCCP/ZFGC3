@@ -9,11 +9,12 @@ import java.util.Map;
 
 import org.dozer.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.saml.SAMLCredential;
-import org.springframework.security.saml.userdetails.SAMLUserDetailsService;
+/*import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;*/
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
@@ -32,7 +33,7 @@ import com.zfgc.services.users.UsersService;
 import com.zfgc.util.security.ZfgcSecurityUtils;
 
 @Service
-public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
+public class OauthUsersDetailsServiceImpl implements UserDetailsService{
 
 	@Autowired
 	UsersDataProvider usersDataProvider;
@@ -56,27 +57,18 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
     }
 	
 	@Override
-	public Object loadUserBySAML(SAMLCredential credential)
-			throws UsernameNotFoundException {
-		String usersId = credential.getAttributeAsString("USERS_ID");
-		String displayName = credential.getAttributeAsString("DISPLAY_NAME");
-		String loginName = credential.getAttributeAsString("LOGIN_NAME");
-		String[] groupIds = credential.getAttributeAsStringArray("GROUP_IDS");
-		String[] groupNames = credential.getAttributeAsStringArray("GROUPS");
-		//String activeFlag = credential.getAttributeAsString("ACTIVE_FLAG");
-		String primaryMemberGroupId =  credential.getAttributeAsString("PRIMARY_MEMBER_GROUP_ID");
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
         Users user = new Users();
-        Integer id = Integer.parseInt(usersId);
         try {
-			user = usersService.getUser(id);
+			user = usersService.getUser(username);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
         //did the user's primary IP change since last log in?
-        IpAddress primaryIp = user.getPrimaryIpAddress();
+       /* IpAddress primaryIp = user.getPrimaryIpAddress();
         if(!user.getCurrentIpAddress().equals(primaryIp.getIpAddress())) {
         	//does this IP exist already?
         	try {
@@ -116,23 +108,13 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         	catch(Exception ex) {
         		ex.printStackTrace();
         	}
-        }
+        }*/
         
-        user.setUsersId(Integer.parseInt(usersId));
         user.setFromDb(false);
         
         user.setPrimaryMemberGroupId(user.getPrimaryMemberGroupId());
         //user.setTimeZone(credential.getAttributeAsString("TIME_ZONE"));
-        
-        Map<Integer, String> groups = new HashMap<Integer, String>();
-        
-        if(groupIds != null) {
-	        for(int i = 0; i < groupIds.length; i++){
-	        	groups.put(Integer.parseInt(groupIds[i]), groupNames[i]);
-	        }
-        }
-        
-        user.setMemberGroups(groups);
+
         
         List<Integer> memberGroupIds = new ArrayList<>();
         memberGroupIds.add(user.getPrimaryMemberGroupId());
@@ -145,7 +127,7 @@ public class SamlUsersDetailsServiceImpl implements SAMLUserDetailsService{
         
         user.setPermissions(permissionsService.getPermissionsByMemberGroup(memberGroupIds.toArray(new Integer[memberGroupIds.size()])));
         
-        usersDataProvider.saveUser(user);
+        //usersDataProvider.saveUser(user);
         
         user.setSessionMatchup(ZfgcSecurityUtils.generateCryptoString(8));
         

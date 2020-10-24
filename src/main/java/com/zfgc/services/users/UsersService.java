@@ -22,9 +22,15 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.dao.LookupDao;
@@ -35,6 +41,7 @@ import com.zfgc.dataprovider.UserCurrentActionDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
+import com.zfgc.model.users.AuthCredentials;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
@@ -102,11 +109,24 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	ZfgcGeneralConfig zfgcGeneralConfig;
+	
+	@Value("${clausius.client}")
+	private String clientId;
+	
+	@Value("${clausius.password}")
+	private String clientSecret;
 
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
 	public Users getUser(Integer usersId) throws Exception{
 		Users user = usersDataProvider.getUser(usersId);
+		user.setPrimaryIpAddress(ipAddressService.getIpAddress(user.getPrimaryIp()));
+		
+		return user;
+	}
+	
+	public Users getUser(String username) {
+		Users user = usersDataProvider.getUser(username);
 		user.setPrimaryIpAddress(ipAddressService.getIpAddress(user.getPrimaryIp()));
 		
 		return user;
@@ -367,6 +387,20 @@ public class UsersService extends AbstractService {
 		}
 		
 		return recent;
+	}
+	
+	public String getLoginToken(AuthCredentials credentials) {
+		RestTemplate template = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBasicAuth(clientId, clientSecret);
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		//todo: move these paramters into the request body
+		HttpEntity ent = new HttpEntity("grant_type=password&scope=all&username=" + credentials.getUsername() + "&password=" + credentials.getPassword(), headers);
+
+
+		ResponseEntity<String> result = template.exchange("http://zfgc.com:8080/clausius-auth/oauth/token", HttpMethod.POST, ent, String.class);
+		return result.getBody();
 	}
 	
 	@PostConstruct
