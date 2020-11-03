@@ -66,7 +66,7 @@ public class OauthUsersDetailsServiceImpl implements UserDetailsService{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-        
+       
         //did the user's primary IP change since last log in?
        /* IpAddress primaryIp = user.getPrimaryIpAddress();
         if(!user.getCurrentIpAddress().equals(primaryIp.getIpAddress())) {

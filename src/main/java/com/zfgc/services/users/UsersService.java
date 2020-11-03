@@ -58,6 +58,7 @@ import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.RuleRunService;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.avatar.AvatarService;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.pm.PmService;
@@ -110,6 +111,9 @@ public class UsersService extends AbstractService {
 	@Autowired
 	ZfgcGeneralConfig zfgcGeneralConfig;
 	
+	@Autowired
+	private AvatarService avatarService;
+	
 	@Value("${clausius.client}")
 	private String clientId;
 	
@@ -118,16 +122,22 @@ public class UsersService extends AbstractService {
 
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
-	public Users getUser(Integer usersId) throws Exception{
-		Users user = usersDataProvider.getUser(usersId);
+	private void getUserInternal(Users user) {
 		user.setPrimaryIpAddress(ipAddressService.getIpAddress(user.getPrimaryIp()));
+		user.setPersonalInfo(usersDataProvider.getPersonalInfo(user.getUsersId()));
+		user.getPersonalInfo().setAvatar(avatarService.getAvatarRecord(user.getPersonalInfo().getAvatarId()));
+	}
+	
+	public Users getUser(Integer usersId) {
+		Users user = usersDataProvider.getUser(usersId);
+		getUserInternal(user);
 		
 		return user;
 	}
 	
 	public Users getUser(String username) {
 		Users user = usersDataProvider.getUser(username);
-		user.setPrimaryIpAddress(ipAddressService.getIpAddress(user.getPrimaryIp()));
+		getUserInternal(user);
 		
 		return user;
 	}

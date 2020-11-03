@@ -37,6 +37,8 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.web.authentication.switchuser.SwitchUserFilter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.filter.GenericFilterBean;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.socket.WebSocketHandler;
 import org.springframework.web.socket.config.annotation.AbstractWebSocketMessageBrokerConfigurer;
 import org.springframework.web.socket.config.annotation.EnableWebSocketMessageBroker;
@@ -98,6 +100,15 @@ public class ForumApplication extends SpringBootServletInitializer {
       return dozerBean;
     }
 
+    @Bean
+	public WebMvcConfigurer corsConfigurer() {
+		return new WebMvcConfigurer() {
+			@Override
+			public void addCorsMappings(CorsRegistry registry) {
+				registry.addMapping("/**").allowedOrigins("http://localhost:3000");
+			}
+		};
+	}
     
     public class Oauth2AuthorizationFilter extends GenericFilterBean {
 
@@ -152,7 +163,8 @@ public class ForumApplication extends SpringBootServletInitializer {
     		SecretKeySpec key = new SecretKeySpec(authKey.getBytes(), "HMACSHA256");
     		
     		http.httpBasic().disable().csrf().disable().authorizeRequests().antMatchers("//*.map", 
-					 "/forum/index", 
+					 "/forum/index",
+					 "/zfgcui/**",
 					 "/socket/whosonline",
 					 "/lookups/**",
 					 "/contentstream/**",

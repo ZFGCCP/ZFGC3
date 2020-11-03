@@ -22,6 +22,7 @@ import com.zfgc.dao.UserSecuritySettingsDao;
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dbobj.MemberListingViewDbObj;
 import com.zfgc.dbobj.MemberListingViewDbObjExample;
+import com.zfgc.dbobj.UserPersonalInfoDbObjExample;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -71,6 +72,13 @@ public class UsersDataProvider extends AbstractDataProvider {
 	private PmConversationDataProvider pmConversationDataProvider;
 	
 	private Logger LOGGER = LogManager.getLogger(UsersDataProvider.class);
+	
+	public PersonalInfo getPersonalInfo(Integer usersId) {
+		UserPersonalInfoDbObjExample ex = userPersonalInfoDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId);
+		
+		return mapper.map(userPersonalInfoDao.get(ex).get(0), PersonalInfo.class);
+	}
 	
 	public Users getUser(Integer usersId) {
 		UsersDbObjExample ex = usersDao.getExample();
