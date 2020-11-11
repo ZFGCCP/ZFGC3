@@ -38,6 +38,7 @@ import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UserConnectionDataProvider;
 import com.zfgc.dataprovider.UserCurrentActionDataProvider;
+import com.zfgc.dataprovider.UserEmailViewDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
@@ -50,6 +51,7 @@ import com.zfgc.model.users.MembersView;
 import com.zfgc.model.users.UserConnection;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserCurrentAction;
+import com.zfgc.model.users.UserEmailView;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.PersonalInfo;
@@ -112,6 +114,9 @@ public class UsersService extends AbstractService {
 	ZfgcGeneralConfig zfgcGeneralConfig;
 	
 	@Autowired
+	private UserEmailViewDataProvider userEmailViewDataProvider;
+	
+	@Autowired
 	private AvatarService avatarService;
 	
 	@Value("${clausius.client}")
@@ -119,6 +124,9 @@ public class UsersService extends AbstractService {
 	
 	@Value("${clausius.password}")
 	private String clientSecret;
+	
+	@Value("${clausius.authEndpoint}")
+	private String authEndpoint;
 
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
@@ -142,6 +150,12 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
+	public Users getUserByEmail(String email) {
+		UserEmailView emailView = userEmailViewDataProvider.getActiveUserEmailReverse(email);
+		
+		return getUser(emailView.getLoginName());
+	}
+	
 	public List<Integer> getUsersByConversation(Integer conversationId) throws RuntimeException{
 		List<Users> result = null;
 
@@ -155,10 +169,19 @@ public class UsersService extends AbstractService {
 		return Ids;
 	}
 	
+	private void registerUserAtIdentity(Users user) {
+		RestTemplate template = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBasicAuth(clientId, clientSecret);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		HttpEntity ent = new HttpEntity("{ 'username' : '" + user.getUserContactInfo().getEmail().getEmailAddress() + "', 'password' : '" + user.getPassword() + "' }", headers);
+
+		template.exchange(authEndpoint + "/users/register", HttpMethod.POST, ent, String.class);
+	}
+	
 	@Transactional
 	public Users createNewUser(Users user, HttpServletRequest requestHeader) throws RuntimeException{
-		
-		
 		try {
 			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
 			ruleRunner.runRules(validator, requiredFieldsChecker, ruleChecker, user, user);
@@ -173,7 +196,7 @@ public class UsersService extends AbstractService {
 		}
 		
 		if(!user.getErrors().hasErrors()){
-			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
+			registerUserAtIdentity(user);
 
 			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
 			user.setActiveFlag(false);
@@ -405,11 +428,15 @@ public class UsersService extends AbstractService {
 		headers.setBasicAuth(clientId, clientSecret);
 		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
 		
+		//lets see if this user even exists first.
+		//we need their email address for authentication anyway
+		UserEmailView userEmail = userEmailViewDataProvider.getActiveUserEmail(credentials.getUsername());
+		
 		//todo: move these paramters into the request body
-		HttpEntity ent = new HttpEntity("grant_type=password&scope=all&username=" + credentials.getUsername() + "&password=" + credentials.getPassword(), headers);
+		HttpEntity ent = new HttpEntity("grant_type=password&scope=all&username=" + userEmail.getEmailAddress() + "&password=" + credentials.getPassword(), headers);
 
 
-		ResponseEntity<String> result = template.exchange("http://zfgc.com:8080/clausius-auth/oauth/token", HttpMethod.POST, ent, String.class);
+		ResponseEntity<String> result = template.exchange(authEndpoint + "/oauth/token", HttpMethod.POST, ent, String.class);
 		return result.getBody();
 	}
 	

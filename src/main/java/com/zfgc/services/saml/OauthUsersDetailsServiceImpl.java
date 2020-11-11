@@ -61,7 +61,7 @@ public class OauthUsersDetailsServiceImpl implements UserDetailsService{
 
         Users user = new Users();
         try {
-			user = usersService.getUser(username);
+			user = usersService.getUserByEmail(username);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

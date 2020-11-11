@@ -284,7 +284,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 	private void createUserSecuritySettings(Users user) throws Exception{
 		user.getUserSecurityInfo().setUsersId(user.getUsersId());
 		userSecuritySettingsDao.updateOrInsert(user.getUserSecurityInfo());
-		userSecuritySettingsDao.updateUserPassword(user.getUserSecurityInfo().getUsersId(), user.getUserSecurityInfo().getNewPassword());
 	}
 	
 	private void createUserPersonalMessagingSettings(Users user) throws RuntimeException{
