@@ -175,7 +175,7 @@ public class UsersService extends AbstractService {
 		headers.setBasicAuth(clientId, clientSecret);
 		headers.setContentType(MediaType.APPLICATION_JSON);
 		
-		HttpEntity ent = new HttpEntity("{ 'username' : '" + user.getUserContactInfo().getEmail().getEmailAddress() + "', 'password' : '" + user.getPassword() + "' }", headers);
+		HttpEntity ent = new HttpEntity("{ 'username' : '" + user.getUserContactInfo().getEmail().getEmailAddress() + "', 'password' : '" + user.getUserSecurityInfo().getNewPassword() + "' }", headers);
 
 		template.exchange(authEndpoint + "/users/register", HttpMethod.POST, ent, String.class);
 	}
