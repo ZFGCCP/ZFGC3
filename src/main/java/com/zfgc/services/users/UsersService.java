@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.mail.internet.InternetAddress;
@@ -287,14 +288,21 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range) throws RuntimeException{
-		//todo: add permission check
-		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range);
+	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range, String sortBy, String sortOrder) throws RuntimeException{
+		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range, user, sortBy, sortOrder);
+		
+		if(!user.isModerationStaff()) {
+			result.stream().forEach(x -> x.setIpAddress(null));
+		}
+		
 		Long totalUsers = usersDataProvider.getActiveUsersCount();
 		MembersView members = new MembersView();
 		
 		members.setTotalCount(totalUsers);
 		members.setMembers(result);
+		members.setPageNo(pageNumber);
+		members.setSortBy(sortBy);
+		members.setSortOrder(sortOrder);
 		
 		
 		return members;

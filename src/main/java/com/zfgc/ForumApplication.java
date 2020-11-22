@@ -163,22 +163,7 @@ public class ForumApplication extends SpringBootServletInitializer {
     		SecretKeySpec key = new SecretKeySpec(authKey.getBytes(), "HMACSHA256");
     		
     		http.httpBasic().disable().csrf().disable().authorizeRequests().antMatchers("//*.map", 
-					 "/forum/index",
-					 "/zfgcui/**",
-					 "/socket/whosonline",
-					 "/lookups/**",
-					 "/contentstream/**",
-					 "/subscriptions/threads/**",
-					 "/index.php",
-					 "/config/**",
-					 "/calendar/**",
-					 "/forum/**",
-					 "/users/auth/login",
-					 "/users/navigation",
-					 "/users/loggedInUser",
-					 "/users/requestPasswordReset",
-					 "/users/resetPassword",
-					 "/users/newuser/**").permitAll().and().authorizeRequests().anyRequest().authenticated().and()
+					 "/**").permitAll().and().authorizeRequests().anyRequest().authenticated().and()
     		    .oauth2ResourceServer().jwt().decoder(NimbusJwtDecoder.withSecretKey(key).build());
     		
     		http.addFilterAfter(jwtAuthTokenFilterBean(), SwitchUserFilter.class);

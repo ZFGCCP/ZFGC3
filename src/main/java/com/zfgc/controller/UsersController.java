@@ -175,9 +175,10 @@ class UsersController extends BaseController{
 	
 	@RequestMapping(value="/member-list", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public ResponseEntity getMemberList(@RequestParam Integer pageNo, @RequestParam Integer usersPerPage) {
+	@PreAuthorize("hasRole('ROLE_ZFGC_USER')")
+	public ResponseEntity getMemberList(@RequestParam("pageNo") Integer pageNo, @RequestParam("usersPerPage") Integer usersPerPage, @RequestParam("sortBy") String sortBy, @RequestParam("sortOrder") String sortOrder) {
 		MembersView userList = null;
-		userList = usersService.getMemberListingView(zfgcUser(), pageNo, usersPerPage);
+		userList = usersService.getMemberListingView(zfgcUser(), pageNo, usersPerPage, sortBy, sortOrder);
 		
 		return ResponseEntity.ok(userList);
 	}

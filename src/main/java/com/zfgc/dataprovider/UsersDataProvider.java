@@ -230,24 +230,26 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return usersDao.getDisplayName(usersId);
 	}
 	
-	public List<MemberListingView> getMemberListing(Integer pageIndex, Integer usersPerPage) throws RuntimeException{
+	public List<MemberListingView> getMemberListing(Integer pageIndex, Integer usersPerPage, Users user, String sortBy, String sortOrder) throws RuntimeException{
 		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
+		
+		if(!user.isModerationStaff()) {
+			ex.createCriteria().andActiveFlagEqualTo(true);
+		}
+		
 		ex.setLimitStart(pageIndex * usersPerPage);
 		ex.setLimitRange(usersPerPage);
 		
-		List<MemberListingViewDbObj> dbObj = memberListingViewDao.get(ex);
+		ex.setOrderByClause(sortBy + " " + sortOrder);
 		
-		Map<Integer, MemberListingView> mapping = new HashMap<>();
+		List<MemberListingViewDbObj> dbObj = memberListingViewDao.get(ex);
+		List<MemberListingView> result = new ArrayList<>();
 		
 		for(MemberListingViewDbObj obj : dbObj) {
-			if(!mapping.containsKey(obj.getUsersId())) {
-				mapping.put(obj.getUsersId(), mapper.map(obj, MemberListingView.class));
-			}
-			
-			mapping.get(obj.getUsersId()).getMemberGroups().add(obj.getGroupName());
+			result.add(mapper.map(obj, MemberListingView.class));
 		}
 		
-		return new ArrayList<>(mapping.values());
+		return result;
 		
 	}
 	
