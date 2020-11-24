@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -243,13 +244,10 @@ public class UsersDataProvider extends AbstractDataProvider {
 		ex.setOrderByClause(sortBy + " " + sortOrder);
 		
 		List<MemberListingViewDbObj> dbObj = memberListingViewDao.get(ex);
-		List<MemberListingView> result = new ArrayList<>();
 		
-		for(MemberListingViewDbObj obj : dbObj) {
-			result.add(mapper.map(obj, MemberListingView.class));
-		}
-		
-		return result;
+		return dbObj.stream()
+				    .map(x -> mapper.map(x, MemberListingView.class))
+					.collect(Collectors.toList());
 		
 	}
 	
