@@ -111,6 +111,7 @@ class UsersController extends BaseController{
 	
 	@RequestMapping(value="/profile/{userId}", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
+	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
 	public ResponseEntity getUserProfile(@PathVariable("userId") Integer userId){
 		UserProfileView user = userProfileService.getProfile(userId, zfgcUser());
 		
