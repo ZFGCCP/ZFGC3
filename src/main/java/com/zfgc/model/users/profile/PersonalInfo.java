@@ -14,6 +14,7 @@ import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class PersonalInfo extends BaseZfgcModel {
 
+	@JsonIgnore
 	private Date birthDate;
 	private String customTitle;
 	private String personalText;

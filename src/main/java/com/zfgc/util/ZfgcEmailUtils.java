@@ -28,10 +28,15 @@ public class ZfgcEmailUtils{
 	
 	@Value("${spring.mail.username}") String fromEmail;
 	
-	public void sendEmail(String subject, String body, InternetAddress ... to) throws UnsupportedEncodingException{
+	public void sendEmail(String subject, String body, InternetAddress ... to) {
 		List<InternetAddress> toList = new ArrayList<>();
 		CollectionUtils.addAll(toList, to);
-		InternetAddress from = new InternetAddress(fromEmail, "ZFGC");
+		InternetAddress from;
+		try {
+			from = new InternetAddress(fromEmail, "ZFGC");
+		} catch (UnsupportedEncodingException e) {
+			throw new RuntimeException(e);
+		}
 		
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper;

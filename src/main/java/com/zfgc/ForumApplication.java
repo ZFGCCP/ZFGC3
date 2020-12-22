@@ -62,6 +62,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
 import org.springframework.http.server.ServerHttpRequest;
 import org.springframework.messaging.simp.config.MessageBrokerRegistry;
+import org.springframework.scheduling.annotation.EnableAsync;
+
 import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.interceptors.HttpUserAgentHandshakeInterceptor;
 import com.zfgc.model.users.Users;
@@ -76,6 +78,7 @@ import it.ozimov.springboot.mail.configuration.EnableEmailTools;
 @EnableConfigurationProperties({ZfgcGeneralConfig.class})
 @EnableTransactionManagement
 @EnableEmailTools
+@EnableAsync
 public class ForumApplication extends SpringBootServletInitializer {
 	
     public static void main(String[] args) {

@@ -227,10 +227,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return result;
 	}
 	
-	public String getDisplayName(Integer usersId){
-		return usersDao.getDisplayName(usersId);
-	}
-	
 	public List<MemberListingView> getMemberListing(Integer pageIndex, Integer usersPerPage, Users user, String sortBy, String sortOrder) throws RuntimeException{
 		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
 		

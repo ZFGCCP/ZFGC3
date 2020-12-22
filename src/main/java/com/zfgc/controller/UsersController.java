@@ -62,14 +62,6 @@ class UsersController extends BaseController{
 		
 	}
 	
-	@RequestMapping(value="/displayName/{usersId}", method=RequestMethod.GET, produces="application/json")
-	@ResponseBody
-	public ResponseEntity getUserDisplayName(@PathVariable("usersId") Integer usersId){
-		Users user = usersService.getDisplayName(usersId);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(user);
-	}
-	
 	@RequestMapping(value="/loggedInUser", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
 	public ResponseEntity getCurrentlyLoggedInUser(){
@@ -162,14 +154,11 @@ class UsersController extends BaseController{
 		return ResponseEntity.status(HttpStatus.OK).body(buddyList);
 	}
 	
-	@RequestMapping(value="/navigation", method=RequestMethod.GET, produces="application/json")
+	@RequestMapping(value="/profile/{userId}/navigation", method=RequestMethod.GET, produces="application/json")
 	@ResponseBody
-	public ResponseEntity getProfileNavigationTabs(@RequestParam Integer usersId){
+	@PreAuthorize("hasAnyRole('ROLE_ZFGC_USER')")
+	public ResponseEntity getProfileNavigationTabs(@PathVariable("userId") Integer usersId){
 		List<NavTab> navTabs = userProfileService.getProfileNavTabs(zfgcUser(), usersId);
-		
-		if(navTabs == null){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An unexpected error has occurred. Please contact a system administrator.");
-		}
 		
 		return ResponseEntity.status(HttpStatus.OK).body(navTabs);
 	}
