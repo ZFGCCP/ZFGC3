@@ -1,0 +1,11 @@
+<span uib-dropdown is-open="isOpen" class="dropdown-wrapper">
+	<span class="dropdown-button-wrapper">
+		<button class="btn btn-confirm btn-sm btn-dropdown" ng-disabled="ngDisabled">
+			<i ng-if="iconType && iconType !== null" ng-class="iconType"></i> {{defaultLabel}} 
+		</button>
+		<button class="btn btn-confirm btn-sm btn-dropdown-toggle" uib-dropdown-toggle ng-click="toggleDropDown()" ng-disabled="ngDisabled">
+			<i class="fas fa-caret-down"></i>
+		</button>
+	</span>
+	<ul uib-dropdown-menu role="menu" ng-transclude></ul>
+</span>

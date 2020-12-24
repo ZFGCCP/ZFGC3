@@ -3,6 +3,7 @@ package com.zfgc.rules.users;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.model.BaseZfgcModel;
 import com.zfgc.model.users.Users;
@@ -18,7 +19,7 @@ public class UsersRuleChecker extends AbstractRulesChecker<Users>{
 	AuthenticationService authenticationService;
 	
 	@Autowired
-	UsersService usersService;
+	UsersDataProvider usersDataProvider;
 	
 	@Override
 	public void rulesCheck(Users model, Users user) throws ZfgcValidationException, RuntimeException {
@@ -29,14 +30,14 @@ public class UsersRuleChecker extends AbstractRulesChecker<Users>{
 			model.getErrors().getRuleErrors().add(emailDuplicate);
 		}
 		
-		if(usersService.doesDisplayNameExist(model.getDisplayName())){
+		if(doesDisplayNameExist(model.getDisplayName())){
 			Rule displayNameDuplicate = new Rule();
 			displayNameDuplicate.setRuleName("DISPLAY_NAME_DUPLICATE");
 			displayNameDuplicate.setErrorMessage("That display name is already taken");
 			model.getErrors().getRuleErrors().add(displayNameDuplicate);
 		}
 		
-		if(usersService.doesLoginNameExist(model.getLoginName())){
+		if(doesLoginNameExist(model.getLoginName())){
 			Rule loginNameDuplicate = new Rule();
 			loginNameDuplicate.setRuleName("LOGIN_NAME_DUPLICATE");
 			loginNameDuplicate.setErrorMessage("That login name is already taken");
@@ -67,5 +68,13 @@ public class UsersRuleChecker extends AbstractRulesChecker<Users>{
 			tosUnchecked.setErrorMessage("You must acknowledge that you have read and agree to the terms of service and are 13 years of age or older.");
 			model.getErrors().getRuleErrors().add(tosUnchecked);
 		}
+	}
+	
+	protected Boolean doesLoginNameExist(String loginName) throws RuntimeException {
+		return usersDataProvider.doesLoginNameExist(loginName);
+	}
+	
+	protected Boolean doesDisplayNameExist(String loginName) throws RuntimeException {
+		return usersDataProvider.doesDisplayNameExist(loginName);
 	}
 }

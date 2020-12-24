@@ -48,7 +48,7 @@ public class FileController extends BaseController{
 
 		return ResponseEntity.status(HttpStatus.OK)
 				             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=avatar" + avatarId)
-				             .contentType(MediaType.TEXT_PLAIN)
+				             .contentType(MediaType.IMAGE_JPEG)
 				             .body(new InputStreamResource(is.getIs()));
 	}
 	
@@ -60,7 +60,7 @@ public class FileController extends BaseController{
 
 		return ResponseEntity.status(HttpStatus.OK)
 				             .header(HttpHeaders.CONTENT_DISPOSITION, "attachment;filename=" + galleryId)
-				             .contentType(MediaType.TEXT_PLAIN)
+				             .contentType(MediaType.IMAGE_JPEG)
 				             .body(new InputStreamResource(is.getIs()));
 	}
 	

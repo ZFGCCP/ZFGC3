@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.CharBuffer;
@@ -13,6 +14,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import javax.annotation.PostConstruct;
 import javax.mail.internet.InternetAddress;
@@ -22,9 +24,16 @@ import org.apache.commons.lang3.time.DateUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import com.zfgc.config.ZfgcGeneralConfig;
 import com.zfgc.dao.LookupDao;
@@ -32,9 +41,11 @@ import com.zfgc.dataprovider.EmailAddressDataProvider;
 import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UserConnectionDataProvider;
 import com.zfgc.dataprovider.UserCurrentActionDataProvider;
+import com.zfgc.dataprovider.UserEmailViewDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
+import com.zfgc.model.users.AuthCredentials;
 import com.zfgc.model.users.AuthToken;
 import com.zfgc.model.users.EmailAddress;
 import com.zfgc.model.users.IpAddress;
@@ -43,6 +54,7 @@ import com.zfgc.model.users.MembersView;
 import com.zfgc.model.users.UserConnection;
 import com.zfgc.model.users.UserContactInfo;
 import com.zfgc.model.users.UserCurrentAction;
+import com.zfgc.model.users.UserEmailView;
 import com.zfgc.model.users.UserSecurityInfo;
 import com.zfgc.model.users.Users;
 import com.zfgc.model.users.profile.PersonalInfo;
@@ -51,6 +63,7 @@ import com.zfgc.rules.users.UsersRuleChecker;
 import com.zfgc.services.AbstractService;
 import com.zfgc.services.RuleRunService;
 import com.zfgc.services.authentication.AuthenticationService;
+import com.zfgc.services.avatar.AvatarService;
 import com.zfgc.services.ip.IpAddressService;
 import com.zfgc.services.lookups.LookupService;
 import com.zfgc.services.pm.PmService;
@@ -102,116 +115,127 @@ public class UsersService extends AbstractService {
 	
 	@Autowired
 	ZfgcGeneralConfig zfgcGeneralConfig;
+	
+	@Autowired
+	private UserEmailViewDataProvider userEmailViewDataProvider;
+	
+	@Autowired
+	private AvatarService avatarService;
+	
+	@Value("${clausius.client}")
+	private String clientId;
+	
+	@Value("${clausius.password}")
+	private String clientSecret;
+	
+	@Value("${clausius.authEndpoint}")
+	private String authEndpoint;
 
 	private Logger LOGGER = LogManager.getLogger(UsersService.class);
 
-	public Users getUser(Integer usersId) throws Exception{
-		Users user = usersDataProvider.getUser(usersId);
+	private void getUserInternal(Users user) {
 		user.setPrimaryIpAddress(ipAddressService.getIpAddress(user.getPrimaryIp()));
+		user.setPersonalInfo(usersDataProvider.getPersonalInfo(user.getUsersId()));
+		user.getPersonalInfo().setAvatar(avatarService.getAvatarRecord(user.getPersonalInfo().getAvatarId()));
+	}
+	
+	public Users getUser(Integer usersId) {
+		Users user = usersDataProvider.getUser(usersId);
+		getUserInternal(user);
 		
 		return user;
 	}
 	
-	public List<Integer> getUsersByConversation(Integer conversationId) throws RuntimeException{
-		List<Users> result = null;
+	public Users getUser(String username) {
+		Users user = usersDataProvider.getUser(username);
+		getUserInternal(user);
+		
+		return user;
+	}
+	
+	public Users getUserByEmail(String email) {
+		UserEmailView emailView = userEmailViewDataProvider.getActiveUserEmailReverse(email);
+		
+		return getUser(emailView.getLoginName());
+	}
+	
+	private void registerUserAtIdentity(Users user) {
+		RestTemplate template = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBasicAuth(clientId, clientSecret);
+		headers.setContentType(MediaType.APPLICATION_JSON);
+		
+		HttpEntity ent = new HttpEntity("{ \"username\" : \"" + user.getUserContactInfo().getEmail().getEmailAddress() + "\", \"password\" : \"" + user.getUserSecurityInfo().getNewPassword() + "\" }", headers);
 
-		result = usersDataProvider.getUsersByConversation(conversationId);
-		
-		List<Integer> Ids = new ArrayList<>(result.size());
-		for(Users user : result) {
-			Ids.add(user.getUsersId());
-		}
-		
-		return Ids;
+		template.exchange(authEndpoint + "/users/register", HttpMethod.POST, ent, String.class);
 	}
 	
 	@Transactional
 	public Users createNewUser(Users user, HttpServletRequest requestHeader) throws RuntimeException{
-		
-		
-		try {
-			user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
-			ruleRunner.runRules(validator, requiredFieldsChecker, ruleChecker, user, user);
-		} 
-		catch(ZfgcValidationException ex){
-			ex.printStackTrace();
-			throw ex;
-		}
-		catch (RuntimeException ex) {
-			ex.printStackTrace();
-			throw ex;
-		}
-		
-		if(!user.getErrors().hasErrors()){
-			user.getUserHashInfo().setPassSalt(authenticationService.generateSalt());
+		user.setTimeOffsetLkup(lookupService.getLkupValue(LookupService.TIMEZONE, user.getTimeOffset()));
+		ruleRunner.runRules(validator, requiredFieldsChecker, ruleChecker, user, user);
 
-			user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
-			user.setActiveFlag(false);
-			user.setPrimaryMemberGroupId(2);
-			generateUniqueActivationCode(user);
+		registerUserAtIdentity(user);
+
+		user.setDateRegistered(ZfgcTimeUtils.getToday(user.getTimeOffsetLkup()));
+		user.setActiveFlag(false);
+		user.setPrimaryMemberGroupId(2);
+		generateUniqueActivationCode(user);
+		
+		//does the remote Ip exist?
+		String ip = requestHeader.getRemoteAddr();
+		IpAddress potentialIp = ipAddressService.getIpAddress(ip);
+
+		if(potentialIp == null) {
+			potentialIp = ipAddressService.createIpAddress(requestHeader.getRemoteAddr());
+		}
+		
+		user.setPrimaryIpAddress(potentialIp);
+		user.setPrimaryIp(potentialIp.getIpAddressId());
+		
+		setUserIsSpammer(user);
+		
+		user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
+		Avatar avatar = new Avatar();
+		avatar.setAvatarTypeId(1);
+		
+		user.getPersonalInfo().setAvatar(avatar);
+		
+		user = usersDataProvider.createUser(user);
+		loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
+		
+		//generate rsa key pair for PM, then AES encrypt the private key - base it off of the password for now
+		//todo: when the encryption system for PMs is redone, update this to be a separate field distinct from the password
+		pmService.createKeyPairs(user.getUsersId(), user.getUserSecurityInfo().getNewPassword());
+
+		sendRegistrationEmail(user);	
+		
+		return user;
+	}
+	
+	@Async
+	private void sendRegistrationEmail(Users user) {
+		if(!user.getUserContactInfo().getEmail().getIsSpammerFlag()) {
+			String subject = "New Account Activation For ZFGC";
+			String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
+						  "If you think you have received this email in error, please ignore it.<br><br>" +
+						  zfgcGeneralConfig.getUiUrl() + "/useractivation?activationCode=" + user.getEmailActivationCode();
 			
-			IpAddress potentialIp = null;
-			//does the remote Ip exist?
+			InternetAddress to;
 			try {
-				IpAddress ipCheck = ipAddressService.getIpAddress(requestHeader.getRemoteAddr());
-				potentialIp = ipCheck;
-			}
-			catch(ZfgcNotFoundException ex) {
-				potentialIp = ipAddressService.createIpAddress(requestHeader.getRemoteAddr());
-			}
-			catch(RuntimeException ex) {
-				ex.printStackTrace();
-				throw ex;
-			}
-			
-			user.setPrimaryIpAddress(potentialIp);
-			user.setPrimaryIp(potentialIp.getIpAddressId());
-			
-			try {
-				setUserIsSpammer(user);
-				
-				user.getUserContactInfo().setEmail(emailAddressDataProvider.createNewEmail(user.getUserContactInfo().getEmail()));
-				Avatar avatar = new Avatar();
-				avatar.setAvatarTypeId(1);
-				
-				user.getPersonalInfo().setAvatar(avatar);
-				
-				user = usersDataProvider.createUser(user);
-				loggingService.logAction(7, "User account created for " + user.getLoginName(), user.getUsersId(), user.getPrimaryIpAddress().getIpAddress());
-				
-				if(!user.getUserContactInfo().getEmail().getIsSpammerFlag()) {
-					String subject = "New Account Activation For ZFGC";
-					String body = "Hello " + user.getDisplayName() + ", below you will find an activation link for your account on ZFGC.<br>" +
-								  "If you think you have received this email in error, please ignore it.<br><br>" +
-								  zfgcGeneralConfig.getUiUrl() + "/useractivation?activationCode=" + user.getEmailActivationCode();
-					
-					InternetAddress to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
-					zfgcEmailUtils.sendEmail(subject, body, to);
-				}
-				
-				//generate rsa key pair for PM, then AES encrypt the private key - base it off of the password for now
-				//todo: when the encryption system for PMs is redone, update this to be a separate field distinct from the password
-				pmService.createKeyPairs(user.getUsersId(), user.getUserSecurityInfo().getNewPassword());
-			} catch (Exception ex) {
-				ex.printStackTrace();
-				throw new RuntimeException(ex);
+				to = new InternetAddress(user.getUserContactInfo().getEmail().getEmailAddress(), user.getDisplayName());
+				zfgcEmailUtils.sendEmail(subject, body, to);
+			} catch (UnsupportedEncodingException e) {
+				e.printStackTrace();
 			}
 		}
-		return user;
 	}
 	
 	public void setUserIsSpammer(Users user) throws RuntimeException{
 		user.getPrimaryIpAddress().setIsSpammerFlag(authenticationService.checkIpIsSpammer(user.getPrimaryIpAddress()));
 		user.getUserContactInfo().getEmail().setIsSpammerFlag(authenticationService.checkEmailIsSpammer(user.getUserContactInfo().getEmail()));
 	}
-	
-	public Boolean doesLoginNameExist(String loginName) throws RuntimeException {
-		return usersDataProvider.doesLoginNameExist(loginName);
-	}
-	
-	public Boolean doesDisplayNameExist(String loginName) throws RuntimeException {
-		return usersDataProvider.doesDisplayNameExist(loginName);
-	}
+
 	
 	public Users getLoggedInUser(Users user) throws RuntimeException{
 		if(user.getUsersId() == null || user.getUsersId() == -1){
@@ -227,21 +251,21 @@ public class UsersService extends AbstractService {
 		return user;
 	}
 	
-	public Users getDisplayName(Integer usersId){
-		Users user = new Users();
-		user.setUsersId(usersId);
-		user.setDisplayName(usersDataProvider.getDisplayName(usersId));
-		return user;
-	}
-	
-	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range) throws RuntimeException{
-		//todo: add permission check
-		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range);
+	public MembersView getMemberListingView(Users user, Integer pageNumber, Integer range, String sortBy, String sortOrder) throws RuntimeException{
+		List<MemberListingView> result = usersDataProvider.getMemberListing(pageNumber - 1, range, user, sortBy, sortOrder);
+		
+		if(!user.isModerationStaff()) {
+			result.stream().forEach(x -> x.setIpAddress(null));
+		}
+		
 		Long totalUsers = usersDataProvider.getActiveUsersCount();
 		MembersView members = new MembersView();
 		
 		members.setTotalCount(totalUsers);
 		members.setMembers(result);
+		members.setPageNo(pageNumber);
+		members.setSortBy(sortBy);
+		members.setSortOrder(sortOrder);
 		
 		
 		return members;
@@ -367,6 +391,24 @@ public class UsersService extends AbstractService {
 		}
 		
 		return recent;
+	}
+	
+	public String getLoginToken(AuthCredentials credentials) {
+		RestTemplate template = new RestTemplate();
+		HttpHeaders headers = new HttpHeaders();
+		headers.setBasicAuth(clientId, clientSecret);
+		headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
+		
+		//lets see if this user even exists first.
+		//we need their email address for authentication anyway
+		UserEmailView userEmail = userEmailViewDataProvider.getActiveUserEmail(credentials.getUsername());
+		
+		//todo: move these paramters into the request body
+		HttpEntity ent = new HttpEntity("grant_type=password&scope=all&username=" + userEmail.getEmailAddress() + "&password=" + credentials.getPassword(), headers);
+
+
+		ResponseEntity<String> result = template.exchange(authEndpoint + "/oauth/token", HttpMethod.POST, ent, String.class);
+		return result.getBody();
 	}
 	
 	@PostConstruct

@@ -1,12 +1,15 @@
 package com.zfgc.model.users;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.zfgc.model.BaseZfgcModel;
 
+@JsonInclude(Include.NON_NULL)
 public class UserContactInfo extends BaseZfgcModel{
 
 	private Integer userContactSettingsId;
 	private Integer usersId;
-	
+
 	private String skype;
 	private String gtalk;
 	private String facebook;
@@ -14,7 +17,6 @@ public class UserContactInfo extends BaseZfgcModel{
 	private String xboxLive;
 	private String steam;
 	private String nnid;
-	
 	private EmailAddress email;
 	
 	public boolean getHasContactInfo() {

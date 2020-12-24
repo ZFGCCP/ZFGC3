@@ -23,13 +23,8 @@ public class NavTabService extends AbstractService {
 	
 	public List<NavTab> getUserProfileNavTabs(Users user, Integer userProfileId){
 		List<NavTab> navTabs = null;
-		try{
-			navTabs = navTabDataProvider.getNavTabs(user);
-		}
-		catch(Exception ex){
-			return null;
-		}
-		
+		navTabs = navTabDataProvider.getNavTabs(user);
+
 		for(Iterator<NavTab> itr = navTabs.iterator(); itr.hasNext();){
 			NavTab navTab = itr.next();
 			
@@ -49,13 +44,8 @@ public class NavTabService extends AbstractService {
 				itr.remove();
 			}
 		}
-		
-		if(navTabs != null && navTabs.size() > 0){
-			navTabs.get(0).setActive(true);
-		}
-		else{
-			return null;
-		}
+
+		navTabs.get(0).setActive(true);
 
 		return navTabs;
 	}

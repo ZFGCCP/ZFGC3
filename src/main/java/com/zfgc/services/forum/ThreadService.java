@@ -5,11 +5,20 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.zfgc.dataprovider.ForumDataProvider;
 import com.zfgc.dataprovider.ThreadDataProvider;
 import com.zfgc.model.users.Users;
+import com.zfgc.requiredfields.forum.ThreadRequiredFields;
 import com.zfgc.services.AbstractService;
+import com.zfgc.services.RuleRunService;
+import com.zfgc.services.bbcode.BbcodeService;
+import com.zfgc.validation.forum.ThreadValidator;
+import com.zfgc.model.forum.BrMemberGroupForum;
+import com.zfgc.model.forum.PostContent;
+import com.zfgc.model.forum.Thread;
+import com.zfgc.model.forum.ThreadPost;
 import com.zfgc.model.forum.Topic;
 
 @Component
@@ -19,6 +28,19 @@ public class ThreadService extends AbstractService {
 	
 	@Autowired
 	ForumDataProvider forumDataProvider;
+	
+	@Autowired
+	private BbcodeService bbcodeService;
+	
+	@Autowired
+	private ThreadValidator threadValidator;
+	
+	@Autowired
+	private ThreadRequiredFields threadRequiredFields;
+	
+	@Autowired
+	private RuleRunService<Thread> ruleRunner;
+
 	
 	public Long getThreadsInForum(Short forumId){
 		return threadDataProvider.getNumberOfThreads(forumId);
@@ -40,4 +62,98 @@ public class ThreadService extends AbstractService {
 		
 		return threads;
 	}
+	
+	public Thread getThreadTemplate(Integer forumId, Users user) {
+		Thread topic = new Thread();
+		topic.setThreadStarterId(user.getUsersId());
+		topic.setAuthorName(user.getDisplayName());
+		topic.setParentForumId(forumId);
+		
+		ThreadPost post = new ThreadPost();
+		post.setAuthorId(user.getUsersId());
+		post.getContent().add(new PostContent());
+		post.getHeadContent().setAuthorId(user.getUsersId());
+		post.getHeadContent().setCurrentFlag(true);
+		
+		topic.getPosts().add(post);
+		
+		return topic;
+	}
+	
+	@Transactional
+	public Thread saveNewThread(Thread thread, Users user) {
+		ruleRunner.runRules(threadValidator, threadRequiredFields, null, thread, user);
+		
+		threadDataProvider.saveThread(thread);
+		
+		//save the last post
+		thread.getTailPost().setThreadId(thread.getThreadId());
+		threadDataProvider.postToThread(thread.getTailPost());
+		
+		thread.getTailPost().getHeadContent().setThreadPostId(thread.getTailPost().getThreadPostId());
+		threadDataProvider.savePostContent(thread.getTailPost().getHeadContent());
+		
+		return thread;
+		
+	}
+	
+	public Thread previewThread(Thread thread, Users zfgcUser) {
+		ruleRunner.runRules(threadValidator, threadRequiredFields, null, thread, zfgcUser);
+		
+		return prepareThreadForView(thread);
+	}
+	
+	public Thread prepareThreadForView(Thread thread) {
+		for(ThreadPost post : thread.getPosts()) {
+			String content = post.getHeadContent().getPostData();
+			
+			try {
+				content = bbcodeService.parseText(content);
+			} catch (NoSuchFieldException | SecurityException | IllegalArgumentException | IllegalAccessException e) {
+				throw new RuntimeException(e);
+			}
+			
+			post.getHeadContent().setBody(content);
+		}
+		
+		return thread;
+	}
+	
+	public void stickyUnstickyThreads(List<Integer> threadIds, Users zfgcUser) {
+		//get all the threads
+		List<Topic> threads = threadDataProvider.getThreadsById(threadIds);
+		
+		//ensure the user actually has permissions to modify these threads
+		
+		//swap their sticky flags and save
+		for(Topic thread : threads) {
+			thread.setStickyFlag(!thread.getStickyFlag());
+			threadDataProvider.saveThread((Thread)thread);
+		}
+		
+	}
+	
+	public void lockUnlockThreads(List<Integer> threadIds, Users zfgcUser) {
+		//get all the threads
+		List<Topic> threads = threadDataProvider.getThreadsById(threadIds);
+		
+		//ensure the user actually has permissions to modify these threads
+		
+		//swap their lock flags and save
+		for(Topic thread : threads) {
+			thread.setLockedFlag(!thread.getLockedFlag());
+			threadDataProvider.saveThread((Thread)thread);
+		}
+	}
+	
+	public void moveThreads(List<Integer> threadIds, Integer newForumId, Users zfgcUser) {
+		//get all the threads
+		List<Topic> threads = threadDataProvider.getThreadsById(threadIds);
+		
+		for(Topic thread : threads) {
+			thread.setParentForumId(newForumId);
+			threadDataProvider.saveThread((Thread)thread);
+		}
+	}
+	
 }

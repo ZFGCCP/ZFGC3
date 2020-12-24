@@ -47,9 +47,10 @@
     .conversation-subject{
     	display: flex;
     	align-items: center;
+    	padding-bottom: 1em;
     	
     	label{
-    		padding-right: 5px;
+    		width: 9em;
     	}
     }
 }

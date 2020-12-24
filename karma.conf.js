@@ -47,11 +47,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/forum.module.js",
 	    
+	"./src/main/webapp/scripts/forum/thread/move/move-thread.controller.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
+	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
-	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
 	    
 	"./src/main/webapp/scripts/vendor/jstz/jstz.min.js",
 	    
@@ -83,11 +85,15 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/pm/conversation/add-user-modal.controller.js",
 	    
+	"./src/main/webapp/scripts/forum/thread/thread.controller.js",
+	    
+	"./src/main/webapp/scripts/forum/thread/new-thread.controller.js",
+	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
@@ -100,6 +106,12 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/calendar/calendar.module.js",
 	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/dropdown/drop-down-menu.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/combobox/combobox.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
@@ -146,6 +158,8 @@ module.exports = function(config) {
 	"./src/main/webapp/scripts/lookups/lookups.service.js",
 	    
 	"./src/main/webapp/scripts/interceptor/interceptor.service.js",
+	    
+	"./src/main/webapp/scripts/forum/message-editor.service.js",
 	    
 	"./src/main/webapp/scripts/forum/forum.service.js",
 	    
@@ -201,6 +215,12 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
+	"./src/main/webapp/scripts/directives/combobox/combobox.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/combobox-item/combobox-item.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/dropdown/drop-down-menu.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/event-list/event-list.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/left-panel/left-panel.directive.html",
@@ -211,11 +231,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
 	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
+	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
+	    
+	"./src/main/webapp/scripts/forum/thread/new-thread.html",
 	    
 	"./src/main/webapp/scripts/modal/templates/modalAddUserToConvo.html",
 	    
@@ -275,11 +297,13 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/widget-templates/user-profile/summary.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
+	    
+	"./src/main/webapp/scripts/forum/thread/move/move-thread.html",
 	    
 	"./src/main/webapp/scripts/users/user-profile/mobile/user-profile-mobile-nav.html"
 	    
