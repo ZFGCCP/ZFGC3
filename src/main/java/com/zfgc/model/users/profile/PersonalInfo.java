@@ -14,6 +14,7 @@ import com.zfgc.util.time.ZfgcTimeUtils;
 
 public class PersonalInfo extends BaseZfgcModel {
 
+	@JsonIgnore
 	private Date birthDate;
 	private String customTitle;
 	private String personalText;
@@ -25,6 +26,7 @@ public class PersonalInfo extends BaseZfgcModel {
 	private String signaturePreview;
 	private Integer userPersonalInfoId;
 	private Integer usersId;
+	private Integer avatarId;
 	
 	private Avatar avatar;
 
@@ -38,13 +40,12 @@ public class PersonalInfo extends BaseZfgcModel {
 		return age;
 	}
 	
-	@JsonIgnore
 	public Integer getAvatarId(){
-		if(avatar == null){
-			return null;
-		}
-		
-		return avatar.getAvatarId();
+		return this.avatarId;
+	}
+	
+	public void setAvatarId(Integer avatarId) {
+		this.avatarId = avatarId;
 	}
 	
 	public Date getBirthDate() {

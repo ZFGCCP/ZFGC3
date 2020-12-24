@@ -18,8 +18,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.github.ulisesbocchio.spring.boot.security.saml.annotation.SAMLUser;
-import com.github.ulisesbocchio.spring.boot.security.saml.user.SAMLUserDetails;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.model.forum.Forum;
 import com.zfgc.model.forum.ForumIndex;

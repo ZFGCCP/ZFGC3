@@ -26,6 +26,7 @@ import com.zfgc.dataprovider.PersonalMessagingSettingsDataProvider;
 import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.dataprovider.UserContactInfoDataProvider;
+import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
@@ -86,7 +87,7 @@ public class PmService extends AbstractService {
 	PmConversationDataProvider pmConversationDataProvider;
 	
 	@Autowired
-	UsersService usersService;
+	UsersDataProvider usersDataProvider;
 	
 	@Autowired
 	PmPruneRequiredFields pmPruneRequiredFields;
@@ -308,13 +309,11 @@ public class PmService extends AbstractService {
 						InternetAddress address = new InternetAddress();
 						address.setAddress(contactInfo.getEmail().getEmailAddress());
 						
-						try {
-							zfgcEmailUtils.sendEmail("New Personal Message", 
-													 "You have received a new personal message. Click " +  
-													 zfgcGeneralConfig.getUiUrl() + "/mailBox/conversation?conversationId=" + message.getPmConversationId() + " to view it!", address);
-						} catch (UnsupportedEncodingException e) {
-							e.printStackTrace();
-						}
+
+						zfgcEmailUtils.sendEmail("New Personal Message", 
+												 "You have received a new personal message. Click " +  
+												 zfgcGeneralConfig.getUiUrl() + "/mailBox/conversation?conversationId=" + message.getPmConversationId() + " to view it!", address);
+
 					}
 					
 				}
@@ -469,7 +468,7 @@ public class PmService extends AbstractService {
 				pm.setMessage(bbCodeService.parseText(pm.getMessage()));
 			}
 			
-			convo.setParticipants(usersService.getUsersByConversation(convoId));
+			convo.setParticipants(getUsersByConversation(convoId));
 			
 			if(convo.getMessages().size() == 0) {
 				return null;
@@ -487,6 +486,19 @@ public class PmService extends AbstractService {
 			ex.printStackTrace();
 			return null;
 		}
+	}
+	
+	private List<Integer> getUsersByConversation(Integer conversationId) throws RuntimeException{
+		List<Users> result = null;
+
+		result = usersDataProvider.getUsersByConversation(conversationId);
+		
+		List<Integer> Ids = new ArrayList<>(result.size());
+		for(Users user : result) {
+			Ids.add(user.getUsersId());
+		}
+		
+		return Ids;
 	}
 	
 	public void removeConvoFromInbox(TwoFactorKey aesKey, PmConversation convo, Users zfgcUser) throws ZfgcInvalidAesKeyException, ZfgcNotFoundException, RuntimeException{

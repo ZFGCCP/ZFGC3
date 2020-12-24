@@ -71,6 +71,10 @@ public class AvatarService extends AbstractService {
 		return db;
 	}
 	
+	public Avatar getAvatarRecord(Integer avatarId) {
+		return avatarDataProvider.getAvatar(avatarId);
+	}
+	
 	@Transactional
 	public AvatarStaging stageAvatar(MultipartFile file, Users zfgcUser) {
 		AvatarStaging validatorRecord = new AvatarStaging();

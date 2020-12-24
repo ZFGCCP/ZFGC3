@@ -8,21 +8,25 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationListener;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
-@Component
-public class AuthSuccessHandler implements AuthenticationSuccessHandler{
+import com.zfgc.services.saml.OauthUsersDetailsServiceImpl;
 
-	private Logger LOGGER = LogManager.getLogger(AuthSuccessHandler.class);
-	
-	@Override
-	public void onAuthenticationSuccess(HttpServletRequest request, 
-		      HttpServletResponse response, Authentication authentication) throws IOException,
-			ServletException {
-		LOGGER.debug(authentication);
-		
-	}
+@Component
+public class AuthSuccessHandler implements ApplicationListener<AuthenticationSuccessEvent>
+{
+	@Autowired
+	OauthUsersDetailsServiceImpl userDetailsService;
+
+    @Override
+    public void onApplicationEvent(AuthenticationSuccessEvent event) 
+    {
+       
+    }
 	
 }

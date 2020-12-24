@@ -76,39 +76,33 @@ public class PasswordResetCodeService extends AbstractService {
 		if(zfgcUser.getUsersId() != null) {
 			throw new ZfgcUnauthorizedException();
 		}
+			
+		UserEmailView user = userEmailViewDataProvider.getActiveUserEmail(username);
 		
-		try {
+		PasswordResetCode check = checkResetCode(user.getUsersId(), zfgcUser);
+		
+		PasswordResetCode resetCode = null;
+		if(check != null) {
+			resetCode = check;
+		}
+		else {
+			resetCode = new PasswordResetCode(); 
+			resetCode.setCode(ZfgcSecurityUtils.generateCryptoString(32));
+			resetCode.setUsersId(user.getUsersId());
+			resetCode.setExpirationTs(DateUtils.addHours(new Date(), 1));
 			
-			UserEmailView user = userEmailViewDataProvider.getActiveUserEmail(username);
-			
-			PasswordResetCode check = checkResetCode(user.getUsersId(), zfgcUser);
-			
-			PasswordResetCode resetCode = null;
-			if(check != null) {
-				resetCode = check;
-			}
-			else {
-				resetCode = new PasswordResetCode(); 
-				resetCode.setCode(ZfgcSecurityUtils.generateCryptoString(32));
-				resetCode.setUsersId(user.getUsersId());
-				resetCode.setExpirationTs(DateUtils.addHours(new Date(), 1));
-				
-				passwordResetCodeDataProvider.createResetCode(resetCode);
-			}
+			passwordResetCodeDataProvider.createResetCode(resetCode);
+		}
 
-			InternetAddress to = new InternetAddress();
-			to.setAddress(user.getEmailAddress());
-			zfgcEmailUtils.sendEmail("Password reset link for ZFGC", 
-									 user.getDisplayName() + ",<br><br>" +
-			                         "To reset your password, please click the following link:<br><br>" +
-									 zfgcGeneralConfig.getUiUrl() + "/password-reset/reset?resetCode=" + resetCode.getCode() +
-									 "<br><br>If you did not request this email, please contact us immediately.", to);
-		}
-		catch(ZfgcNotFoundException ex) {
-			LOGGER.error(ex.getMessage());
-		} catch (UnsupportedEncodingException e) {
-			throw new RuntimeException(e);
-		}
+		InternetAddress to = new InternetAddress();
+		to.setAddress(user.getEmailAddress());
+		zfgcEmailUtils.sendEmail("Password reset link for ZFGC", 
+								 user.getDisplayName() + ",<br><br>" +
+		                         "To reset your password, please click the following link:<br><br>" +
+								 zfgcGeneralConfig.getUiUrl() + "/password-reset/reset?resetCode=" + resetCode.getCode() +
+								 "<br><br>If you did not request this email, please contact us immediately.", to);
+
+
 	}
 	
 	@Transactional

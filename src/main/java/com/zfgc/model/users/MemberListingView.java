@@ -21,6 +21,9 @@ public class MemberListingView extends BaseZfgcModel {
     @JsonIgnore
     private Date dateRegistered;
     private String groupName;
+    private Boolean activeFlag;
+    private String ipAddress;
+ 
     
     public List<String> getMemberGroups() {
 		return memberGroups;
@@ -125,6 +128,22 @@ public class MemberListingView extends BaseZfgcModel {
 		}
 		
 		return sdf.format(lastLogin);
+	}
+
+	public Boolean getActiveFlag() {
+		return activeFlag;
+	}
+
+	public void setActiveFlag(Boolean activeFlag) {
+		this.activeFlag = activeFlag;
+	}
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public void setIpAddress(String ipAddress) {
+		this.ipAddress = ipAddress;
 	}
 
 }

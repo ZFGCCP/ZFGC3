@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.zfgc.dataprovider.IpDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
 import com.zfgc.model.BaseZfgcModel;
@@ -32,6 +34,7 @@ import com.zfgc.model.users.profile.UserProfileView;
 import com.zfgc.util.time.ZfgcTimeUtils;
 
 @Component
+@JsonInclude(Include.NON_NULL)
 public class Users extends BaseZfgcModel implements UserDetails {
 	private String password;
 	private Integer ttlLogin;

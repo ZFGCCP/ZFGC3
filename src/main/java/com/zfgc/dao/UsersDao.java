@@ -49,10 +49,6 @@ public class UsersDao extends AbstractDao<UsersDbObjExample, UsersDbObj, Users> 
 		return usersDbObj;
 	}
 	
-	public String getDisplayName(Integer usersId){
-		return usersDbObjMapper.getDisplayName(usersId);
-	}
-	
 	@Override
 	public List<UsersDbObj> get(UsersDbObjExample ex) throws RuntimeException {
 		return usersDbObjMapper.selectByExample(ex);

@@ -49,9 +49,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/forum/thread/move/move-thread.controller.js",
 	    
-	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.js",
 	    
@@ -91,9 +91,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.js",
 	    
-	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.js",
+	    
+	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.js",
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.js",
 	    
@@ -115,9 +115,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.directive.js",
 	    
-	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
-	    
 	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.directive.js",
+	    
+	"./src/main/webapp/scripts/common/header/zfgc-header.directive.js",
 	    
 	"./src/main/webapp/scripts/whos-online/online.module.js",
 	    
@@ -209,9 +209,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/whos-online/online.html",
 	    
-	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
-	    
 	"./src/main/webapp/scripts/common/header/zfgc-header.html",
+	    
+	"./src/main/webapp/scripts/directives/avatar-gallery/avatar-gallery.html",
 	    
 	"./src/main/webapp/scripts/directives/collapsible-widget/collapsible-widget.html",
 	    
@@ -231,9 +231,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/user-details/user-details.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/user-sidebar/user-sidebar.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/user-name-icon/user-name-icon.directive.html",
 	    
 	"./src/main/webapp/scripts/directives/whos-online/whos-online.directive.html",
 	    
@@ -299,9 +299,9 @@ module.exports = function(config) {
 	    
 	"./src/main/webapp/scripts/directives/forms/date-selector/date-selector.directive.html",
 	    
-	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
-	    
 	"./src/main/webapp/scripts/directives/forms/user-search/user-search.directive.html",
+	    
+	"./src/main/webapp/scripts/directives/forms/message-editor/message-editor.directive.html",
 	    
 	"./src/main/webapp/scripts/forum/thread/move/move-thread.html",
 	    

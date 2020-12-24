@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -22,6 +23,7 @@ import com.zfgc.dao.UserSecuritySettingsDao;
 import com.zfgc.dao.UsersDao;
 import com.zfgc.dbobj.MemberListingViewDbObj;
 import com.zfgc.dbobj.MemberListingViewDbObjExample;
+import com.zfgc.dbobj.UserPersonalInfoDbObjExample;
 import com.zfgc.dbobj.UsersDbObj;
 import com.zfgc.dbobj.UsersDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -71,6 +73,13 @@ public class UsersDataProvider extends AbstractDataProvider {
 	private PmConversationDataProvider pmConversationDataProvider;
 	
 	private Logger LOGGER = LogManager.getLogger(UsersDataProvider.class);
+	
+	public PersonalInfo getPersonalInfo(Integer usersId) {
+		UserPersonalInfoDbObjExample ex = userPersonalInfoDao.getExample();
+		ex.createCriteria().andUsersIdEqualTo(usersId);
+		
+		return mapper.map(userPersonalInfoDao.get(ex).get(0), PersonalInfo.class);
+	}
 	
 	public Users getUser(Integer usersId) {
 		UsersDbObjExample ex = usersDao.getExample();
@@ -218,28 +227,23 @@ public class UsersDataProvider extends AbstractDataProvider {
 		return result;
 	}
 	
-	public String getDisplayName(Integer usersId){
-		return usersDao.getDisplayName(usersId);
-	}
-	
-	public List<MemberListingView> getMemberListing(Integer pageIndex, Integer usersPerPage) throws RuntimeException{
+	public List<MemberListingView> getMemberListing(Integer pageIndex, Integer usersPerPage, Users user, String sortBy, String sortOrder) throws RuntimeException{
 		MemberListingViewDbObjExample ex = memberListingViewDao.getExample();
+		
+		if(!user.isModerationStaff()) {
+			ex.createCriteria().andActiveFlagEqualTo(true);
+		}
+		
 		ex.setLimitStart(pageIndex * usersPerPage);
 		ex.setLimitRange(usersPerPage);
 		
+		ex.setOrderByClause(sortBy + " " + sortOrder);
+		
 		List<MemberListingViewDbObj> dbObj = memberListingViewDao.get(ex);
 		
-		Map<Integer, MemberListingView> mapping = new HashMap<>();
-		
-		for(MemberListingViewDbObj obj : dbObj) {
-			if(!mapping.containsKey(obj.getUsersId())) {
-				mapping.put(obj.getUsersId(), mapper.map(obj, MemberListingView.class));
-			}
-			
-			mapping.get(obj.getUsersId()).getMemberGroups().add(obj.getGroupName());
-		}
-		
-		return new ArrayList<>(mapping.values());
+		return dbObj.stream()
+				    .map(x -> mapper.map(x, MemberListingView.class))
+					.collect(Collectors.toList());
 		
 	}
 	
@@ -276,7 +280,6 @@ public class UsersDataProvider extends AbstractDataProvider {
 	private void createUserSecuritySettings(Users user) throws Exception{
 		user.getUserSecurityInfo().setUsersId(user.getUsersId());
 		userSecuritySettingsDao.updateOrInsert(user.getUserSecurityInfo());
-		userSecuritySettingsDao.updateUserPassword(user.getUserSecurityInfo().getUsersId(), user.getUserSecurityInfo().getNewPassword());
 	}
 	
 	private void createUserPersonalMessagingSettings(Users user) throws RuntimeException{
