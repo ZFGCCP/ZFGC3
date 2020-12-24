@@ -1,7 +1,0 @@
-<div class="mobile-user-popover" ng-hide="!vm.navOpen" uib-collapse="vm.navOpen">
-	<div class="nav-item" ng-repeat="tab in vm.tabDropdown.subTabs" ng-click="vm.tabClick(vm.tabDropdown, tab); vm.navOpen = false">
-		<span>{{tab.title}}</span>
-	</div>
-	
-	<div ng-include="'scripts/popover/popoverUserDetails.html'"></div>
-</div>
