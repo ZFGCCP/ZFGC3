@@ -24,18 +24,14 @@ public class RuleRunService<M extends BaseZfgcModel> {
 		
 		if(validator != null){
 			validator.validator(model);
-			
-			if(model.getErrors().getValidationErrors().size() > 0){
-				throw new ZfgcValidationException(model.getClass().getName(), model.getErrors());
-			}
 		}
 		
 		if(rules != null){
 			rules.rulesCheck(model, user);
-			
-			if(model.getErrors().getRuleErrors().size() > 0){
-				throw new ZfgcValidationException(model.getClass().getName(), model.getErrors());
-			}
+		}
+		
+		if(model.getErrors().getHasErrors()) {
+			throw new ZfgcValidationException(model.getClass().getName(), model.getErrors());
 		}
 	}
 }
