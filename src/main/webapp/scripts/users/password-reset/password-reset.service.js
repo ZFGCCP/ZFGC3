@@ -12,8 +12,10 @@
 			});
 		
 		service.requestPasswordReset = function(vm){
+			vm.savedUserName = vm.userName;
 			service.resource.save(vm.userName).$promise.then(function(data){
 				vm.responseReceived = true;
+				 
 			});
 		};
 		

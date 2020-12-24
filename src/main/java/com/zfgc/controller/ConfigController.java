@@ -16,7 +16,6 @@ public class ConfigController extends BaseController {
 	@ResponseBody
 	public ResponseEntity getServerSideConfig(){
 		ServerConfig config = new ServerConfig();
-		config.setIdpEntityId(zfgcSamlConfig.getEntityId());
 		
 		return ResponseEntity.ok(config);
 	}

@@ -32,4 +32,19 @@ public class UserEmailViewDataProvider extends AbstractDataProvider {
 		
 		return mapper.map(result.get(0), UserEmailView.class);
 	}
+	
+	public UserEmailView getActiveUserEmailReverse(String email) {
+		UserEmailViewDbObjExample ex = userEmailViewDao.getExample();
+		ex.createCriteria().andActiveFlagEqualTo(true)
+		                   .andEmailAddressEqualTo(email);
+		
+		
+		List<UserEmailViewDbObj> result = userEmailViewDao.get(ex);
+		
+		if(result.size() == 0 ) {
+			throw new ZfgcNotFoundException("user email " + email);
+		}
+		
+		return mapper.map(result.get(0), UserEmailView.class);
+	}
 }

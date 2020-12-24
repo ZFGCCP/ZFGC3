@@ -1,52 +1,26 @@
 (function(){
 	'use strict';
 	
-	function MessageEditor($window,PmService, ForumPostService, UserService){
+	function MessageEditor($window, $timeout, PmService, ForumPostService, ForumService, UserService, MessageEditorService){
 		var directive = {};
 		directive.restrict = 'E';
 		directive.templateUrl = "scripts/directives/forms/message-editor/message-editor.directive.html";
 		directive.scope = {
 				showReplyBox:'=',
-				conversation:'=',
-				getTemplate:'@?',
-				vm:'=?'
+				vm:'=?',
+				ngModel: '=',
+				onSubmit: '&'
 		}
 
 		directive.link = function ($scope, element, attrs) {
-			$scope.template = {
-				pmConversationId : $scope.conversation.pmConversationId,
-				receivers : $scope.conversation.participants,
-				subject : $scope.conversation.subject
-			};
-			
-			$scope.$watch('conversation.subject', function(){
-				$scope.personalMessage.subject = $scope.conversation.subject;
-			});
-			
-			$scope.conversation.$promise.then(function(data){
-				if(!$scope.getTemplate || $scope.getTemplate === null || $scope.getTemplate === false){
-					$scope.personalMessage = $scope.conversation.messages[0];
-					
-					var profileContainer = {};
-					UserService.loadProfile($scope.conversation.participants[0], profileContainer);
-					$scope.vm.participants.push(profileContainer.profile);
-				}
-				else{
-					var template = {};
-					template.pmConversationId = $scope.conversation.pmConversationId;
-					template.subject = !$scope.conversation.subject || $scope.conversation.subject === null ? "" : $scope.conversation.subject;
-					template.receivers = $scope.conversation.participants;
-					$scope.personalMessage = PmService.getTemplate(template);
-				}
-			});
-			
-			
 			$scope.getLastCursorPos = function(){
-				PmService.getLastCursorPos(vm);
+				$timeout(function(){
+					$scope.currentCursorPos = angular.element(element[0]).find('textarea')[0].selectionStart;
+				},100);
 			};
 			
 			$scope.insertShortcut = function(shortcut){
-				PmService.insertShortcut(vm,shortcut);
+				$scope.ngModel = MessageEditorService.insertShortcut($scope.currentCursorPos, $scope.ngModel, shortcut);
 			};
 			
 			$scope.toggleReplyBox = function(){
@@ -59,8 +33,7 @@
 			};
 			
 			$scope.reply = function(){
-				$scope.personalMessage.receivers = $scope.conversation.participants;
-				PmService.sendPm($scope.personalMessage);
+				$scope.onSubmit();
 			};
 		}
 		
@@ -68,6 +41,6 @@
 	}
 	
 	angular.module("zfgc.forum")
-		   .directive("messageEditor", ['$window','PmService','ForumPostService','UserService', MessageEditor]);
+		   .directive("messageEditor", ['$window','$timeout', 'PmService','ForumPostService', 'ForumService', 'UserService', 'MessageEditorService', MessageEditor]);
 	
 })();

@@ -29,6 +29,10 @@ public class IpDataProvider extends AbstractDataProvider{
 		ex.createCriteria().andIpAddressEqualTo(ipAddress);
 		List<IpAddressDbObj> dbObj = ipDao.get(ex);
 		
+		if(dbObj.isEmpty()) {
+			return null;
+		}
+		
 		return mapper.map(dbObj.get(0), IpAddress.class);
 	}
 	

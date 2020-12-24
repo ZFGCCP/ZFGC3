@@ -2,7 +2,7 @@ package com.zfgc.validation;
 
 import java.util.regex.Pattern;
 
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.zfgc.exception.ZfgcValidationException;
@@ -99,5 +99,14 @@ public abstract class AbstractValidator<T extends BaseZfgcModel> {
 			model.getErrors().getValidationErrors().add(emailLengthRule);
 
 		}
+	}
+	
+	protected String sanitizeString(String theString) {
+		theString = StringUtils.replace(theString, "<", "&lt;");
+		theString = StringUtils.replace(theString, ">", "&gt;");
+		theString = StringUtils.replace(theString, "\"", "&quot;");
+		theString = StringUtils.replace(theString, "&", "&amp;");
+
+		return theString;
 	}
 }

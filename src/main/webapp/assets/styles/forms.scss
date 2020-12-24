@@ -5,6 +5,14 @@ form{
 	}
 	
 	.checkbox-wrapper{
+		&.thread-checkbox{
+			input[type="checkbox"]{
+				bottom: 1.4em;
+    			margin-right: 1em;
+    			position: relative;
+			}
+		}
+	
 		display: flex;
 		align-items: center;
 		

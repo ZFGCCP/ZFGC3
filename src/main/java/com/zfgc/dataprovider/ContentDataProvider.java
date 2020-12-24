@@ -10,6 +10,7 @@ import java.io.InputStream;
 import java.net.URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import com.zfgc.exception.ZfgcNotFoundException;
@@ -22,10 +23,18 @@ public class ContentDataProvider extends AbstractDataProvider{
 	@Autowired
 	AvatarService avatarService;
 	
+	@Value("${zfgc.general.avatarDirectory}")
+	private String avatarDirectory;
+	
 	public InputStreamWrapper getAvatarHandle(Integer avatarId) throws ZfgcNotFoundException, FileNotFoundException {
-		String fileName = avatarService.getAvatarFileName(avatarId);
-		if (fileName == null){
-			throw new ZfgcNotFoundException("Avatar " + avatarId);
+		
+		String fileName = avatarDirectory + "\\avatar-none.png";
+		
+		if(avatarId > -1) {
+			fileName = avatarService.getAvatarFileName(avatarId);
+			if (fileName == null){
+				throw new ZfgcNotFoundException("Avatar " + avatarId);
+			}
 		}
 		
 		InputStream stream = null;

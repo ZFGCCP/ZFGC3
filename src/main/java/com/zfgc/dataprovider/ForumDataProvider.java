@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -40,14 +41,14 @@ public class ForumDataProvider extends AbstractDataProvider {
 		List<ForumPermissionsViewDbObj> forumDbs = null;
 		List<Integer> permissionIds = new ArrayList<>();
 		
-		permissionIds.addAll(user.getMemberGroupIds());
+		permissionIds.addAll(user.getPermissions().stream().mapToInt(x -> x.getPermissionsId()).boxed().collect(Collectors.toList()));
 		ForumPermissionsViewDbObjExample ex = forumPermissionsViewDao.getExample();
 	
 		if(parentId.isEmpty()) {
-			ex.createCriteria().andMemberGroupIdIn(permissionIds).andParentForumIdIsNull();
+			ex.createCriteria().andPermissionIdIn(permissionIds).andParentForumIdIsNull();
 		}
 		else {
-			ex.createCriteria().andMemberGroupIdIn(permissionIds).andParentForumIdIn(parentId);
+			ex.createCriteria().andPermissionIdIn(permissionIds).andParentForumIdIn(parentId);
 		}
 		
 		forumDbs = forumPermissionsViewDao.get(ex);
@@ -88,9 +89,9 @@ public class ForumDataProvider extends AbstractDataProvider {
 	public Forum getForum(Short forumId, Users user) {
 		ForumPermissionsViewDbObjExample ex = new ForumPermissionsViewDbObjExample();
 		List<Integer> permissionIds = new ArrayList<>();
-		permissionIds.addAll(user.getMemberGroupIds());
+		permissionIds.addAll(user.getPermissions().stream().mapToInt(x -> x.getPermissionsId()).boxed().collect(Collectors.toList()));
 		
-		ex.createCriteria().andForumIdEqualTo(forumId).andMemberGroupIdIn(permissionIds);
+		ex.createCriteria().andForumIdEqualTo(forumId).andPermissionIdIn(permissionIds);
 		List<ForumPermissionsViewDbObj> result = forumPermissionsViewDao.get(ex);
 		
 		if(result.size() == 0) {
@@ -98,5 +99,21 @@ public class ForumDataProvider extends AbstractDataProvider {
 		}
 		
 		return mapper.map(result.get(0), Forum.class);
+	}
+	
+	public List<Forum> getForumPermissions(Short parentId, Users user) {
+		List<ForumPermissionsViewDbObj> forumDbs = null;
+		ForumPermissionsViewDbObjExample ex = forumPermissionsViewDao.getExample();
+		ex.createCriteria().andParentForumIdEqualTo(parentId);
+						   
+		
+		forumDbs = forumPermissionsViewDao.get(ex);
+		List<Forum> forums = new ArrayList<>();
+		
+		for(ForumPermissionsViewDbObj dbObj : forumDbs) {
+			forums.add(mapper.map(dbObj, Forum.class));
+		}
+		
+		return forums;
 	}
 }
