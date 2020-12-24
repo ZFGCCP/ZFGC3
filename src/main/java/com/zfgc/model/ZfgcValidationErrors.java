@@ -38,7 +38,7 @@ public class ZfgcValidationErrors{
 		this.requiredFieldsErrors = requiredFieldsErrors;
 	}
 	
-	public Boolean hasErrors(){
+	public Boolean getHasErrors(){
 		return requiredFieldsErrors.size() > 0 || validationErrors.size() > 0 || ruleErrors.size() > 0 || generalErrors.size() > 0;
 	}
 

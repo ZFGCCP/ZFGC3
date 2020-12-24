@@ -235,7 +235,7 @@ public class UserProfileService extends AbstractService{
 				accountSettings.getErrors().getRuleErrors().add(changedRegDt);
 			}*/
 			
-			if(accountSettings.getErrors().hasErrors()){
+			if(accountSettings.getErrors().getHasErrors()){
 				throw new ZfgcValidationException(accountSettings.getClass().getName());
 			}
 		}
@@ -277,7 +277,7 @@ public class UserProfileService extends AbstractService{
 				accountSettings.getErrors().getRuleErrors().add(changedRegDt);
 			}
 			
-			if(accountSettings.getErrors().hasErrors()){
+			if(accountSettings.getErrors().getHasErrors()){
 				throw new ZfgcValidationException(accountSettings.getClass().getName());
 			}
 		}
