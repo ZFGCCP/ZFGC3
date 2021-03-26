@@ -20,7 +20,7 @@ public class PmConversationBoxViewDao extends AbstractDao<PmConversationBoxViewD
 	@Override
 	public List<PmConversationBoxViewDbObjWithBLOBs> get(
 			PmConversationBoxViewDbObjExample ex) throws RuntimeException {
-		return pmConversationBoxViewDbObjMapper.selectByExampleWithBLOBs(ex);
+		return pmConversationBoxViewDbObjMapper.selectByExampleLimit(ex);
 	}
 
 	@Override
@@ -52,8 +52,7 @@ public class PmConversationBoxViewDao extends AbstractDao<PmConversationBoxViewD
 	@Override
 	public Long countByExample(PmConversationView obj,
 			PmConversationBoxViewDbObjExample ex) throws RuntimeException {
-		// TODO Auto-generated method stub
-		return null;
+		return (long)pmConversationBoxViewDbObjMapper.countByExample(ex);
 	}
 	
 }

@@ -1,7 +1,10 @@
 package com.zfgc.model.pm;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+
+import org.apache.commons.lang3.time.DateUtils;
 
 import com.zfgc.constants.pm.PmConstants;
 import com.zfgc.model.BaseZfgcModel;
@@ -80,10 +83,13 @@ public class PmConversationView extends BaseZfgcModel{
 	}
 
 	public String getSentDtAsString(){
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(getUserTimeZone());
-		
 		if(sentDt == null){
 			return "";
+		}
+		
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat(getUserTimeZone());
+		if(DateUtils.isSameDay(new Date(), sentDt)) {
+			sdf = ZfgcTimeUtils.getZfgcTimeFormat(getUserTimeZone());
 		}
 		
 		return sdf.format(sentDt);
@@ -98,11 +104,13 @@ public class PmConversationView extends BaseZfgcModel{
 	}
 
 	public String getStartDtAsString(){
-		
-		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateTimeFormat(getUserTimeZone());
-		
 		if(startDt == null){
 			return "";
+		}
+		
+		SimpleDateFormat sdf = ZfgcTimeUtils.getZfgcSimpleDateFormat(getUserTimeZone());
+		if(DateUtils.isSameDay(new Date(), startDt)) {
+			sdf = ZfgcTimeUtils.getZfgcTimeFormat(getUserTimeZone());
 		}
 		
 		return sdf.format(startDt);

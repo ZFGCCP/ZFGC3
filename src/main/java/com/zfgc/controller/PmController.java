@@ -89,31 +89,11 @@ public class PmController extends BaseController {
 	
 	@RequestMapping(value="/convobox", method=RequestMethod.POST, produces="application/json")
 	@PreAuthorize("hasRole('ZFGC_USER')")
-	public ResponseEntity viewConvoBox(@RequestParam("filterType") Integer filterType, @RequestBody TwoFactorKey aesKey){
-		PmConvoBox convos = null;
-		//todo: use constants
-		switch(filterType) {
-		case 0:
-			convos = pmService.getConversationBox(aesKey, zfgcUser());
-			break;
-			
-		case 1:
-			convos = pmService.getConversationsInBox(aesKey, zfgcUser());
-			break;
-			
-		case 2:
-			convos = pmService.getConversationsSentBox(aesKey, zfgcUser());
-			break;
-			
-		case 3:
-			convos = pmService.getArchiveBox(aesKey, zfgcUser());
-			break;
-		}
+	public ResponseEntity viewConvoBox(@RequestParam("filterType") Integer filterType, 
+									   //@RequestBody TwoFactorKey aesKey, 
+									   @RequestParam("pageNo") Integer pageNo){
 		
-		if(convos == null){
-			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-		}
-		
+		PmConvoBox convos = pmService.getConverastionBox(pageNo, zfgcUser(), filterType);
 		return ResponseEntity.ok(convos);
 	}
 	

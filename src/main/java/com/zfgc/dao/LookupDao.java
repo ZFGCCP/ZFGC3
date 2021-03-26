@@ -1,44 +1,44 @@
 package com.zfgc.dao;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.namedparam.MapSqlParameterSource;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.zfgc.model.BaseZfgcModel;
+import com.zfgc.mappers.LkupAllViewDbObjMapper;
 import com.zfgc.model.lookups.Lookup;
+import com.zfgc.dbobj.LkupAllViewDbObj;
+import com.zfgc.dbobj.LkupAllViewDbObjExample;
 
 @Component
 public class LookupDao extends AbstractDao<Object,Object,Object>{
 	
 	private Logger LOGGER = LogManager.getLogger(LookupDao.class);
 	
+	@Autowired
+	private LkupAllViewDbObjMapper lkupAllViewDbObjMapper;
+	
+	
 	public List<Lookup> getLookup(String lookupName) throws Exception{
-		StringBuilder sql = new StringBuilder();
+		LkupAllViewDbObjExample ex = new LkupAllViewDbObjExample();
+		ex.createCriteria().andLkupNameEqualTo(lookupName);
+		ex.setOrderByClause("LKUP_ID ASC");
+		List<LkupAllViewDbObj> lkupDb = lkupAllViewDbObjMapper.selectByExample(ex);
 		
-		sql.append("SELECT LKUP_ID AS ID, LKUP_DESC AS VALUE \n")
-		   .append("FROM LKUP_ALL_VIEW \n")
-		   .append("WHERE LKUP_NAME = :lookupName");
-		
-		MapSqlParameterSource params = new MapSqlParameterSource();
-		params.addValue("lookupName",lookupName);
-		
-		try{
-			List<Lookup> lookups = jdbcTemplate.query(sql.toString(), params, new BeanPropertyRowMapper(Lookup.class));
-			if(lookups == null || lookups.size() == 0){
-				throw new Exception("Lookup " + lookupName + " returned zero results.");
-			}
-			
-			LOGGER.info("Loaded lookup " + lookupName);
-			return lookups;
+		if(lkupDb == null || lkupDb.size() == 0){
+			throw new RuntimeException("Lookup " + lookupName + " returned zero results.");
 		}
-		catch(Exception ex){
-			LOGGER.error("Error getting lookups for " + lookupName);
-			throw new Exception(ex.getMessage());
-		}
+		
+		LOGGER.info("Loaded lookup " + lookupName);
+		return lkupDb.stream().map(x -> {
+			Lookup lkup = new Lookup();
+			lkup.setId(x.getLkupId());
+			lkup.setValue(x.getLkupDesc());
+			return lkup;
+		}).collect(Collectors.toList());
 	}
 
 	@Override

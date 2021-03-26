@@ -27,6 +27,7 @@ import com.zfgc.dataprovider.PmConversationDataProvider;
 import com.zfgc.dataprovider.PmKeyDataProvider;
 import com.zfgc.dataprovider.UserContactInfoDataProvider;
 import com.zfgc.dataprovider.UsersDataProvider;
+import com.zfgc.dbobj.PmConversationBoxViewDbObjExample;
 import com.zfgc.exception.ZfgcNotFoundException;
 import com.zfgc.exception.ZfgcValidationException;
 import com.zfgc.exception.security.ZfgcInvalidAesKeyException;
@@ -164,44 +165,32 @@ public class PmService extends AbstractService {
 		}
 	}
 	
-	public PmConvoBox getConversationBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
-		aesKey.setUsersId(zfgcUser.getUsersId());
-		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
-		if(!authenticationService.isValidAesKey(aesKey)){
-			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
+	public PmConvoBox getConverastionBox(Integer pageNo, Users zfgcUser, Integer boxId) {
+		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
+		
+		switch(boxId) {
+		case 0:
+			ex.createCriteria().andReceiverIdEqualTo(zfgcUser.getUsersId()).andSenderIdNotEqualTo(zfgcUser.getUsersId());
+			break;
+			
+		case 1:
+			ex.createCriteria().andSenderIdEqualTo(zfgcUser.getUsersId()).andReceiverIdNotEqualTo(zfgcUser.getUsersId());
+			break;
+			
+		case 2: //archive box
+			break;
+			
+		case 3: //legacy box
+			break;
 		}
 		
-		try {
-			List<PmConversationView> convoView = pmConversationDataProvider.getBoxViewByUsersId(zfgcUser);
-			PmConvoBox convoBox = new  PmConvoBox();
-			convoBox.setConversations(decryptAndPrepareConvoBox(convoView, senderKeys, aesKey));
-			return convoBox;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
-	public PmConvoBox getConversationsSentBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
-		aesKey.setUsersId(zfgcUser.getUsersId());
-		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
-		if(!authenticationService.isValidAesKey(aesKey)){
-			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
-		}
+		PmConvoBox convoBox = pmConversationDataProvider.getBoxViewByUsersId(ex, pageNo);
 		
-		try {
-			List<PmConversationView> convoView = pmConversationDataProvider.getSentBoxViewByUsersId(zfgcUser);
-			PmConvoBox convoBox = new  PmConvoBox();
-			convoBox.setConversations(decryptAndPrepareConvoBox(convoView, senderKeys, aesKey));
-			return convoBox;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
+		return convoBox;
 	}
 	
 	public PmConvoBox getConversationsInBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException{
-		aesKey.setUsersId(zfgcUser.getUsersId());
+		//aesKey.setUsersId(zfgcUser.getUsersId());
 		PmKey senderKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
 			throw new ZfgcInvalidAesKeyException(senderKeys.getParityWord());
@@ -418,21 +407,6 @@ public class PmService extends AbstractService {
 		return convo;
 	}
 	
-	@Deprecated
-	public PmConvoBox getConvoBox(Users user){
-		try {
-			List<PmConversationView> convos = pmConversationDataProvider.getBoxViewByUsersId(user);
-			
-			PmConvoBox convoBox = new PmConvoBox();
-			convoBox.setConversations(convos);
-			
-			return convoBox;
-		} catch (Exception e) {
-			e.printStackTrace();
-			return null;
-		}
-	}
-	
 	@Transactional
 	public PmConversation getConversation(Integer convoId, TwoFactorKey aesKey, Users user) throws ZfgcInvalidAesKeyException, RuntimeException {
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(user.getUsersId());
@@ -595,7 +569,7 @@ public class PmService extends AbstractService {
 	}
 	
 	@Transactional
-	public PmConvoBox getArchiveBox(TwoFactorKey aesKey, Users zfgcUser) throws ZfgcInvalidAesKeyException, RuntimeException{
+	public PmConvoBox getArchiveBox(TwoFactorKey aesKey,  Integer pageNo, Users zfgcUser) throws ZfgcInvalidAesKeyException, RuntimeException{
 		PmKey receiverKeys = pmKeyDataProvider.getPmKeyByUsersId(zfgcUser.getUsersId());
 		if(!checkIfAesKeyValid(aesKey,zfgcUser)){
 			throw new ZfgcInvalidAesKeyException(receiverKeys.getParityWord());
@@ -618,10 +592,10 @@ public class PmService extends AbstractService {
 	}
 	
 	private boolean checkIfAesKeyValid(TwoFactorKey aesKey,Users zfgcUser) throws ZfgcInvalidAesKeyException{
-		aesKey.setUsersId(zfgcUser.getUsersId());
+		/*aesKey.setUsersId(zfgcUser.getUsersId());
 		if(!authenticationService.isValidAesKey(aesKey)){
 			return false;
-		}
+		}*/
 		
 		return true;
 	}

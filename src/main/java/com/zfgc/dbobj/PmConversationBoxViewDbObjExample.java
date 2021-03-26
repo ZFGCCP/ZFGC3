@@ -899,4 +899,35 @@ public class PmConversationBoxViewDbObjExample {
             super();
         }
     }
+    
+    protected Integer limitStart;
+    protected Integer limitRange;
+    
+    public String getLimitClause() {
+    	if(limitStart != null && limitRange == null) {
+    		return "LIMIT " + limitStart;
+    	}
+    	else if(limitStart != null && limitRange != null) {
+    		return "LIMIT " + limitStart + "," + limitRange;
+    	}
+    	
+    	return null;
+    	
+    }
+
+	public Integer getLimitStart() {
+		return limitStart;
+	}
+
+	public void setLimitStart(Integer limitStart) {
+		this.limitStart = limitStart;
+	}
+
+	public Integer getLimitRange() {
+		return limitRange;
+	}
+
+	public void setLimitRange(Integer limitRange) {
+		this.limitRange = limitRange;
+	}
 }
