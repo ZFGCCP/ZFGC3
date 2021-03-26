@@ -4,7 +4,7 @@
 
   <properties resource="application.properties"/>
   <classPathEntry location="${mbg.jdbc.driver-location}"/>
-  <context id="zfgc3_context">
+  <context id="zfgc3_context" targetRuntime="MyBatis3">
 
     <jdbcConnection connectionURL="${mbg.jdbc.url}"
     				driverClass="com.mysql.jdbc.Driver"
@@ -18,7 +18,6 @@
     	<property name="enableSubPackages" value="true" />
     </sqlMapGenerator>
     <javaClientGenerator targetPackage="com.zfgc.mappers" targetProject="forum" type="XMLMAPPER" />
-    
     
 
     <!-- tables -->
@@ -324,11 +323,13 @@
     </table>-->
     
     <!-- views -->
-    <table schema="zfgc3" tableName="MEMBER_LISTING_VIEW" domainObjectName="MemberListingViewDbObj">
+    <table schema="zfgc3" tableName="LKUP_ALL_VIEW" domainObjectName="LkupAllViewDbObj">
+    </table>
+    <!--<table schema="zfgc3" tableName="MEMBER_LISTING_VIEW" domainObjectName="MemberListingViewDbObj">
     	<columnOverride column="ACTIVE_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     </table>
     
-    <!--<table schema="zfgc3" tableName="TOPIC_VIEW" domainObjectName="TopicViewDbObj">
+    <table schema="zfgc3" tableName="TOPIC_VIEW" domainObjectName="TopicViewDbObj">
     	<columnOverride column="NEW_POSTS_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="LOCKED_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>
     	<columnOverride column="STICKY_FLAG" jdbcType='BIT' javaType='java.lang.Boolean'></columnOverride>

@@ -10,6 +10,7 @@ import com.zfgc.model.BaseZfgcModel;
 public class PmConvoBox extends BaseZfgcModel{
 
 	private List<PmConversationView> conversations;
+	private Long totalPages;
 	
 	@Override
 	public String getHMAC() throws Exception {
@@ -23,6 +24,14 @@ public class PmConvoBox extends BaseZfgcModel{
 
 	public void setConversations(List<PmConversationView> conversations) {
 		this.conversations = conversations;
+	}
+
+	public Long getTotalPages() {
+		return totalPages;
+	}
+
+	public void setTotalPages(Long totalPages) {
+		this.totalPages = totalPages;
 	}
 	
 }

@@ -36,6 +36,7 @@ import com.zfgc.model.pm.BrUserConversation;
 import com.zfgc.model.pm.PmArchiveBoxView;
 import com.zfgc.model.pm.PmConversation;
 import com.zfgc.model.pm.PmConversationView;
+import com.zfgc.model.pm.PmConvoBox;
 import com.zfgc.model.pm.PmPrune;
 import com.zfgc.model.users.Users;
 import com.zfgc.util.time.ZfgcTimeUtils;
@@ -109,69 +110,41 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brUserConversationDao.updateOrInsert(mapping);
 	}
 	
-	public List<PmConversationView> getBoxViewByUsersId(Users user) throws Exception{
+	public PmConvoBox getBoxViewByUsersId(PmConversationBoxViewDbObjExample ex, Integer pageNo) {
+		PmConvoBox convoBox = new PmConvoBox();
+		Long pageCount = (long)Math.ceil(pmConversationBoxViewDao.countByExample(null, ex) / 10.0);
+		convoBox.setTotalPages(pageCount);
+		
+		ex.setLimitStart((pageNo - 1) * 10);
+		ex.setLimitRange(10);
+
+		List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
+		List<PmConversationView> result = new ArrayList<>();
+		
+		for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
+			result.add(mapper.map(obj, PmConversationView.class));
+		}
+		convoBox.setConversations(result);
+		
+		return convoBox;
+	}
+	
+	public List<PmConversationView> getInBoxViewByUsersId(Users user){
 		Integer usersId = user.getUsersId();
 		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
 		ex.createCriteria().andReceiverIdEqualTo(usersId).andSenderIdNotEqualTo(usersId);
 		
-		ex.or().andSenderIdEqualTo(usersId).andReceiverIdEqualTo(usersId);
+		List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
+		List<PmConversationView> result = new ArrayList<>();
 		
-		try {
-			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
-			List<PmConversationView> result = new ArrayList<>();
-			
-			for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
-				result.add(mapper.map(obj, PmConversationView.class));
-			}
-			
-			return result;
-			
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		} 
+		for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
+			result.add(mapper.map(obj, PmConversationView.class));
+		}
+		
+		return result;
 	}
 	
-	public List<PmConversationView> getSentBoxViewByUsersId(Users user) throws Exception{
-		Integer usersId = user.getUsersId();
-		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
-		ex.createCriteria().andSenderIdEqualTo(usersId).andReceiverIdEqualTo(usersId);
-		
-		try {
-			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
-			List<PmConversationView> result = new ArrayList<>();
-			
-			for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
-				result.add(mapper.map(obj, PmConversationView.class));
-			}
-			
-			return result;
-			
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		} 
-	}
-	
-	public List<PmConversationView> getInBoxViewByUsersId(Users user) throws Exception{
-		Integer usersId = user.getUsersId();
-		PmConversationBoxViewDbObjExample ex = new PmConversationBoxViewDbObjExample();
-		ex.createCriteria().andReceiverIdEqualTo(usersId).andSenderIdNotEqualTo(usersId);
-		
-		try {
-			List<PmConversationBoxViewDbObjWithBLOBs> dbObj = pmConversationBoxViewDao.get(ex);
-			List<PmConversationView> result = new ArrayList<>();
-			
-			for(PmConversationBoxViewDbObjWithBLOBs obj : dbObj){
-				result.add(mapper.map(obj, PmConversationView.class));
-			}
-			
-			return result;
-			
-		} catch (Exception e) {
-			throw new Exception(e.getMessage());
-		} 
-	}
-	
-	public PmConversation getConversation(Integer convoId) throws RuntimeException {
+	public PmConversation getConversation(Integer convoId){
 		PmConversationDbObjExample ex = new PmConversationDbObjExample();
 		ex.createCriteria().andPmConversationIdEqualTo(convoId);
 		List<PmConversationDbObj> conversations = null;
@@ -190,21 +163,21 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		}
 	}
 	
-	public void deleteConversationFromBox(PmConversation convo, Users zfgcUser) throws RuntimeException{
+	public void deleteConversationFromBox(PmConversation convo, Users zfgcUser){
 		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId()).andPmConversationIdEqualTo(convo.getPmConversationId());
 		
 		brUserConversationDao.deleteByExample(null, ex);
 	}
 	
-	public void bulkDeleteConversation(List<Integer> ids, Users zfgcUser) throws RuntimeException{
+	public void bulkDeleteConversation(List<Integer> ids, Users zfgcUser) {
 		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(zfgcUser.getUsersId()).andPmConversationIdIn(ids);
 		
 		brUserConversationDao.deleteByExample(null,ex);
 	}
 	
-	public List<PmArchiveBoxView> getArchiveBox(Users zfgcUser) throws RuntimeException{
+	public List<PmArchiveBoxView> getArchiveBox(Users zfgcUser){
 		PmArchiveBoxViewDbObjExample sendEx = pmArchiveBoxViewDao.getExample();
 		sendEx.createCriteria().andSenderIdEqualTo(zfgcUser.getUsersId()).andSendCopyFlagEqualTo(true);
 		
@@ -224,7 +197,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return result;
 	}
 	
-	public List<Integer> getConvosToBePruned(PmPrune prune, Users zfgcUser) throws RuntimeException{
+	public List<Integer> getConvosToBePruned(PmPrune prune, Users zfgcUser){
 		PmConversationBoxViewDbObjExample pruneEx = pmConversationBoxViewDao.getExample();
 		Criteria crit = pruneEx.createCriteria();
 		
@@ -255,16 +228,11 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		
 	}
 	
-	public BrPmConversationUserInvite getConvoInvite(Integer pmConversationId, Integer usersId) throws RuntimeException{
+	public BrPmConversationUserInvite getConvoInvite(Integer pmConversationId, Integer usersId){
 		BrPmConversationUserInviteDbObjExample ex = new BrPmConversationUserInviteDbObjExample(); 
 		ex.createCriteria().andUsersIdEqualTo(usersId).andPmConversationIdEqualTo(pmConversationId);
 		List<BrPmConversationUserInviteDbObj> result = null;
-		try {
-			result = brPmConversationUserInviteDao.get(ex);
-		} catch (RuntimeException e) {
-			e.printStackTrace();
-			throw e;
-		}
+		result = brPmConversationUserInviteDao.get(ex);
 		
 		if(result.isEmpty()){
 			return null;
@@ -273,21 +241,18 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return mapper.map(result.get(0),BrPmConversationUserInvite.class);
 	}
 	
-	public boolean isUserPartOfConvo(Integer pmConversationId, Integer usersId) throws RuntimeException{
+	public boolean isUserPartOfConvo(Integer pmConversationId, Integer usersId){
 		BrUserConversationDbObjExample ex = brUserConversationDao.getExample();
 		ex.createCriteria().andUsersIdEqualTo(usersId).andPmConversationIdEqualTo(pmConversationId);
 		List<BrUserConversationDbObj> result = null;
-		try {
-			result = brUserConversationDao.get(ex);
-		} catch (Exception e) {
-			e.printStackTrace();
-			throw e;
-		}
+
+		result = brUserConversationDao.get(ex);
+
 
 		return result.size() > 0;
 	}
 	
-	public boolean isConvoArchived(Integer pmConversationId, Integer usersId) throws RuntimeException{
+	public boolean isConvoArchived(Integer pmConversationId, Integer usersId){
 		BrPmConversationArchiveDbObjExample ex = brPmConversationArchiveDao.getExample();
 		ex.createCriteria().andPmConversationIdEqualTo(pmConversationId).andUsersIdEqualTo(usersId);
 		List<BrPmConversationArchiveDbObj> result = null;
@@ -297,7 +262,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return result.size() > 0;
 	}
 	
-	public Date getArchivalDate(Integer pmConversationId, Integer usersId) throws ZfgcNotFoundException, Exception{
+	public Date getArchivalDate(Integer pmConversationId, Integer usersId) throws ZfgcNotFoundException{
 		BrPmConversationArchiveDbObjExample ex = brPmConversationArchiveDao.getExample();
 		ex.createCriteria().andPmConversationIdEqualTo(pmConversationId).andUsersIdEqualTo(usersId);
 		List<BrPmConversationArchiveDbObj> result = null;
@@ -311,7 +276,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		return result.get(0).getArchiveDt();
 	}
 	
-	public void createInvite(BrPmConversationUserInvite invite) throws RuntimeException {
+	public void createInvite(BrPmConversationUserInvite invite){
 		brPmConversationUserInviteDao.updateOrInsert(invite);
 	}
 	
@@ -319,7 +284,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brPmConversationUserInviteDao.hardDelete(invite);
 	}
 	
-	public void setConvoToRead(Integer convoId, Integer usersId) throws RuntimeException{
+	public void setConvoToRead(Integer convoId, Integer usersId){
 		BrUserConversation convo = new BrUserConversation();
 		convo.setUsersId(usersId);
 		convo.setPmConversationId(convoId);
@@ -330,7 +295,7 @@ public class PmConversationDataProvider extends AbstractDataProvider{
 		brUserConversationDao.updateByExample(convo, ex);
 	}
 	
-	public void setConvoToUnRead(Integer convoId, Integer usersId) throws RuntimeException{
+	public void setConvoToUnRead(Integer convoId, Integer usersId){
 		BrUserConversation convo = new BrUserConversation();
 		convo.setUsersId(usersId);
 		convo.setPmConversationId(convoId);

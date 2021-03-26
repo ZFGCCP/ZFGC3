@@ -1,5 +1,7 @@
 package com.zfgc.mappers;
 
+import com.zfgc.dbobj.MemberListingViewDbObj;
+import com.zfgc.dbobj.MemberListingViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObj;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjExample;
 import com.zfgc.dbobj.PmConversationBoxViewDbObjWithBLOBs;
@@ -74,4 +76,6 @@ public interface PmConversationBoxViewDbObjMapper {
 	List<PmConversationBoxViewDbObj> selectArchived(Integer usersId);
 	
 	List<Integer> prune(PmPrune prune);
+	
+	List<PmConversationBoxViewDbObjWithBLOBs> selectByExampleLimit(PmConversationBoxViewDbObjExample example);
 }

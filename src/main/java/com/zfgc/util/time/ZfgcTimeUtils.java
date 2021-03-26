@@ -66,6 +66,13 @@ public class ZfgcTimeUtils extends DateUtils {
 		return sdf;
 	}
 	
+	public static SimpleDateFormat getZfgcTimeFormat(String timezone) {
+		SimpleDateFormat sdf = new SimpleDateFormat("hh:mm:ss a");
+		sdf.setTimeZone(TimeZone.getTimeZone(timezone));
+		
+		return sdf;
+	}
+	
 	public static Calendar getCalendar(){
 		return getCalendar("GMT");
 	}
